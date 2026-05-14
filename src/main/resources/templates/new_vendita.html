@@ -59,10 +59,15 @@
             </select>
         </div>
      <!-- N BINS -->
-        <div class="mb-3">
-            <label class="form-label">Numero Bins</label>
-            <input type="number" class="form-control" th:field="*{nBins}" required>
-        </div>
+<div class="mb-3">
+    <label class="form-label">Numero Bins</label>
+
+    <input type="number"
+           class="form-control"
+           th:field="*{nBins}"
+           min="1"
+           required>
+</div>
 
         <!-- SUBMIT -->
         <button type="submit" class="btn btn-success">

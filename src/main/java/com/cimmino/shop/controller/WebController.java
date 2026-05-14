@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.cimmino.shop.database.Arrivi;
 import com.cimmino.shop.database.ArriviRepository;
@@ -60,7 +61,7 @@ public class WebController {
 
 	    return "arrivi2";
 	}
-	@PostMapping("/arrivi/save")
+	//@PostMapping("/arrivi/save")
 	public String save(@ModelAttribute Arrivi arrivo,  Model model) {
 
 	    for (BinsArrivi b : arrivo.getBins()) {
@@ -73,6 +74,35 @@ public class WebController {
 	    model.addAttribute("results", risultati);
 	    return "arrivi";
 	   // return "redirect:/web/arrivi";
+	}
+	@PostMapping("/arrivi/save")
+	public String save(@ModelAttribute Arrivi arrivo,
+	                   RedirectAttributes redirectAttributes) {
+
+	    // ❌ CONTROLLO ERRORE
+	    if (arrivo.getBins() == null || arrivo.getBins().isEmpty() ) {
+
+	        redirectAttributes.addFlashAttribute(
+	                "error",
+	                "Devi selezionare almeno un Bin prima di salvare"
+	        );
+
+	        return "redirect:/web/arrivi/new";
+	    }
+
+	    // ✔ collega figli al parent
+	    for (BinsArrivi b : arrivo.getBins()) {
+	        b.setArrivoEntity(arrivo);
+	    }
+
+	    arriviRepository.save(arrivo);
+
+	    redirectAttributes.addFlashAttribute(
+	            "msg",
+	            "Arrivo salvato correttamente"
+	    );
+
+	    return "redirect:/web/arrivi/new";
 	}
 	@GetMapping("/arrivi/new")
 	public String newArrivo(Model model) {
