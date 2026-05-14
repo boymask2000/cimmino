@@ -19,7 +19,7 @@
     <!-- LOGGATO -->
     <div sec:authorize="isAuthenticated()">
 
-        <h1 class="text-center mb-4">Status</h1>
+        <h1 class="text-center mb-4">Arrivi</h1>
 
         <!-- FORM DATE -->
         <form th:action="@{/web/filter}"  method="get" class="row g-3 mb-4 justify-content-center">
@@ -41,7 +41,9 @@
             </div>
 
         </form>
-
+<a
+						th:href="@{/web/commercianti/lista/0}"
+						class="btn btn-primary btn-sm">Commercianti </a>
     </div>
 
     <!-- NON LOGGATO -->

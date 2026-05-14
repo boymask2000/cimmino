@@ -1,7 +1,7 @@
 package com.cimmino.shop.database;
 
 import java.math.BigDecimal;
-import java.util.Date;
+import java.time.LocalDate;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -20,17 +20,27 @@ public class Vendite {
 	@Column(name = "vendite_id")
 	private Long id;
 
-	private Long arrivo_entity;
+	@ManyToOne
+	@JoinColumn(name = "arrivo_id")
+	private Arrivi arrivoEntity;
 	
 	@ManyToOne
-    @JoinColumn(name = "vendita_id") // FK nella tabella bins
+    @JoinColumn(name = "commerciante_id") // FK nella tabella bins
 	private Commerciante commerciante;
 	
-	private String nomeBin;
-	private int nBins;
+	@ManyToOne
+	@JoinColumn(name = "bin_id")
+	private Bin bin;
 	
-	private Date data;
-	private Date dtt;
+	private Integer lordo;
+	private Integer netto;
+	private Integer tara;
+	
+	private Integer nBins;
+	
+	private LocalDate data;
+
+	private LocalDate dtt;
 	
 	private BigDecimal importo;
 	
@@ -52,36 +62,57 @@ public class Vendite {
 	public void setId(Long id) {
 		this.id = id;
 	}
-	public Long getArrivo_entity() {
-		return arrivo_entity;
-	}
-	public void setArrivo_entity(Long arrivo_entity) {
-		this.arrivo_entity = arrivo_entity;
-	}
+	
 
-	public String getNomeBin() {
-		return nomeBin;
+	public Arrivi getArrivoEntity() {
+		return arrivoEntity;
 	}
-	public void setNomeBin(String nomeBin) {
-		this.nomeBin = nomeBin;
+	public void setArrivoEntity(Arrivi arrivoEntity) {
+		this.arrivoEntity = arrivoEntity;
 	}
-	public int getnBins() {
+	public Bin getBin() {
+		return bin;
+	}
+	public void setBin(Bin bin) {
+		this.bin = bin;
+	}
+	public Integer getnBins() {
 		return nBins;
 	}
-	public void setnBins(int nBins) {
+	public void setnBins(Integer nBins) {
 		this.nBins = nBins;
 	}
-	public Date getData() {
+	public LocalDate getData() {
 		return data;
 	}
-	public void setData(Date data) {
+	public void setData(LocalDate data) {
 		this.data = data;
 	}
-	public Date getDtt() {
+	public LocalDate getDtt() {
 		return dtt;
 	}
-	public void setDtt(Date dtt) {
+	public void setDtt(LocalDate dtt) {
 		this.dtt = dtt;
 	}
+	public Integer getLordo() {
+		return lordo;
+	}
+	public void setLordo(Integer lordo) {
+		this.lordo = lordo;
+	}
+	public Integer getNetto() {
+		return netto;
+	}
+	public void setNetto(Integer netto) {
+		this.netto = netto;
+	}
+	public Integer getTara() {
+		return tara;
+	}
+	public void setTara(Integer tara) {
+		this.tara = tara;
+	}
+
+
 	
 }

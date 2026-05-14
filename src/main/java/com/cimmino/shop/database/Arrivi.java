@@ -41,7 +41,7 @@ public class Arrivi {
 	           orphanRemoval = true)
 	private List<BinsArrivi> bins = new ArrayList<>();
 
-	@OneToMany(mappedBy = "arrivo_entity")
+	@OneToMany(mappedBy = "arrivoEntity")
 	private Set<Vendite> vendite;
 	
 	
