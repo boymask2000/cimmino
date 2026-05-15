@@ -128,19 +128,20 @@
 									<td><span class="badge bg-primary"> <span
 											th:text="${b.nBins}"></span>
 									</span></td>
-<td><span class="badge bg-primary"> <span
+									<td><span class="badge bg-primary"> <span
+											th:text="${b.bin.name}"></span>
+									</span></td>
+									<td><span class="badge bg-primary"> <span
 											th:text="${b.lordo}"></span>
 									</span></td>
 									<td><span class="badge bg-primary"> <span
 											th:text="${b.netto}"></span>
 									</span></td>
 									<td><span class="badge bg-primary"> <span
-											th:text="${b.tara}"></span>
+											th:text="${b.bin.tara}"></span>
 									</span></td>
 
-									<td><span class="badge bg-secondary"> Bin: <span
-											th:text="${b.bin != null ? b.bin.name : 'N/A'}"></span>
-									</span></td>
+								
 									<td><span th:text="${b.importo}"></span></td>
 
 								</tr>

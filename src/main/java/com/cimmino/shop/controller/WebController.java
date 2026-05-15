@@ -19,6 +19,7 @@ import com.cimmino.shop.database.Arrivi;
 import com.cimmino.shop.database.ArriviRepository;
 import com.cimmino.shop.database.BinRepository;
 import com.cimmino.shop.database.BinsArrivi;
+import com.cimmino.shop.service.ArriviService;
 
 
 
@@ -29,6 +30,8 @@ public class WebController {
 	ArriviRepository arriviRepository ;
 	@Autowired
 	BinRepository binRepository;
+	@Autowired
+	ArriviService arriviService;
 
 	@GetMapping("/home")
 	public String home(Model model) {
@@ -67,6 +70,7 @@ public class WebController {
 	    for (BinsArrivi b : arrivo.getBins()) {
 	        b.setArrivoEntity(arrivo);
 	    }
+	  
 
 	    arriviRepository.save(arrivo);
 	 
@@ -94,7 +98,8 @@ public class WebController {
 	    for (BinsArrivi b : arrivo.getBins()) {
 	        b.setArrivoEntity(arrivo);
 	    }
-
+	    arriviService.eseguiCalcoli(arrivo);
+	    
 	    arriviRepository.save(arrivo);
 
 	    redirectAttributes.addFlashAttribute(

@@ -1,10 +1,14 @@
 package com.cimmino.shop.service;
 
+import java.math.BigInteger;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.cimmino.shop.database.Arrivi;
 import com.cimmino.shop.database.Bin;
 import com.cimmino.shop.database.BinRepository;
+import com.cimmino.shop.database.BinsArrivi;
 import com.cimmino.shop.database.Commerciante;
 import com.cimmino.shop.database.CommercianteRepository;
 import com.cimmino.shop.database.OpCommerciante;
@@ -17,40 +21,39 @@ import jakarta.transaction.Transactional;
 @Service
 public class VenditeService {
 
-    @Autowired
-    private VenditeRepository venditeRepository;
+	@Autowired
+	private VenditeRepository venditeRepository;
 
-    @Autowired
-    private CommercianteRepository commercianteRepository;
-    
-    @Autowired
-    private OperazioniCommercianteRepository opCommercianteRepository;
+	@Autowired
+	private CommercianteRepository commercianteRepository;
 
-    @Autowired
-    private BinRepository binRepository;
+	@Autowired
+	private OperazioniCommercianteRepository opCommercianteRepository;
 
-    @Transactional
-    public Vendite save(Vendite vendita, Long commercianteId, Long binId) {
+	@Autowired
+	private BinRepository binRepository;
+	@Autowired
+	ArriviService arriviService;
 
-        Commerciante commerciante = commercianteRepository.findById(commercianteId)
-                .orElseThrow(() -> new RuntimeException("Commerciante non trovato"));
+	@Transactional
+	public Vendite save(Vendite vendita, Long commercianteId, Long binId) {
 
-        Bin bin = binRepository.findById(binId)
-                .orElseThrow(() -> new RuntimeException("Bin non trovato"));
+		Commerciante commerciante = commercianteRepository.findById(commercianteId)
+				.orElseThrow(() -> new RuntimeException("Commerciante non trovato"));
 
-        vendita.setCommerciante(commerciante);
-        vendita.setBin(bin);
-        
-        saveOperazioneCommerciante(vendita);
-        
-        
+		Bin bin = binRepository.findById(binId).orElseThrow(() -> new RuntimeException("Bin non trovato"));
 
-        return venditeRepository.save(vendita);
-    }
+		vendita.setCommerciante(commerciante);
+		vendita.setBin(bin);
+		eseguiCalcoli(vendita);
+		saveOperazioneCommerciante(vendita);
+
+		return venditeRepository.save(vendita);
+	}
 
 	private void saveOperazioneCommerciante(Vendite vendita) {
 		OpCommerciante op = new OpCommerciante();
-		
+
 		op.setBin(vendita.getBin());
 		op.setCommerciante(vendita.getCommerciante());
 		op.setData(vendita.getData());
@@ -59,8 +62,25 @@ public class VenditeService {
 		op.setLordo(vendita.getLordo());
 		op.setNetto(vendita.getNetto());
 		op.setTara(vendita.getTara());
-		
+		op.setnBins(vendita.getnBins());
+
 		opCommercianteRepository.save(op);
-		
+
+	}
+
+	public void eseguiCalcoli(Vendite vendita) {
+		BigInteger totalePesoNetto = BigInteger.ZERO;
+		BigInteger totalePesoLordo = BigInteger.ZERO;
+
+		Bin bin = vendita.getBin();
+		int lordo = bin.getPeso_lordo() * vendita.getnBins();
+		int netto = (bin.getPeso_lordo() - bin.getTara()) * vendita.getnBins();
+
+		totalePesoLordo = totalePesoLordo.add(BigInteger.valueOf(lordo));
+		totalePesoNetto = totalePesoNetto.add(BigInteger.valueOf(netto));
+
+		vendita.setLordo(totalePesoLordo.intValue());
+		vendita.setNetto(totalePesoNetto.intValue());
+		vendita.setTara(vendita.getnBins()*bin.getTara());
 	}
 }
