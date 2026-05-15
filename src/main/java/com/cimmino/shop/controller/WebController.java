@@ -53,6 +53,10 @@ public class WebController {
 
 		return "home";
 	}
+	@GetMapping("/anagrafiche")
+	public String anagrafiche(Model model) {
+		return "anagrafiche";
+	}
 	List<Arrivi> risultati = new ArrayList<Arrivi>();
 	@GetMapping("/filter")
 	public String filter(

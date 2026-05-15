@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Nuovo Bin</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 30px;
+        }
+
+        form {
+            width: 450px;
+        }
+
+        .form-row {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .form-row label {
+            width: 150px;
+            font-weight: bold;
+        }
+
+        .form-row input {
+            flex: 1;
+            padding: 8px;
+        }
+
+        button {
+            padding: 10px 20px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+
+<h1>Modifica Bin</h1>
+
+<form th:action="@{/web/anagrafiche/bins/save}"
+      th:object="${bin}"
+      method="post">
+
+    <input type="hidden" th:field="*{id}" />
+
+    <div class="form-row">
+        <label>Nome:</label>
+
+        <input type="text"
+               th:field="*{name}"
+               required />
+    </div>
+    
+    <div class="form-row">
+        <label>Peso Lordo:</label>
+
+        <input type="text"
+               th:field="*{peso_lordo}"
+               required />
+    </div>
+
+<div class="form-row">
+        <label>Tara:</label>
+
+        <input type="text"
+               th:field="*{tara}"
+               required />
+    </div>
+
+    <button type="submit">
+        Salva
+    </button>
+
+</form>
+
+</body>
+</html>

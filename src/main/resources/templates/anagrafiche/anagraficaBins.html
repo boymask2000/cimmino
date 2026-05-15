@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Lista Bins</title>
+
+<style>
+body {
+	font-family: Arial;
+}
+
+table {
+	border-collapse: collapse;
+	width: 80%;
+}
+
+td, th {
+	border: 1px solid black;
+	padding: 10px;
+}
+
+a {
+	margin-right: 10px;
+}
+
+.btn {
+	padding: 8px 15px;
+	background-color: #3498db;
+	color: white;
+	text-decoration: none;
+	border-radius: 5px;
+}
+</style>
+</head>
+
+<body>
+
+	<h1>Lista Bin</h1>
+
+	<br>
+
+	<a class="btn" th:href="@{/web/anagrafiche/bins/new}"> Nuovo Bin </a>
+
+	<br>
+	<br>
+
+	<table>
+
+		<tr>
+			<th>ID</th>
+			<th>Nome</th>
+			<th>Peso Lordo</th>
+			<th>Tara</th>
+
+		</tr>
+
+		<tr th:each="p : ${products}">
+
+			<td th:text="${p.id}"></td>
+
+			<td th:text="${p.name}"></td>
+
+			<td th:text="${p.peso_lordo}"></td>
+			<td th:text="${p.tara}"></td>
+
+
+			<td><a th:href="@{/web/anagrafiche/bins/edit/{id}(id=${p.id})}">
+					Modifica </a> 
+					<a
+				th:href="@{/webanagrafiche/bins/delete/{id}(id=${p.id})}">
+					Elimina </a></td>
+
+		</tr>
+
+	</table>
+
+</body>
+</html>

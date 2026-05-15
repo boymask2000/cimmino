@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Nuovo prodotto</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 30px;
+        }
+
+        form {
+            width: 450px;
+        }
+
+        .form-row {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .form-row label {
+            width: 150px;
+            font-weight: bold;
+        }
+
+        .form-row input {
+            flex: 1;
+            padding: 8px;
+        }
+
+        button {
+            padding: 10px 20px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+
+<h1>Nuovo prodotto</h1>
+
+<form th:action="@{/web/anagrafiche/merce/save}"
+      th:object="${product}"
+      method="post">
+
+    <div class="form-row">
+        <label>Nome:</label>
+
+        <input type="text"
+               th:field="*{name}"
+               required />
+    </div>
+
+
+
+
+
+    <button type="submit">
+        Salva
+    </button>
+
+</form>
+
+<br>
+
+<a th:href="@{/web/products}">
+    Torna alla lista
+</a>
+
+</body>
+</html>

@@ -1,7 +1,11 @@
 package com.cimmino.shop.database;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 
 public interface MerceRepository extends JpaRepository<Merce, Long> {
+	
+	@Query("select u from Merce  u where u.name = ?1")
+	Merce findbyName( String name );
 
 }
