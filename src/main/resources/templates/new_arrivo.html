@@ -2,168 +2,226 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <head>
-    <meta charset="UTF-8">
-    <title>Nuovo Arrivo</title>
+<meta charset="UTF-8">
+<title>Nuovo Arrivo</title>
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+	rel="stylesheet">
 </head>
 
 <body>
 
-<div class="container mt-4">
+	<div class="container mt-4">
 
-    <h1 class="text-center mb-4">Inserisci Arrivo</h1>
+		<h1 class="text-center mb-4">Inserisci Arrivo</h1>
 
-    <form th:action="@{/web/arrivi/save}"
-          th:object="${arrivo}"
-          method="post">
+		<form th:action="@{/web/arrivi/save}" th:object="${arrivo}"
+			method="post">
 
-        <!-- DATA -->
-
+			<!-- DATA -->
 
 
-        <!-- DATA -->
-        <div class="row mb-3 align-items-center">
-            <label class="col-sm-3 col-form-label">Data</label>
-            <div class="col-sm-9">
-                <input type="date"
-                       th:field="*{data}"
-                       class="form-control">
-            </div>
-        </div>
 
-        <!-- MERCE -->
-        <div class="row mb-3 align-items-center">
-            <label class="col-sm-3 col-form-label">Merce</label>
-            <div class="col-sm-9">
-                <input type="text"
-                       th:field="*{merce}"
-                       class="form-control"
-                       placeholder="Merce">
-            </div>
-        </div>
+			<!-- DATA -->
+			<div class="row mb-3 align-items-center">
+				<label class="col-sm-3 col-form-label">Data</label>
+				<div class="col-sm-9">
+					<input type="date" th:field="*{data}" class="form-control">
+				</div>
+			</div>
 
-        <!-- PESO LORDO -->
-        <div class="row mb-3 align-items-center">
-            <label class="col-sm-3 col-form-label">Peso Lordo</label>
-            <div class="col-sm-9">
-                <input type="number"
-                       th:field="*{peso_lordo}"
-                       class="form-control"
-                       placeholder="Peso lordo">
-            </div>
-        </div>
+			<!-- MERCE -->
 
-        <!-- PESO NETTO -->
-        <div class="row mb-3 align-items-center">
-            <label class="col-sm-3 col-form-label">Peso Netto</label>
-            <div class="col-sm-9">
-                <input type="number"
-                       th:field="*{peso_netto}"
-                       class="form-control"
-                       placeholder="Peso netto">
-            </div>
-        </div>
+			<div class="row mb-3 align-items-center">
+				<label class="form-label">Merce</label> <select class="form-select"
+					th:field="*{merce.merce_id}" required>
+					<option value="">-- Seleziona Merce --</option>
 
-        <!-- FREDDO -->
-        <div class="row mb-3 align-items-center">
-            <label class="col-sm-3 col-form-label">Tipo</label>
-            <div class="col-sm-9">
-                <select th:field="*{freddo}" class="form-control">
-                    <option value="1">Freddo</option>
-                    <option value="0">Caldo</option>
-                </select>
-            </div>
-        </div>
- <div class="row mb-3 align-items-center">
-            <label class="col-sm-3 col-form-label">Calo</label>
-            <div class="col-sm-9">
-                <input type="number"
-                       th:field="*{calo}"
-                       class="form-control"
-                       placeholder="Calo">
-            </div>
-        </div>
-        <!-- INTESTAZIONE -->
-        <div class="row mb-3 align-items-center">
-            <label class="col-sm-3 col-form-label">Intestazione</label>
-            <div class="col-sm-9">
-                <input type="text"
-                       th:field="*{intestazione_merce}"
-                       class="form-control"
-                       placeholder="Intestazione">
-            </div>
-        </div>
-        <hr>
+					<option th:each="c : ${listamerce}" th:value="${c.merce_id}"
+						th:text="${c.name}"></option>
 
-        <h4>Bins</h4>
+				</select>
+			</div>
 
-        <!-- CONTAINER BINS -->
-        <div id="binsContainer"></div>
+			<h4>Bins</h4>
 
-        <!-- BOTTONE AGGIUNGI -->
-        <button type="button" class="btn btn-primary mt-2" onclick="addBin()">
-            + Aggiungi Bin
-        </button>
+			<!-- CONTAINER BINS -->
+			<div id="binsContainer"></div>
 
-        <hr>
+			<!-- BOTTONE AGGIUNGI -->
+			<button type="button" class="btn btn-primary mt-2" onclick="addBin()">
+				+ Aggiungi Bin</button>
 
-        <button type="submit" class="btn btn-success">
-            Salva Arrivo
-        </button>
 
-    </form>
+			<!-- PESO LORDO -->
+			<div class="row mb-3 align-items-center">
+				<label class="col-sm-3 col-form-label">Peso Lordo</label>
+				<div class="col-sm-9">
+					<input type="number" th:field="*{peso_lordo}" class="form-control"
+						placeholder="Peso lordo">
+				</div>
+			</div>
 
-</div>
+			<!-- PESO NETTO -->
+			<div class="row mb-3 align-items-center">
+				<label class="col-sm-3 col-form-label">Peso Netto</label>
+				<div class="col-sm-9">
+					<input type="number" th:field="*{peso_netto}" class="form-control"
+						placeholder="Peso netto">
+				</div>
+			</div>
+
+			<!-- FREDDO -->
+			<div class="row mb-3 align-items-center">
+				<label class="col-sm-3 col-form-label">Tipo</label>
+				<div class="col-sm-9">
+					<select th:field="*{freddo}" class="form-control">
+						<option value="1">Freddo</option>
+						<option value="0">Caldo</option>
+					</select>
+				</div>
+			</div>
+			<div class="row mb-3 align-items-center">
+				<label class="col-sm-3 col-form-label">Calo</label>
+				<div class="col-sm-9">
+					<input type="number" th:field="*{calo}" class="form-control"
+						placeholder="Calo">
+				</div>
+			</div>
+			<!-- INTESTAZIONE -->
+			<div class="row mb-3 align-items-center">
+				<label class="col-sm-3 col-form-label">Intestazione</label>
+				<div class="col-sm-9">
+					<input type="text" th:field="*{intestazione_merce}"
+						class="form-control" placeholder="Intestazione">
+				</div>
+			</div>
+			<hr>
+
+
+			<hr>
+
+			<button type="submit" class="btn btn-success">Salva Arrivo</button>
+
+		</form>
+
+	</div>
 
 <script th:inline="javascript">
 
-let index = document.querySelectorAll('#binsContainer .row').length;
+let index = 0;
 
-    // lista bin dal backend
-    const binsList = /*[[${binsList}]]*/ [];
+// lista bins dal backend
+const binsList = /*[[${binsList}]]*/ [];
 
-    function addBin() {
+function aggiornaCampi() {
 
-        const container = document.getElementById("binsContainer");
+    let totaleLordo = 0;
+    let totaleNetto = 0;
 
-        let options = `<option value="">Seleziona Bin</option>`;
+    const rows = document.querySelectorAll('.bin-row');
 
-        binsList.forEach(b => {
-            options += `<option value="${b.id}">${b.name}</option>`;
-        });
+    rows.forEach(row => {
 
-        const html = `
-        <div class="row mb-2 border p-2">
+        const quantita =
+            parseInt(row.querySelector('.numBins').value) || 0;
 
-            <div class="col-md-5">
-                <input type="number"
-                       name="bins[${index}].numBins"
-                       class="form-control"
-                       placeholder="Numero bins">
-            </div>
+        const binId =
+            parseInt(row.querySelector('.binSelect').value);
 
-            <div class="col-md-5">
-                <select name="bins[${index}].bin.id"
-                        class="form-control">
-                    ${options}
-                </select>
-            </div>
+        if (!binId)
+            return;
 
-            <div class="col-md-2">
-                <button type="button"
-                        class="btn btn-danger"
-                        onclick="this.parentElement.parentElement.remove()">
-                    X
-                </button>
-            </div>
+        // cerca il bin selezionato
+        const bin = binsList.find(b => b.id == binId);
 
-        </div>`;
+        if (!bin)
+            return;
 
-        container.insertAdjacentHTML("beforeend", html);
+        totaleLordo +=
+            (bin.peso_lordo || 0) * quantita;
 
-        index++;
-    }
+        totaleNetto +=
+            (bin.peso_lordo-bin.tara || 0) * quantita;
+    });
+
+    // aggiorna campi
+    document.querySelector('[name="peso_lordo"]').value =
+        totaleLordo;
+
+    document.querySelector('[name="peso_netto"]').value =
+        totaleNetto;
+
+    document.querySelector('[name="calo"]').value =
+        totaleLordo - totaleNetto;
+}
+
+function addBin() {
+
+    const container =
+        document.getElementById("binsContainer");
+
+    let options =
+        `<option value="">Seleziona Bin</option>`;
+
+    binsList.forEach(b => {
+
+        options += `
+            <option value="${b.id}">
+                ${b.name}
+            </option>`;
+    });
+
+    const html = `
+
+    <div class="row mb-2 border p-2 bin-row">
+
+        <div class="col-md-5">
+
+            <input type="number"
+                   name="bins[${index}].numBins"
+                   class="form-control numBins"
+                   placeholder="Numero bins"
+                   oninput="aggiornaCampi()">
+
+        </div>
+
+        <div class="col-md-5">
+
+            <select name="bins[${index}].bin"
+                    class="form-control binSelect"
+                    onchange="aggiornaCampi()">
+
+                ${options}
+
+            </select>
+
+        </div>
+
+        <div class="col-md-2">
+
+            <button type="button"
+                    class="btn btn-danger"
+                    onclick="removeRow(this)">
+                X
+            </button>
+
+        </div>
+
+    </div>`;
+
+    container.insertAdjacentHTML("beforeend", html);
+
+    index++;
+}
+
+function removeRow(button) {
+
+    button.closest('.bin-row').remove();
+
+    aggiornaCampi();
+}
 
 </script>
 

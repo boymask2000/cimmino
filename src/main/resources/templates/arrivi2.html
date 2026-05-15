@@ -34,7 +34,7 @@
 				<tr th:each="a : ${results}">
 					<td class="align-middle text-nowrap" style="width: 1%;"><a
 						th:href="@{/web/vendita/new/{id}(id=${a.id})}"
-						class="btn btn-primary btn-sm"> Modifica </a></td>
+						class="btn btn-primary btn-sm"> Vendita </a></td>
 					<td>
 
 						<table border="1">
@@ -45,7 +45,7 @@
 							</tr>
 
 							<tr>
-								<td th:text="${a.merce}"></td>
+								<td th:text="${a.merce.name}"></td>
 							</tr>
 
 							<tr>
@@ -108,7 +108,11 @@
 									<th>Colore</th>
 									<th>Lordo</th>
 									<th>Netto</th>
+									<th>Media</th>
 									<th>Tara</th>
+									<th>Scarto</th>
+									<th>Prezzo</th>
+									
 									<th>Importo</th>
 								</tr>
 							</thead>
@@ -138,10 +142,18 @@
 											th:text="${b.netto}"></span>
 									</span></td>
 									<td><span class="badge bg-primary"> <span
+											th:text="${b.media}"></span>
+									</span></td>
+									<td><span class="badge bg-primary"> <span
 											th:text="${b.bin.tara}"></span>
 									</span></td>
+									<td><span class="badge bg-primary"> <span
+											th:text="${b.scarto}"></span>
+									</span></td>
+									<td><span class="badge bg-primary"> <span
+											th:text="${b.prezzo}"></span>
+									</span></td>
 
-								
 									<td><span th:text="${b.importo}"></span></td>
 
 								</tr>
@@ -156,5 +168,6 @@
 				</tr>
 			</table>
 		</div>
+	</div>
 </body>
 </html>

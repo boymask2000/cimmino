@@ -19,6 +19,7 @@ import com.cimmino.shop.database.Arrivi;
 import com.cimmino.shop.database.ArriviRepository;
 import com.cimmino.shop.database.BinRepository;
 import com.cimmino.shop.database.BinsArrivi;
+import com.cimmino.shop.database.MerceRepository;
 import com.cimmino.shop.service.ArriviService;
 
 
@@ -30,6 +31,8 @@ public class WebController {
 	ArriviRepository arriviRepository ;
 	@Autowired
 	BinRepository binRepository;
+	@Autowired
+	MerceRepository merceRepository;
 	@Autowired
 	ArriviService arriviService;
 
@@ -61,6 +64,8 @@ public class WebController {
 		            arriviRepository.cerca(startDate, endDate);
 
 		    model.addAttribute("results", risultati);
+		    model.addAttribute("startDate", startDate);
+		    model.addAttribute("endDate", endDate);
 
 	    return "arrivi2";
 	}
@@ -113,7 +118,7 @@ public class WebController {
 	public String newArrivo(Model model) {
 		Arrivi arrivo = new Arrivi();
 	    arrivo.setData(LocalDate.now()); // 👈 data corrente
-
+	    model.addAttribute("listamerce", merceRepository.findAll());
 	    model.addAttribute("arrivo", arrivo);
 	    model.addAttribute("binsList", binRepository.findAll());
 	    return "new_arrivo";

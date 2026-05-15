@@ -16,16 +16,16 @@ public class BinsArrivi {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "binsarrivi_id")
 	private Long id;
-	
+
 	@ManyToOne
-    @JoinColumn(name = "bin_id") // FK nella tabella bins
-    private Bin bin;
-	
+	@JoinColumn(name = "bin_id") // FK nella tabella bins
+	private Bin bin;
+
 	private int numBins;
 
-	 @ManyToOne
-	    @JoinColumn(name = "arrivo_id")
-	    private Arrivi arrivoEntity;
+	@ManyToOne
+	@JoinColumn(name = "arrivo_id")
+	private Arrivi arrivoEntity;
 
 	public Long getId() {
 		return id;

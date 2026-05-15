@@ -6,12 +6,16 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
@@ -24,9 +28,12 @@ public class Arrivi {
 	private Long id;
 
 
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate data;
 	
-	private String merce;
+	@ManyToOne
+    @JoinColumn(name = "merce_id") 
+	private Merce merce;
 	
 	private int peso_lordo;
 	private int peso_netto;
@@ -70,13 +77,7 @@ public class Arrivi {
 		this.data = data;
 	}
 
-	public String getMerce() {
-		return merce;
-	}
-
-	public void setMerce(String merce) {
-		this.merce = merce;
-	}
+	
 
 	public int getPeso_lordo() {
 		return peso_lordo;
@@ -126,5 +127,13 @@ public class Arrivi {
 
 	public void setVendite(Set<Vendite> vendite) {
 		this.vendite = vendite;
+	}
+
+	public Merce getMerce() {
+		return merce;
+	}
+
+	public void setMerce(Merce merce) {
+		this.merce = merce;
 	}
 }

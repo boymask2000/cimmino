@@ -42,6 +42,12 @@ public class Vendite {
 
 	private LocalDate dtt;
 	
+	private BigDecimal media;
+	
+	private BigDecimal scarto;
+	
+	private BigDecimal prezzo;
+	
 	private BigDecimal importo;
 	
 	public Commerciante getCommerciante() {
@@ -111,6 +117,24 @@ public class Vendite {
 	}
 	public void setTara(Integer tara) {
 		this.tara = tara;
+	}
+	public BigDecimal getPrezzo() {
+		return prezzo;
+	}
+	public void setPrezzo(BigDecimal prezzo) {
+		this.prezzo = prezzo;
+	}
+	public BigDecimal getMedia() {
+		return media;
+	}
+	public void setMedia(BigDecimal media) {
+		this.media = media;
+	}
+	public BigDecimal getScarto() {
+		return scarto;
+	}
+	public void setScarto(BigDecimal scarto) {
+		this.scarto = scarto;
 	}
 
 
