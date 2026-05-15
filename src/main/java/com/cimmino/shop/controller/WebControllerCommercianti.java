@@ -1,5 +1,6 @@
 package com.cimmino.shop.controller;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -71,11 +72,15 @@ public class WebControllerCommercianti {
 	    } else {
 	        ll = operazioniCommercianteRepository.findByCommerciante(commercianteId);
 	    }
-
+	    BigDecimal totale = ll.stream()
+	            .map(OpCommerciante::getImporto)
+	            .filter(i -> i != null)
+	            .reduce(BigDecimal.ZERO, BigDecimal::add);
+	    
 	    model.addAttribute("operazioni", ll);
 	    model.addAttribute("commercianti", commercianteRepository.findAll());
 	    model.addAttribute("commercianteId", commercianteId);
-
+	    model.addAttribute("totale", totale);
 	    return "commercianti";
 	}
 }
