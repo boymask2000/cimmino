@@ -60,9 +60,11 @@ public class VenditeService {
 		op.setDtt(vendita.getDtt());
 		op.setImporto(vendita.getImporto());
 		op.setLordo(vendita.getLordo());
+		op.setPrezzo(vendita.getPrezzo());
 		op.setNetto(vendita.getNetto());
 		op.setTara(vendita.getTara());
 		op.setnBins(vendita.getnBins());
+		op.setMerce(vendita.getArrivoEntity().getMerce());
 
 		opCommercianteRepository.save(op);
 

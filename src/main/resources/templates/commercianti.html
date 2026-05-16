@@ -71,12 +71,13 @@
 						<th>Data</th>
 						<th>DTT</th>
 						<th>Commerciante</th>
+						<th>Merce</th>
 						<th>Bin</th>
 						<th class="text-end">N° Bins</th>
 						<th class="text-end">Lordo</th>
 						<th class="text-end">Netto</th>
 						<th class="text-end">Tara</th>
-						
+						<th class="text-end">Prezzo</th>
 						<th class="text-end">Importo</th>
 					</tr>
 				</thead>
@@ -94,6 +95,7 @@
 						<td
 							th:text="${op.commerciante != null ? op.commerciante.name : ''}">
 						</td>
+						<td th:text="${op.merce.name}" class="text-end"></td>
 
 						<td th:text="${op.bin != null ? op.bin.name : ''}"></td>
 						<td th:text="${op.nBins}" class="text-end"></td>
@@ -104,7 +106,7 @@
 
 						<td th:text="${op.tara}" class="text-end"></td>
 
-						
+						<td th:text="${op.prezzo}" class="text-end"></td>
 
 						<td th:text="${op.importo}" class="text-end"></td>
 
@@ -113,7 +115,7 @@
 				</tbody>
 				<tfoot class="table-dark">
 <tr>
-    <td colspan="9" class="text-end fw-bold">Totale</td>
+    <td colspan="11" class="text-end fw-bold">Totale</td>
     <td th:text="${totale}" class="text-end fw-bold"></td>
 </tr>
 </tfoot>

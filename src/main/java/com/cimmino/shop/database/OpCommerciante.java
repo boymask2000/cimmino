@@ -21,23 +21,28 @@ public class OpCommerciante {
 	private Long id;
 
 	@ManyToOne
-    @JoinColumn(name = "commerciante_id") // FK nella tabella bins
+	@JoinColumn(name = "commerciante_id") // FK nella tabella bins
 	private Commerciante commerciante;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "bin_id")
 	private Bin bin;
-	
+
+	@ManyToOne
+	@JoinColumn(name = "merce_id")
+	private Merce merce;
+
 	private Integer lordo;
 	private Integer netto;
 	private Integer tara;
-	
+
 	private Integer nBins;
-	
+
 	private LocalDate data;
 
 	private LocalDate dtt;
-	
+
+	private BigDecimal prezzo;
 	private BigDecimal importo;
 
 	public Long getId() {
@@ -119,6 +124,21 @@ public class OpCommerciante {
 	public void setImporto(BigDecimal importo) {
 		this.importo = importo;
 	}
-	
-	
+
+	public Merce getMerce() {
+		return merce;
+	}
+
+	public void setMerce(Merce merce) {
+		this.merce = merce;
+	}
+
+	public BigDecimal getPrezzo() {
+		return prezzo;
+	}
+
+	public void setPrezzo(BigDecimal prezzo) {
+		this.prezzo = prezzo;
+	}
+
 }
