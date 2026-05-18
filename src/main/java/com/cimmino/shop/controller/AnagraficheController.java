@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.cimmino.shop.database.Bin;
 import com.cimmino.shop.database.BinRepository;
+import com.cimmino.shop.database.Commerciante;
+import com.cimmino.shop.database.CommercianteRepository;
 import com.cimmino.shop.database.Merce;
 import com.cimmino.shop.database.MerceRepository;
 
@@ -23,6 +25,9 @@ public class AnagraficheController {
 
 	@Autowired
 	MerceRepository merceRepository;
+	
+	@Autowired
+	CommercianteRepository commercianteRepository;
 
 	@GetMapping("/merce")
 	public String anagraficaMerce(Model model) {
@@ -110,5 +115,35 @@ public class AnagraficheController {
 		binRepository.save(product);
 		model.addAttribute("products", binRepository.findAll());
 		return "anagrafiche/anagraficaBins";
+	}
+	
+	@GetMapping("/commercianti")
+	public String anagraficaCommercianti(Model model) {
+
+		model.addAttribute("commercianti", commercianteRepository.findAll());
+
+		return "anagrafiche/anagraficaCommercianti";
+	}
+	@GetMapping("/commercianti/new")
+	public String anagraficaCommerciantiNew(Model model) {
+
+		Commerciante commerciante = new Commerciante();
+		model.addAttribute("commerciante", commerciante);
+	
+
+		return "anagrafiche/new_commerciante";
+	}
+	@PostMapping("/commercianti/save")
+	public String anagraficaCommerciantiSave(@ModelAttribute Commerciante comm, Model model) {
+
+		Commerciante m = commercianteRepository.findbyName(comm.getName());
+		if (m != null) {
+			model.addAttribute("commercianti", commercianteRepository.findAll());
+			return "anagrafiche/anagraficaCommercianti";
+		}
+
+		commercianteRepository.save(comm);
+		model.addAttribute("commercianti", commercianteRepository.findAll());
+		return "anagrafiche/anagraficaCommercianti";
 	}
 }
