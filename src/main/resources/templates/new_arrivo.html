@@ -128,103 +128,100 @@
 
 let index = 0;
 
-// lista bins dal backend
 const binsList = /*[[${binsList}]]*/ [];
 
-function aggiornaCampi() {
+function aggiornaPesi(element) {
+
+    const row = element.closest('.bin-row');
+
+    const quantita = parseInt(row.querySelector('.numBins').value) || 0;
+    const binId = parseInt(row.querySelector('.binSelect').value);
+
+    if (!binId) return;
+
+    const bin = binsList.find(b => b.id == binId);
+    if (!bin) return;
+
+    const lordo = (bin.peso_lordo || 0) * quantita;
+    const netto = ((bin.peso_lordo || 0) - (bin.tara || 0)) * quantita;
+
+    row.querySelector('.pesoLordo').value = lordo;
+    row.querySelector('.pesoNetto').value = netto;
+
+    aggiornaTotali();
+}
+
+function aggiornaTotali() {
 
     let totaleLordo = 0;
     let totaleNetto = 0;
 
-    const rows = document.querySelectorAll('.bin-row');
+    document.querySelectorAll('.bin-row').forEach(row => {
 
-    rows.forEach(row => {
+        const lordo = parseInt(row.querySelector('.pesoLordo').value) || 0;
+        const netto = parseInt(row.querySelector('.pesoNetto').value) || 0;
 
-        const quantita =
-            parseInt(row.querySelector('.numBins').value) || 0;
-
-        const binId =
-            parseInt(row.querySelector('.binSelect').value);
-
-        if (!binId)
-            return;
-
-        // cerca il bin selezionato
-        const bin = binsList.find(b => b.id == binId);
-
-        if (!bin)
-            return;
-
-        totaleLordo +=
-            (bin.peso_lordo || 0) * quantita;
-
-        totaleNetto +=
-            (bin.peso_lordo-bin.tara || 0) * quantita;
+        totaleLordo += lordo;
+        totaleNetto += netto;
     });
 
-    // aggiorna campi
-    document.querySelector('[name="peso_lordo"]').value =
-        totaleLordo;
-
-    document.querySelector('[name="peso_netto"]').value =
-        totaleNetto;
-
-    document.querySelector('[name="calo"]').value =
-        totaleLordo - totaleNetto;
+    document.querySelector('[name="peso_lordo"]').value = totaleLordo;
+    document.querySelector('[name="peso_netto"]').value = totaleNetto;
+    document.querySelector('[name="calo"]').value = totaleLordo - totaleNetto;
 }
 
 function addBin() {
 
-    const container =
-        document.getElementById("binsContainer");
+    const container = document.getElementById("binsContainer");
 
-    let options =
-        `<option value="">Seleziona Bin</option>`;
+    let options = `<option value="">Seleziona Bin</option>`;
 
     binsList.forEach(b => {
-
-        options += `
-            <option value="${b.id}">
-                ${b.name}
-            </option>`;
+        options += `<option value="${b.id}">${b.name}</option>`;
     });
 
     const html = `
+    <div class="row mb-2 border p-2 bin-row align-items-center">
 
-    <div class="row mb-2 border p-2 bin-row">
-
-        <div class="col-md-5">
-
-        <input type="number"
-            name="bins[${index}].numBins"
-            class="form-control numBins"
-            placeholder="Numero bins"
-            min="1"
-            required
-            oninput="aggiornaCampi()">
-
+        <div class="col-md-2">
+            <input type="number"
+                name="bins[${index}].numBins"
+                class="form-control numBins"
+                min="1"
+                placeholder="Qta"
+                oninput="aggiornaPesi(this)">
         </div>
 
-        <div class="col-md-5">
-
+        <div class="col-md-3">
             <select name="bins[${index}].bin"
                     class="form-control binSelect"
-                    onchange="aggiornaCampi()">
-
+                    onchange="aggiornaPesi(this)">
                 ${options}
-
             </select>
-
         </div>
 
         <div class="col-md-2">
+            <input type="number"
+                   name="bins[${index}].pesoLordo"
+                   class="form-control pesoLordo"
+                	   oninput="aggiornaTotali()"
+                   >
+        </div>
 
+        <div class="col-md-2">
+            <input type="number"
+                   name="bins[${index}].pesoNetto"
+                   class="form-control pesoNetto"
+                	   oninput="aggiornaTotali()"
+                   >
+        </div>
+
+        <div class="col-md-2">
             <button type="button"
                     class="btn btn-danger"
                     onclick="removeRow(this)">
                 X
             </button>
-
         </div>
 
     </div>`;
@@ -235,12 +232,9 @@ function addBin() {
 }
 
 function removeRow(button) {
-
     button.closest('.bin-row').remove();
-
-    aggiornaCampi();
+    aggiornaTotali();
 }
-
 </script>
 
 </body>

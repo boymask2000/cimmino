@@ -1,9 +1,13 @@
 package com.cimmino.shop.database;
 
 
+
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.springframework.format.annotation.DateTimeFormat;
@@ -18,6 +22,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.persistence.Transient;
 
 @Entity
 @Table(name = "Arrivi")
@@ -49,9 +54,10 @@ public class Arrivi {
 	private List<BinsArrivi> bins = new ArrayList<>();
 
 	@OneToMany(mappedBy = "arrivoEntity")
-	private Set<Vendite> vendite;
+	private List<Vendite> vendite;
 	
-	
+	@Transient
+	private Map<String, Double> sums=new HashMap<String, Double>();
 
 	public List<BinsArrivi> getBins() {
 		return bins;
@@ -121,13 +127,6 @@ public class Arrivi {
 
 
 
-	public Set<Vendite> getVendite() {
-		return vendite;
-	}
-
-	public void setVendite(Set<Vendite> vendite) {
-		this.vendite = vendite;
-	}
 
 	public Merce getMerce() {
 		return merce;
@@ -136,4 +135,23 @@ public class Arrivi {
 	public void setMerce(Merce merce) {
 		this.merce = merce;
 	}
+
+	public List<Vendite> getVendite() {
+		 vendite.sort(Comparator.comparing(Vendite::getData));
+		return vendite;
+	}
+
+	public void setVendite(List<Vendite> vendite) {
+		this.vendite = vendite;
+	}
+
+	public Map<String, Double> getSums() {
+		return sums;
+	}
+
+	public void setSums(Map<String, Double> sums) {
+		this.sums = sums;
+	}
+
+
 }

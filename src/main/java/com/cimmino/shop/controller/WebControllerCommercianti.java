@@ -1,6 +1,7 @@
 package com.cimmino.shop.controller;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -28,7 +29,7 @@ public class WebControllerCommercianti {
 	@Autowired
 	CommercianteRepository commercianteRepository;
 
-	//@GetMapping("/commercianti/lista/{id}")
+	// @GetMapping("/commercianti/lista/{id}")
 	public String listaCommercianti(@PathVariable Long id,
 			@RequestParam(name = "commercianteId", required = false, defaultValue = "0") Long commercianteId,
 			Model model) {
@@ -45,42 +46,52 @@ public class WebControllerCommercianti {
 		model.addAttribute("operazioni", ll);
 		return "commercianti";
 	}
+
 	@GetMapping("/commercianti/lista/{id}")
-	public String listaCommercianti(
-	        @RequestParam(required = false, defaultValue = "0") Long commercianteId,
-	        RedirectAttributes redirectAttributes) {
+	public String listaCommercianti(@RequestParam(required = false, defaultValue = "0") Long commercianteId,
+			RedirectAttributes redirectAttributes) {
 
-	    redirectAttributes.addAttribute("commercianteId", commercianteId);
+		redirectAttributes.addAttribute("commercianteId", commercianteId);
 
-	    if (commercianteId == 0) {
-	        redirectAttributes.addFlashAttribute("msg", "Nessun filtro applicato");
-	    } else {
-	        redirectAttributes.addFlashAttribute("msg", "Filtri applicati");
-	    }
+		if (commercianteId == 0) {
+			redirectAttributes.addFlashAttribute("msg", "Nessun filtro applicato");
+		} else {
+			redirectAttributes.addFlashAttribute("msg", "Filtri applicati");
+		}
 
-	    return "redirect:/web/commercianti/view";
+		return "redirect:/web/commercianti/view";
 	}
+
 	@GetMapping("/commercianti/view")
-	public String view(
-	        @RequestParam(required = false, defaultValue = "0") Long commercianteId,
-	        Model model) {
+	public String view(@RequestParam(required = false, defaultValue = "0") Long commercianteId, Model model) {
 
-	    List<OpCommerciante> ll;
+		List<OpCommerciante> ll;
 
-	    if (commercianteId == 0) {
-	        ll = operazioniCommercianteRepository.findAll();
-	    } else {
-	        ll = operazioniCommercianteRepository.findByCommerciante(commercianteId);
-	    }
-	    BigDecimal totale = ll.stream()
-	            .map(OpCommerciante::getImporto)
-	            .filter(i -> i != null)
-	            .reduce(BigDecimal.ZERO, BigDecimal::add);
-	    
-	    model.addAttribute("operazioni", ll);
-	    model.addAttribute("commercianti", commercianteRepository.findAll());
-	    model.addAttribute("commercianteId", commercianteId);
-	    model.addAttribute("totale", totale);
-	    return "commercianti";
+		if (commercianteId == 0) {
+			ll = operazioniCommercianteRepository.findAll();
+		} else {
+			ll = operazioniCommercianteRepository.findByCommerciante(commercianteId);
+		}
+		BigDecimal totale = ll.stream().map(OpCommerciante::getImporto).filter(i -> i != null).reduce(BigDecimal.ZERO,
+				BigDecimal::add);
+
+		model.addAttribute("operazioni", ll);
+		model.addAttribute("commercianti", commercianteRepository.findAll());
+		model.addAttribute("commercianteId", commercianteId);
+		model.addAttribute("totale", totale);
+		return "commercianti";
+	}
+
+	@GetMapping("/commercianti/filter")
+	public String filter(@RequestParam LocalDate startDate, @RequestParam LocalDate endDate, Model model) {
+
+		List<OpCommerciante> risultati = operazioniCommercianteRepository.cerca(startDate, endDate);
+
+		model.addAttribute("commercianti", commercianteRepository.findAll());
+		model.addAttribute("operazioni", risultati);
+		model.addAttribute("startDate", startDate);
+		model.addAttribute("endDate", endDate);
+
+		return "commercianti";
 	}
 }

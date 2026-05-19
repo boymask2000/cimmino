@@ -32,11 +32,11 @@
 
 				<!-- 🔥 CORPO TABELLA -->
 
-
 				<tr th:each="a : ${results}">
 					<td class="align-middle text-nowrap" style="width: 1%;"><a
 						th:href="@{/web/vendita/new/{id}(id=${a.id})}"
 						class="btn btn-primary btn-sm"> Vendita </a></td>
+						
 					<td>
 
 						<table border="1">
@@ -159,6 +159,14 @@
 									<td><span th:text="${b.importo}"></span></td>
 
 								</tr>
+								<tfoot>
+<tr>
+	<td colspan="5"></td>
+	<td th:text="${a.sums.get('LORDO')}"></td>
+	<td th:text="${a.sums.get('NETTO')}"></td>
+	<td colspan="5"></td>
+</tr>
+</tfoot>
 
 							</tbody>
 

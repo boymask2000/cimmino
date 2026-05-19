@@ -20,6 +20,12 @@ public class BinsArrivi {
 	@ManyToOne
 	@JoinColumn(name = "bin_id") // FK nella tabella bins
 	private Bin bin;
+	
+	@Column(name = "peso_lordo")
+	private Integer pesoLordo;
+
+	@Column(name = "peso_netto")
+	private Integer pesoNetto;
 
 	private int numBins;
 
@@ -58,4 +64,22 @@ public class BinsArrivi {
 	public void setArrivoEntity(Arrivi arrivoEntity) {
 		this.arrivoEntity = arrivoEntity;
 	}
+
+	public Integer getPesoLordo() {
+		return pesoLordo;
+	}
+
+	public void setPesoLordo(Integer pesoLordo) {
+		this.pesoLordo = pesoLordo;
+	}
+
+	public Integer getPesoNetto() {
+		return pesoNetto;
+	}
+
+	public void setPesoNetto(Integer pesoNetto) {
+		this.pesoNetto = pesoNetto;
+	}
+
+
 }

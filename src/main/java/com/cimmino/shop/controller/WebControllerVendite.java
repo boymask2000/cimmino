@@ -60,7 +60,7 @@ public class WebControllerVendite {
 		vendita.setData(currData);
 		venditeService.save(vendita, commercianteId, binId);
 
-		return "arrivi2";
+		return  "home";
 	}
 
 

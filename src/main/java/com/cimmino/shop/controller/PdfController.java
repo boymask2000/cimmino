@@ -24,14 +24,15 @@ public class PdfController {
 
 	@GetMapping("/pdf")
 	public ResponseEntity<byte[]> pdf() throws Exception {
-List<Arrivi> lista = arriviRepository.findAll();
+		List<Arrivi> lista = arriviRepository.findAll();
 		byte[] pdf = pdfService.generatePdf(lista);
 
 		return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=fattura.pdf")
 				.contentType(MediaType.APPLICATION_PDF).body(pdf);
 	}
+
 	@PostConstruct
 	public void init() {
-	    System.out.println("PdfController caricato");
+
 	}
 }

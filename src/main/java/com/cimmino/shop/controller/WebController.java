@@ -4,6 +4,7 @@ package com.cimmino.shop.controller;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -20,6 +21,7 @@ import com.cimmino.shop.database.ArriviRepository;
 import com.cimmino.shop.database.BinRepository;
 import com.cimmino.shop.database.BinsArrivi;
 import com.cimmino.shop.database.MerceRepository;
+import com.cimmino.shop.database.Vendite;
 import com.cimmino.shop.service.ArriviService;
 
 
@@ -58,6 +60,7 @@ public class WebController {
 		return "anagrafiche";
 	}
 	List<Arrivi> risultati = new ArrayList<Arrivi>();
+	
 	@GetMapping("/filter")
 	public String filter(
 	        @RequestParam LocalDate startDate,
@@ -66,6 +69,10 @@ public class WebController {
 
 		  risultati =
 		            arriviRepository.cerca(startDate, endDate);
+		  
+		  arriviService.calcSums(risultati);
+		  
+		
 
 		    model.addAttribute("results", risultati);
 		    model.addAttribute("startDate", startDate);
@@ -73,21 +80,7 @@ public class WebController {
 
 	    return "arrivi2";
 	}
-	//@PostMapping("/arrivi/save")
-	public String save(@ModelAttribute Arrivi arrivo,  Model model) {
 
-	    for (BinsArrivi b : arrivo.getBins()) {
-	        b.setArrivoEntity(arrivo);
-	    }
-	  
-
-	    arriviRepository.save(arrivo);
-	 
-
-	    model.addAttribute("results", risultati);
-	    return "arrivi";
-	   // return "redirect:/web/arrivi";
-	}
 	@PostMapping("/arrivi/save")
 	public String save(@ModelAttribute Arrivi arrivo,
 	                   RedirectAttributes redirectAttributes) {
