@@ -283,13 +283,13 @@ public class PdfService {
             out.append("<td>").append(clean(ven.getCommerciante().getName())).append("</td>");
             out.append("<td>").append(clean(ven.getData())).append("</td>");
             out.append("<td>").append(clean(ven.getDtt())).append("</td>");
-            out.append("<td>").append(clean(ven.getLordo())).append("</td>");
-            out.append("<td>").append(clean(ven.getNetto())).append("</td>");
+            out.append("<td>").append(clean(ven.getPeso_lordo())).append("</td>");
+            out.append("<td>").append(clean(ven.getPeso_netto())).append("</td>");
             out.append("<td>").append(clean(ven.getTara())).append("</td>");
             out.append("<td>").append(clean(ven.getMedia())).append("</td>");
             out.append("<td>").append(clean(ven.getScarto())).append("</td>");
-            out.append("<td>").append(clean(ven.getBin().getName())).append("</td>");
-            out.append("<td>").append(clean(ven.getnBins())).append("</td>");
+       //     out.append("<td>").append(clean(ven.getBin().getName())).append("</td>");
+        //    out.append("<td>").append(clean(ven.getnBins())).append("</td>");
             out.append("<td>").append(clean(ven.getPrezzo())).append("</td>");
             out.append("<td>").append(clean(ven.getImporto())).append("</td>");
 

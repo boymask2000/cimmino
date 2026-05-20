@@ -27,11 +27,18 @@ public class BinsArrivi {
 	@Column(name = "peso_netto")
 	private Integer pesoNetto;
 
-	private int numBins;
+	private Integer numBins;
+	
+	@Column(name = "numBinSold")
+	private Integer numBinSold;
 
 	@ManyToOne
+	@JoinColumn(name = "vendite_id")
+	private Vendite vendita;
+	
+	@ManyToOne
 	@JoinColumn(name = "arrivo_id")
-	private Arrivi arrivoEntity;
+	private Arrivi arrivo;
 
 	public Long getId() {
 		return id;
@@ -49,21 +56,7 @@ public class BinsArrivi {
 		this.bin = bin;
 	}
 
-	public int getNumBins() {
-		return numBins;
-	}
 
-	public void setNumBins(int numBins) {
-		this.numBins = numBins;
-	}
-
-	public Arrivi getArrivoEntity() {
-		return arrivoEntity;
-	}
-
-	public void setArrivoEntity(Arrivi arrivoEntity) {
-		this.arrivoEntity = arrivoEntity;
-	}
 
 	public Integer getPesoLordo() {
 		return pesoLordo;
@@ -80,6 +73,39 @@ public class BinsArrivi {
 	public void setPesoNetto(Integer pesoNetto) {
 		this.pesoNetto = pesoNetto;
 	}
+
+	public Integer getNumBinSold() {
+		return numBinSold;
+	}
+
+	public void setNumBinSold(Integer numBinSold) {
+		this.numBinSold = numBinSold;
+	}
+
+	public Arrivi getArrivo() {
+		return arrivo;
+	}
+
+	public void setArrivo(Arrivi arrivo) {
+		this.arrivo = arrivo;
+	}
+
+	public Vendite getVendita() {
+		return vendita;
+	}
+
+	public void setVendita(Vendite vendita) {
+		this.vendita = vendita;
+	}
+
+	public Integer getNumBins() {
+		return numBins;
+	}
+
+	public void setNumBins(Integer numBins) {
+		this.numBins = numBins;
+	}
+
 
 
 }

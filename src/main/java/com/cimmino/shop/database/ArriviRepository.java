@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 public interface ArriviRepository extends JpaRepository<Arrivi, Long> {
 
@@ -13,4 +14,8 @@ public interface ArriviRepository extends JpaRepository<Arrivi, Long> {
 	@Query("select u from Arrivi u where u.data>= ?1 and data <=?2 order by data")
 	 List<Arrivi> cerca(LocalDate startDate, LocalDate endDate);
 //	User findByUserId(String userid);
+	
+	
+
+	
 }

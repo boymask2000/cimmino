@@ -1,6 +1,5 @@
 package com.cimmino.shop.controller;
 
-
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,21 +21,24 @@ import com.cimmino.shop.database.BinRepository;
 import com.cimmino.shop.database.BinsArrivi;
 import com.cimmino.shop.database.MerceRepository;
 import com.cimmino.shop.database.Vendite;
+import com.cimmino.shop.database.dto.ArriviDTO;
+import com.cimmino.shop.mappers.BinMapper;
 import com.cimmino.shop.service.ArriviService;
-
-
 
 @Controller
 @RequestMapping("/web")
 public class WebController {
 	@Autowired
-	ArriviRepository arriviRepository ;
+	ArriviRepository arriviRepository;
 	@Autowired
 	BinRepository binRepository;
 	@Autowired
 	MerceRepository merceRepository;
 	@Autowired
 	ArriviService arriviService;
+	
+	@Autowired
+	BinMapper binMapper;
 
 	@GetMapping("/home")
 	public String home(Model model) {
@@ -47,77 +49,76 @@ public class WebController {
 
 		model.addAttribute("startDate", firstDay);
 		model.addAttribute("endDate", lastDay);
-		
-		//model.addAttribute("status", statusService.getStatus());
+
+		// model.addAttribute("status", statusService.getStatus());
 
 //		List<User> users = usersRepo.findAll();
 //		model.addAttribute("nusers", users.size());
 
 		return "home";
 	}
+
 	@GetMapping("/anagrafiche")
 	public String anagrafiche(Model model) {
 		return "anagrafiche";
 	}
+
 	List<Arrivi> risultati = new ArrayList<Arrivi>();
-	
+
 	@GetMapping("/filter")
-	public String filter(
-	        @RequestParam LocalDate startDate,
-	        @RequestParam LocalDate endDate,
-	        Model model) {
+	public String filter(@RequestParam LocalDate startDate, @RequestParam LocalDate endDate, Model model) {
 
-		  risultati =
-		            arriviRepository.cerca(startDate, endDate);
-		  
-		  arriviService.calcSums(risultati);
-		  
-		
+		risultati = arriviRepository.cerca(startDate, endDate);
 
-		    model.addAttribute("results", risultati);
-		    model.addAttribute("startDate", startDate);
-		    model.addAttribute("endDate", endDate);
+		arriviService.calcSums(risultati);
 
-	    return "arrivi2";
+		model.addAttribute("results", risultati);
+		model.addAttribute("startDate", startDate);
+		model.addAttribute("endDate", endDate);
+
+		return "arrivi2";
 	}
 
 	@PostMapping("/arrivi/save")
-	public String save(@ModelAttribute Arrivi arrivo,
-	                   RedirectAttributes redirectAttributes) {
+	public String save(@ModelAttribute Arrivi arrivo, RedirectAttributes redirectAttributes) {
 
-	    // ❌ CONTROLLO ERRORE
-	    if (arrivo.getBins() == null || arrivo.getBins().isEmpty() ) {
+		// ❌ CONTROLLO ERRORE
+		if (arrivo.getBins() == null || arrivo.getBins().isEmpty()) {
 
-	        redirectAttributes.addFlashAttribute(
-	                "error",
-	                "Devi selezionare almeno un Bin prima di salvare"
-	        );
+			redirectAttributes.addFlashAttribute("error", "Devi selezionare almeno un Bin prima di salvare");
 
-	        return "redirect:/web/arrivi/new";
-	    }
+			return "redirect:/web/arrivi/new";
+		}
 
-	    // ✔ collega figli al parent
-	    for (BinsArrivi b : arrivo.getBins()) {
-	        b.setArrivoEntity(arrivo);
-	    }
-	    arriviService.eseguiCalcoli(arrivo);
-	    
-	    arriviRepository.save(arrivo);
+		// ✔ collega figli al parent
+		for (BinsArrivi b : arrivo.getBins()) {
+			b.setArrivo(arrivo);
+		}
+	//	arriviService.eseguiCalcoli(arrivo);
 
-	    redirectAttributes.addFlashAttribute(
-	            "msg",
-	            "Arrivo salvato correttamente"
-	    );
+		arriviRepository.save(arrivo);
 
-	    return "redirect:/web/arrivi/new";
+		redirectAttributes.addFlashAttribute("msg", "Arrivo salvato correttamente");
+
+		return "redirect:/web/arrivi/new";
 	}
+
 	@GetMapping("/arrivi/new")
 	public String newArrivo(Model model) {
-		Arrivi arrivo = new Arrivi();
-	    arrivo.setData(LocalDate.now()); // 👈 data corrente
-	    model.addAttribute("listamerce", merceRepository.findAll());
+
+	    Arrivi arrivo = new Arrivi();
+	    arrivo.setData(LocalDate.now());
+	    arrivo.setBins(new ArrayList<>());
+
 	    model.addAttribute("arrivo", arrivo);
-	    model.addAttribute("binsList", binRepository.findAll());
+	    model.addAttribute("listamerce", merceRepository.findAll());
+
+	    // 🔥 FIX IMPORTANTE: DTO NON ENTITY
+	    model.addAttribute(
+	        "binsList",
+	        binMapper.toDtoList(binRepository.findAll())
+	    );
+
 	    return "new_arrivo";
 	}
 }

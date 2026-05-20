@@ -1,0 +1,70 @@
+package com.cimmino.shop.service;
+
+import java.util.List;
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.cimmino.shop.database.Arrivi;
+import com.cimmino.shop.database.ArriviRepository;
+import com.cimmino.shop.database.BinsArrivi;
+import com.cimmino.shop.database.BinsArriviRepository;
+import com.cimmino.shop.database.Vendite;
+import com.cimmino.shop.database.VenditeRepository;
+
+@Service
+public class BinArriviService {
+	@Autowired
+	private VenditeRepository venditeRepository;
+	@Autowired
+	private BinsArriviRepository binsArriviRepository;
+	@Autowired
+	private ArriviRepository arriviRepository;
+
+	public int calcAvail(Long binid, Long arrivoId) {
+		System.out.println("arrivoId=" + arrivoId);
+
+	//	List<BinsArrivi> optbin = binsArriviRepository.findByArrivo_Id(arrivoId);
+		int occ = calcOccupatiDaArrivo( arrivoId,binid) ;
+		int totBins =calcTot(arrivoId,binid);
+		//int totBins = binsArriviRepository.sumByBinId(binid, arrivoId);
+		
+
+		// int soldBins = b.getNumBinSold()!=null?b.getNumBinSold():0;
+//		List<Vendite> binUsati = venditeRepository.findBinUsati(binid, arrivoId);
+//		int soldBins = binUsati != null ? binUsati.size() : 0;
+	//	System.out.println("BIN=" + binid + " totBins=" + totBins + " soldBins=" + soldBins);
+		System.out.println("totBins=" + totBins );
+		System.out.println("occ=" + occ);
+
+		int avail = totBins - occ;
+		return avail;
+	}
+
+	private int calcTot(Long arrivoId, Long binid) {
+		Optional<Arrivi> op = arriviRepository.findById(arrivoId);
+		if(op.isEmpty())return 0;
+		Arrivi arr = op.get();
+		int tot=0;
+		for ( BinsArrivi a: arr.getBins()) {
+			if( a.getBin().getId()==binid)
+			tot+=a.getNumBins();
+		}
+		return tot;
+	}
+
+	private int calcOccupatiDaArrivo(Long arrivoId, Long binid) {
+		int ret = 0;
+
+		List<Vendite> vv = venditeRepository.findVenditeDiArrivo(arrivoId);
+		for (Vendite v : vv) {
+			List<BinsArrivi> binsArr = v.getBins();
+			for( BinsArrivi bin: binsArr) {
+				if( bin.getBin().getId()==binid)
+				ret+=bin.getNumBins();
+			}
+		}
+		return ret;
+	}
+}

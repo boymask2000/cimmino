@@ -72,8 +72,9 @@ public class WebControllerCommercianti {
 		} else {
 			ll = operazioniCommercianteRepository.findByCommerciante(commercianteId);
 		}
-		BigDecimal totale = ll.stream().map(OpCommerciante::getImporto).filter(i -> i != null).reduce(BigDecimal.ZERO,
-				BigDecimal::add);
+		Double totale =(double) 0;
+//		Double totale = ll.stream().map(OpCommerciante::getImporto).filter(i -> i != null).reduce((Double)0,
+//				Double::add);
 
 		model.addAttribute("operazioni", ll);
 		model.addAttribute("commercianti", commercianteRepository.findAll());
@@ -86,7 +87,9 @@ public class WebControllerCommercianti {
 	public String filter(@RequestParam LocalDate startDate, @RequestParam LocalDate endDate, Model model) {
 
 		List<OpCommerciante> risultati = operazioniCommercianteRepository.cerca(startDate, endDate);
-
+		risultati.forEach(o -> {
+		    System.out.println("MERCE=" + o.getMerce());
+		});
 		model.addAttribute("commercianti", commercianteRepository.findAll());
 		model.addAttribute("operazioni", risultati);
 		model.addAttribute("startDate", startDate);

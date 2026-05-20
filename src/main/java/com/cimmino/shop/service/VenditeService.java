@@ -1,20 +1,27 @@
 package com.cimmino.shop.service;
 
+import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.math.RoundingMode;
+import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.cimmino.shop.database.Arrivi;
+import com.cimmino.shop.database.ArriviRepository;
 import com.cimmino.shop.database.Bin;
 import com.cimmino.shop.database.BinRepository;
 import com.cimmino.shop.database.BinsArrivi;
+import com.cimmino.shop.database.BinsArriviRepository;
 import com.cimmino.shop.database.Commerciante;
 import com.cimmino.shop.database.CommercianteRepository;
 import com.cimmino.shop.database.OpCommerciante;
 import com.cimmino.shop.database.OperazioniCommercianteRepository;
 import com.cimmino.shop.database.Vendite;
 import com.cimmino.shop.database.VenditeRepository;
+import com.cimmino.shop.database.dto.VenditaDTO;
 
 import jakarta.transaction.Transactional;
 
@@ -33,56 +40,114 @@ public class VenditeService {
 	@Autowired
 	private BinRepository binRepository;
 	@Autowired
+	private BinsArriviRepository binsArriviRepository;
+	@Autowired
 	ArriviService arriviService;
+	@Autowired
+	ArriviRepository arriviRepository;
+
+	public Vendite create(VenditaDTO dto) {
+
+		Vendite v = new Vendite();
+
+		v.setArrivo(arriviRepository.findById(dto.getArrivoId()).orElseThrow());
+
+//	        v.setBin(
+//	            binRepository.findById(dto.getBinId())
+//	                .orElseThrow()
+//	        );
+
+		v.setCommerciante(commercianteRepository.findById(dto.getCommercianteId()).orElseThrow());
+
+//	        v.setnBins(dto.getnBins());
+		v.setPrezzo(dto.getPrezzo());
+		v.setScarto(dto.getScarto());
+
+		// 🔥 business logic centralizzata
+		int available = 0;// binRepository.getAvailable(dto.getBinId());
+
+//	        if (dto.getnBins() > available) {
+//	            throw new IllegalStateException("Stock insufficiente");
+//	        }
+
+		double peso = binRepository.getPesoNetto(dto.getBinId());
+
+		double importo = dto.getPrezzo()
+				// * dto.getnBins()
+				* peso * (1 - dto.getScarto() / 100);
+
+		v.setImporto(importo);
+
+		return venditeRepository.save(v);
+	}
 
 	@Transactional
-	public Vendite save(Vendite vendita, Long commercianteId, Long binId) {
+	public Vendite save(Vendite vendita, Long commercianteId) {
 
 		Commerciante commerciante = commercianteRepository.findById(commercianteId)
 				.orElseThrow(() -> new RuntimeException("Commerciante non trovato"));
 
-		Bin bin = binRepository.findById(binId).orElseThrow(() -> new RuntimeException("Bin non trovato"));
+//		System.out.println("binId = "+binId);
+//		Optional<BinsArrivi> opbarr = binsArriviRepository.findById(binId);
+//		BinsArrivi barr = opbarr.get();
+//		Bin bin = barr.getBin();//.findById(barr.getBin().ge).orElseThrow(() -> new RuntimeException("Bin non trovato"));
 
 		vendita.setCommerciante(commerciante);
-		vendita.setBin(bin);
+
+	
+
 		eseguiCalcoli(vendita);
+
+		Vendite v = venditeRepository.save(vendita);
 		saveOperazioneCommerciante(vendita);
 
-		return venditeRepository.save(vendita);
+		return v;
 	}
 
 	private void saveOperazioneCommerciante(Vendite vendita) {
 		OpCommerciante op = new OpCommerciante();
 
-		op.setBin(vendita.getBin());
+		// op.setBin(vendita.getBin());
 		op.setCommerciante(vendita.getCommerciante());
 		op.setData(vendita.getData());
 		op.setDtt(vendita.getDtt());
 		op.setImporto(vendita.getImporto());
-		op.setLordo(vendita.getLordo());
+		op.setLordo(vendita.getPeso_lordo());
 		op.setPrezzo(vendita.getPrezzo());
-		op.setNetto(vendita.getNetto());
+		op.setNetto(vendita.getPeso_netto());
 		op.setTara(vendita.getTara());
-		op.setnBins(vendita.getnBins());
-		op.setMerce(vendita.getArrivoEntity().getMerce());
+		// op.setnBins(vendita.getnBins());
+		op.setMerce(vendita.getArrivo().getMerce());
 
 		opCommercianteRepository.save(op);
 
 	}
 
 	public void eseguiCalcoli(Vendite vendita) {
-		BigInteger totalePesoNetto = BigInteger.ZERO;
-		BigInteger totalePesoLordo = BigInteger.ZERO;
+		int totaleBins = vendita.getBins().stream().mapToInt(b -> b.getNumBins()).sum();
+		BigDecimal pesoNetto = BigDecimal.valueOf(vendita.getPeso_netto());
 
-		Bin bin = vendita.getBin();
-		int lordo = bin.getPeso_lordo() * vendita.getnBins();
-		int netto = (bin.getPeso_lordo() - bin.getTara()) * vendita.getnBins();
+		BigDecimal media = BigDecimal.ZERO;
 
-		totalePesoLordo = totalePesoLordo.add(BigInteger.valueOf(lordo));
-		totalePesoNetto = totalePesoNetto.add(BigInteger.valueOf(netto));
+		if (totaleBins > 0) {
+			media = pesoNetto.divide(BigDecimal.valueOf(totaleBins), 2, RoundingMode.HALF_UP);
+			
+		}
+		vendita.setMedia(media);
+	}
 
-		vendita.setLordo(totalePesoLordo.intValue());
-		vendita.setNetto(totalePesoNetto.intValue());
-		vendita.setTara(vendita.getnBins()*bin.getTara());
+	public void save(VenditaDTO dto) {
+
+		Vendite v = new Vendite();
+
+		v.setCommerciante(new Commerciante(dto.getCommercianteId()));
+		// v.setBin(binRepository.getReferenceById(dto.getBinId()));
+		v.setArrivo(arriviRepository.getReferenceById(dto.getArrivoId()));
+
+		// v.setnBins(dto.getnBins());
+		v.setPrezzo(dto.getPrezzo());
+		v.setScarto(dto.getScarto());
+
+		venditeRepository.save(v);
 	}
 }

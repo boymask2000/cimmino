@@ -17,6 +17,14 @@ public class Commerciante {
 	
 	private String name;
 
+	public Commerciante(Long commercianteId) {
+		commerciante_id=commercianteId;
+	}
+
+	public Commerciante() {
+		// TODO Auto-generated constructor stub
+	}
+
 	public Long getCommerciante_id() {
 		return commerciante_id;
 	}

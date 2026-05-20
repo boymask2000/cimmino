@@ -8,9 +8,10 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import org.springframework.format.annotation.DateTimeFormat;
+
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -40,20 +41,21 @@ public class Arrivi {
     @JoinColumn(name = "merce_id") 
 	private Merce merce;
 	
-	private int peso_lordo;
-	private int peso_netto;
+	private Double peso_lordo;
+	private Double peso_netto;
 	
-	private int calo;
+	private Double calo;
 	private int freddo; // 1=freddo 0=caldo
 	
 	private String intestazione_merce;
 	
-	@OneToMany(mappedBy = "arrivoEntity",
+	@OneToMany(mappedBy = "arrivo",
 	           cascade = CascadeType.ALL,
 	           orphanRemoval = true)
+	@JsonManagedReference
 	private List<BinsArrivi> bins = new ArrayList<>();
 
-	@OneToMany(mappedBy = "arrivoEntity")
+	@OneToMany(mappedBy = "arrivo")
 	private List<Vendite> vendite;
 	
 	@Transient
@@ -63,8 +65,16 @@ public class Arrivi {
 		return bins;
 	}
 
+
 	public void setBins(List<BinsArrivi> bins) {
-		this.bins = bins;
+	    this.bins.clear();
+
+	    if (bins != null) {
+	        for (BinsArrivi b : bins) {
+	            b.setArrivo(this);
+	            this.bins.add(b);
+	        }
+	    }
 	}
 
 	public Long getId() {
@@ -85,30 +95,7 @@ public class Arrivi {
 
 	
 
-	public int getPeso_lordo() {
-		return peso_lordo;
-	}
-
-	public void setPeso_lordo(int peso_lordo) {
-		this.peso_lordo = peso_lordo;
-	}
-
-	public int getPeso_netto() {
-		return peso_netto;
-	}
-
-	public void setPeso_netto(int peso_netto) {
-		this.peso_netto = peso_netto;
-	}
-
-	public int getCalo() {
-		return calo;
-	}
-
-	public void setCalo(int calo) {
-		this.calo = calo;
-	}
-
+	
 	public int getFreddo() {
 		return freddo;
 	}
@@ -151,6 +138,30 @@ public class Arrivi {
 
 	public void setSums(Map<String, Double> sums) {
 		this.sums = sums;
+	}
+
+	public Double getPeso_lordo() {
+		return peso_lordo;
+	}
+
+	public void setPeso_lordo(Double peso_lordo) {
+		this.peso_lordo = peso_lordo;
+	}
+
+	public Double getPeso_netto() {
+		return peso_netto;
+	}
+
+	public void setPeso_netto(Double peso_netto) {
+		this.peso_netto = peso_netto;
+	}
+
+	public Double getCalo() {
+		return calo;
+	}
+
+	public void setCalo(Double calo) {
+		this.calo = calo;
 	}
 
 

@@ -5,6 +5,7 @@ import java.time.LocalDate;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -24,11 +25,11 @@ public class OpCommerciante {
 	@JoinColumn(name = "commerciante_id") // FK nella tabella bins
 	private Commerciante commerciante;
 
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "bin_id")
 	private Bin bin;
 
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "merce_id")
 	private Merce merce;
 
@@ -42,8 +43,8 @@ public class OpCommerciante {
 
 	private LocalDate dtt;
 
-	private BigDecimal prezzo;
-	private BigDecimal importo;
+	private Double prezzo;
+	private Double importo;
 
 	public Long getId() {
 		return id;
@@ -117,11 +118,11 @@ public class OpCommerciante {
 		this.dtt = dtt;
 	}
 
-	public BigDecimal getImporto() {
+	public Double getImporto() {
 		return importo;
 	}
 
-	public void setImporto(BigDecimal importo) {
+	public void setImporto(Double importo) {
 		this.importo = importo;
 	}
 
@@ -133,11 +134,11 @@ public class OpCommerciante {
 		this.merce = merce;
 	}
 
-	public BigDecimal getPrezzo() {
+	public Double getPrezzo() {
 		return prezzo;
 	}
 
-	public void setPrezzo(BigDecimal prezzo) {
+	public void setPrezzo(Double prezzo) {
 		this.prezzo = prezzo;
 	}
 
