@@ -14,7 +14,17 @@
 
 <div class="container mt-4">
 
-    <h2 class="mb-4">Dettaglio Vendita</h2>
+    <div class="d-flex justify-content-between align-items-center mb-3">
+
+			<h1 class="mb-0">Dettaglio Vendita</h1>
+
+
+<a th:href="@{/pdf/vendita_dettaglio/{id}(id=${vendita.id})}"
+   class="btn btn-success">
+    🖨 Stampa
+</a>
+
+		</div>
 
     <!-- ===================== HEADER ===================== -->
 

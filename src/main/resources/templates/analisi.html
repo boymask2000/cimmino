@@ -38,6 +38,9 @@
 
 	<div class="container mt-4">
 <h1 class="mb-0">Analisi</h1>
+	<div class="section-row">
+<p th:text="${analisi.arrivo.data}"></p>
+<p th:text="${analisi.arrivo.merceName}"></p></div>
 		<!-- ARRIVO -->
 		<div class="section-row">
 
@@ -165,6 +168,7 @@
 
 										<thead class="table-dark">
 											<tr>
+											<th>Data</th>
 												<th>Bin</th>
 												<th>Num</th>
 												<th>Lordo</th>
@@ -175,6 +179,7 @@
 										<tbody>
 
 											<tr th:each="op : ${ven.bins}">
+											<td th:text="${ven.data}"></td>
 												<td th:text="${op.bin.name}"></td>
 												<td th:text="${op.numBins}"></td>
 												<td th:text="${op.pesoLordo}"></td>
