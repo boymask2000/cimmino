@@ -1,8 +1,11 @@
 package com.cimmino.shop.controller;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -34,7 +37,7 @@ public class WebControllerCommercianti {
 
 		model.addAttribute("commercianti", commercianteRepository.findAll());
 
-		System.out.println(commercianteId);
+	
 		if (commercianteId == 0) {
 			ll = operazioniCommercianteRepository.findAll();
 		} else {
@@ -69,9 +72,16 @@ public class WebControllerCommercianti {
 		} else {
 			ll = operazioniCommercianteRepository.findByCommerciante(commercianteId);
 		}
-		Double totale =(double) 0;
-//		Double totale = ll.stream().map(OpCommerciante::getImporto).filter(i -> i != null).reduce((Double)0,
-//				Double::add);
+	//	Double totale = ll.stream().mapToDouble(OpCommerciante::getImporto).sum();
+		
+		
+		
+		BigDecimal totale = ll.stream()
+		        .map(OpCommerciante::getImporto) // Double
+		        .filter(Objects::nonNull)
+		        .map(BigDecimal::valueOf)
+		        .reduce(BigDecimal.ZERO, BigDecimal::add)
+		        .setScale(2, RoundingMode.HALF_UP);
 
 		model.addAttribute("operazioni", ll);
 		model.addAttribute("commercianti", commercianteRepository.findAll());
@@ -84,9 +94,7 @@ public class WebControllerCommercianti {
 	public String filter(@RequestParam LocalDate startDate, @RequestParam LocalDate endDate, Model model) {
 
 		List<OpCommerciante> risultati = operazioniCommercianteRepository.cerca(startDate, endDate);
-		risultati.forEach(o -> {
-		    System.out.println("MERCE=" + o.getMerce());
-		});
+
 		model.addAttribute("commercianti", commercianteRepository.findAll());
 		model.addAttribute("operazioni", risultati);
 		model.addAttribute("startDate", startDate);
