@@ -1,6 +1,6 @@
 package com.cimmino.shop.controller;
 
-import java.util.List;
+import java.math.BigDecimal;
 import java.util.Map;
 import java.util.Optional;
 
@@ -12,9 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.cimmino.shop.database.Bin;
 import com.cimmino.shop.database.BinRepository;
-import com.cimmino.shop.database.BinsArrivi;
 import com.cimmino.shop.database.BinsArriviRepository;
-import com.cimmino.shop.database.Vendite;
 import com.cimmino.shop.database.VenditeRepository;
 import com.cimmino.shop.service.BinArriviService;
 
@@ -33,11 +31,11 @@ public class BinApiController {
 	VenditeRepository venditeRepository;
 
 	@GetMapping("/{id}/peso")
-	public Integer getPeso(@PathVariable Long id) {
+	public BigDecimal getPeso(@PathVariable Long id) {
 		Optional<Bin> opbin = binRepository.findById(id);
 		if (opbin.isPresent())
-			return opbin.get().getPesoLordo() - opbin.get().getTara();
-		return 0;
+			return opbin.get().getPesoLordo().subtract(opbin.get().getTara());
+		return BigDecimal.ZERO;
 
 //        Integer vv = binRepository.findById(id)
 //                .map(Bin::getPeso_lordo)

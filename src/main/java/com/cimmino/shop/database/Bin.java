@@ -1,6 +1,8 @@
 package com.cimmino.shop.database;
 
 import jakarta.persistence.*;
+
+import java.math.BigDecimal;
 import java.util.List;
 
 @Entity
@@ -17,10 +19,10 @@ public class Bin {
 
     // usa naming Java standard (NON snake_case nei field Java)
     @Column(name = "peso_lordo")
-    private Integer pesoLordo;
+    private BigDecimal pesoLordo;
 
     @Column(name = "tara")
-    private int tara;
+    private BigDecimal tara;
 
     // =========================
     // RELAZIONI (IMPORTANTISSIMO PER DEBUG E QUERY)
@@ -54,13 +56,6 @@ public class Bin {
 
     
 
-    public int getTara() {
-        return tara;
-    }
-
-    public void setTara(int tara) {
-        this.tara = tara;
-    }
 
     public List<BinsArrivi> getArrivi() {
         return arrivi;
@@ -70,13 +65,23 @@ public class Bin {
         this.arrivi = arrivi;
     }
 
-   
-
-	public Integer getPesoLordo() {
+	public BigDecimal getPesoLordo() {
 		return pesoLordo;
 	}
 
-	public void setPesoLordo(Integer pesoLordo) {
+	public void setPesoLordo(BigDecimal pesoLordo) {
 		this.pesoLordo = pesoLordo;
 	}
+
+	public BigDecimal getTara() {
+		return tara;
+	}
+
+	public void setTara(BigDecimal tara) {
+		this.tara = tara;
+	}
+
+   
+
+
 }

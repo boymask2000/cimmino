@@ -158,11 +158,15 @@ function addBin() {
         </div>
 
         <div class="col-md-2">
-            <input type="number" class="form-control pesoLordo" readonly>
+            <input type="number" class="form-control pesoLordo" 
+            	name="bins[${index}].pesoLordo"
+            onchange="aggiornaTotali()">
         </div>
 
         <div class="col-md-2">
-            <input type="number" class="form-control pesoNetto" readonly>
+            <input type="number" class="form-control pesoNetto"
+            	name="bins[${index}].pesoNetto"
+            onchange="aggiornaTotali()">
         </div>
 
         <div class="col-md-3">

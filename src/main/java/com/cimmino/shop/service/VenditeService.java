@@ -1,20 +1,13 @@
 package com.cimmino.shop.service;
 
 import java.math.BigDecimal;
-import java.math.BigInteger;
 import java.math.RoundingMode;
-import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.cimmino.shop.database.Arrivi;
 import com.cimmino.shop.database.ArriviRepository;
-import com.cimmino.shop.database.Bin;
 import com.cimmino.shop.database.BinRepository;
-import com.cimmino.shop.database.BinsArrivi;
-import com.cimmino.shop.database.BinsArriviRepository;
 import com.cimmino.shop.database.Commerciante;
 import com.cimmino.shop.database.CommercianteRepository;
 import com.cimmino.shop.database.OpCommerciante;
@@ -39,10 +32,11 @@ public class VenditeService {
 
 	@Autowired
 	private BinRepository binRepository;
-	@Autowired
-	private BinsArriviRepository binsArriviRepository;
+;
 	@Autowired
 	ArriviService arriviService;
+	@Autowired
+	MovimentiBinService movimentiBinService;
 	@Autowired
 	ArriviRepository arriviRepository;
 
@@ -64,7 +58,7 @@ public class VenditeService {
 		v.setScarto(dto.getScarto());
 
 		// 🔥 business logic centralizzata
-		int available = 0;// binRepository.getAvailable(dto.getBinId());
+		//int available = 0;// binRepository.getAvailable(dto.getBinId());
 
 //	        if (dto.getnBins() > available) {
 //	            throw new IllegalStateException("Stock insufficiente");
@@ -99,6 +93,8 @@ public class VenditeService {
 		eseguiCalcoli(vendita);
 
 		Vendite v = venditeRepository.save(vendita);
+		movimentiBinService.register(vendita);
+		
 		saveOperazioneCommerciante(vendita);
 
 		return v;

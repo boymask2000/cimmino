@@ -37,8 +37,13 @@
 							<a th:href="@{/web/vendita/new/{id}(id=${a.id})}"
 								class="btn btn-primary btn-sm"> Vendita </a>
 						</div>
+<!-- 						<a th:href="@{/web/vendita/new/{id}(id=${a.id})}" -->
+<!-- 								class="btn btn-primary btn-sm"> Vendita </a> -->
+								
 						<div th:if="${a.sums.get('AVAIL')== 0}">
 							<p>Vendite</p><p>complete</p>
+							<a th:href="@{/web/analisi/show/{id}(id=${a.id})}"
+								class="btn btn-primary btn-sm"> Analisi </a>
 						</div>
 					</td>
 

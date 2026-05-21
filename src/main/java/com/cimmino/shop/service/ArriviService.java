@@ -1,5 +1,6 @@
 package com.cimmino.shop.service;
 
+import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.List;
 import java.util.Map;
@@ -44,13 +45,13 @@ public class ArriviService {
 	}
 
 	public void eseguiCalcoli(Arrivi arrivo) {
-		BigInteger totalePesoNetto = BigInteger.ZERO;
-		BigInteger totalePesoLordo = BigInteger.ZERO;
+		BigDecimal totalePesoNetto = BigDecimal.ZERO;
+		BigDecimal totalePesoLordo = BigDecimal.ZERO;
 
 		for (BinsArrivi b : arrivo.getBins()) {
 			Bin bin = b.getBin();
-			totalePesoLordo = totalePesoLordo.add(BigInteger.valueOf(bin.getPesoLordo()));
-			totalePesoNetto = totalePesoNetto.add(BigInteger.valueOf(bin.getPesoLordo() - bin.getTara()));
+			totalePesoLordo = totalePesoLordo.add(bin.getPesoLordo());
+			totalePesoNetto = totalePesoNetto.add(bin.getPesoLordo().subtract(bin.getTara()));
 		}
 		arrivo.setPeso_lordo(totalePesoLordo.doubleValue());
 		arrivo.setPeso_netto(totalePesoNetto.doubleValue());
@@ -59,6 +60,7 @@ public class ArriviService {
 	public void calcSums(List<Arrivi> risultati) {
 		
 		for (Arrivi arr : risultati) {
+			System.out.println("------------------------------------");
 			int avail = 0;
 			Map<String, Double> sums = arr.getSums();
 
@@ -77,7 +79,7 @@ public class ArriviService {
 			}
 
 			for (BinsArrivi b : arr.getBins()) {
-				int k = binArriviService.calcAvail(b.getId(), arr.getId());
+				int k = binArriviService.calcAvail(b.getBin().getId(), arr.getId());
 				avail += k;
 				System.out.println("AVAIL: = " + k);
 				

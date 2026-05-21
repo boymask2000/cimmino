@@ -10,7 +10,6 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -39,7 +38,7 @@ public class Vendite {
 	           cascade = CascadeType.ALL,
 	           orphanRemoval = true)
 	@JsonManagedReference
-	private List<BinsArrivi> bins = new ArrayList<>();
+	private List<BinsVendite> bins = new ArrayList<>();
 	
 	private int peso_lordo=0;
 	private int peso_netto=0;
@@ -123,12 +122,7 @@ public class Vendite {
 	public void setImporto(Double importo) {
 		this.importo = importo;
 	}
-	public List<BinsArrivi> getBins() {
-		return bins;
-	}
-	public void setBins(List<BinsArrivi> bins) {
-		this.bins = bins;
-	}
+
 	public int getPeso_lordo() {
 		return peso_lordo;
 	}
@@ -140,6 +134,12 @@ public class Vendite {
 	}
 	public void setPeso_netto(int peso_netto) {
 		this.peso_netto = peso_netto;
+	}
+	public List<BinsVendite> getBins() {
+		return bins;
+	}
+	public void setBins(List<BinsVendite> bins) {
+		this.bins = bins;
 	}
 
 

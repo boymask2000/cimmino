@@ -12,17 +12,17 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "BinsArrivi")
-public class BinsArrivi {
+@Table(name = "BinsVendite")
+public class BinsVendite {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "binsarrivi_id")
+	@Column(name = "binvendite_id")
 	private Long id;
 
 	@ManyToOne
 	@JoinColumn(name = "bin_id") // FK nella tabella bins
 	private Bin bin;
-	
+
 	@Column(name = "peso_lordo")
 	private BigDecimal pesoLordo;
 
@@ -30,11 +30,11 @@ public class BinsArrivi {
 	private BigDecimal pesoNetto;
 
 	private Integer numBins;
-	
+
 	@ManyToOne
-	@JoinColumn(name = "arrivo_id")
-	private Arrivi arrivo;
-	
+	@JoinColumn(name = "vendite_id")
+	private Vendite vendita;
+
 	public Long getId() {
 		return id;
 	}
@@ -51,15 +51,14 @@ public class BinsArrivi {
 		this.bin = bin;
 	}
 
+	
 
-
-
-	public Arrivi getArrivo() {
-		return arrivo;
+	public Vendite getVendita() {
+		return vendita;
 	}
 
-	public void setArrivo(Arrivi arrivo) {
-		this.arrivo = arrivo;
+	public void setVendita(Vendite vendita) {
+		this.vendita = vendita;
 	}
 
 	public Integer getNumBins() {
@@ -85,7 +84,5 @@ public class BinsArrivi {
 	public void setPesoNetto(BigDecimal pesoNetto) {
 		this.pesoNetto = pesoNetto;
 	}
-
-
 
 }

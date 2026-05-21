@@ -21,17 +21,15 @@ import com.cimmino.shop.database.Arrivi;
 import com.cimmino.shop.database.ArriviRepository;
 import com.cimmino.shop.database.Bin;
 import com.cimmino.shop.database.BinRepository;
-import com.cimmino.shop.database.BinsArrivi;
+import com.cimmino.shop.database.BinsVendite;
 import com.cimmino.shop.database.CommercianteRepository;
 import com.cimmino.shop.database.Vendite;
 import com.cimmino.shop.database.VenditeRepository;
-import com.cimmino.shop.database.dto.BinsArriviDTO;
+import com.cimmino.shop.database.dto.BinsVenditaDTO;
 import com.cimmino.shop.database.dto.VenditaDTO;
-import com.cimmino.shop.mappers.BinsArriviMapper;
+import com.cimmino.shop.mappers.BinsVenditaMapper;
 import com.cimmino.shop.service.VenditeService;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Controller
@@ -47,8 +45,9 @@ public class WebControllerVendite {
 	VenditeService venditeService;
 	@Autowired
 	private VenditeRepository venditeRepository;
+
 	@Autowired
-	private BinsArriviMapper binsArriviMapper;
+	private BinsVenditaMapper binsVenditaMapper;
 
 	@PostMapping("/vendita/save1")
 	public String save(@ModelAttribute VenditaDTO dto) {
@@ -93,9 +92,9 @@ public class WebControllerVendite {
 		System.out.println(binsJson);
 
 		ObjectMapper mapper = new ObjectMapper();
-		List<BinsArriviDTO> bins = new ArrayList<BinsArriviDTO>();
+		List<BinsVenditaDTO> bins = new ArrayList<BinsVenditaDTO>();
 		try {
-			bins = mapper.readValue(binsJson, new TypeReference<List<BinsArriviDTO>>() {
+			bins = mapper.readValue(binsJson, new TypeReference<List<BinsVenditaDTO>>() {
 			});
 
 		} catch (Exception e) {
@@ -105,8 +104,8 @@ public class WebControllerVendite {
 
 		// binRepository.findById(bins.)
 
-		List<BinsArrivi> entities = binsArriviMapper.toEntityList(bins);
-		for (BinsArrivi b : entities) {
+		List<BinsVendite> entities = binsVenditaMapper.toEntityList(bins);
+		for (BinsVendite b : entities) {
 			b.setVendita(vendita);
 
 			Optional<Bin> opbin = binRepository.findById(b.getBin().getId());
@@ -140,7 +139,7 @@ public class WebControllerVendite {
 			return "show_vendita";
 		Vendite v = vend.get();
 		model.addAttribute("vendita", v);
-		for (BinsArrivi b : v.getBins()) {
+		for (BinsVendite b : v.getBins()) {
 
 			Optional<Bin> opbin = binRepository.findById(b.getBin().getId());
 			if (opbin.isPresent()) {

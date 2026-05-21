@@ -2,7 +2,7 @@ package com.cimmino.shop.database.dto;
 
 import java.math.BigDecimal;
 
-public class BinsArriviDTO {
+public class BinsVenditaDTO {
 	  private Long id;
 
 	    private Long binId;

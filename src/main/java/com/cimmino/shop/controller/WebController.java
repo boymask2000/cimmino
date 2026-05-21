@@ -3,7 +3,6 @@ package com.cimmino.shop.controller;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -20,10 +19,9 @@ import com.cimmino.shop.database.ArriviRepository;
 import com.cimmino.shop.database.BinRepository;
 import com.cimmino.shop.database.BinsArrivi;
 import com.cimmino.shop.database.MerceRepository;
-import com.cimmino.shop.database.Vendite;
-import com.cimmino.shop.database.dto.ArriviDTO;
 import com.cimmino.shop.mappers.BinMapper;
 import com.cimmino.shop.service.ArriviService;
+import com.cimmino.shop.service.MovimentiBinService;
 
 @Controller
 @RequestMapping("/web")
@@ -36,6 +34,8 @@ public class WebController {
 	MerceRepository merceRepository;
 	@Autowired
 	ArriviService arriviService;
+	@Autowired
+	MovimentiBinService movimentiBinService;
 	
 	@Autowired
 	BinMapper binMapper;
@@ -62,6 +62,12 @@ public class WebController {
 	public String anagrafiche(Model model) {
 		return "anagrafiche";
 	}
+//	@GetMapping("/movimentibin")
+//	public String movimentibin(Model model) {
+//		movimentiBinService.prova();
+//		
+//		return "movimentibin";
+//	}
 
 	List<Arrivi> risultati = new ArrayList<Arrivi>();
 
@@ -97,6 +103,8 @@ public class WebController {
 	//	arriviService.eseguiCalcoli(arrivo);
 
 		arriviRepository.save(arrivo);
+		
+		movimentiBinService.register(arrivo);
 
 		redirectAttributes.addFlashAttribute("msg", "Arrivo salvato correttamente");
 

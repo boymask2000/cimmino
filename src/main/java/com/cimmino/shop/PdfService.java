@@ -168,25 +168,25 @@ public class PdfService {
 
         return out.toString();
     }
-    private String generateArrivi0(List<Arrivi> arrivi) {
-
-        StringBuilder out = new StringBuilder();
-
-        for (Arrivi arrivo : arrivi) {
-
-            out.append("<div class='arrivo-box'>");
-
-            out.append(makeArriviBox(arrivo));
-
-            if (!arrivo.getVendite().isEmpty()) {
-                out.append(makeVenditeBox(arrivo));
-            }
-
-            out.append("</div>");
-        }
-
-        return out.toString();
-    }
+//    private String generateArrivi0(List<Arrivi> arrivi) {
+//
+//        StringBuilder out = new StringBuilder();
+//
+//        for (Arrivi arrivo : arrivi) {
+//
+//            out.append("<div class='arrivo-box'>");
+//
+//            out.append(makeArriviBox(arrivo));
+//
+//            if (!arrivo.getVendite().isEmpty()) {
+//                out.append(makeVenditeBox(arrivo));
+//            }
+//
+//            out.append("</div>");
+//        }
+//
+//        return out.toString();
+//    }
 
     private String makeArriviBox(Arrivi arrivo) {
 

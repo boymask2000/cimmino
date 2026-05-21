@@ -6,18 +6,18 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
 import com.cimmino.shop.database.Bin;
-import com.cimmino.shop.database.BinsArrivi;
-import com.cimmino.shop.database.dto.BinsArriviDTO;
+import com.cimmino.shop.database.BinsVendite;
+import com.cimmino.shop.database.dto.BinsVenditaDTO;
 @Mapper(componentModel = "spring")
-public interface BinsArriviMapper {
+public interface BinsVenditaMapper {
 
-    default BinsArrivi toEntity(BinsArriviDTO dto) {
+    default BinsVendite toEntity(BinsVenditaDTO dto) {
 
         if (dto == null) {
             return null;
         }
 
-        BinsArrivi entity = new BinsArrivi();
+        BinsVendite entity = new BinsVendite();
 
         entity.setPesoLordo(dto.getPesoLordo());
         entity.setPesoNetto(dto.getPesoNetto());
@@ -30,8 +30,6 @@ public interface BinsArriviMapper {
 
             bin.setId(dto.getBinId());
             bin.setName(dto.getBinName());
-            bin.setPesoLordo(dto.getPesoLordo());
-       //     bin.setPesoNetto(dto.getPesoNetto());
 
             entity.setBin(bin);
         }
@@ -39,11 +37,11 @@ public interface BinsArriviMapper {
         return entity;
     }
 
-    List<BinsArrivi> toEntityList(List<BinsArriviDTO> dtoList);
+    List<BinsVendite> toEntityList(List<BinsVenditaDTO> dtoList);
 
     @Mapping(source = "bin.id", target = "binId")
     @Mapping(source = "bin.name", target = "binName")
-    BinsArriviDTO toDto(BinsArrivi entity);
+    BinsVenditaDTO toDto(BinsVendite entity);
 
-    List<BinsArriviDTO> toDtoList(List<BinsArrivi> entityList);
+    List<BinsVenditaDTO> toDtoList(List<BinsVendite> entityList);
 }
