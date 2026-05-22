@@ -228,8 +228,7 @@ public class GeneraleArriviPrinter extends BasePrinter implements HasOutputStrea
 		out.append("<th>Tara</th>");
 		out.append("<th>Media</th>");
 		out.append("<th>Scarto</th>");
-		out.append("<th>Bin</th>");
-		out.append("<th>N° Bin</th>");
+		
 		out.append("<th>Prezzo</th>");
 		out.append("<th>Importo</th>");
 		out.append("</tr>");
