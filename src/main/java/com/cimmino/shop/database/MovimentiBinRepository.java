@@ -19,7 +19,7 @@ public interface MovimentiBinRepository extends JpaRepository<MovimentoBin, Long
 			    SUM(CASE WHEN m.inout = 1 THEN m.numBins ELSE -m.numBins END) as saldo
 
 			FROM Bin b
-			LEFT JOIN MovimentoBin m ON m.bin = b
+			LEFT JOIN MovimentoBin m ON m.binName = b.name
 			GROUP BY b.id, b.name
 			""")
 			List<BinMovimentoView> getRiepilogoMovimenti();

@@ -18,6 +18,7 @@ import com.cimmino.shop.database.Arrivi;
 import com.cimmino.shop.database.ArriviRepository;
 import com.cimmino.shop.database.BinRepository;
 import com.cimmino.shop.database.BinsArrivi;
+import com.cimmino.shop.database.BinsArriviRepository;
 import com.cimmino.shop.database.MerceRepository;
 import com.cimmino.shop.mappers.BinMapper;
 import com.cimmino.shop.service.ArriviService;
@@ -30,6 +31,8 @@ public class WebController {
 	ArriviRepository arriviRepository;
 	@Autowired
 	BinRepository binRepository;
+	@Autowired
+	BinsArriviRepository binsArriviRepository;
 	@Autowired
 	MerceRepository merceRepository;
 	@Autowired
@@ -95,6 +98,7 @@ public class WebController {
 
 			return "redirect:/web/arrivi/new";
 		}
+		
 
 		// ✔ collega figli al parent
 		for (BinsArrivi b : arrivo.getBins()) {

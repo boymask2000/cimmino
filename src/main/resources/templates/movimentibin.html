@@ -29,9 +29,19 @@
 
 <div class="container mt-4">
 
+
+	
 	<div class="d-flex justify-content-between align-items-center mb-3">
-		<h2>Movimenti Bin</h2>
-	</div>
+
+			<h2>Movimenti Bin</h2>
+
+			<a th:href="@{/movimentibin/sposta/1}" class="btn btn-success"> Prendi Bin </a> 
+			<a th:href="@{/movimentibin/sposta/0}" class="btn btn-success"> Restituisci Bin </a> 
+			
+
+
+		</div>
+	
 
 	<!-- LAYOUT AFFIANCATO -->
 	<div class="row">
@@ -87,7 +97,7 @@
 						<tr th:each="op : ${operazioni}">
 							<td th:text="${op.id}"></td>
 							<td th:text="${op.data}"></td>
-							<td th:text="${op.bin.name}"></td>
+							<td th:text="${op.binName}"></td>
 							<td th:text="${op.numBins}"></td>
 							<td th:text="${op.inout==0?'Uscita':'Ingresso'}"></td>
 						</tr>

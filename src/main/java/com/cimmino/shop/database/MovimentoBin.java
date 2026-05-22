@@ -10,6 +10,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import jakarta.persistence.Transient;
 
 @Entity
 @Table(name = "MovimentiBin")
@@ -20,10 +21,8 @@ public class MovimentoBin {
 	private Long id;
 
 	private LocalDate data;
-	
-	@ManyToOne
-    @JoinColumn(name = "bin_id") 
-	private Bin bin;
+
+	private String binName;
 	
 	private int numBins;
 
@@ -47,13 +46,7 @@ public class MovimentoBin {
 		this.inout = inout;
 	}
 
-	public Bin getBin() {
-		return bin;
-	}
 
-	public void setBin(Bin bin) {
-		this.bin = bin;
-	}
 
 	public int getNumBins() {
 		return numBins;
@@ -70,5 +63,15 @@ public class MovimentoBin {
 	public void setData(LocalDate data) {
 		this.data = data;
 	}
+
+	public String getBinName() {
+		return binName;
+	}
+
+	public void setBinName(String binName) {
+		this.binName = binName;
+	}
+
+
 
 }
