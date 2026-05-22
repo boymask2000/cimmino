@@ -60,7 +60,7 @@ public class ArriviService {
 	public void calcSums(List<Arrivi> risultati) {
 		
 		for (Arrivi arr : risultati) {
-			System.out.println("------------------------------------");
+
 			int avail = 0;
 			Map<String, Double> sums = arr.getSums();
 
@@ -81,11 +81,11 @@ public class ArriviService {
 			for (BinsArrivi b : arr.getBins()) {
 				int k = binArriviService.calcAvail(b.getBin().getId(), arr.getId());
 				avail += k;
-				System.out.println("AVAIL: = " + k);
+		
 				
 			}
 			sums.put("AVAIL", (double) avail);
-			System.out.println("bin: "+ arr.getId()+" AVAIL = " + avail);
+		
 			
 		}
 

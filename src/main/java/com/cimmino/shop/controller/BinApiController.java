@@ -46,9 +46,9 @@ public class BinApiController {
 
 	@GetMapping("/{binid}/{arrivoId}/availability")
 	public Map<String, Integer> availability(@PathVariable Long binid, @PathVariable Long arrivoId) {
-System.out.println("Contr binid = "+binid+ "  arrivoId = "+arrivoId);
+
 		int avail = binArriviService.calcAvail(binid, arrivoId);
-		System.out.println("Contr avail = "+avail);
+
 //		int total = binsArriviRepository.findByBin_Id(binid).map(BinsArrivi::getNumBins).orElse(0);
 //
 //		System.out.println("BIN=" + binid + " TOTAL=" + total + " SOLD=" + sold);

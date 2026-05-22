@@ -12,11 +12,11 @@ public class BasePrinter {
 	}
 	
 	public String clean(Object value) {
-System.out.println("Clean1 "+value);
+
 		if (value == null) {
 			return "";
 		}
-		System.out.println("Clean1 "+value.toString());
+
 		return value.toString();
 	}
 

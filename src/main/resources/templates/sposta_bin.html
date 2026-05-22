@@ -3,47 +3,87 @@
 
 <head>
 <meta charset="UTF-8">
-<title>Nuovo Arrivo</title>
+<title>Nuovo Movimento</title>
 
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" th:href="@{/css/style.css}">
+<style>
+
+.page-title {
+    font-weight: 600;
+    letter-spacing: .5px;
+}
+
+.card {
+    border: none;
+    border-radius: 14px;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.06);
+}
+
+.bin-row {
+    background: #fff;
+    padding: 12px;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.04);
+}
+</style>
+
 </head>
 
 <body>
 
-<div class="container mt-4">
+<div class="container py-4">
 
-    <h1 class="text-center mb-4">Inserisci Arrivo</h1>
+    <!-- HEADER -->
+    <div th:if="${operazione == 1}" class="text-center mb-4">
+        <h2 class="page-title">📦 Inserimento Nuovo Arrivo</h2>
+      
+    </div>
+    <div th:if="${operazione == 0}" class="text-center mb-4">
+        <h2 class="page-title">📦 Inserimento Nuova Uscita</h2>
+       
+    </div>
 
-    <form th:action="@{/movimentibin/save}" th:object="${binsarrivi}" method="post">
+    <!-- FORM CARD -->
+    <div class="card p-4">
 
+        <form th:action="@{/movimentibin/save}" th:object="${binsarrivi}" method="post">
 
-    <input type="hidden" name="binsJs" id="binsJs">
-     <input type="hidden" name="operazione" id="operazione" th:value="${operazione}">
+            <input type="hidden" name="operazione" id="operazione" th:value="${operazione}">
 
-        <h5>Bins</h5>
+            <!-- SECTION HEADER -->
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h5 class="mb-0">Bins inseriti</h5>
 
-        <div id="binsContainer"></div>
+                <button type="button"
+                        class="btn btn-primary btn-sm"
+                        onclick="addBin()">
+                    + Aggiungi Bin
+                </button>
+            </div>
 
-        <button type="button" class="btn btn-primary mb-3" onclick="addBin()">
-            + Aggiungi Bin
-        </button>
+            <div id="binsContainer" class="mb-3"></div>
 
-     
-   
+            <!-- ACTIONS -->
+            <div class="d-flex justify-content-end gap-2">
+                <button type="reset" class="btn btn-outline-secondary">
+                    Reset
+                </button>
 
-        <button type="submit" class="btn btn-success">
-            Salva Arrivo
-        </button>
+                <button type="submit" class="btn btn-success">
+                    Salva Arrivo
+                </button>
+            </div>
 
-    </form>
+        </form>
 
+    </div>
 </div>
 
 <script th:inline="javascript">
 
 let index = 0;
 const binsList = /*[[${binsJs}]]*/ [];
-
 
 function addBin() {
 
@@ -55,40 +95,42 @@ function addBin() {
     });
 
     const html = `
-    <div class="row mb-3 bin-row align-items-center">
+    <div class="row g-2 align-items-center mb-3 bin-row">
 
         <div class="col-md-2">
             <input type="number"
                    name="binsarrivi[${index}].numBins"
-                   class="form-control numBins"
+                   class="form-control"
                    min="1"
-                   placeholder="Qta"
-                   oninput="aggiornaPesi(this)">
+                   placeholder="Qta">
         </div>
 
-        <div class="col-md-3">
+        <div class="col-md-4">
             <select name="binsarrivi[${index}].bin.name"
-                    class="form-select binSelect"
-                    onchange="aggiornaPesi(this)">
+                    class="form-select">
                 ${options}
             </select>
         </div>
 
-        <div class="col-md-2">
-            <input type="number" class="form-control pesoLordo" 
-            	name="binsarrivi[${index}].pesoLordo"
-            onchange="aggiornaTotali()">
+        <div style="visibility: hidden;" class="col-md-2">
+            <input type="number"
+                   name="binsarrivi[${index}].pesoLordo"
+                   class="form-control"
+                   placeholder="Peso lordo">
         </div>
 
-        <div class="col-md-2">
-            <input type="number" class="form-control pesoNetto"
-            	name="binsarrivi[${index}].pesoNetto"
-            onchange="aggiornaTotali()">
+        <div style="visibility: hidden;" class="col-md-2">
+            <input type="number"
+                   name="binsarrivi[${index}].pesoNetto"
+                   class="form-control"
+                   placeholder="Peso netto">
         </div>
 
-        <div class="col-md-3">
-            <button type="button" class="btn btn-danger" onclick="removeRow(this)">
-                X
+        <div class="col-md-2 text-end">
+            <button type="button"
+                    class="btn btn-outline-danger"
+                    onclick="removeRow(this)">
+                Rimuovi
             </button>
         </div>
 
@@ -100,7 +142,6 @@ function addBin() {
 
 function removeRow(btn) {
     btn.closest('.bin-row').remove();
-    aggiornaTotali();
 }
 
 </script>

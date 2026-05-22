@@ -22,14 +22,11 @@ public class BinArriviService {
 	private ArriviRepository arriviRepository;
 
 	public int calcAvail(Long binid, Long arrivoId) {
-		System.out.println("arrivoId=" + arrivoId+"  binid=" + binid);
 
 		// List<BinsArrivi> optbin = binsArriviRepository.findByArrivo_Id(arrivoId);
 		int occ = calcOccupatiDaVendite(arrivoId, binid);
 		int totBins = calcPrevistiInArrivo(arrivoId, binid);
 
-		System.out.println("totBins=" + totBins);
-		System.out.println("venduti=" + occ);
 
 		int avail = totBins - occ;
 		return avail;
