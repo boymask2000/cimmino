@@ -5,9 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.jspecify.annotations.Nullable;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,7 +21,6 @@ import com.cimmino.shop.database.BinRepository;
 import com.cimmino.shop.database.BinsArrivi;
 import com.cimmino.shop.database.MovimentiBinRepository;
 import com.cimmino.shop.database.MovimentoBin;
-import com.cimmino.shop.database.Vendite;
 import com.cimmino.shop.mappers.BinsArriviMapper;
 import com.cimmino.shop.service.MovimentiBinService;
 

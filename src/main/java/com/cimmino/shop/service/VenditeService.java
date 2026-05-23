@@ -31,8 +31,7 @@ public class VenditeService {
 	private OperazioniCommercianteRepository opCommercianteRepository;
 
 	@Autowired
-	private BinRepository binRepository;
-;
+	private BinRepository binRepository;;
 	@Autowired
 	ArriviService arriviService;
 	@Autowired
@@ -58,17 +57,15 @@ public class VenditeService {
 		v.setScarto(dto.getScarto());
 
 		// 🔥 business logic centralizzata
-		//int available = 0;// binRepository.getAvailable(dto.getBinId());
+		// int available = 0;// binRepository.getAvailable(dto.getBinId());
 
 //	        if (dto.getnBins() > available) {
 //	            throw new IllegalStateException("Stock insufficiente");
 //	        }
+		BigDecimal peso = BigDecimal.valueOf(binRepository.getPesoNetto(dto.getBinId()));
+		BigDecimal scarto = dto.getScarto().divide(BigDecimal.valueOf(100));
 
-		double peso = binRepository.getPesoNetto(dto.getBinId());
-
-		double importo = dto.getPrezzo()
-				// * dto.getnBins()
-				* peso * (1 - dto.getScarto() / 100);
+		BigDecimal importo = dto.getPrezzo().multiply(peso).multiply(BigDecimal.ONE.subtract(scarto));
 
 		v.setImporto(importo);
 
@@ -88,13 +85,11 @@ public class VenditeService {
 
 		vendita.setCommerciante(commerciante);
 
-	
-
 		eseguiCalcoli(vendita);
 
 		Vendite v = venditeRepository.save(vendita);
 		movimentiBinService.register(vendita);
-		
+
 		saveOperazioneCommerciante(vendita);
 
 		return v;
@@ -121,13 +116,13 @@ public class VenditeService {
 
 	public void eseguiCalcoli(Vendite vendita) {
 		int totaleBins = vendita.getBins().stream().mapToInt(b -> b.getNumBins()).sum();
-		BigDecimal pesoNetto = BigDecimal.valueOf(vendita.getPeso_netto());
+		BigDecimal pesoNetto = vendita.getPeso_netto();
 
 		BigDecimal media = BigDecimal.ZERO;
 
 		if (totaleBins > 0) {
 			media = pesoNetto.divide(BigDecimal.valueOf(totaleBins), 2, RoundingMode.HALF_UP);
-			
+
 		}
 		vendita.setMedia(media);
 	}

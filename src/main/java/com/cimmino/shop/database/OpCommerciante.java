@@ -1,5 +1,6 @@
 package com.cimmino.shop.database;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 import jakarta.persistence.Column;
@@ -32,9 +33,9 @@ public class OpCommerciante {
 	@JoinColumn(name = "merce_id")
 	private Merce merce;
 
-	private Integer lordo;
-	private Integer netto;
-	private Integer tara;
+	private BigDecimal lordo;
+	private BigDecimal netto;
+	private BigDecimal tara;
 
 	private Integer nBins;
 
@@ -42,8 +43,8 @@ public class OpCommerciante {
 
 	private LocalDate dtt;
 
-	private Double prezzo;
-	private Double importo;
+	private BigDecimal prezzo;
+	private BigDecimal importo;
 
 	public Long getId() {
 		return id;
@@ -67,30 +68,6 @@ public class OpCommerciante {
 
 	public void setBin(Bin bin) {
 		this.bin = bin;
-	}
-
-	public Integer getLordo() {
-		return lordo;
-	}
-
-	public void setLordo(Integer lordo) {
-		this.lordo = lordo;
-	}
-
-	public Integer getNetto() {
-		return netto;
-	}
-
-	public void setNetto(Integer netto) {
-		this.netto = netto;
-	}
-
-	public Integer getTara() {
-		return tara;
-	}
-
-	public void setTara(Integer tara) {
-		this.tara = tara;
 	}
 
 	public Integer getnBins() {
@@ -117,14 +94,6 @@ public class OpCommerciante {
 		this.dtt = dtt;
 	}
 
-	public Double getImporto() {
-		return importo;
-	}
-
-	public void setImporto(Double importo) {
-		this.importo = importo;
-	}
-
 	public Merce getMerce() {
 		return merce;
 	}
@@ -133,12 +102,44 @@ public class OpCommerciante {
 		this.merce = merce;
 	}
 
-	public Double getPrezzo() {
+	public BigDecimal getLordo() {
+		return lordo;
+	}
+
+	public void setLordo(BigDecimal lordo) {
+		this.lordo = lordo;
+	}
+
+	public BigDecimal getNetto() {
+		return netto;
+	}
+
+	public void setNetto(BigDecimal netto) {
+		this.netto = netto;
+	}
+
+	public BigDecimal getTara() {
+		return tara;
+	}
+
+	public void setTara(BigDecimal tara) {
+		this.tara = tara;
+	}
+
+	public BigDecimal getPrezzo() {
 		return prezzo;
 	}
 
-	public void setPrezzo(Double prezzo) {
+	public void setPrezzo(BigDecimal prezzo) {
 		this.prezzo = prezzo;
+	}
+
+	public BigDecimal getImporto() {
+		return importo;
+	}
+
+	public void setImporto(BigDecimal importo) {
+		this.importo = importo;
 	}
 
 }

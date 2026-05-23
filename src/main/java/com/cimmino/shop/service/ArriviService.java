@@ -1,7 +1,6 @@
 package com.cimmino.shop.service;
 
 import java.math.BigDecimal;
-import java.math.BigInteger;
 import java.util.List;
 import java.util.Map;
 
@@ -53,27 +52,27 @@ public class ArriviService {
 			totalePesoLordo = totalePesoLordo.add(bin.getPesoLordo());
 			totalePesoNetto = totalePesoNetto.add(bin.getPesoLordo().subtract(bin.getTara()));
 		}
-		arrivo.setPeso_lordo(totalePesoLordo.doubleValue());
-		arrivo.setPeso_netto(totalePesoNetto.doubleValue());
+		arrivo.setPeso_lordo(totalePesoLordo);
+		arrivo.setPeso_netto(totalePesoNetto);
 	}
 
 	public void calcSums(List<Arrivi> risultati) {
-		
+
 		for (Arrivi arr : risultati) {
 
 			int avail = 0;
-			Map<String, Double> sums = arr.getSums();
+			Map<String, BigDecimal> sums = arr.getSums();
 
 			for (Vendite v : arr.getVendite()) {
 				if (sums.get("NETTO") == null)
-					sums.put("NETTO", (double) 0);
+					sums.put("NETTO", BigDecimal.ZERO);
 				if (sums.get("LORDO") == null)
-					sums.put("LORDO", (double) 0);
-				Double lordo = sums.get("LORDO");
-				lordo += v.getPeso_lordo();
+					sums.put("LORDO", BigDecimal.ZERO);
+				BigDecimal lordo = sums.get("LORDO");
+				lordo = lordo.add(v.getPeso_lordo());
 				sums.put("LORDO", lordo);
-				Double netto = sums.get("NETTO");
-				netto += v.getPeso_netto();
+				BigDecimal netto = sums.get("NETTO");
+				netto = netto.add(v.getPeso_netto());
 				sums.put("NETTO", netto);
 
 			}
@@ -81,14 +80,9 @@ public class ArriviService {
 			for (BinsArrivi b : arr.getBins()) {
 				int k = binArriviService.calcAvail(b.getBin().getId(), arr.getId());
 				avail += k;
-		
-				
 			}
-			sums.put("AVAIL", (double) avail);
-		
-			
+			sums.put("AVAIL",new BigDecimal(avail));
 		}
-
 	}
 
 	@Transactional

@@ -1,6 +1,7 @@
 package com.cimmino.shop.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -100,7 +101,7 @@ public class AnagraficheController {
 	public String anagraficaBinsUpdate(@ModelAttribute Bin product, Model model) {
 
 		binRepository.save(product);
-		model.addAttribute("products", binRepository.findAll());
+		model.addAttribute("products", binRepository.findAll(Sort.by("name")));
 		return "anagrafiche/anagraficaBins";
 	}
 	@PostMapping("/bins/save")

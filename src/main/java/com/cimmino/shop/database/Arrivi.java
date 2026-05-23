@@ -2,6 +2,7 @@ package com.cimmino.shop.database;
 
 
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -41,10 +42,10 @@ public class Arrivi {
     @JoinColumn(name = "merce_id") 
 	private Merce merce;
 	
-	private Double peso_lordo;
-	private Double peso_netto;
+	private BigDecimal peso_lordo;
+	private BigDecimal peso_netto;
 	
-	private Double calo;
+	private BigDecimal calo;
 	private int freddo; // 1=freddo 0=caldo
 	
 	private String intestazione_merce;
@@ -59,7 +60,7 @@ public class Arrivi {
 	private List<Vendite> vendite;
 	
 	@Transient
-	private Map<String, Double> sums=new HashMap<String, Double>();
+	private Map<String, BigDecimal> sums=new HashMap<String, BigDecimal>();
 
 	public List<BinsArrivi> getBins() {
 		return bins;
@@ -132,37 +133,46 @@ public class Arrivi {
 		this.vendite = vendite;
 	}
 
-	public Map<String, Double> getSums() {
-		return sums;
-	}
 
-	public void setSums(Map<String, Double> sums) {
-		this.sums = sums;
-	}
-
-	public Double getPeso_lordo() {
+	public BigDecimal getPeso_lordo() {
 		return peso_lordo;
 	}
 
-	public void setPeso_lordo(Double peso_lordo) {
+
+	public void setPeso_lordo(BigDecimal peso_lordo) {
 		this.peso_lordo = peso_lordo;
 	}
 
-	public Double getPeso_netto() {
+
+	public BigDecimal getPeso_netto() {
 		return peso_netto;
 	}
 
-	public void setPeso_netto(Double peso_netto) {
+
+	public void setPeso_netto(BigDecimal peso_netto) {
 		this.peso_netto = peso_netto;
 	}
 
-	public Double getCalo() {
+
+	public BigDecimal getCalo() {
 		return calo;
 	}
 
-	public void setCalo(Double calo) {
+
+	public void setCalo(BigDecimal calo) {
 		this.calo = calo;
 	}
+
+
+	public Map<String, BigDecimal> getSums() {
+		return sums;
+	}
+
+
+	public void setSums(Map<String, BigDecimal> sums) {
+		this.sums = sums;
+	}
+
 
 
 }

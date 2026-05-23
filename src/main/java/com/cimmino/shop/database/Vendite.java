@@ -40,9 +40,9 @@ public class Vendite {
 	@JsonManagedReference
 	private List<BinsVendite> bins = new ArrayList<>();
 	
-	private int peso_lordo=0;
-	private int peso_netto=0;
-	private Integer tara;
+	private BigDecimal peso_lordo;
+	private BigDecimal peso_netto;
+	private BigDecimal tara;
 	
 	private LocalDate data;
 
@@ -50,11 +50,11 @@ public class Vendite {
 	
 	private BigDecimal media;
 	
-	private Double scarto;
+	private BigDecimal scarto;
 	
-	private Double prezzo;
+	private BigDecimal prezzo;
 	
-	private Double importo;
+	private BigDecimal importo;
 	
 	public Commerciante getCommerciante() {
 		return commerciante;
@@ -62,12 +62,7 @@ public class Vendite {
 	public void setCommerciante(Commerciante commerciante) {
 		this.commerciante = commerciante;
 	}
-	public Double getImporto() {
-		return importo;
-	}
-	public void setImporto(double importo2) {
-		this.importo = importo2;
-	}
+	
 	public Long getId() {
 		return id;
 	}
@@ -89,57 +84,62 @@ public class Vendite {
 		this.dtt = dtt;
 	}
 
-	public Integer getTara() {
-		return tara;
-	}
-	public void setTara(Integer tara) {
-		this.tara = tara;
-	}
-	public Double getPrezzo() {
-		return prezzo;
-	}
-	public void setPrezzo(Double double1) {
-		this.prezzo = double1;
-	}
+	
 	public BigDecimal getMedia() {
 		return media;
 	}
 	public void setMedia(BigDecimal media) {
 		this.media = media;
 	}
-	public Double getScarto() {
-		return scarto;
-	}
-	public void setScarto(Double double1) {
-		this.scarto = double1;
-	}
+	
 	public Arrivi getArrivo() {
 		return arrivo;
 	}
 	public void setArrivo(Arrivi arrivo) {
 		this.arrivo = arrivo;
 	}
-	public void setImporto(Double importo) {
-		this.importo = importo;
-	}
-
-	public int getPeso_lordo() {
-		return peso_lordo;
-	}
-	public void setPeso_lordo(int peso_lordo) {
-		this.peso_lordo = peso_lordo;
-	}
-	public int getPeso_netto() {
-		return peso_netto;
-	}
-	public void setPeso_netto(int peso_netto) {
-		this.peso_netto = peso_netto;
-	}
+	
 	public List<BinsVendite> getBins() {
 		return bins;
 	}
 	public void setBins(List<BinsVendite> bins) {
 		this.bins = bins;
+	}
+	public BigDecimal getPeso_lordo() {
+		return peso_lordo;
+	}
+	public void setPeso_lordo(BigDecimal peso_lordo) {
+		this.peso_lordo = peso_lordo;
+	}
+	public BigDecimal getPeso_netto() {
+		return peso_netto;
+	}
+	public void setPeso_netto(BigDecimal peso_netto) {
+		this.peso_netto = peso_netto;
+	}
+	public BigDecimal getTara() {
+		return tara;
+	}
+	public void setTara(BigDecimal tara) {
+		this.tara = tara;
+	}
+	public BigDecimal getScarto() {
+		return scarto;
+	}
+	public void setScarto(BigDecimal scarto) {
+		this.scarto = scarto;
+	}
+	public BigDecimal getPrezzo() {
+		return prezzo;
+	}
+	public void setPrezzo(BigDecimal prezzo) {
+		this.prezzo = prezzo;
+	}
+	public BigDecimal getImporto() {
+		return importo;
+	}
+	public void setImporto(BigDecimal importo) {
+		this.importo = importo;
 	}
 
 

@@ -1,5 +1,7 @@
 package com.cimmino.shop.database.dto;
 
+import java.math.BigDecimal;
+
 public class VenditaDTO {
 
 	 private Long id;
@@ -9,9 +11,9 @@ public class VenditaDTO {
 	    private Long arrivoId;
 
 
-	    private Double prezzo;
-	    private Double scarto;
-	    private Double importo;
+	    private BigDecimal prezzo;
+	    private BigDecimal scarto;
+	    private BigDecimal importo;
 	public Long getArrivoId() {
 		return arrivoId;
 	}
@@ -31,28 +33,30 @@ public class VenditaDTO {
 		this.commercianteId = commercianteId;
 	}
 
-	public Double getPrezzo() {
-		return prezzo;
-	}
-	public void setPrezzo(Double prezzo) {
-		this.prezzo = prezzo;
-	}
-	public Double getScarto() {
-		return scarto;
-	}
-	public void setScarto(Double scarto) {
-		this.scarto = scarto;
-	}
+
 	public Long getId() {
 		return id;
 	}
 	public void setId(Long id) {
 		this.id = id;
 	}
-	public Double getImporto() {
+	public BigDecimal getPrezzo() {
+		return prezzo;
+	}
+	public void setPrezzo(BigDecimal prezzo) {
+		this.prezzo = prezzo;
+	}
+	public BigDecimal getScarto() {
+		return scarto;
+	}
+	public void setScarto(BigDecimal scarto) {
+		this.scarto = scarto;
+	}
+	public BigDecimal getImporto() {
 		return importo;
 	}
-	public void setImporto(Double importo) {
+	public void setImporto(BigDecimal importo) {
 		this.importo = importo;
 	}
+	
 }

@@ -1,7 +1,6 @@
 package com.cimmino.shop.service.print;
 
 import java.io.ByteArrayOutputStream;
-import java.util.List;
 
 import com.cimmino.shop.database.BinsVendite;
 import com.cimmino.shop.database.Vendite;

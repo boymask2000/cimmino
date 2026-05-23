@@ -75,11 +75,9 @@ public class WebControllerCommercianti {
 	//	Double totale = ll.stream().mapToDouble(OpCommerciante::getImporto).sum();
 		
 		
-		
 		BigDecimal totale = ll.stream()
-		        .map(OpCommerciante::getImporto) // Double
+		        .map(OpCommerciante::getImporto)
 		        .filter(Objects::nonNull)
-		        .map(BigDecimal::valueOf)
 		        .reduce(BigDecimal.ZERO, BigDecimal::add)
 		        .setScale(2, RoundingMode.HALF_UP);
 
