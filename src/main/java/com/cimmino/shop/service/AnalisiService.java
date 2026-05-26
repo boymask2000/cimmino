@@ -39,14 +39,14 @@ public class AnalisiService {
 
 		BigDecimal totPesoLordoArrivo = binsArrivi.stream()
 				.filter(b -> b.getBin() != null && b.getBin().getPesoLordo() != null && b.getNumBins() != null)
-				.map(b -> b.getBin().getPesoLordo().multiply(BigDecimal.valueOf(b.getNumBins())))
+				.map(b -> b.getPesoLordo())
 				.reduce(BigDecimal.ZERO, BigDecimal::add);
 
 		BigDecimal totPesoNettoArrivo = binsArrivi.stream()
 				.filter(b -> b.getBin() != null && b.getBin().getPesoLordo() != null && b.getBin().getTara() != null
 						&& b.getNumBins() != null)
-				.map(b -> b.getBin().getPesoLordo().subtract(b.getBin().getTara())
-						.multiply(BigDecimal.valueOf(b.getNumBins())))
+				.map(b -> b.getPesoLordo().subtract(b.getBin().getTara()
+						.multiply(BigDecimal.valueOf(b.getNumBins()))))
 				.reduce(BigDecimal.ZERO, BigDecimal::add);
 
 		BigDecimal totPesoLordoVendite = BigDecimal.ZERO;
@@ -56,15 +56,16 @@ public class AnalisiService {
 
 			BigDecimal lordo = ven.getBins().stream()
 					.filter(b -> b.getBin() != null && b.getBin().getPesoLordo() != null && b.getNumBins() != null)
-					.map(b -> b.getBin().getPesoLordo().multiply(BigDecimal.valueOf(b.getNumBins())))
+					.map(b -> b.getPesoLordo())
 					.reduce(BigDecimal.ZERO, BigDecimal::add);
+			
 			totPesoLordoVendite = totPesoLordoVendite.add(lordo);
 
 			BigDecimal netto = ven.getBins().stream()
 					.filter(b -> b.getBin() != null && b.getBin().getPesoLordo() != null && b.getBin().getTara() != null
 							&& b.getNumBins() != null)
-					.map(b -> b.getBin().getPesoLordo().subtract(b.getBin().getTara())
-							.multiply(BigDecimal.valueOf(b.getNumBins())))
+					.map(b -> b.getPesoLordo().subtract(b.getBin().getTara()
+							.multiply(BigDecimal.valueOf(b.getNumBins()))))
 					.reduce(BigDecimal.ZERO, BigDecimal::add);
 
 			totPesoNettoVendite = totPesoNettoVendite.add(netto);

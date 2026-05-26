@@ -13,6 +13,7 @@ import com.cimmino.shop.database.Bin;
 import com.cimmino.shop.database.BinRepository;
 import com.cimmino.shop.database.BinsArrivi;
 import com.cimmino.shop.database.BinsArriviRepository;
+import com.cimmino.shop.database.BinsVendite;
 import com.cimmino.shop.database.Vendite;
 import com.cimmino.shop.database.dto.ArriviDTO;
 import com.cimmino.shop.database.dto.BinsArriviDTO;
@@ -69,10 +70,12 @@ public class ArriviService {
 				if (sums.get("LORDO") == null)
 					sums.put("LORDO", BigDecimal.ZERO);
 				BigDecimal lordo = sums.get("LORDO");
+				if( v.getPeso_lordo()!=null)
 				lordo = lordo.add(v.getPeso_lordo());
 				sums.put("LORDO", lordo);
 				BigDecimal netto = sums.get("NETTO");
-				netto = netto.add(v.getPeso_netto());
+				if( v.getNettoDiTara()!=null)
+				netto = netto.add(v.getNettoDiTara());
 				sums.put("NETTO", netto);
 
 			}
@@ -81,7 +84,7 @@ public class ArriviService {
 				int k = binArriviService.calcAvail(b.getBin().getId(), arr.getId());
 				avail += k;
 			}
-			sums.put("AVAIL",new BigDecimal(avail));
+			sums.put("AVAIL", new BigDecimal(avail));
 		}
 	}
 
@@ -108,5 +111,19 @@ public class ArriviService {
 				binsArriviRepository.save(entity);
 			}
 		}
+	}
+
+	public void calcNumTotaleBins(List<Arrivi> arr) {
+		for (Arrivi arrivo : arr) {
+			List<Vendite> vendite = arrivo.getVendite();
+			for (Vendite ven : vendite) {
+				int sum = 0;
+				for (BinsVendite bve : ven.getBins()) {
+					sum += bve.getNumBins();
+				}
+				ven.setNumeroTotaleBins(sum);
+			}
+		}
+
 	}
 }

@@ -84,9 +84,13 @@ public class WebController {
 		model.addAttribute("results", risultati);
 		model.addAttribute("startDate", startDate);
 		model.addAttribute("endDate", endDate);
+		
+		arriviService.calcNumTotaleBins( risultati);
 
 		return "arrivi2";
 	}
+
+
 
 	@PostMapping("/arrivi/save")
 	public String save(@ModelAttribute Arrivi arrivo, RedirectAttributes redirectAttributes) {

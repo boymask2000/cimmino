@@ -44,6 +44,7 @@ public class Arrivi {
 	
 	private BigDecimal peso_lordo;
 	private BigDecimal peso_netto;
+	private BigDecimal media;
 	
 	private BigDecimal calo;
 	private int freddo; // 1=freddo 0=caldo
@@ -171,6 +172,16 @@ public class Arrivi {
 
 	public void setSums(Map<String, BigDecimal> sums) {
 		this.sums = sums;
+	}
+
+
+	public BigDecimal getMedia() {
+		return media;
+	}
+
+
+	public void setMedia(BigDecimal media) {
+		this.media = media;
 	}
 
 

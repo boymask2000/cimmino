@@ -146,7 +146,8 @@ public class DettaglioVenditaPrinter extends BasePrinter implements HasOutputStr
 		out.append("<th>Data</th>");
 		out.append("<th>DTT</th>");
 		out.append("<th>Lordo</th>");
-		out.append("<th>Netto</th>");
+		out.append("<th>Netto di Tara</th>");
+		out.append("<th>Netto di Scarto</th>");
 		out.append("<th>Tara</th>");
 		out.append("<th>Media</th>");
 		out.append("<th>Scarto</th>");
@@ -163,7 +164,8 @@ public class DettaglioVenditaPrinter extends BasePrinter implements HasOutputStr
 			out.append("<td>").append(clean(ven.getData())).append("</td>");
 			out.append("<td>").append(clean(ven.getDtt())).append("</td>");
 			out.append("<td>").append(clean(ven.getPeso_lordo())).append("</td>");
-			out.append("<td>").append(clean(ven.getPeso_netto())).append("</td>");
+			out.append("<td>").append(clean(ven.getNettoDiTara())).append("</td>");
+			out.append("<td>").append(clean(ven.getNettoDiScarto())).append("</td>");
 			out.append("<td>").append(clean(ven.getTara())).append("</td>");
 			out.append("<td>").append(clean(ven.getMedia())).append("</td>");
 			out.append("<td>").append(clean(ven.getScarto())).append("</td>");

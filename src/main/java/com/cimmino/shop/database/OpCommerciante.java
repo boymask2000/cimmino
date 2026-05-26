@@ -34,14 +34,15 @@ public class OpCommerciante {
 	private Merce merce;
 
 	private BigDecimal lordo;
-	private BigDecimal netto;
+	private BigDecimal nettoDiTara; // netto di tara
+	private BigDecimal nettoDiScarto;
 	private BigDecimal tara;
 
 	private Integer nBins;
 
 	private LocalDate data;
 
-	private LocalDate dtt;
+	private String dtt;
 
 	private BigDecimal prezzo;
 	private BigDecimal importo;
@@ -86,13 +87,7 @@ public class OpCommerciante {
 		this.data = data;
 	}
 
-	public LocalDate getDtt() {
-		return dtt;
-	}
 
-	public void setDtt(LocalDate dtt) {
-		this.dtt = dtt;
-	}
 
 	public Merce getMerce() {
 		return merce;
@@ -110,13 +105,8 @@ public class OpCommerciante {
 		this.lordo = lordo;
 	}
 
-	public BigDecimal getNetto() {
-		return netto;
-	}
 
-	public void setNetto(BigDecimal netto) {
-		this.netto = netto;
-	}
+
 
 	public BigDecimal getTara() {
 		return tara;
@@ -140,6 +130,30 @@ public class OpCommerciante {
 
 	public void setImporto(BigDecimal importo) {
 		this.importo = importo;
+	}
+
+	public String getDtt() {
+		return dtt;
+	}
+
+	public void setDtt(String dtt) {
+		this.dtt = dtt;
+	}
+
+	public BigDecimal getNettoDiTara() {
+		return nettoDiTara;
+	}
+
+	public void setNettoDiTara(BigDecimal nettoDiTara) {
+		this.nettoDiTara = nettoDiTara;
+	}
+
+	public BigDecimal getNettoDiScarto() {
+		return nettoDiScarto;
+	}
+
+	public void setNettoDiScarto(BigDecimal nettoDiScarto) {
+		this.nettoDiScarto = nettoDiScarto;
 	}
 
 }

@@ -63,9 +63,15 @@
 			</div>
 
 			<div class="row mb-3">
-				<label class="col-sm-3 col-form-label">Peso Netto</label>
+				<label class="col-sm-3 col-form-label">Netto di Tara</label>
 				<div class="col-sm-9">
-					<input type="number" th:field="*{peso_netto}" class="form-control">
+					<input type="number" th:field="*{nettoDiTara}" class="form-control">
+				</div>
+			</div>
+			<div class="row mb-3">
+				<label class="col-sm-3 col-form-label">Netto di Scarto</label>
+				<div class="col-sm-9">
+					<input type="number" th:field="*{nettoDiScarto}" class="form-control">
 				</div>
 			</div>
 
@@ -80,6 +86,12 @@
 			<div class="mb-3">
 				<label class="form-label">Scarto (%)</label> <input type="number"
 					name="scarto" id="scarto" class="form-control" step="0.01">
+			</div>
+			
+			<!-- SCARTO -->
+			<div class="mb-3">
+				<label class="form-label">DTT</label> <input type="text"
+					name="dtt" id="dtt" class="form-control" >
 			</div>
 
 			<!-- IMPORTO -->
@@ -156,6 +168,7 @@
 	        let totale = 0;
 	        let totaleLordo = 0;
 	        let totaleNetto = 0;
+	        let totaleTara = 0;
 
 	        document.querySelectorAll(".bin-row").forEach(row => {
 
@@ -166,41 +179,40 @@
 	            
 	            const l = parseFloat(row.querySelector('.pesoLordo')?.value) || 0;
 	            const n = parseFloat(row.querySelector('.pesoNetto')?.value) || 0;
+	            
+	            totaleTara += l - n;
 
 	            totaleLordo += l;
 	            totaleNetto += n;
 	        });
 	        const lordoInput = document.querySelector('[name="peso_lordo"]');
-	        const nettoInput = document.querySelector('[name="peso_netto"]');
+	        const nettoDiTara = document.querySelector('[name="nettoDiTara"]');
+	        const scarto = document.querySelector('[name="scarto"]');
+	        const prezzo =
+	            parseFloat(document.getElementById("prezzo").value) || 0;
+	        
+	        const nettoDiScarto = nettoDiTara.value *( 1 - scarto.value/100)
 	        
 
 	        if (lordoInput) lordoInput.value = totaleLordo;
-	        if (nettoInput) nettoInput.value = totaleNetto;
+	        if (nettoDiTara) nettoDiTara.value = totaleNetto ;
+	        
+	        
+	        document.getElementById("nettoDiScarto").value = nettoDiScarto;
 
 	        document.getElementById("nBins").value = totale;
+	        
+	        const importo =
+	            prezzo * nettoDiScarto;
+	        document.getElementById("importo").value =
+	            importo.toFixed(2);
 
 	        calcImporto();
 	    }
 
 	    function calcImporto() {
 
-	        let netto = 0;
-
-	        document.querySelectorAll(".pesoNetto").forEach(el => {
-	            netto += parseFloat(el.value) || 0;
-	        });
-
-	        const prezzo =
-	            parseFloat(document.getElementById("prezzo").value) || 0;
-
-	        const scarto =
-	            parseFloat(document.getElementById("scarto").value) || 0;
-
-	        const importo =
-	            prezzo * netto * (1 - scarto / 100);
-
-	        document.getElementById("importo").value =
-	            importo.toFixed(2);
+	 
 	  
 	    }
 	    function aggiornaPesi(row) {
@@ -305,10 +317,10 @@
 	    document.addEventListener("DOMContentLoaded", function () {
 
 	        document.getElementById("prezzo")
-	            .addEventListener("input", calcImporto);
+	            .addEventListener("input", aggiornaTotali);
 
 	        document.getElementById("scarto")
-	            .addEventListener("input", calcImporto);
+	            .addEventListener("input", aggiornaTotali);
 	    });
 	    document.getElementById("venditaForm").addEventListener("submit", function () {
 

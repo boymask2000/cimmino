@@ -17,6 +17,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.persistence.Transient;
 
 @Entity
 @Table(name = "Vendite")
@@ -29,119 +30,158 @@ public class Vendite {
 	@ManyToOne
 	@JoinColumn(name = "arrivo_id")
 	private Arrivi arrivo;
-	
+
 	@ManyToOne
-    @JoinColumn(name = "commerciante_id") // FK nella tabella bins
+	@JoinColumn(name = "commerciante_id") // FK nella tabella bins
 	private Commerciante commerciante;
-	
-	@OneToMany(mappedBy = "vendita",
-	           cascade = CascadeType.ALL,
-	           orphanRemoval = true)
+
+	@OneToMany(mappedBy = "vendita", cascade = CascadeType.ALL, orphanRemoval = true)
 	@JsonManagedReference
 	private List<BinsVendite> bins = new ArrayList<>();
-	
+
+	@Transient
+	private Integer numeroTotaleBins;
+
 	private BigDecimal peso_lordo;
-	private BigDecimal peso_netto;
+	private BigDecimal nettoDiTara; // netto di tara
+	private BigDecimal nettoDiScarto;
 	private BigDecimal tara;
-	
+
 	private LocalDate data;
 
-	private LocalDate dtt;
-	
+	private String dtt;
+
 	private BigDecimal media;
-	
+
 	private BigDecimal scarto;
-	
+
 	private BigDecimal prezzo;
-	
+
 	private BigDecimal importo;
-	
+
 	public Commerciante getCommerciante() {
 		return commerciante;
 	}
+
 	public void setCommerciante(Commerciante commerciante) {
 		this.commerciante = commerciante;
 	}
-	
+
 	public Long getId() {
 		return id;
 	}
+
 	public void setId(Long id) {
 		this.id = id;
 	}
-	
 
 	public LocalDate getData() {
 		return data;
 	}
+
 	public void setData(LocalDate data) {
 		this.data = data;
 	}
-	public LocalDate getDtt() {
-		return dtt;
-	}
-	public void setDtt(LocalDate dtt) {
-		this.dtt = dtt;
-	}
 
-	
 	public BigDecimal getMedia() {
 		return media;
 	}
+
 	public void setMedia(BigDecimal media) {
 		this.media = media;
 	}
-	
+
 	public Arrivi getArrivo() {
 		return arrivo;
 	}
+
 	public void setArrivo(Arrivi arrivo) {
 		this.arrivo = arrivo;
 	}
-	
+
 	public List<BinsVendite> getBins() {
 		return bins;
 	}
+
 	public void setBins(List<BinsVendite> bins) {
 		this.bins = bins;
 	}
+
 	public BigDecimal getPeso_lordo() {
 		return peso_lordo;
 	}
+
 	public void setPeso_lordo(BigDecimal peso_lordo) {
 		this.peso_lordo = peso_lordo;
 	}
-	public BigDecimal getPeso_netto() {
-		return peso_netto;
-	}
-	public void setPeso_netto(BigDecimal peso_netto) {
-		this.peso_netto = peso_netto;
-	}
+
+
 	public BigDecimal getTara() {
 		return tara;
 	}
+
 	public void setTara(BigDecimal tara) {
 		this.tara = tara;
 	}
+
 	public BigDecimal getScarto() {
 		return scarto;
 	}
+
 	public void setScarto(BigDecimal scarto) {
 		this.scarto = scarto;
 	}
+
 	public BigDecimal getPrezzo() {
 		return prezzo;
 	}
+
 	public void setPrezzo(BigDecimal prezzo) {
 		this.prezzo = prezzo;
 	}
+
 	public BigDecimal getImporto() {
 		return importo;
 	}
+
 	public void setImporto(BigDecimal importo) {
 		this.importo = importo;
 	}
 
+	public String getDtt() {
+		return dtt;
+	}
 
-	
+	public void setDtt(String dtt) {
+		this.dtt = dtt;
+	}
+
+	public int getNumeroTotaleBins() {
+		return numeroTotaleBins;
+	}
+
+	public void setNumeroTotaleBins(int numeroTotaleBins) {
+		this.numeroTotaleBins = numeroTotaleBins;
+	}
+
+	public BigDecimal getNettoDiTara() {
+		return nettoDiTara;
+	}
+
+	public void setNettoDiTara(BigDecimal nettoDiTara) {
+		this.nettoDiTara = nettoDiTara;
+	}
+
+	public BigDecimal getNettoDiScarto() {
+		return nettoDiScarto;
+	}
+
+	public void setNettoDiScarto(BigDecimal nettoDiScarto) {
+		this.nettoDiScarto = nettoDiScarto;
+	}
+
+	public void setNumeroTotaleBins(Integer numeroTotaleBins) {
+		this.numeroTotaleBins = numeroTotaleBins;
+	}
+
 }

@@ -127,9 +127,12 @@
 									<th>Data</th>
 									<th>DTT</th>
 									
+									<th>Bin</th>
+									
 
 									<th>Lordo</th>
-									<th>Netto</th>
+									<th>Netto di Tara</th>
+									<th>Netto di Scarto</th>
 									<th>Media</th>
 									
 									<th>Scarto</th>
@@ -152,14 +155,19 @@
 									<td><span class="badge bg-primary"> <span
 											th:text="${b.dtt}"></span>
 									</span></td>
-									
+									<td><span class="badge bg-primary"> <span
+											th:text="${b.numeroTotaleBins}"></span>
+									</span></td>
 									
 
 									<td><span class="badge bg-primary"> <span
 											th:text="${b.peso_lordo}"></span>
 									</span></td>
 									<td><span class="badge bg-primary"> <span
-											th:text="${b.peso_netto}"></span>
+											th:text="${b.nettoDiTara}"></span>
+									</span></td>
+									<td><span class="badge bg-primary"> <span
+											th:text="${b.nettoDiScarto}"></span>
 									</span></td>
 									<td><span class="badge bg-primary"> <span
 											th:text="${b.media}"></span>

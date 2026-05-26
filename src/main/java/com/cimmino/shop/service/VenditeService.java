@@ -105,7 +105,8 @@ public class VenditeService {
 		op.setImporto(vendita.getImporto());
 		op.setLordo(vendita.getPeso_lordo());
 		op.setPrezzo(vendita.getPrezzo());
-		op.setNetto(vendita.getPeso_netto());
+		op.setNettoDiTara(vendita.getNettoDiTara());
+		op.setNettoDiScarto(vendita.getNettoDiScarto());
 		op.setTara(vendita.getTara());
 		// op.setnBins(vendita.getnBins());
 		op.setMerce(vendita.getArrivo().getMerce());
@@ -116,12 +117,12 @@ public class VenditeService {
 
 	public void eseguiCalcoli(Vendite vendita) {
 		int totaleBins = vendita.getBins().stream().mapToInt(b -> b.getNumBins()).sum();
-		BigDecimal pesoNetto = vendita.getPeso_netto();
+		BigDecimal pesoLordo = vendita.getPeso_lordo();
 
 		BigDecimal media = BigDecimal.ZERO;
 
 		if (totaleBins > 0) {
-			media = pesoNetto.divide(BigDecimal.valueOf(totaleBins), 2, RoundingMode.HALF_UP);
+			media = pesoLordo.divide(BigDecimal.valueOf(totaleBins), 2, RoundingMode.HALF_UP);
 
 		}
 		vendita.setMedia(media);

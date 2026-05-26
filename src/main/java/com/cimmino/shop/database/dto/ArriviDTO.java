@@ -1,5 +1,6 @@
 package com.cimmino.shop.database.dto;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -7,14 +8,16 @@ public class ArriviDTO {
 
     private Long id;
     private LocalDate data;
-	private int peso_lordo;
-	private int peso_netto;
+    private BigDecimal peso_lordo;
+	private BigDecimal peso_netto;
+	private BigDecimal media;
     private Long merceId;
-	private int calo;
+	private BigDecimal calo;
 	private int freddo; 
 	private String merceName;
     private List<BinsArriviDTO> bins;
-
+	private String intestazione_merce;
+	
 	public Long getId() {
 		return id;
 	}
@@ -47,29 +50,8 @@ public class ArriviDTO {
 		this.bins = bins;
 	}
 
-	public int getPeso_lordo() {
-		return peso_lordo;
-	}
+	
 
-	public void setPeso_lordo(int peso_lordo) {
-		this.peso_lordo = peso_lordo;
-	}
-
-	public int getPeso_netto() {
-		return peso_netto;
-	}
-
-	public void setPeso_netto(int peso_netto) {
-		this.peso_netto = peso_netto;
-	}
-
-	public int getCalo() {
-		return calo;
-	}
-
-	public void setCalo(int calo) {
-		this.calo = calo;
-	}
 
 	public int getFreddo() {
 		return freddo;
@@ -85,5 +67,45 @@ public class ArriviDTO {
 
 	public void setMerceName(String merceName) {
 		this.merceName = merceName;
+	}
+
+	public BigDecimal getMedia() {
+		return media;
+	}
+
+	public void setMedia(BigDecimal media) {
+		this.media = media;
+	}
+
+	public void setPeso_lordo(BigDecimal peso_lordo) {
+		this.peso_lordo = peso_lordo;
+	}
+
+	public void setPeso_netto(BigDecimal peso_netto) {
+		this.peso_netto = peso_netto;
+	}
+
+	public BigDecimal getPeso_lordo() {
+		return peso_lordo;
+	}
+
+	public BigDecimal getPeso_netto() {
+		return peso_netto;
+	}
+
+	public BigDecimal getCalo() {
+		return calo;
+	}
+
+	public void setCalo(BigDecimal calo) {
+		this.calo = calo;
+	}
+
+	public String getIntestazione_merce() {
+		return intestazione_merce;
+	}
+
+	public void setIntestazione_merce(String intestazione_merce) {
+		this.intestazione_merce = intestazione_merce;
 	}
 }
