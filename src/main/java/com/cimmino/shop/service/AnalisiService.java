@@ -39,34 +39,35 @@ public class AnalisiService {
 
 		BigDecimal totPesoLordoArrivo = binsArrivi.stream()
 				.filter(b -> b.getBin() != null && b.getBin().getPesoLordo() != null && b.getNumBins() != null)
-				.map(b -> b.getPesoLordo())
-				.reduce(BigDecimal.ZERO, BigDecimal::add);
+				.map(b -> b.getPesoLordo()).reduce(BigDecimal.ZERO, BigDecimal::add);
 
 		BigDecimal totPesoNettoArrivo = binsArrivi.stream()
 				.filter(b -> b.getBin() != null && b.getBin().getPesoLordo() != null && b.getBin().getTara() != null
 						&& b.getNumBins() != null)
-				.map(b -> b.getPesoLordo().subtract(b.getBin().getTara()
-						.multiply(BigDecimal.valueOf(b.getNumBins()))))
+				.map(b -> b.getPesoLordo().subtract(b.getBin().getTara().multiply(BigDecimal.valueOf(b.getNumBins()))))
 				.reduce(BigDecimal.ZERO, BigDecimal::add);
 
 		BigDecimal totPesoLordoVendite = BigDecimal.ZERO;
 		BigDecimal totPesoNettoVendite = BigDecimal.ZERO;
+		BigDecimal totNettoDiTaraVendite = BigDecimal.ZERO;
 
 		for (Vendite ven : vendite) {
 
 			BigDecimal lordo = ven.getBins().stream()
 					.filter(b -> b.getBin() != null && b.getBin().getPesoLordo() != null && b.getNumBins() != null)
-					.map(b -> b.getPesoLordo())
-					.reduce(BigDecimal.ZERO, BigDecimal::add);
-			
+					.map(b -> b.getPesoLordo()).reduce(BigDecimal.ZERO, BigDecimal::add);
+
 			totPesoLordoVendite = totPesoLordoVendite.add(lordo);
 
 			BigDecimal netto = ven.getBins().stream()
 					.filter(b -> b.getBin() != null && b.getBin().getPesoLordo() != null && b.getBin().getTara() != null
 							&& b.getNumBins() != null)
-					.map(b -> b.getPesoLordo().subtract(b.getBin().getTara()
-							.multiply(BigDecimal.valueOf(b.getNumBins()))))
+					.map(b -> b.getPesoLordo()
+							.subtract(b.getBin().getTara().multiply(BigDecimal.valueOf(b.getNumBins()))))
 					.reduce(BigDecimal.ZERO, BigDecimal::add);
+
+			if( ven.getNettoDiTara()!=null)
+			totNettoDiTaraVendite = totNettoDiTaraVendite.add(ven.getNettoDiTara());
 
 			totPesoNettoVendite = totPesoNettoVendite.add(netto);
 
@@ -77,6 +78,7 @@ public class AnalisiService {
 		result.setTotPesoNettoArrivo(totPesoNettoArrivo);
 		result.setTotPesoLordoVendite(totPesoLordoVendite);
 		result.setTotPesoNettoVendite(totPesoNettoVendite);
+		result.setTotNettoDiTaraVendite(totNettoDiTaraVendite);
 
 		return result;
 	}

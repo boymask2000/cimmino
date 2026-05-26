@@ -28,6 +28,7 @@ import com.cimmino.shop.database.VenditeRepository;
 import com.cimmino.shop.database.dto.BinsVenditaDTO;
 import com.cimmino.shop.database.dto.VenditaDTO;
 import com.cimmino.shop.mappers.BinsVenditaMapper;
+import com.cimmino.shop.service.ConfigurazioneService;
 import com.cimmino.shop.service.VenditeService;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -43,6 +44,8 @@ public class WebControllerVendite {
 	BinRepository binRepository;
 	@Autowired
 	VenditeService venditeService;
+	@Autowired
+	ConfigurazioneService configurazioneService;
 	@Autowired
 	private VenditeRepository venditeRepository;
 
@@ -79,6 +82,7 @@ public class WebControllerVendite {
 		}).toList();
 
 		model.addAttribute("binsJs", binsJs);
+		model.addAttribute("configurazione", configurazioneService.getConfigurazione());
 
 		return "new_vendita";
 	}

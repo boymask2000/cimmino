@@ -51,6 +51,8 @@ public class Arrivi {
 	
 	private String intestazione_merce;
 	
+	private String key;
+	
 	@OneToMany(mappedBy = "arrivo",
 	           cascade = CascadeType.ALL,
 	           orphanRemoval = true)
@@ -182,6 +184,16 @@ public class Arrivi {
 
 	public void setMedia(BigDecimal media) {
 		this.media = media;
+	}
+
+
+	public String getKey() {
+		return key;
+	}
+
+
+	public void setKey(String key) {
+		this.key = key;
 	}
 
 

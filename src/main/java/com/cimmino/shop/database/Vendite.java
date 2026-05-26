@@ -58,6 +58,8 @@ public class Vendite {
 	private BigDecimal prezzo;
 
 	private BigDecimal importo;
+	
+	private BigDecimal frigo;
 
 	public Commerciante getCommerciante() {
 		return commerciante;
@@ -182,6 +184,14 @@ public class Vendite {
 
 	public void setNumeroTotaleBins(Integer numeroTotaleBins) {
 		this.numeroTotaleBins = numeroTotaleBins;
+	}
+
+	public BigDecimal getFrigo() {
+		return frigo;
+	}
+
+	public void setFrigo(BigDecimal frigo) {
+		this.frigo = frigo;
 	}
 
 }

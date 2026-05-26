@@ -16,6 +16,7 @@ public class AnalisiResultBean {
 	
 	private BigDecimal totPesoLordoVendite;
 	private BigDecimal totPesoNettoVendite;
+	private BigDecimal totNettoDiTaraVendite ;
 	
 	public ArriviDTO getArrivo() {
 		return arrivo;
@@ -52,6 +53,12 @@ public class AnalisiResultBean {
 	}
 	public void setTotPesoNettoVendite(BigDecimal totPesoNettoVendite) {
 		this.totPesoNettoVendite = totPesoNettoVendite;
+	}
+	public BigDecimal getTotNettoDiTaraVendite() {
+		return totNettoDiTaraVendite;
+	}
+	public void setTotNettoDiTaraVendite(BigDecimal totNettoDiTaraVendite) {
+		this.totNettoDiTaraVendite = totNettoDiTaraVendite;
 	}
 
 

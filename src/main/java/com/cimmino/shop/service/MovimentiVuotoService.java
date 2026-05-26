@@ -1,5 +1,9 @@
 package com.cimmino.shop.service;
 
+import static com.cimmino.shop.database.MovimentiVuotoSpecification.bin;
+import static com.cimmino.shop.database.MovimentiVuotoSpecification.dataA;
+import static com.cimmino.shop.database.MovimentiVuotoSpecification.dataDa;
+
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
@@ -15,21 +19,20 @@ import com.cimmino.shop.database.BinRepository;
 import com.cimmino.shop.database.BinsArrivi;
 import com.cimmino.shop.database.BinsArriviRepository;
 import com.cimmino.shop.database.BinsVendite;
-import com.cimmino.shop.database.MovimentiBinRepository;
-import com.cimmino.shop.database.MovimentoBin;
+import com.cimmino.shop.database.MovimentiVuotiRepository;
+import com.cimmino.shop.database.MovimentoVuoto;
 import com.cimmino.shop.database.Vendite;
-import static com.cimmino.shop.database.MovimentiBinSpecification.*;
 @Service
-public class MovimentiBinService {
+public class MovimentiVuotoService {
 	@Autowired
-	MovimentiBinRepository movimentiBinRepository;
+	MovimentiVuotiRepository movimentiVuotiRepository;
 	@Autowired
 	BinsArriviRepository binsArriviRepository;
 	@Autowired
 	BinRepository binRepository;
 
 	public void prova() {
-		List<BinMovimentoView> vv = movimentiBinRepository.getRiepilogoMovimenti();
+		List<BinMovimentoView> vv = movimentiVuotiRepository.getRiepilogoMovimenti();
 
 		for (BinMovimentoView view : vv) {
 			System.out.println(view.getName() + " " + view.getSaldo());
@@ -43,7 +46,7 @@ public class MovimentiBinService {
 
 		for (BinsArrivi binArrivo : arrivo.getBins()) {
 
-			MovimentoBin mov = new MovimentoBin();
+			MovimentoVuoto mov = new MovimentoVuoto();
 
 			Optional<Bin> optBin = binRepository.findById(binArrivo.getBin().getId());
 			if (optBin.isPresent()) {
@@ -55,40 +58,40 @@ public class MovimentiBinService {
 
 			mov.setInout(1);
 			mov.setNumBins(binArrivo.getNumBins());
-			movimentiBinRepository.save(mov);
+			movimentiVuotiRepository.save(mov);
 		}
 	}
 
 	public void register(Vendite vendita) {
 		for (BinsVendite binArrivo : vendita.getBins()) {
-			MovimentoBin mov = new MovimentoBin();
+			MovimentoVuoto mov = new MovimentoVuoto();
 			mov.setData(LocalDate.now());
 			mov.setBinName(binArrivo.getBin().getName());
 			mov.setInout(0);
 			mov.setNumBins(binArrivo.getNumBins());
-			movimentiBinRepository.save(mov);
+			movimentiVuotiRepository.save(mov);
 		}
 	}
 
 	public void register(List<BinsArrivi> binsarrivi, Long operazione) {
 		for (BinsArrivi binArrivo : binsarrivi) {
-			MovimentoBin mov = new MovimentoBin();
+			MovimentoVuoto mov = new MovimentoVuoto();
 			mov.setData(LocalDate.now());
 			mov.setBinName(binArrivo.getBin().getName());
 			mov.setInout(operazione.intValue());
 			mov.setNumBins(binArrivo.getNumBins());
-			movimentiBinRepository.save(mov);
+			movimentiVuotiRepository.save(mov);
 		}
 	}
 
-	public List<MovimentoBin> findFiltered(LocalDate dataDa, LocalDate dataA, String bin) {
+	public List<MovimentoVuoto> findFiltered(LocalDate dataDa, LocalDate dataA, String bin) {
 
-		 Specification<MovimentoBin> spec =
+		 Specification<MovimentoVuoto> spec =
 	                Specification.where(dataDa(dataDa))
 	                             .and(dataA(dataA))
 	                             .and(bin(bin));
 
-	        return movimentiBinRepository.findAll(spec);
+	        return movimentiVuotiRepository.findAll(spec);
 
 	}
 }

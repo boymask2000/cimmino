@@ -85,10 +85,28 @@
     </div>
 
     <div class="row mb-3">
-        <label class="col-sm-3 col-form-label">Peso Netto</label>
+        <label class="col-sm-3 col-form-label">Netto di Tara</label>
         <div class="col-sm-9">
             <input type="number"
-                   th:value="${vendita.peso_netto}"
+                   th:value="${vendita.nettoDiTara}"
+                   class="form-control"
+                   disabled>
+        </div>
+    </div>
+    <div class="row mb-3">
+        <label class="col-sm-3 col-form-label">Netto di Scarto</label>
+        <div class="col-sm-9">
+            <input type="number"
+                   th:value="${vendita.nettoDiScarto}"
+                   class="form-control"
+                   disabled>
+        </div>
+    </div>
+     <div class="row mb-3">
+        <label class="col-sm-3 col-form-label">Frigo</label>
+        <div class="col-sm-9">
+            <input type="number"
+                   th:value="${vendita.frigo}"
                    class="form-control"
                    disabled>
         </div>

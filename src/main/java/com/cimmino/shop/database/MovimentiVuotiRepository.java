@@ -8,8 +8,8 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-public interface MovimentiBinRepository extends JpaRepository<MovimentoBin, Long>,
-JpaSpecificationExecutor<MovimentoBin> {
+public interface MovimentiVuotiRepository extends JpaRepository<MovimentoVuoto, Long>,
+JpaSpecificationExecutor<MovimentoVuoto> {
 
 	@Query("""
 			SELECT 
@@ -23,7 +23,7 @@ JpaSpecificationExecutor<MovimentoBin> {
 			    SUM(CASE WHEN m.inout = 1 THEN m.numBins ELSE -m.numBins END) as saldo
 
 			FROM Bin b
-			LEFT JOIN MovimentoBin m ON m.binName = b.name
+			LEFT JOIN MovimentoVuoto m ON m.binName = b.name
 			GROUP BY b.id, b.name
 			""")
 			List<BinMovimentoView> getRiepilogoMovimenti();
@@ -31,7 +31,7 @@ JpaSpecificationExecutor<MovimentoBin> {
 	
 	@Query("""
 		    SELECT o
-		    FROM MovimentoBin o
+		    FROM MovimentoVuoto o
 		    WHERE (:dataDa IS NULL OR o.data >= :dataDa)
 		      AND (:dataA IS NULL OR o.data <= :dataA)
 		      AND (:bin IS NULL OR :bin='' OR o.binName = :bin)

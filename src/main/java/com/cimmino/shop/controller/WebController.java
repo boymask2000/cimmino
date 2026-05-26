@@ -65,12 +65,7 @@ public class WebController {
 	public String anagrafiche(Model model) {
 		return "anagrafiche";
 	}
-//	@GetMapping("/movimentibin")
-//	public String movimentibin(Model model) {
-//		movimentiBinService.prova();
-//		
-//		return "movimentibin";
-//	}
+
 
 	List<Arrivi> risultati = new ArrayList<Arrivi>();
 

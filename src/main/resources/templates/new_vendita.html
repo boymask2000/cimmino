@@ -22,6 +22,7 @@
 			method="post" id="venditaForm">
 
 <input type="hidden" name="binsJson" id="binsJson">
+<input type="hidden" name="prezzoFrigo" id="prezzoFrigo" th:value="${configurazione.prezzoFrigo}">
 			<!-- ARRIVO ID (OBBLIGATORIO) -->
 			<input type="hidden" name="arrivoId" id="arrivoId"
 				th:value="${arrivo.id}">
@@ -71,7 +72,7 @@
 			<div class="row mb-3">
 				<label class="col-sm-3 col-form-label">Netto di Scarto</label>
 				<div class="col-sm-9">
-					<input type="number" th:field="*{nettoDiScarto}" class="form-control">
+					<input type="number" th:field="*{nettoDiScarto}" class="form-control" step="0.01">
 				</div>
 			</div>
 
@@ -98,6 +99,11 @@
 			<div class="mb-3">
 				<label class="form-label">Importo</label> <input type="number"
 					name="importo" id="importo" class="form-control" readonly>
+			</div>
+			
+			<div class="mb-3">
+				<label class="form-label">Frigo</label> <input type="number"
+					name="frigo" id="frigo" class="form-control" readonly>
 			</div>
 
 			<button type="submit" class="btn btn-success">Salva Vendita
@@ -198,7 +204,7 @@
 	        if (nettoDiTara) nettoDiTara.value = totaleNetto ;
 	        
 	        
-	        document.getElementById("nettoDiScarto").value = nettoDiScarto;
+	        document.getElementById("nettoDiScarto").value = nettoDiScarto.toFixed(2);
 
 	        document.getElementById("nBins").value = totale;
 	        
@@ -206,6 +212,11 @@
 	            prezzo * nettoDiScarto;
 	        document.getElementById("importo").value =
 	            importo.toFixed(2);
+	        
+	        const prezzoFrigo = document.getElementById("prezzoFrigo");
+	        
+	        const frigo = (totaleLordo - (totaleTara/2))*prezzoFrigo.value;
+	        document.getElementById("frigo").value = frigo.toFixed(2) ;
 
 	        calcImporto();
 	    }

@@ -20,27 +20,27 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.cimmino.shop.database.BinMovimentoView;
 import com.cimmino.shop.database.BinRepository;
 import com.cimmino.shop.database.BinsArrivi;
-import com.cimmino.shop.database.MovimentiBinRepository;
-import com.cimmino.shop.database.MovimentoBin;
+import com.cimmino.shop.database.MovimentiVuotiRepository;
+import com.cimmino.shop.database.MovimentoVuoto;
 import com.cimmino.shop.mappers.BinsArriviMapper;
-import com.cimmino.shop.service.MovimentiBinService;
+import com.cimmino.shop.service.MovimentiVuotoService;
 
 @Controller
-@RequestMapping("/movimentibin")
-public class MovimentiBinController {
+@RequestMapping("/movimentivuoti")
+public class MovimentiVuotiController {
 	@Autowired
-	MovimentiBinRepository movimentiBinRepository;
+	MovimentiVuotiRepository movimentiVuotiRepository;
 	@Autowired
 	BinsArriviMapper binsArriviMapper;
 	@Autowired
 	BinRepository binRepository;
 	@Autowired
-	MovimentiBinService movimentiBinService;
+	MovimentiVuotoService movimentiVuotoService;
 
 	@GetMapping("/lista")
 	public String listaCommercianti(RedirectAttributes redirectAttributes) {
 
-		return "redirect:/movimentibin/view";
+		return "redirect:/movimentivuoti/view";
 	}
 	@GetMapping("/searchResult")
 	public String view(
@@ -52,7 +52,7 @@ public class MovimentiBinController {
 
 
 	    model.addAttribute("operazioni",
-	    		movimentiBinService.findFiltered(dataDa, dataA, bin));
+	    		movimentiVuotoService.findFiltered(dataDa, dataA, bin));
 
 //	    model.addAttribute("riepilogo",
 //	    		movimentiBinService.riepilogo());
@@ -61,7 +61,7 @@ public class MovimentiBinController {
 //	    		movimentiBinService.findAll());
 
 	//    return "movimenti-bin";
-	    List<BinMovimentoView> riepilogo = movimentiBinRepository.getRiepilogoMovimenti();
+	    List<BinMovimentoView> riepilogo = movimentiVuotiRepository.getRiepilogoMovimenti();
 
 		model.addAttribute("riepilogo", riepilogo);
 	
@@ -71,42 +71,42 @@ public class MovimentiBinController {
 		model.addAttribute("dataA",dataA);
 		model.addAttribute("bin",bin);
 		
-		return "movimentibin";
+		return "movimentiVuoti";
 	}
 
 	@GetMapping("/view")
 	public String view(Model model) {
 
-		List<MovimentoBin> ll;
+		List<MovimentoVuoto> ll;
 
-		ll = movimentiBinRepository.findAll();
+		ll = movimentiVuotiRepository.findAll();
 		
-		List<BinMovimentoView> riepilogo = movimentiBinRepository.getRiepilogoMovimenti();
+		List<BinMovimentoView> riepilogo = movimentiVuotiRepository.getRiepilogoMovimenti();
 
 		model.addAttribute("bins", binRepository.findAll());
 		model.addAttribute("riepilogo", riepilogo);
 		model.addAttribute("operazioni", ll);
 		model.addAttribute("dataDa", LocalDate.now());
 		model.addAttribute("dataA", LocalDate.now());
-		return "movimentibin";
+		return "movimentiVuoti";
 	}
 	@GetMapping("/reset")
 	public String reset(Model model) {
 		LocalDate dataFrom = LocalDate.of(2026, 1, 1);
 		LocalDate dataTo = LocalDate.of(2126, 1, 1);
 		
-		List<MovimentoBin> ll;
+		List<MovimentoVuoto> ll;
 
-		ll = movimentiBinRepository.findAll();
+		ll = movimentiVuotiRepository.findAll();
 		
-		List<BinMovimentoView> riepilogo = movimentiBinRepository.getRiepilogoMovimenti();
+		List<BinMovimentoView> riepilogo = movimentiVuotiRepository.getRiepilogoMovimenti();
 
 		model.addAttribute("bins", binRepository.findAll());
 		model.addAttribute("riepilogo", riepilogo);
 		model.addAttribute("operazioni", ll);
 		model.addAttribute("dataDa", dataFrom);
 		model.addAttribute("dataA", dataTo);
-		return "movimentibin";
+		return "movimentiVuoti";
 	}
 	@GetMapping("/sposta/{id}")
 	public String spostaBin(@PathVariable Long id,Model model)  {
@@ -142,9 +142,9 @@ public class MovimentiBinController {
 //	    	System.out.println(bin.getBin().getName());
 //	    	System.out.println(bin.getNumBins());
 //	    }
-	    movimentiBinService.register(binsarrivi, operazione);
+	    movimentiVuotoService.register(binsarrivi, operazione);
 
-	    return "redirect:/movimentibin/view";
+	    return "redirect:/movimentivuoti/view";
 	}
 	
 }
