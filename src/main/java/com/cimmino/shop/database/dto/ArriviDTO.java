@@ -6,17 +6,23 @@ import java.util.List;
 
 public class ArriviDTO {
 
-    private Long id;
-    private LocalDate data;
-    private BigDecimal peso_lordo;
-	private BigDecimal peso_netto;
-	private BigDecimal media;
-    private Long merceId;
-	private BigDecimal calo;
-	private int freddo; 
-	private String merceName;
-    private List<BinsArriviDTO> bins;
-	private String intestazione_merce;
+	 private Long id;
+	    private LocalDate data;
+
+	    private MerceDTO merce;
+
+	    private BigDecimal peso_lordo;
+	    private BigDecimal peso_netto;
+	    private BigDecimal calo;
+	    private BigDecimal media;
+	    private String key;
+
+	    private int freddo;
+	    private String intestazione_merce;
+
+	    private List<BinsArriviDTO> bins;
+	    private List<VenditaDTO> vendite;
+	
 	
 	public Long getId() {
 		return id;
@@ -34,13 +40,7 @@ public class ArriviDTO {
 		this.data = data;
 	}
 
-	public Long getMerceId() {
-		return merceId;
-	}
-
-	public void setMerceId(Long merceId) {
-		this.merceId = merceId;
-	}
+	
 
 	public List<BinsArriviDTO> getBins() {
 		return bins;
@@ -61,21 +61,9 @@ public class ArriviDTO {
 		this.freddo = freddo;
 	}
 
-	public String getMerceName() {
-		return merceName;
-	}
+	
 
-	public void setMerceName(String merceName) {
-		this.merceName = merceName;
-	}
-
-	public BigDecimal getMedia() {
-		return media;
-	}
-
-	public void setMedia(BigDecimal media) {
-		this.media = media;
-	}
+	
 
 	public void setPeso_lordo(BigDecimal peso_lordo) {
 		this.peso_lordo = peso_lordo;
@@ -107,5 +95,37 @@ public class ArriviDTO {
 
 	public void setIntestazione_merce(String intestazione_merce) {
 		this.intestazione_merce = intestazione_merce;
+	}
+
+	public MerceDTO getMerce() {
+		return merce;
+	}
+
+	public void setMerce(MerceDTO merce) {
+		this.merce = merce;
+	}
+
+	public BigDecimal getMedia() {
+		return media;
+	}
+
+	public void setMedia(BigDecimal media) {
+		this.media = media;
+	}
+
+	public String getKey() {
+		return key;
+	}
+
+	public void setKey(String key) {
+		this.key = key;
+	}
+
+	public List<VenditaDTO> getVendite() {
+		return vendite;
+	}
+
+	public void setVendite(List<VenditaDTO> vendite) {
+		this.vendite = vendite;
 	}
 }

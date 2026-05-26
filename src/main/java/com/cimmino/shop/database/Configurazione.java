@@ -18,6 +18,8 @@ public class Configurazione {
 	private Long id;
 	
 	private BigDecimal prezzoFrigo ;
+	
+	private String installationId;
 
 	public Long getId() {
 		return id;
@@ -33,5 +35,13 @@ public class Configurazione {
 
 	public void setPrezzoFrigo(BigDecimal prezzoFrigo) {
 		this.prezzoFrigo = prezzoFrigo;
+	}
+
+	public String getInstallationId() {
+		return installationId;
+	}
+
+	public void setInstallationId(String installationId) {
+		this.installationId = installationId;
 	}
 }
