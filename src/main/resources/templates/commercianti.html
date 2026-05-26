@@ -75,7 +75,8 @@
 						<th>Bin</th>
 						<th class="text-end">N° Bins</th>
 						<th class="text-end">Lordo</th>
-						<th class="text-end">Netto</th>
+						<th class="text-end">Netto di Tara</th>
+						<th class="text-end">Netto di Scarto</th>
 						<th class="text-end">Tara</th>
 						<th class="text-end">Prezzo</th>
 						<th class="text-end">Importo</th>
@@ -103,7 +104,8 @@
 
 						<td th:text="${op.lordo}" class="text-end"></td>
 
-						<td th:text="${op.netto}" class="text-end"></td>
+						<td th:text="${op.nettoDiTara}" class="text-end"></td>
+						<td th:text="${op.nettoDiScarto}" class="text-end"></td>
 
 						<td th:text="${op.tara}" class="text-end"></td>
 

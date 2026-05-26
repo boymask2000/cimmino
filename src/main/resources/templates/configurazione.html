@@ -4,37 +4,38 @@
 <head>
 <meta charset="UTF-8">
 <title>Configurazione</title>
-<link rel="stylesheet" href="/css/style.css">
-<link
-	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
-	rel="stylesheet">
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 
 <style>
+body {
+    background: #f5f7fb;
+}
 
 .page-title {
-	font-weight: 600;
-	letter-spacing: .5px;
+    font-weight: 600;
+    letter-spacing: .5px;
 }
 
 .card {
-	border: none;
-	border-radius: 16px;
-	box-shadow: 0 6px 20px rgba(0, 0, 0, 0.06);
-}
-
-.form-label {
-	font-weight: 500;
+    border: none;
+    border-radius: 16px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.06);
 }
 
 .form-control {
-	border-radius: 10px;
-	padding: 10px 12px;
+    border-radius: 10px;
+    padding: 10px 12px;
 }
 
 .btn-save {
-	border-radius: 10px;
-	padding: 10px;
-	font-weight: 500;
+    border-radius: 10px;
+    padding: 10px;
+    font-weight: 500;
+}
+
+.form-label {
+    font-weight: 500;
 }
 </style>
 
@@ -42,67 +43,147 @@
 
 <body>
 
-	<div class="container py-5">
+<div class="container py-5">
 
-		<!-- HEADER -->
-		<div class="text-center mb-4">
-			<h2 class="page-title">⚙️ Configurazione</h2>
+    <!-- HEADER -->
+    <div class="text-center mb-4">
+        <h2 class="page-title">⚙️ Configurazione</h2>
+        <p class="text-muted">
+            Gestisci i parametri generali dell'applicazione
+        </p>
+    </div>
 
-			<p class="text-muted">Gestisci i parametri generali
-				dell'applicazione</p>
-		</div>
+    <!-- CARD -->
+    <div class="row justify-content-center">
 
-		<!-- CARD -->
-		<div class="row justify-content-center">
+        <div class="col-12 col-md-8 col-lg-6">
 
-			<div class="col-12 col-md-6 col-lg-4">
+            <div class="card p-4">
 
-				<div class="card p-4">
+                <form th:action="@{/config/save}" th:object="${conf}" method="post">
 
-					<form th:action="@{/config/save}" th:object="${conf}" method="post">
-						<input type="hidden" th:field="*{id}" /> <input type="hidden"
-							name="configurazione" id="configurazione"
-							th:value="${configurazione}">
+                    <input type="hidden" th:field="*{id}" />
+                    <input type="hidden" th:field="*{installationId}" />
+                    <input type="hidden"
+                           name="configurazione"
+                           id="configurazione"
+                           th:value="${configurazione}">
 
-						<!-- COSTO FRIGO -->
-						<div class="row align-items-center mb-4">
+                    <!-- NOME -->
+                    <div class="row align-items-center mb-4">
 
-    <label class="col-sm-7 col-form-label fw-semibold text-end pe-4">
-        💰 Costo Frigo
-    </label>
+                        <label class="col-sm-4 col-form-label fw-semibold text-end pe-4">
+                            💰 Nome
+                        </label>
 
-    <div class="col-sm-5">
+                        <div class="col-sm-8">
+                            <input type="text"
+                                   class="form-control"
+                                   th:field="*{name}"
+                                   required>
+                        </div>
 
-        <input type="number"
-               step="0.01"
-               min="0"
-               class="form-control"
-               th:field="*{prezzoFrigo}"
-               placeholder="Inserisci costo frigo"
-               required>
+                    </div>
+
+                    <!-- INDIRIZZO -->
+                    <div class="row align-items-center mb-4">
+
+                        <label class="col-sm-4 col-form-label fw-semibold text-end pe-4">
+                            📍 Indirizzo
+                        </label>
+
+                        <div class="col-sm-8">
+                            <input type="text"
+                                   class="form-control"
+                                   th:field="*{indirizzo}"
+                                   required>
+                        </div>
+
+                    </div>
+
+                    <!-- PEC -->
+                    <div class="row align-items-center mb-4">
+
+                        <label class="col-sm-4 col-form-label fw-semibold text-end pe-4">
+                            ✉️ PEC
+                        </label>
+
+                        <div class="col-sm-8">
+                            <input type="text"
+                                   class="form-control"
+                                   th:field="*{pec}">
+                        </div>
+
+                    </div>
+
+                    <!-- CODICE FISCALE -->
+                    <div class="row align-items-center mb-4">
+
+                        <label class="col-sm-4 col-form-label fw-semibold text-end pe-4">
+                            🧾 Cod. Fiscale
+                        </label>
+
+                        <div class="col-sm-8">
+                            <input type="text"
+                                   class="form-control"
+                                   th:field="*{codFiscale}">
+                        </div>
+
+                    </div>
+
+                    <!-- P. IVA -->
+                    <div class="row align-items-center mb-4">
+
+                        <label class="col-sm-4 col-form-label fw-semibold text-end pe-4">
+                            🧾 P. IVA
+                        </label>
+
+                        <div class="col-sm-8">
+                            <input type="text"
+                                   class="form-control"
+                                   th:field="*{pIva}"
+                                   required>
+                        </div>
+
+                    </div>
+
+                    <!-- COSTO FRIGO -->
+                    <div class="row align-items-center mb-4">
+
+                        <label class="col-sm-4 col-form-label fw-semibold text-end pe-4">
+                            ❄️ Costo Frigo
+                        </label>
+
+                        <div class="col-sm-8">
+                            <input type="number"
+                                   step="0.01"
+                                   min="0"
+                                   class="form-control"
+                                   th:field="*{prezzoFrigo}"
+                                   required>
+                        </div>
+
+                    </div>
+
+                    <!-- BOTTONI -->
+                    <div class="d-grid">
+
+                        <button type="submit"
+                                class="btn btn-success btn-save">
+                            💾 Salva Configurazione
+                        </button>
+
+                    </div>
+
+                </form>
+
+            </div>
+
+        </div>
 
     </div>
 
 </div>
-
-						<!-- BOTTONI -->
-						<div class="d-grid">
-
-							<button type="submit" class="btn btn-success btn-save">
-
-								💾 Salva Configurazione</button>
-
-						</div>
-
-					</form>
-
-				</div>
-
-			</div>
-
-		</div>
-
-	</div>
 
 </body>
 </html>

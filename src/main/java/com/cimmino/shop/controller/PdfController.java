@@ -69,6 +69,15 @@ public class PdfController {
 		return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=fattura.pdf")
 				.contentType(MediaType.APPLICATION_PDF).body(pdf);
 	}
+	
+	@GetMapping("/dtt/{id}")
+	public ResponseEntity<byte[]> dtt(@PathVariable Long id) throws Exception {
+
+		byte[] pdf = pdfService.generateDTT(id);
+
+		return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=fattura.pdf")
+				.contentType(MediaType.APPLICATION_PDF).body(pdf);
+	}
 
 	@PostConstruct
 	public void init() {

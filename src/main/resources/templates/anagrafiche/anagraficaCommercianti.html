@@ -1,82 +1,88 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Lista Prodotti</title>
+<title>Lista Prodotti</title>
 
-    <style>
+<style>
+body {
+	font-family: Arial;
+}
 
-        body {
-            font-family: Arial;
-        }
+table {
+	border-collapse: collapse;
+	width: 80%;
+}
 
-        table {
-            border-collapse: collapse;
-            width: 80%;
-        }
+td, th {
+	border: 1px solid black;
+	padding: 10px;
+}
 
-        td, th {
-            border: 1px solid black;
-            padding: 10px;
-        }
+a {
+	margin-right: 10px;
+}
 
-        a {
-            margin-right: 10px;
-        }
-
-        .btn {
-            padding: 8px 15px;
-            background-color: #3498db;
-            color: white;
-            text-decoration: none;
-            border-radius: 5px;
-        }
-
-    </style>
+.btn {
+	padding: 8px 15px;
+	background-color: #3498db;
+	color: white;
+	text-decoration: none;
+	border-radius: 5px;
+}
+</style>
 </head>
 
 <body>
 
-<h1>Lista Commercianti</h1>
+	<h1>Lista Commercianti</h1>
 
-<br>
+	<br>
 
-<a class="btn" th:href="@{/web/anagrafiche/commercianti/new}">
-    Nuovo Commerciante
-</a>
+	<a class="btn" th:href="@{/web/anagrafiche/commercianti/new}">
+		Nuovo Commerciante </a>
 
-<br><br>
+	<br>
+	<br>
 
-<table>
+	<table>
 
-    <tr>
-        <th>ID</th>
-        <th>Nome</th>
-       
-    </tr>
+		<tr>
 
-    <tr th:each="p : ${commercianti}">
+			<th>Nome</th>
+			<th>Indirizzo</th>
+			<th>PEC</th>
+			<th>Cod. Fiscale</th>
+			<th>P.Iva</th>
 
-        <td th:text="${p.commerciante_id}"></td>
+		</tr>
 
-        <td th:text="${p.name}"></td>
+		<tr th:each="p : ${commercianti}">
 
-       
 
-<!--         <td> -->
 
-<!--             <a th:href="@{/web/anagrafiche/merce/edit/{id}(id=${p.merce_id})}"> -->
-<!--                 Modifica -->
-<!--             </a> -->
+			<td th:text="${p.name}"></td>
+			<td th:text="${p.indirizzo}"></td>
+			<td th:text="${p.pec}"></td>
+			<td th:text="${p.codFiscale}"></td>
+			<td th:text="${p.pIva}"></td>
 
-<!--             <a th:href="@{/webanagrafiche/merce/delete/{id}(id=${p.merce_id})}"> -->
-<!--                 Elimina -->
-<!--             </a> -->
 
-<!--         </td> -->
 
-    </tr>
+			<!--         <td> -->
 
-</table>
+			<!--             <a th:href="@{/web/anagrafiche/merce/edit/{id}(id=${p.merce_id})}"> -->
+			<!--                 Modifica -->
+			<!--             </a> -->
+
+			<!--             <a th:href="@{/webanagrafiche/merce/delete/{id}(id=${p.merce_id})}"> -->
+			<!--                 Elimina -->
+			<!--             </a> -->
+
+			<!--         </td> -->
+
+		</tr>
+
+	</table>
 
 </body>
 </html>

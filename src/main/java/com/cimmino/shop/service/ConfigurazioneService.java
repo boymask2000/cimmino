@@ -2,7 +2,7 @@ package com.cimmino.shop.service;
 
 import java.math.BigDecimal;
 import java.util.Date;
-import java.util.Optional;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,11 +18,14 @@ public class ConfigurazioneService {
 	
 	public Configurazione getConfigurazione() {
 	
-		Optional<Configurazione> optConf = configurazioneRepository.findById((long) 1);
-		if( optConf.isEmpty())
+		 List<Configurazione> confs = configurazioneRepository.findAll();
+		if( confs.isEmpty())
 			return initConfig();
+		if( confs.size()>1) {
+			System.out.println("ERR getConfigurazione");
+		}
 		
-		return optConf.get();
+		return confs.get(0);
 	}
 	
 	

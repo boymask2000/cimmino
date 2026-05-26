@@ -60,6 +60,11 @@ public class WebController {
 
 		return "home";
 	}
+	@GetMapping("/anagrafiche")
+	public String anagrafiche(Model model) {
+		return "anagrafiche";
+	}
+
 	@GetMapping("/stampeGlobali")
 	public String stampeGlobali(Model model) {
 		LocalDate today = LocalDate.now();
