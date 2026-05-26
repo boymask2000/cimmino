@@ -1,18 +1,23 @@
 package com.cimmino.shop.controller;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.cimmino.shop.database.Arrivi;
 import com.cimmino.shop.database.ArriviRepository;
+import com.cimmino.shop.database.dto.ArriviDTO;
 import com.cimmino.shop.service.print.PdfService;
 
 import jakarta.annotation.PostConstruct;
@@ -25,6 +30,28 @@ public class PdfController {
 	@Autowired
 	ArriviRepository arriviRepository;
 
+	@GetMapping("/filter_arrivi2")
+	public ResponseEntity<byte[]> filter_arrivi(Model model) throws Exception {
+
+		List<Arrivi> lista = arriviRepository.findAll();
+		byte[] pdf = pdfService.generatePdfGeneraleArrivi(lista);
+
+		return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=fattura.pdf")
+				.contentType(MediaType.APPLICATION_PDF).body(pdf);
+	}
+
+	@GetMapping("/filter_arrivi")
+	public ResponseEntity<byte[]> stampaFiltrata(@RequestParam LocalDate startDate, @RequestParam LocalDate endDate)
+			throws Exception {
+
+		List<Arrivi> lista = arriviRepository.cerca(startDate, endDate);
+
+		byte[] pdf = pdfService.generatePdfGeneraleArrivi(lista);
+
+		return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=arrivi.pdf")
+				.contentType(MediaType.APPLICATION_PDF).body(pdf);
+	}
+
 	@GetMapping("/generale_arrivi")
 	public ResponseEntity<byte[]> generale_arrivi() throws Exception {
 		List<Arrivi> lista = arriviRepository.findAll();
@@ -36,9 +63,7 @@ public class PdfController {
 
 	@GetMapping("/vendita_dettaglio/{id}")
 	public ResponseEntity<byte[]> vendita_dettaglio(@PathVariable Long id) throws Exception {
-	
 
-		
 		byte[] pdf = pdfService.generatePdfDettaglioVendita(id);
 
 		return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=fattura.pdf")

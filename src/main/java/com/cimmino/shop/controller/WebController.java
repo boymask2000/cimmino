@@ -60,11 +60,25 @@ public class WebController {
 
 		return "home";
 	}
+	@GetMapping("/stampeGlobali")
+	public String stampeGlobali(Model model) {
+		LocalDate today = LocalDate.now();
 
-	@GetMapping("/anagrafiche")
-	public String anagrafiche(Model model) {
-		return "anagrafiche";
+		LocalDate firstDay = today.withDayOfMonth(1);
+		LocalDate lastDay = today.withDayOfMonth(today.lengthOfMonth());
+
+		model.addAttribute("startDate", firstDay);
+		model.addAttribute("endDate", lastDay);
+
+		// model.addAttribute("status", statusService.getStatus());
+
+//		List<User> users = usersRepo.findAll();
+//		model.addAttribute("nusers", users.size());
+
+		return "stampeGlobali";
 	}
+	
+
 
 
 	List<Arrivi> risultati = new ArrayList<Arrivi>();

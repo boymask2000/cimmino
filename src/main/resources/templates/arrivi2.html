@@ -12,7 +12,7 @@
 
 <body>
 
-	<div class="container-fluid mt-4">>
+	<div class="container-fluid mt-4">
 
 		<div class="d-flex justify-content-between align-items-center mb-3">
 
@@ -21,10 +21,20 @@
 			<a th:href="@{/web/arrivi/new}" class="btn btn-success"> Nuovo
 				Arrivo </a> 
 			
-<a th:href="@{/pdf/generale_arrivi}"
-   class="btn btn-success">
-    🖨 Stampa
-</a>
+<form th:action="@{/pdf/filter_arrivi}" >
+
+    <input type="hidden"
+           name="startDate"
+           th:value="${startDate}">
+           <input type="hidden"
+           name="endDate"
+           th:value="${endDate}">
+
+    <button type="submit" class="btn btn-success">
+        🖨 Stampa
+    </button>
+
+</form>
 
 		</div>
 
