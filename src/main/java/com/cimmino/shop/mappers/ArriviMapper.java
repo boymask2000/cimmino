@@ -19,15 +19,15 @@ public interface ArriviMapper {
     // ENTITY -> DTO
     // =========================
 
-    @Mapping(source = "merce.merce_id", target = "merceId")
-    @Mapping(source = "merce.name", target = "merceName")
+   // @Mapping(source = "merce.merce_id", target = "merceId")
+   // @Mapping(source = "merce.name", target = "merceName")
     ArriviDTO toDto(Arrivi entity);
 
     // =========================
     // DTO -> ENTITY
     // =========================
 
-    @Mapping(source = "merceId", target = "merce.merce_id")
+   // @Mapping(source = "merceId", target = "merce.merce_id")
     Arrivi toEntity(ArriviDTO dto);
 
     // =========================

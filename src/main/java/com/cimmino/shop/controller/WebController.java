@@ -19,6 +19,7 @@ import com.cimmino.shop.database.ArriviRepository;
 import com.cimmino.shop.database.BinRepository;
 import com.cimmino.shop.database.BinsArrivi;
 import com.cimmino.shop.database.BinsArriviRepository;
+import com.cimmino.shop.database.CommercianteRepository;
 import com.cimmino.shop.database.MerceRepository;
 import com.cimmino.shop.mappers.BinMapper;
 import com.cimmino.shop.service.ArriviService;
@@ -39,7 +40,8 @@ public class WebController {
 	ArriviService arriviService;
 	@Autowired
 	MovimentiBinService movimentiBinService;
-	
+	@Autowired
+	CommercianteRepository commercianteRepository;
 	@Autowired
 	BinMapper binMapper;
 
@@ -60,6 +62,7 @@ public class WebController {
 
 		return "home";
 	}
+
 	@GetMapping("/anagrafiche")
 	public String anagrafiche(Model model) {
 		return "anagrafiche";

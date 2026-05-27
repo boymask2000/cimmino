@@ -101,7 +101,7 @@ public class VenditeService {
 		// op.setBin(vendita.getBin());
 		op.setCommerciante(vendita.getCommerciante());
 		op.setData(vendita.getData());
-		op.setDtt(vendita.getDtt());
+		op.setDdt(vendita.getDdt());
 		op.setImporto(vendita.getImporto());
 		op.setLordo(vendita.getPeso_lordo());
 		op.setPrezzo(vendita.getPrezzo());

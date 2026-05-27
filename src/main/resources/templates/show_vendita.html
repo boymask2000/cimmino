@@ -23,9 +23,9 @@
    class="btn btn-success">
     🖨 Stampa
 </a>
-<a th:href="@{/pdf/dtt/{id}(id=${vendita.id})}"
+<a th:href="@{/pdf/ddt/{id}(id=${vendita.id})}"
    class="btn btn-success">
-    🖨 Stampa DTT
+    🖨 Stampa DDT
 </a>
 		</div>
 
@@ -115,10 +115,10 @@
         </div>
     </div>
      <div class="row mb-3">
-        <label class="col-sm-3 col-form-label">DTT</label>
+        <label class="col-sm-3 col-form-label">DDT</label>
         <div class="col-sm-9">
             <input type="number"
-                   th:value="${vendita.dtt}"
+                   th:value="${vendita.ddt}"
                    class="form-control"
                    disabled>
         </div>

@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Lista Prodotti</title>
+
+<style>
+body {
+	font-family: Arial;
+}
+
+table {
+	border-collapse: collapse;
+	width: 80%;
+}
+
+td, th {
+	border: 1px solid black;
+	padding: 10px;
+	text-align: center;
+}
+
+a {
+	margin-right: 10px;
+}
+
+.btn {
+	padding: 8px 15px;
+	background-color: #3498db;
+	color: white;
+	text-decoration: none;
+	border-radius: 5px;
+	border: none;
+	cursor: pointer;
+	margin-top: 15px;
+}
+
+.riga-selezionata {
+	background-color: #d6ecff;
+	cursor: pointer;
+}
+
+tr.clickable-row {
+	cursor: pointer;
+}
+</style>
+</head>
+
+<body>
+
+	<h1>Vendite Commerciante</h1>
+
+	<h3 th:text="${commerciante.name}"></h3>
+
+	<form th:action="@{/ddt/vendite/selezionate}" method="post">
+	
+	 <input type="hidden"
+	       name="commercianteId"
+	       th:value="${commerciante.commerciante_id}" />
+
+
+		<table>
+
+			<tr>
+				<th>Seleziona</th>
+				<th>Data</th>
+				<th>Importo</th>
+				<th>DDT</th>
+			</tr>
+
+			<tr th:each="ven : ${vendite}" class="clickable-row">
+
+				<td>
+					<input type="checkbox"
+						   name="ids"
+						   th:value="${ven.id}"
+						   class="row-checkbox">
+				</td>
+
+				<td th:text="${ven.data}"></td>
+				<td th:text="${ven.importo}"></td>
+				<td th:text="${ven.ddt}"></td>
+
+			</tr>
+
+		</table>
+
+		<button type="submit" class="btn">
+			Invia selezionati
+		</button>
+
+	</form>
+
+	<script>
+
+		document.querySelectorAll(".clickable-row").forEach(row => {
+
+			row.addEventListener("click", function(e) {
+
+				// evita doppio toggle se clicchi direttamente sulla checkbox
+				if (e.target.type !== "checkbox") {
+
+					const checkbox = row.querySelector(".row-checkbox");
+					checkbox.checked = !checkbox.checked;
+				}
+
+				aggiornaStile(row);
+			});
+
+			const checkbox = row.querySelector(".row-checkbox");
+
+			checkbox.addEventListener("change", function() {
+				aggiornaStile(row);
+			});
+
+		});
+
+		function aggiornaStile(row) {
+
+			const checkbox = row.querySelector(".row-checkbox");
+
+			if (checkbox.checked) {
+				row.classList.add("riga-selezionata");
+			} else {
+				row.classList.remove("riga-selezionata");
+			}
+		}
+
+	</script>
+
+</body>
+</html>

@@ -42,7 +42,7 @@ public class OpCommerciante {
 
 	private LocalDate data;
 
-	private String dtt;
+	private String ddt;
 
 	private BigDecimal prezzo;
 	private BigDecimal importo;
@@ -132,13 +132,6 @@ public class OpCommerciante {
 		this.importo = importo;
 	}
 
-	public String getDtt() {
-		return dtt;
-	}
-
-	public void setDtt(String dtt) {
-		this.dtt = dtt;
-	}
 
 	public BigDecimal getNettoDiTara() {
 		return nettoDiTara;
@@ -154,6 +147,14 @@ public class OpCommerciante {
 
 	public void setNettoDiScarto(BigDecimal nettoDiScarto) {
 		this.nettoDiScarto = nettoDiScarto;
+	}
+
+	public String getDdt() {
+		return ddt;
+	}
+
+	public void setDdt(String ddt) {
+		this.ddt = ddt;
 	}
 
 }

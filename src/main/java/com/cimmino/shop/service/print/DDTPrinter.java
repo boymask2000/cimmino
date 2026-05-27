@@ -4,16 +4,17 @@ import java.io.ByteArrayOutputStream;
 import java.math.BigDecimal;
 
 import com.cimmino.shop.database.BinsVendite;
+import com.cimmino.shop.database.Commerciante;
 import com.cimmino.shop.database.Configurazione;
 import com.cimmino.shop.database.Vendite;
 import com.openhtmltopdf.pdfboxout.PdfRendererBuilder;
 
-public class DTTPrinter extends BasePrinter implements HasOutputStream {
+public class DDTPrinter extends BasePrinter implements HasOutputStream {
 
 	private Configurazione conf;
 	private Vendite vendita;
 
-	public DTTPrinter(Vendite ven, Configurazione conf) throws Exception {
+	public DDTPrinter(Vendite ven, Configurazione conf) throws Exception {
 		this.conf = conf;
 		this.vendita = ven;
 
@@ -105,6 +106,9 @@ public class DTTPrinter extends BasePrinter implements HasOutputStream {
 		html.append(makeTestata3());
 		html.append(makeTestata4());
 		html.append(makeBinsBox(vendita));
+		
+		html.append(makeFooter1());
+		html.append(makeFooter2());
 
 		html.append("""
 				    </body>
@@ -112,6 +116,48 @@ public class DTTPrinter extends BasePrinter implements HasOutputStream {
 				""");
 
 		return html.toString();
+	}
+
+	private Object makeFooter2() {
+		StringBuilder out = new StringBuilder();
+		out.append("<table>");
+		out.append("<tr>");
+		out.append("<td>");
+		out.append("<h2>");
+		out.append("PRODOTTO CERTIFICATO GLOBAL GAP");
+		out.append("</h2>");
+		out.append("<h2>");
+		out.append("GGN 4063061826466");
+		out.append("</h2>");
+		out.append("</td>");
+		out.append("<td>");
+		out.append("<p>Firma del conducente</p>");
+		out.append("<br/>");			out.append("<br/>");
+		out.append("<p>Firma del destinatario</p>");out.append("<br/>");
+		out.append("</td>");
+		out.append("</tr>");
+		out.append("</table>");
+		return out.toString();
+	}
+
+	private Object makeFooter1() {
+		StringBuilder out = new StringBuilder();
+		out.append("<table>");
+		out.append("<tr>");
+		out.append("<td>");
+		out.append("<h4>");
+		out.append("1 Incaricato del trasporto (DITTA, INDIRIZZO, N.ALBO)");
+		out.append("</h4>");
+		
+		out.append("</td>");
+		out.append("<td>");
+		out.append("<h4>");
+		out.append("2 Incaricato del trasporto (DITTA, INDIRIZZO, N.ALBO)");
+		out.append("</h4>");
+		out.append("</td>");
+		out.append("</tr>");
+		out.append("</table>");
+		return out.toString();
 	}
 
 	private Object makeBinsBox(Vendite vendita2) {
@@ -147,20 +193,57 @@ public class DTTPrinter extends BasePrinter implements HasOutputStream {
 			
 			out.append("</tr>");
 		}
+		for(int i=0; i<10- vendita.getBins().size(); i++) {
+			out.append("<tr>");
+			out.append("<td>");
+		
+			out.append("</td>");
+			out.append("<td>");
+			
+			out.append("</td>");
+			out.append("<td>");
+			
+			out.append("</td>");
+			out.append("<td>");
+		
+			out.append("</td>");
+			
+			out.append("</tr>");
+		}
 		out.append("</tbody>");
-		makeFooter(out, totColli, totPeso);
+//		makeFooter(out, totColli, totPeso);
 		out.append("</table>");
+		makeFooter2(out, totColli, totPeso);
 		return out.toString();
 	}
 
+	private void makeFooter2(StringBuilder out, int totColli, BigDecimal totPeso) {
+		out.append("<table>");
+		out.append("<tr>");
+	//	out.append("<td colspan=\"3\">N.Colli</td>");
+		out.append("<td  >");
+		out.append("PAESE DI ORIGINE<br/>dei prodotti<br/>ITALIA");
+		out.append("</td>");
+		out.append("<td  >");
+		out.append("CATEGORIA<br/>Ove richiesta");
+		out.append("</td>");
+		out.append("<td  >");
+		out.append("Aspetto esteriore dei beni<br/>BINS IN PLASTICA");
+		out.append("</td>");
+		out.append("<td  class=\"text-end fw-bold\">n.Colli<br/>"+totColli+"</td>");
+		out.append("<td  class=\"text-end fw-bold\" >Peso kg.<br/>"+totPeso+"</td>");
+		out.append("</tr>");
+		out.append("</table>");
+		System.out.println(out.toString());
+	}
 	private void makeFooter(StringBuilder out, int totColli, BigDecimal totPeso) {
 		out.append("<tfoot>");
 		out.append("<tr>");
 	//	out.append("<td colspan=\"3\">N.Colli</td>");
 		out.append("<td colspan=\"0\" ></td>");
 		out.append("<td colspan=\"1\" ></td>");
-		out.append("<td colspan=\"1\"  class=\"text-end fw-bold\">"+totColli+"</td>");
-		out.append("<td colspan=\"1\" class=\"text-end fw-bold\" >"+totPeso+"</td>");
+		out.append("<td colspan=\"1\" class=\"text-end fw-bold\">n.Colli<br/>"+totColli+"</td>");
+		out.append("<td colspan=\"1\" class=\"text-end fw-bold\" >Peso kg.<br/>"+totPeso+"</td>");
 		out.append("</tr>");
 		out.append("</tfoot>");
 		System.out.println(out.toString());
@@ -168,6 +251,11 @@ public class DTTPrinter extends BasePrinter implements HasOutputStream {
 
 	private String makeTestata4() {
 		StringBuilder out = new StringBuilder();
+		out.append("<table>");
+		out.append("<tr>");
+		
+		out.append("<td>");
+		
 		out.append("<h3>");
 		out.append("Causale del trasporto:");
 		out.append("</h3>");
@@ -175,11 +263,36 @@ public class DTTPrinter extends BasePrinter implements HasOutputStream {
 		out.append("<h3>");
 		out.append("CONFERIMENTO MERCI");
 		out.append("</h3>");
+		out.append("</td>");
+		
+		out.append("<td>");
+		out.append("<h4>");
+		out.append("Luogo di compilazione e caico merci (se diverso dal cedente)");
+		out.append("</h4>");
+		out.append("</td>");
+
+		out.append("</tr>");
+		out.append("</table>");
 		return out.toString();
 	}
 
 	private String makeTestata3() {
 		StringBuilder out = new StringBuilder();
+		Commerciante comm = vendita.getCommerciante();
+		out.append("<table>");
+		out.append("<tr>");
+		
+		out.append("<td>");
+		out.append(comm.getName());
+		out.append("<br/>"+clean(comm.getIndirizzo()));
+		out.append("</td>");
+
+
+		out.append("</tr>");
+		out.append("</table>");
+		
+
+		
 		return out.toString();
 	}
 
@@ -190,11 +303,13 @@ public class DTTPrinter extends BasePrinter implements HasOutputStream {
 
 	private String makeTestata1() {
 		StringBuilder out = new StringBuilder();
-
+	
 		out.append("<table>");
+		
 		out.append("<tr>");
 
 		out.append("<td>");
+		out.append("<h4>Cedente: Ditta </h4>");
 		insertAzienda(out);
 		out.append("</td>");
 
@@ -224,6 +339,15 @@ public class DTTPrinter extends BasePrinter implements HasOutputStream {
 		out.append("</p>");
 		out.append("<p>");
 		out.append(conf.getIndirizzo());
+		out.append("</p>");
+		out.append("<p>");
+		out.append(conf.getPec());
+		out.append("</p>");
+		out.append("<p>");
+		out.append(conf.getCodFiscale());
+		out.append("</p>");
+		out.append("<p>");
+		out.append(conf.getpIva());
 		out.append("</p>");
 	}
 }

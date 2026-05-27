@@ -17,7 +17,7 @@ public class VenditaDTO {
 		private BigDecimal tara;
 	    private LocalDate data;
 
-		private String dtt;
+		private String ddt;
 
 		private BigDecimal media;
 
@@ -102,12 +102,7 @@ public class VenditaDTO {
 	public void setData(LocalDate data) {
 		this.data = data;
 	}
-	public String getDtt() {
-		return dtt;
-	}
-	public void setDtt(String dtt) {
-		this.dtt = dtt;
-	}
+	
 	public BigDecimal getMedia() {
 		return media;
 	}
@@ -119,6 +114,12 @@ public class VenditaDTO {
 	}
 	public void setFrigo(BigDecimal frigo) {
 		this.frigo = frigo;
+	}
+	public String getDdt() {
+		return ddt;
+	}
+	public void setDdt(String ddt) {
+		this.ddt = ddt;
 	}
 	
 }

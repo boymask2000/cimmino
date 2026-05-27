@@ -1,6 +1,7 @@
 package com.cimmino.shop.service.print;
 
 import java.io.ByteArrayOutputStream;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -29,30 +30,45 @@ public class PdfService {
 	}
 
 	public byte[] generatePdfDettaglioVendita(Long idVednita) throws Exception {
-		
+
 		Optional<Vendite> v = venditeRepository.findById(idVednita);
-		if(v.isEmpty())return null;
+		if (v.isEmpty())
+			return null;
 		Vendite ven = v.get();
-		
-		
+
 		HasOutputStream builder = new DettaglioVenditaPrinter(ven);
 
 		ByteArrayOutputStream outputStream = builder.getOutputStream();
 		return outputStream.toByteArray();
 	}
 
-	public byte[] generateDTT(Long idVendita) throws Exception {
+	public byte[] generateDDT(Long idVendita) throws Exception {
 		Optional<Vendite> v = venditeRepository.findById(idVendita);
-	
-		if(v.isEmpty())return null;
+
+		if (v.isEmpty())
+			return null;
 		Vendite ven = v.get();
 		Configurazione conf = configurazioneService.getConfigurazione();
-		
-		HasOutputStream builder = new DTTPrinter(ven, conf);
+
+		HasOutputStream builder = new DDTPrinter(ven, conf);
 
 		ByteArrayOutputStream outputStream = builder.getOutputStream();
 		return outputStream.toByteArray();
-		
+
+	}
+
+	public byte[] generateDDT4Vendite(List<Long> ids) throws Exception {
+		List<Vendite> vendite = new ArrayList<Vendite>();
+		for (Long id : ids) {
+			Optional<Vendite> v = venditeRepository.findById(id);
+			vendite.add(v.get());
+		}
+		Configurazione conf = configurazioneService.getConfigurazione();
+
+		HasOutputStream builder = new DDTListVenditePrinter(vendite, conf);
+
+		ByteArrayOutputStream outputStream = builder.getOutputStream();
+		return outputStream.toByteArray();
 	}
 
 }

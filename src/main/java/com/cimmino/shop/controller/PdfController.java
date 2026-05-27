@@ -36,7 +36,7 @@ public class PdfController {
 		List<Arrivi> lista = arriviRepository.findAll();
 		byte[] pdf = pdfService.generatePdfGeneraleArrivi(lista);
 
-		return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=fattura.pdf")
+		return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=arrivi.pdf")
 				.contentType(MediaType.APPLICATION_PDF).body(pdf);
 	}
 
@@ -57,7 +57,7 @@ public class PdfController {
 		List<Arrivi> lista = arriviRepository.findAll();
 		byte[] pdf = pdfService.generatePdfGeneraleArrivi(lista);
 
-		return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=fattura.pdf")
+		return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=arrivi.pdf")
 				.contentType(MediaType.APPLICATION_PDF).body(pdf);
 	}
 
@@ -66,19 +66,30 @@ public class PdfController {
 
 		byte[] pdf = pdfService.generatePdfDettaglioVendita(id);
 
-		return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=fattura.pdf")
+		return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=vendita.pdf")
 				.contentType(MediaType.APPLICATION_PDF).body(pdf);
 	}
 	
-	@GetMapping("/dtt/{id}")
-	public ResponseEntity<byte[]> dtt(@PathVariable Long id) throws Exception {
+	@GetMapping("/ddt/{id}")
+	public ResponseEntity<byte[]> ddt(@PathVariable Long id) throws Exception {
 
-		byte[] pdf = pdfService.generateDTT(id);
+		byte[] pdf = pdfService.generateDDT(id);
 
-		return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=fattura.pdf")
+		return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=ddt.pdf")
 				.contentType(MediaType.APPLICATION_PDF).body(pdf);
 	}
 
+	@GetMapping("/ddt/vendite")
+	public ResponseEntity<byte[]> ddtForVendite(@RequestParam List<Long> ids, Model model) throws Exception {
+
+		byte[] pdf = pdfService.generateDDT4Vendite(ids);
+
+		return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=ddt.pdf")
+				.contentType(MediaType.APPLICATION_PDF).body(pdf);
+	}
+
+	
+	
 	@PostConstruct
 	public void init() {
 

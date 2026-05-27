@@ -144,7 +144,7 @@ public class DettaglioVenditaPrinter extends BasePrinter implements HasOutputStr
 		out.append("<tr>");
 		out.append("<th>Commerciante</th>");
 		out.append("<th>Data</th>");
-		out.append("<th>DTT</th>");
+		out.append("<th>DDT</th>");
 		out.append("<th>Lordo</th>");
 		out.append("<th>Netto di Tara</th>");
 		out.append("<th>Netto di Scarto</th>");
@@ -162,7 +162,7 @@ public class DettaglioVenditaPrinter extends BasePrinter implements HasOutputStr
 
 			out.append("<td>").append(clean(ven.getCommerciante().getName())).append("</td>");
 			out.append("<td>").append(clean(ven.getData())).append("</td>");
-			out.append("<td>").append(clean(ven.getDtt())).append("</td>");
+			out.append("<td>").append(clean(ven.getDdt())).append("</td>");
 			out.append("<td>").append(clean(ven.getPeso_lordo())).append("</td>");
 			out.append("<td>").append(clean(ven.getNettoDiTara())).append("</td>");
 			out.append("<td>").append(clean(ven.getNettoDiScarto())).append("</td>");

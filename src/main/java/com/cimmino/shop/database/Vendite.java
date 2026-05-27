@@ -49,7 +49,7 @@ public class Vendite {
 
 	private LocalDate data;
 
-	private String dtt;
+	private String ddt;
 
 	private BigDecimal media;
 
@@ -150,13 +150,7 @@ public class Vendite {
 		this.importo = importo;
 	}
 
-	public String getDtt() {
-		return dtt;
-	}
 
-	public void setDtt(String dtt) {
-		this.dtt = dtt;
-	}
 
 	public int getNumeroTotaleBins() {
 		return numeroTotaleBins;
@@ -192,6 +186,14 @@ public class Vendite {
 
 	public void setFrigo(BigDecimal frigo) {
 		this.frigo = frigo;
+	}
+
+	public String getDdt() {
+		return ddt;
+	}
+
+	public void setDdt(String ddt) {
+		this.ddt = ddt;
 	}
 
 }
