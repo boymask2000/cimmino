@@ -1,5 +1,7 @@
 package com.cimmino.shop.controller;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
@@ -147,4 +149,22 @@ public class AnagraficheController {
 		model.addAttribute("commercianti", commercianteRepository.findAll());
 		return "anagrafiche/anagraficaCommercianti";
 	}
+	@PostMapping("/commercianti/update")
+	public String anagraficaCommerciantiUpdate(@ModelAttribute Commerciante comm, Model model) {
+
+		
+		commercianteRepository.save(comm);
+		model.addAttribute("commercianti", commercianteRepository.findAll());
+		return "anagrafiche/anagraficaCommercianti";
+	}
+	@GetMapping("/commercianti/edit/{id}")
+	public String anagraficCommerciantiEdit(@PathVariable Long id, Model model) {
+		Optional<Commerciante> opt = commercianteRepository.findById(id);
+		Commerciante comm = opt.get();
+
+		model.addAttribute("commerciante", comm);
+
+		return "anagrafiche/edit_commerciante";
+	}
+
 }
