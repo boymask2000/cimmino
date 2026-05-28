@@ -154,29 +154,13 @@ body {
 								<td class="fw-bold text-success"
 									th:text="${'€ ' + ven.importo}"></td>
 
-								<td>
-
-									<span th:if="${ven.ddt != null}"
-										class="badge bg-success badge-ddt">
-
-										<i class="bi bi-check-circle"></i>
-										Presente
-
-									</span>
-
-									<span th:if="${ven.ddt == null}"
-										class="badge bg-secondary badge-ddt">
-
-										<i class="bi bi-dash-circle"></i>
-										Assente
-
-									</span>
-
-								</td>
+								
+<td th:text="${ven.ddt}"></td>
+									
 
 								<td>
 
-									<a th:if="${ven.ddt != null}"
+									<a th:if="${ven.ddt != null && ven.ddt !=''}"
 										th:href="@{/ddt/viewddt/{id}(id=${ven.ddt})}"
 										class="btn btn-primary btn-sm btn-action">
 

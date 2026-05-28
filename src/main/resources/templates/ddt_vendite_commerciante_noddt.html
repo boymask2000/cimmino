@@ -227,12 +227,14 @@ body {
 					</div>
 
 					<button type="submit"
-						class="btn btn-primary btn-submit">
+        id="submitBtn"
+        class="btn btn-primary btn-submit"
+        disabled>
 
-						<i class="bi bi-send-check"></i>
-						Invia selezionati
+    <i class="bi bi-send-check"></i>
+    Invia selezionati
 
-					</button>
+</button>
 
 				</div>
 
@@ -282,9 +284,19 @@ body {
 
 		function aggiornaContatore() {
 
-			const checked = document.querySelectorAll(".row-checkbox:checked").length;
+		    const checked = document.querySelectorAll(".row-checkbox:checked").length;
 
-			document.getElementById("selectedCount").innerText = checked;
+		    document.getElementById("selectedCount").innerText = checked;
+
+		    const btn = document.getElementById("submitBtn");
+
+		    if (checked > 0) {
+		        btn.disabled = false;
+		        btn.classList.remove("disabled");
+		    } else {
+		        btn.disabled = true;
+		        btn.classList.add("disabled");
+		    }
 		}
 
 	</script>
