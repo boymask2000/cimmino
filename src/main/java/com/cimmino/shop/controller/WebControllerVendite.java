@@ -93,6 +93,9 @@ public class WebControllerVendite {
 			@RequestParam("commercianteId") Long commercianteId, @RequestParam String binsJson,
 			@RequestParam("arrivoId") Long arrivoId, @RequestParam("currData") LocalDate currData, Model model) {
 
+		if(vendita.getDdt().equals(""))
+			vendita.setDdt(null);
+		
 		ObjectMapper mapper = new ObjectMapper();
 		List<BinsVenditaDTO> bins = new ArrayList<BinsVenditaDTO>();
 		try {
