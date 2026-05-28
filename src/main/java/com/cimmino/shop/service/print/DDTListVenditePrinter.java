@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.cimmino.shop.database.BinsVendite;
+import com.cimmino.shop.database.Commerciante;
 import com.cimmino.shop.database.Configurazione;
 import com.cimmino.shop.database.Vendite;
 import com.cimmino.shop.database.dto.DDTDTO;
@@ -24,13 +25,15 @@ public class DDTListVenditePrinter extends BasePrinter implements HasOutputStrea
 
 	private Configurazione conf;
 	private List<Vendite> vendite;
+	private Commerciante commerciante;
 
 	
 	public void exec(List<Vendite> vendite, Configurazione conf) throws Exception{
 
 		this.conf = conf;
 		this.vendite = vendite;
-
+		if(vendite.size()>0)
+			this.commerciante=vendite.get(0).getCommerciante();
 		String html = buildHtml();
 
 		outputStream = new ByteArrayOutputStream();
@@ -44,6 +47,7 @@ public class DDTListVenditePrinter extends BasePrinter implements HasOutputStrea
 		DDTDTO dto = ddtService.create(html);
 		Long ddtId = dto.getId();
 		for (Vendite vendita : vendite) {
+			
 			vendita.setDdt(""+ddtId);
 			venditeService.save(vendita);
 		}
@@ -192,6 +196,7 @@ public class DDTListVenditePrinter extends BasePrinter implements HasOutputStrea
 		out.append("</thead> ");
 		out.append("<tbody>");
 		int totColli = 0;
+		int numRows=0;
 		BigDecimal totPeso = BigDecimal.ZERO;
 		for (Vendite vendita : vendite)
 			for (BinsVendite b : vendita.getBins()) {
@@ -212,24 +217,25 @@ public class DDTListVenditePrinter extends BasePrinter implements HasOutputStrea
 				out.append("</td>");
 
 				out.append("</tr>");
+				numRows++;
 			}
-//		for(int i=0; i<10- vendita.getBins().size(); i++) {
-//			out.append("<tr>");
-//			out.append("<td>");
-//		
-//			out.append("</td>");
-//			out.append("<td>");
-//			
-//			out.append("</td>");
-//			out.append("<td>");
-//			
-//			out.append("</td>");
-//			out.append("<td>");
-//		
-//			out.append("</td>");
-//			
-//			out.append("</tr>");
-//		}
+		for(int i=0; i<10- numRows; i++) {
+			out.append("<tr>");
+			out.append("<td>");
+		
+			out.append("</td>");
+			out.append("<td>");
+			
+			out.append("</td>");
+			out.append("<td>");
+			
+			out.append("</td>");
+			out.append("<td>");
+		
+			out.append("</td>");
+			
+			out.append("</tr>");
+		}
 		out.append("</tbody>");
 //		makeFooter(out, totColli, totPeso);
 		out.append("</table>");
@@ -299,17 +305,17 @@ public class DDTListVenditePrinter extends BasePrinter implements HasOutputStrea
 
 	private String makeTestata3() {
 		StringBuilder out = new StringBuilder();
-	//	Commerciante comm = vendita.getCommerciante();
-//		out.append("<table>");
-//		out.append("<tr>");
-//
-//		out.append("<td>");
-//		out.append(comm.getName());
-//		out.append("<br/>" + clean(comm.getIndirizzo()));
-//		out.append("</td>");
-//
-//		out.append("</tr>");
-//		out.append("</table>");
+	
+		out.append("<table>");
+		out.append("<tr>");
+
+		out.append("<td>");
+		out.append(commerciante.getName());
+		out.append("<br/>" + clean(commerciante.getIndirizzo()));
+		out.append("</td>");
+
+		out.append("</tr>");
+		out.append("</table>");
 
 		return out.toString();
 	}
