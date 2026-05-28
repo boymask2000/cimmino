@@ -45,6 +45,15 @@ public class DDTController {
 		model.addAttribute("commercianti", commercianteRepository.findAll());
 		return "ddt_commercianti";
 	}
+	@GetMapping("/vendite_commercianteNoDDT/{id}")
+	public String vendite_commercianteNoDDt(@PathVariable Long id, Model model) {
+		Optional<Commerciante> opt_comm = commercianteRepository.findById(id);
+		Commerciante comm = opt_comm.get();
+		List<Vendite> vendite = venditeRepository.findVenditeDiCommercianteSenzaDDT(comm.getCommerciante_id());
+		model.addAttribute("vendite", vendite);
+		model.addAttribute("commerciante", comm);
+		return "ddt_vendite_commerciante_noddt";
+	}
 	@GetMapping("/vendite_commerciante/{id}")
 	public String vendite_commerciante(@PathVariable Long id, Model model) {
 		Optional<Commerciante> opt_comm = commercianteRepository.findById(id);
@@ -69,5 +78,11 @@ public class DDTController {
 
 
 	    return "redirect:/pdf/ddt/vendite";
+	}
+	@GetMapping("/viewddt/{id}")
+	public String viewDDT(@PathVariable Long id,  RedirectAttributes redirectAttributes) {
+
+		redirectAttributes.addAttribute("id", id);
+		return "redirect:/pdf/ddt/showddt";
 	}
 }

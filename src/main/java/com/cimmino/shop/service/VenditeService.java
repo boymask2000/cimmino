@@ -142,4 +142,10 @@ public class VenditeService {
 
 		venditeRepository.save(v);
 	}
+	
+	public void save(Vendite v) {
+
+
+		venditeRepository.save(v);
+	}
 }

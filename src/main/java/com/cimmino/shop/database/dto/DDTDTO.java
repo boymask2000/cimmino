@@ -1,19 +1,12 @@
-package com.cimmino.shop.database;
+package com.cimmino.shop.database.dto;
 
 import java.time.LocalDate;
 
 import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
 
-@Entity
-@Table(name = "ddt")
-public class DDT {
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+
+public class DDTDTO {
+
 	private Long id;
 	
 	private LocalDate date;

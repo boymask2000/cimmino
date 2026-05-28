@@ -4,17 +4,29 @@ import java.io.ByteArrayOutputStream;
 import java.math.BigDecimal;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
 import com.cimmino.shop.database.BinsVendite;
 import com.cimmino.shop.database.Configurazione;
 import com.cimmino.shop.database.Vendite;
+import com.cimmino.shop.database.dto.DDTDTO;
+import com.cimmino.shop.service.DDTService;
+import com.cimmino.shop.service.VenditeService;
 import com.openhtmltopdf.pdfboxout.PdfRendererBuilder;
 
+@Component
 public class DDTListVenditePrinter extends BasePrinter implements HasOutputStream {
+	@Autowired
+	DDTService ddtService;
+	@Autowired
+	VenditeService venditeService;
 
 	private Configurazione conf;
 	private List<Vendite> vendite;
 
-	public DDTListVenditePrinter(List<Vendite> vendite, Configurazione conf) throws Exception {
+	
+	public void exec(List<Vendite> vendite, Configurazione conf) throws Exception{
 
 		this.conf = conf;
 		this.vendite = vendite;
@@ -28,6 +40,14 @@ public class DDTListVenditePrinter extends BasePrinter implements HasOutputStrea
 		builder.withHtmlContent(html, null);
 		builder.toStream(outputStream);
 		builder.run();
+		
+		DDTDTO dto = ddtService.create(html);
+		Long ddtId = dto.getId();
+		for (Vendite vendita : vendite) {
+			vendita.setDdt(""+ddtId);
+			venditeService.save(vendita);
+		}
+		
 	}
 
 	private String buildHtml() {
@@ -349,3 +369,4 @@ public class DDTListVenditePrinter extends BasePrinter implements HasOutputStrea
 		out.append("</p>");
 	}
 }
+	

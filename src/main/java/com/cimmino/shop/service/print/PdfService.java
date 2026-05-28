@@ -11,15 +11,20 @@ import com.cimmino.shop.database.Arrivi;
 import com.cimmino.shop.database.Configurazione;
 import com.cimmino.shop.database.Vendite;
 import com.cimmino.shop.database.VenditeRepository;
+import com.cimmino.shop.database.dto.DDTDTO;
 import com.cimmino.shop.service.ConfigurazioneService;
+import com.cimmino.shop.service.DDTService;
 
 @Service
 public class PdfService {
-
+	@Autowired
+	DDTService ddtService;
 	@Autowired
 	VenditeRepository venditeRepository;
 	@Autowired
 	ConfigurazioneService configurazioneService;
+	@Autowired
+	DDTListVenditePrinter ddtListVenditePrinter;
 
 	public byte[] generatePdfGeneraleArrivi(List<Arrivi> arrivi) throws Exception {
 
@@ -65,10 +70,19 @@ public class PdfService {
 		}
 		Configurazione conf = configurazioneService.getConfigurazione();
 
-		HasOutputStream builder = new DDTListVenditePrinter(vendite, conf);
+		 ddtListVenditePrinter.exec(vendite, conf);
+		
+		ByteArrayOutputStream outputStream = ddtListVenditePrinter.getOutputStream();
+		return outputStream.toByteArray();
+	}
+
+	public byte[] onlyShow(Long id) throws Exception {
+	DDTDTO ddt = ddtService.getDDT(id);
+		HasOutputStream builder = new DDTPrinterRAW(ddt);
 
 		ByteArrayOutputStream outputStream = builder.getOutputStream();
 		return outputStream.toByteArray();
+
 	}
 
 }

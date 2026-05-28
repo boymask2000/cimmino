@@ -22,4 +22,7 @@ public interface VenditeRepository extends JpaRepository<Vendite, Long> {
 	
 	@Query("select v from Vendite v where v.commerciante.commerciante_id=:commId")
 	List<Vendite> findVenditeDiCommerciante( @Param("commId") Long commId) ;
+	
+	@Query("select v from Vendite v where v.commerciante.commerciante_id=:commId and v.ddt is null")
+	List<Vendite> findVenditeDiCommercianteSenzaDDT( @Param("commId") Long commId) ;
 }

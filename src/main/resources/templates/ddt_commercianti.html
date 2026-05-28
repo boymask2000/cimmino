@@ -1,86 +1,168 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+
 <head>
+<meta charset="UTF-8">
 <title>DDT</title>
+
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+	rel="stylesheet">
+
+<link rel="stylesheet"
+	href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 
 <style>
 body {
-	font-family: Arial;
+	background-color: #f5f7fa;
+	font-family: Arial, sans-serif;
 }
 
-table {
-	border-collapse: collapse;
-	width: 80%;
+.page-container {
+	max-width: 1400px;
+	margin: 40px auto;
+	padding: 20px;
 }
 
-td, th {
-	border: 1px solid black;
-	padding: 10px;
+.page-title {
+	font-size: 2rem;
+	font-weight: bold;
+	color: #2c3e50;
+	margin-bottom: 25px;
 }
 
-a {
-	margin-right: 10px;
+.card-custom {
+	background: white;
+	border-radius: 15px;
+	padding: 20px;
+	box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
 }
 
-.btn {
-	padding: 8px 15px;
-	background-color: #3498db;
+.table thead {
+	background-color: #0d6efd;
 	color: white;
-	text-decoration: none;
-	border-radius: 5px;
+}
+
+.table th {
+	vertical-align: middle;
+	white-space: nowrap;
+}
+
+.table td {
+	vertical-align: middle;
+}
+
+.btn-action {
+	min-width: 120px;
+	border-radius: 10px;
+	font-weight: 500;
+}
+
+.table-hover tbody tr:hover {
+	background-color: #f1f5ff;
+}
+
+.empty-message {
+	text-align: center;
+	padding: 40px;
+	color: #6c757d;
+	font-size: 1.1rem;
 }
 </style>
 </head>
 
 <body>
 
-	<h1>DDT</h1>
+	<div class="container-fluid page-container">
 
+		<div class="d-flex justify-content-between align-items-center mb-4">
 
+			<h1 class="page-title">
+				<i class="bi bi-truck"></i> Gestione DDT
+			</h1>
 
-	<table>
+		</div>
 
-		<tr>
+		<div class="card-custom">
 
-			<th>Nome</th>
-			<th>Indirizzo</th>
-			<th>PEC</th>
-			<th>Cod. Fiscale</th>
-			<th>P.Iva</th>
-			<th></th>
-		</tr>
+			<div class="table-responsive">
 
-		<tr th:each="p : ${commercianti}">
+				<table class="table table-hover align-middle">
 
+					<thead>
+						<tr>
+							<th>Nome</th>
+							<th>Indirizzo</th>
+							<th>PEC</th>
+							<th>Cod. Fiscale</th>
+							<th>P. IVA</th>
+							<th class="text-center">Nuovo DDT</th>
+							<th class="text-center">Storico DDT</th>
+						</tr>
+					</thead>
 
+					<tbody>
 
-			<td th:text="${p.name}"></td>
-			<td th:text="${p.indirizzo}"></td>
-			<td th:text="${p.pec}"></td>
-			<td th:text="${p.codFiscale}"></td>
-			<td th:text="${p.pIva}"></td>
-			<td>
-				<div>
-					<a th:href="@{/ddt/vendite_commerciante/{id}(id=${p.commerciante_id})}"
-						class="btn btn-primary btn-sm"> Crea DDT </a>
-				</div>
-			</td>
+						<tr th:if="${#lists.isEmpty(commercianti)}">
+							<td colspan="7" class="empty-message">
+								<i class="bi bi-inbox fs-3"></i>
+								<br>
+								Nessun commerciante trovato
+							</td>
+						</tr>
 
-			<!--         <td> -->
+						<tr th:each="p : ${commercianti}">
 
-			<!--             <a th:href="@{/web/anagrafiche/merce/edit/{id}(id=${p.merce_id})}"> -->
-			<!--                 Modifica -->
-			<!--             </a> -->
+							<td class="fw-semibold" th:text="${p.name}"></td>
 
-			<!--             <a th:href="@{/webanagrafiche/merce/delete/{id}(id=${p.merce_id})}"> -->
-			<!--                 Elimina -->
-			<!--             </a> -->
+							<td th:text="${p.indirizzo}"></td>
 
-			<!--         </td> -->
+							<td>
+								<span class="text-primary" th:text="${p.pec}"></span>
+							</td>
 
-		</tr>
+							<td th:text="${p.codFiscale}"></td>
 
-	</table>
+							<td th:text="${p.pIva}"></td>
+
+							<td class="text-center">
+
+								<a
+									th:href="@{/ddt/vendite_commercianteNoDDT/{id}(id=${p.commerciante_id})}"
+									class="btn btn-success btn-sm btn-action">
+
+									<i class="bi bi-plus-circle"></i>
+									Crea DDT
+
+								</a>
+
+							</td>
+
+							<td class="text-center">
+
+								<a
+									th:href="@{/ddt/vendite_commerciante/{id}(id=${p.commerciante_id})}"
+									class="btn btn-primary btn-sm btn-action">
+
+									<i class="bi bi-file-earmark-text"></i>
+									Visualizza
+
+								</a>
+
+							</td>
+
+						</tr>
+
+					</tbody>
+
+				</table>
+
+			</div>
+
+		</div>
+
+	</div>
 
 </body>
+
 </html>

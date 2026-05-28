@@ -10,14 +10,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.cimmino.shop.database.Arrivi;
 import com.cimmino.shop.database.ArriviRepository;
-import com.cimmino.shop.database.dto.ArriviDTO;
 import com.cimmino.shop.service.print.PdfService;
 
 import jakarta.annotation.PostConstruct;
@@ -83,6 +81,14 @@ public class PdfController {
 	public ResponseEntity<byte[]> ddtForVendite(@RequestParam List<Long> ids, Model model) throws Exception {
 
 		byte[] pdf = pdfService.generateDDT4Vendite(ids);
+
+		return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=ddt.pdf")
+				.contentType(MediaType.APPLICATION_PDF).body(pdf);
+	}
+	@GetMapping("/ddt/showddt")
+	public ResponseEntity<byte[]> showddt(@RequestParam Long id, Model model) throws Exception {
+
+		byte[] pdf = pdfService.onlyShow(id);
 
 		return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=ddt.pdf")
 				.contentType(MediaType.APPLICATION_PDF).body(pdf);

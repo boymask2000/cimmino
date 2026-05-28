@@ -3,7 +3,6 @@ package com.cimmino.shop.mappers;
 import java.util.List;
 
 import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
 
 import com.cimmino.shop.database.Arrivi;
 import com.cimmino.shop.database.BinsArrivi;
