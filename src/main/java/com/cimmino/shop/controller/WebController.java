@@ -25,6 +25,8 @@ import com.cimmino.shop.mappers.BinMapper;
 import com.cimmino.shop.service.ArriviService;
 import com.cimmino.shop.service.MovimentiBinService;
 
+import jakarta.servlet.http.HttpSession;
+
 @Controller
 @RequestMapping("/web")
 public class WebController {
@@ -85,14 +87,21 @@ public class WebController {
 
 		return "stampeGlobali";
 	}
-	
-
-
 
 	List<Arrivi> risultati = new ArrayList<Arrivi>();
 
 	@GetMapping("/filter")
-	public String filter(@RequestParam LocalDate startDate, @RequestParam LocalDate endDate, Model model) {
+	public String filter(@RequestParam LocalDate startDate, //
+			@RequestParam LocalDate endDate, //
+			HttpSession session, //
+			Model model) {
+		
+		if (startDate != null) {
+			session.setAttribute("startDate", startDate);
+		}
+		if (endDate != null) {
+			session.setAttribute("endDate", endDate);
+		}
 
 		risultati = arriviRepository.cerca(startDate, endDate);
 
@@ -101,13 +110,11 @@ public class WebController {
 		model.addAttribute("results", risultati);
 		model.addAttribute("startDate", startDate);
 		model.addAttribute("endDate", endDate);
-		
-		arriviService.calcNumTotaleBins( risultati);
+
+		arriviService.calcNumTotaleBins(risultati);
 
 		return "arrivi2";
 	}
-
-
 
 	@PostMapping("/arrivi/save")
 	public String save(@ModelAttribute Arrivi arrivo, RedirectAttributes redirectAttributes) {
@@ -119,16 +126,15 @@ public class WebController {
 
 			return "redirect:/web/arrivi/new";
 		}
-		
 
 		// ✔ collega figli al parent
 		for (BinsArrivi b : arrivo.getBins()) {
 			b.setArrivo(arrivo);
 		}
-	//	arriviService.eseguiCalcoli(arrivo);
+		// arriviService.eseguiCalcoli(arrivo);
 
 		arriviRepository.save(arrivo);
-		
+
 		movimentiBinService.register(arrivo);
 
 		redirectAttributes.addFlashAttribute("msg", "Arrivo salvato correttamente");
@@ -139,19 +145,16 @@ public class WebController {
 	@GetMapping("/arrivi/new")
 	public String newArrivo(Model model) {
 
-	    Arrivi arrivo = new Arrivi();
-	    arrivo.setData(LocalDate.now());
-	    arrivo.setBins(new ArrayList<>());
+		Arrivi arrivo = new Arrivi();
+		arrivo.setData(LocalDate.now());
+		arrivo.setBins(new ArrayList<>());
 
-	    model.addAttribute("arrivo", arrivo);
-	    model.addAttribute("listamerce", merceRepository.findAll());
+		model.addAttribute("arrivo", arrivo);
+		model.addAttribute("listamerce", merceRepository.findAll());
 
-	    // 🔥 FIX IMPORTANTE: DTO NON ENTITY
-	    model.addAttribute(
-	        "binsList",
-	        binMapper.toDtoList(binRepository.findAll())
-	    );
+		// 🔥 FIX IMPORTANTE: DTO NON ENTITY
+		model.addAttribute("binsList", binMapper.toDtoList(binRepository.findAll()));
 
-	    return "new_arrivo";
+		return "new_arrivo";
 	}
 }

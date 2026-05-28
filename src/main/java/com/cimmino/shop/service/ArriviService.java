@@ -3,6 +3,7 @@ package com.cimmino.shop.service;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -125,5 +126,17 @@ public class ArriviService {
 			}
 		}
 
+	}
+	@Transactional
+	public void delete(Long id) {
+		 Optional<Arrivi> opt = arriviRepository.findById(id);
+		 if(opt.isEmpty())return;
+		 Arrivi arrivo = opt.get();
+		 
+		List<BinsArrivi> bins = arrivo.getBins();
+		for(BinsArrivi bin:bins )
+		binArriviService.delete(bin);
+		 
+		arriviRepository.delete(arrivo);
 	}
 }

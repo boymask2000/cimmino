@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.cimmino.shop.database.Arrivi;
 import com.cimmino.shop.database.ArriviRepository;
 import com.cimmino.shop.database.BinsArrivi;
+import com.cimmino.shop.database.BinsArriviRepository;
 import com.cimmino.shop.database.BinsVendite;
 import com.cimmino.shop.database.Vendite;
 import com.cimmino.shop.database.VenditeRepository;
@@ -17,7 +18,8 @@ import com.cimmino.shop.database.VenditeRepository;
 public class BinArriviService {
 	@Autowired
 	private VenditeRepository venditeRepository;
-
+	@Autowired
+	BinsArriviRepository binsArriviRepository;
 	@Autowired
 	private ArriviRepository arriviRepository;
 
@@ -57,5 +59,10 @@ public class BinArriviService {
 			}
 		}
 		return ret;
+	}
+
+	public void delete(BinsArrivi bin) {
+		binsArriviRepository.delete(bin);
+		
 	}
 }
