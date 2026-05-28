@@ -33,7 +33,8 @@ public class ArriviService {
 
 	@Autowired
 	BinArriviService binArriviService;
-
+	@Autowired
+	MovimentiBinService movimentiBinService;
 	@Autowired
 	private BinsArriviRepository binsArriviRepository;
 	@Autowired
@@ -132,6 +133,8 @@ public class ArriviService {
 		 Optional<Arrivi> opt = arriviRepository.findById(id);
 		 if(opt.isEmpty())return;
 		 Arrivi arrivo = opt.get();
+		 
+		 movimentiBinService.unregister(arrivo, "Cancellazione Arrivo");
 		 
 		List<BinsArrivi> bins = arrivo.getBins();
 		for(BinsArrivi bin:bins )

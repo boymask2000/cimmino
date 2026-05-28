@@ -25,6 +25,8 @@ public class MovimentoBin {
 
 	private int inout = 0; // 0 == OUT -- 1 == IN
 
+	private String descrizione;
+	
 	public Long getId() {
 		return id;
 	}
@@ -67,6 +69,14 @@ public class MovimentoBin {
 
 	public void setBinName(String binName) {
 		this.binName = binName;
+	}
+
+	public String getDescrizione() {
+		return descrizione;
+	}
+
+	public void setDescrizione(String descrizione) {
+		this.descrizione = descrizione;
 	}
 
 

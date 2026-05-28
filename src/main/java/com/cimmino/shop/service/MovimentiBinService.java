@@ -91,4 +91,28 @@ public class MovimentiBinService {
 	        return movimentiBinRepository.findAll(spec);
 
 	}
+
+	public void unregister(Arrivi arrivo, String descr) {
+		List<BinsArrivi> binsA = binsArriviRepository.findByArrivo_Id(arrivo.getId());
+		arrivo.setBins(binsA);
+
+		for (BinsArrivi binArrivo : arrivo.getBins()) {
+
+			MovimentoBin mov = new MovimentoBin();
+
+			Optional<Bin> optBin = binRepository.findById(binArrivo.getBin().getId());
+			if (optBin.isPresent()) {
+				Bin bin = optBin.get();
+				mov.setBinName(bin.getName());
+			}
+
+			mov.setData(LocalDate.now());
+
+			mov.setInout(0);
+			mov.setDescrizione(descr);
+			mov.setNumBins(binArrivo.getNumBins());
+			movimentiBinRepository.save(mov);
+		}
+		
+	}
 }

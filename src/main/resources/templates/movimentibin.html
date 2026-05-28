@@ -143,6 +143,7 @@
 								<th>Bin</th>
 								<th>Num</th>
 								<th>Mov</th>
+								<th>Note</th>
 							</tr>
 						</thead>
 
@@ -153,6 +154,7 @@
 								<td th:text="${op.binName}"></td>
 								<td th:text="${op.numBins}"></td>
 								<td th:text="${op.inout==0?'Uscita':'Ingresso'}"></td>
+								<td th:text="${op.descrizione}"></td>
 							</tr>
 						</tbody>
 
