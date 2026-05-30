@@ -2,6 +2,7 @@ package com.cimmino.shop.service.print;
 
 import java.io.ByteArrayOutputStream;
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +11,7 @@ import org.springframework.stereotype.Component;
 import com.cimmino.shop.database.BinsVendite;
 import com.cimmino.shop.database.Commerciante;
 import com.cimmino.shop.database.Configurazione;
-import com.cimmino.shop.database.Vendite;
+import com.cimmino.shop.database.Vendita;
 import com.cimmino.shop.database.dto.DDTDTO;
 import com.cimmino.shop.service.DDTService;
 import com.cimmino.shop.service.VenditeService;
@@ -24,17 +25,18 @@ public class DDTListVenditePrinter extends BasePrinter implements HasOutputStrea
 	VenditeService venditeService;
 
 	private Configurazione conf;
-	private List<Vendite> vendite;
+	private List<Vendita> vendite;
 	private Commerciante commerciante;
 
-	
-	public void exec(List<Vendite> vendite, Configurazione conf) throws Exception{
+	public void exec(List<Vendita> vendite, Configurazione conf) throws Exception {
 
 		this.conf = conf;
 		this.vendite = vendite;
-		if(vendite.size()>0)
-			this.commerciante=vendite.get(0).getCommerciante();
-		String html = buildHtml();
+		if (vendite.size() > 0)
+			this.commerciante = vendite.get(0).getCommerciante();
+
+		DDTDTO dto1 = ddtService.create("");
+		String html = buildHtml(dto1);
 
 		outputStream = new ByteArrayOutputStream();
 
@@ -43,18 +45,18 @@ public class DDTListVenditePrinter extends BasePrinter implements HasOutputStrea
 		builder.withHtmlContent(html, null);
 		builder.toStream(outputStream);
 		builder.run();
-		
+
 		DDTDTO dto = ddtService.create(html);
 		Long ddtId = dto.getId();
-		for (Vendite vendita : vendite) {
-			
-			vendita.setDdt(""+ddtId);
+		for (Vendita vendita : vendite) {
+
+			vendita.setDdt("" + ddtId);
 			venditeService.save(vendita);
 		}
-		
+
 	}
 
-	private String buildHtml() {
+	private String buildHtml(DDTDTO dto1) {
 
 		StringBuilder html = new StringBuilder();
 
@@ -120,7 +122,7 @@ public class DDTListVenditePrinter extends BasePrinter implements HasOutputStrea
 				                    <body>
 				                """);
 
-		html.append(makeTestata1());
+		html.append(makeTestata1(dto1));
 		html.append(makeTestata2());
 		html.append(makeTestata3());
 		html.append(makeTestata4());
@@ -169,7 +171,10 @@ public class DDTListVenditePrinter extends BasePrinter implements HasOutputStrea
 		out.append("<h4>");
 		out.append("1 Incaricato del trasporto (DITTA, INDIRIZZO, N.ALBO)");
 		out.append("</h4>");
-
+		out.append("<br/>");
+		out.append("<br/>");
+		out.append("<br/>");
+		out.append("<br/>");
 		out.append("</td>");
 		out.append("<td>");
 		out.append("<h4>");
@@ -196,9 +201,9 @@ public class DDTListVenditePrinter extends BasePrinter implements HasOutputStrea
 		out.append("</thead> ");
 		out.append("<tbody>");
 		int totColli = 0;
-		int numRows=0;
+		int numRows = 0;
 		BigDecimal totPeso = BigDecimal.ZERO;
-		for (Vendite vendita : vendite)
+		for (Vendita vendita : vendite)
 			for (BinsVendite b : vendita.getBins()) {
 				out.append("<tr>");
 				out.append("<td>");
@@ -219,21 +224,21 @@ public class DDTListVenditePrinter extends BasePrinter implements HasOutputStrea
 				out.append("</tr>");
 				numRows++;
 			}
-		for(int i=0; i<10- numRows; i++) {
+		for (int i = 0; i < 10 - numRows; i++) {
 			out.append("<tr>");
 			out.append("<td>");
-		
+
 			out.append("</td>");
 			out.append("<td>");
-			
+
 			out.append("</td>");
 			out.append("<td>");
-			
+
 			out.append("</td>");
 			out.append("<td>");
-		
+
 			out.append("</td>");
-			
+
 			out.append("</tr>");
 		}
 		out.append("</tbody>");
@@ -305,7 +310,7 @@ public class DDTListVenditePrinter extends BasePrinter implements HasOutputStrea
 
 	private String makeTestata3() {
 		StringBuilder out = new StringBuilder();
-	
+
 		out.append("<table>");
 		out.append("<tr>");
 
@@ -313,7 +318,9 @@ public class DDTListVenditePrinter extends BasePrinter implements HasOutputStrea
 		out.append(commerciante.getName());
 		out.append("<br/>" + clean(commerciante.getIndirizzo()));
 		out.append("</td>");
-
+		out.append("<td>");
+		out.append("Luogo di destinazione");
+		out.append("</td>");
 		out.append("</tr>");
 		out.append("</table>");
 
@@ -322,10 +329,25 @@ public class DDTListVenditePrinter extends BasePrinter implements HasOutputStrea
 
 	private String makeTestata2() {
 		StringBuilder out = new StringBuilder();
+		out.append("<table>");
+
+		out.append("<tr>");
+
+		out.append("<td>");
+		out.append("<br/>");
+		out.append("<br/>");
+		out.append("<br/>");
+		out.append("<br/>");
+		out.append("<br/>");
+		out.append("<br/>");
+		out.append("</td>");
+
+		out.append("</tr>");
+		out.append("</table>");
 		return out.toString();
 	}
 
-	private String makeTestata1() {
+	private String makeTestata1(DDTDTO dto1) {
 		StringBuilder out = new StringBuilder();
 
 		out.append("<table>");
@@ -338,7 +360,7 @@ public class DDTListVenditePrinter extends BasePrinter implements HasOutputStrea
 		out.append("</td>");
 
 		out.append("<td>");
-		insertTestataDestra(out);
+		insertTestataDestra(out, dto1);
 		out.append("</td>");
 
 		out.append("</tr>");
@@ -346,15 +368,27 @@ public class DDTListVenditePrinter extends BasePrinter implements HasOutputStrea
 		return out.toString();
 	}
 
-	private void insertTestataDestra(StringBuilder out) {
+	private void insertTestataDestra(StringBuilder out, DDTDTO dto) {
 		out.append("<h2>");
 		out.append("D.T.T.  SCHEDA DI TRASPORTO");
 		out.append("</h2>");
+		out.append("Trasporto a mezzo Vettore");
+		out.append("<table>");
 
+		out.append("<tr>");
+
+		out.append("<td>");
 		out.append("<h2>");
-	//	out.append("N." + conf.getId() + " Del " + vendita.getData());
+		out.append("N." + dto.getId());
 		out.append("</h2>");
-
+		out.append("</td>");
+		out.append("<td>");
+		out.append("<h2>");
+		out.append("Del " + LocalDate.now());
+		out.append("</h2>");
+		out.append("</td>");
+		out.append("</tr>");
+		out.append("</table>");
 	}
 
 	private void insertAzienda(StringBuilder out) {
@@ -375,4 +409,3 @@ public class DDTListVenditePrinter extends BasePrinter implements HasOutputStrea
 		out.append("</p>");
 	}
 }
-	

@@ -9,7 +9,8 @@ public class ArriviDTO {
 	 private Long id;
 	    private LocalDate data;
 
-	    private MerceDTO merce;
+	    private Long merceId;
+	    private String merceNome;
 
 	    private BigDecimal peso_lordo;
 	    private BigDecimal peso_netto;
@@ -97,13 +98,7 @@ public class ArriviDTO {
 		this.intestazione_merce = intestazione_merce;
 	}
 
-	public MerceDTO getMerce() {
-		return merce;
-	}
 
-	public void setMerce(MerceDTO merce) {
-		this.merce = merce;
-	}
 
 	public BigDecimal getMedia() {
 		return media;
@@ -127,5 +122,21 @@ public class ArriviDTO {
 
 	public void setVendite(List<VenditaDTO> vendite) {
 		this.vendite = vendite;
+	}
+
+	public Long getMerceId() {
+		return merceId;
+	}
+
+	public void setMerceId(Long merceId) {
+		this.merceId = merceId;
+	}
+
+	public String getMerceNome() {
+		return merceNome;
+	}
+
+	public void setMerceNome(String merceNome) {
+		this.merceNome = merceNome;
 	}
 }

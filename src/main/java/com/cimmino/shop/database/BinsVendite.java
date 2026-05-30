@@ -33,7 +33,7 @@ public class BinsVendite {
 
 	@ManyToOne
 	@JoinColumn(name = "vendite_id")
-	private Vendite vendita;
+	private Vendita vendita;
 
 	public Long getId() {
 		return id;
@@ -53,11 +53,11 @@ public class BinsVendite {
 
 	
 
-	public Vendite getVendita() {
+	public Vendita getVendita() {
 		return vendita;
 	}
 
-	public void setVendita(Vendite vendita) {
+	public void setVendita(Vendita vendita) {
 		this.vendita = vendita;
 	}
 

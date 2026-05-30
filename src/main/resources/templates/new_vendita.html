@@ -21,8 +21,11 @@
 		<form th:action="@{/web/vendita/save}" th:object="${vendita}"
 			method="post" id="venditaForm">
 
-<input type="hidden" name="binsJson" id="binsJson">
-<input type="hidden" name="prezzoFrigo" id="prezzoFrigo" th:value="${configurazione.prezzoFrigo}">
+			<input type="hidden" name="binsJson" id="binsJson"> <input
+				type="hidden" name="prezzoFrigoxFreddo" id="prezzoFrigoxFreddo"
+				th:value="${configurazione.prezzoFrigoxFreddo}"> <input
+				type="hidden" name="prezzoFrigoxCaldo" id="prezzoFrigoxCaldo"
+				th:value="${configurazione.prezzoFrigoxCaldo}">
 			<!-- ARRIVO ID (OBBLIGATORIO) -->
 			<input type="hidden" name="arrivoId" id="arrivoId"
 				th:value="${arrivo.id}">
@@ -62,6 +65,17 @@
 					<input type="number" th:field="*{peso_lordo}" class="form-control">
 				</div>
 			</div>
+		
+			<div class="form-check mb-3" th:if="${!gruppoVenditePresente}">
+				<input class="form-check-input" type="checkbox" name="creaGruppo"
+					id="creaGruppo"> <label class="form-check-label"
+					for="creaGruppo"> Crea gruppo vendite </label>
+			</div>
+			<div class="form-check mb-3" th:if="${gruppoVenditePresente}">
+				<input class="form-check-input" type="checkbox" name="joinGruppo"
+					id="joinGruppo"> <label class="form-check-label"
+					for="joinGruppo"> Unisci a Gruppo Vendite </label>
+			</div>
 
 			<div class="row mb-3">
 				<label class="col-sm-3 col-form-label">Netto di Tara</label>
@@ -72,7 +86,8 @@
 			<div class="row mb-3">
 				<label class="col-sm-3 col-form-label">Netto di Scarto</label>
 				<div class="col-sm-9">
-					<input type="number" th:field="*{nettoDiScarto}" class="form-control" step="0.01">
+					<input type="number" th:field="*{nettoDiScarto}"
+						class="form-control" step="0.01">
 				</div>
 			</div>
 
@@ -88,7 +103,7 @@
 				<label class="form-label">Scarto (%)</label> <input type="number"
 					name="scarto" id="scarto" class="form-control" step="0.01">
 			</div>
-			
+
 			<!-- SCARTO -->
 
 			<!-- IMPORTO -->
@@ -96,10 +111,16 @@
 				<label class="form-label">Importo</label> <input type="number"
 					name="importo" id="importo" class="form-control" readonly>
 			</div>
-			
+
 			<div class="mb-3">
-				<label class="form-label">Frigo</label> <input type="number"
-					name="frigo" id="frigo" class="form-control" readonly>
+				<label class="form-label">Frigo per Caldo</label> <input
+					type="number" name="frigoxCaldo" id="frigoxCaldo"
+					class="form-control" readonly>
+			</div>
+			<div class="mb-3">
+				<label class="form-label">Frigo per Freddo</label> <input
+					type="number" name="frigoxFreddo" id="frigoxFreddo"
+					class="form-control" readonly>
 			</div>
 
 			<button type="submit" class="btn btn-success">Salva Vendita
@@ -119,7 +140,34 @@
 </script>
 	<script>
 
-	  
+	document.getElementById("creaGruppo")?.addEventListener("change", function () {
+
+	    const pesoLordoInput = document.querySelector('[name="peso_lordo"]');
+	    if (!pesoLordoInput) return;
+
+	    if (this.checked) {
+
+	        pesoLordoInput.value = 0;
+	        pesoLordoInput.disabled = true;
+
+	        // stile grigio
+	        pesoLordoInput.classList.add("bg-light");
+	        pesoLordoInput.classList.add("text-muted");
+
+	    } else {
+
+	        pesoLordoInput.disabled = false;
+
+	        // rimuove stile grigio
+	        pesoLordoInput.classList.remove("bg-light");
+	        pesoLordoInput.classList.remove("text-muted");
+
+	        // opzionale: ricalcolo automatico
+	        if (typeof aggiornaTotali === "function") {
+	            aggiornaTotali();
+	        }
+	    }
+	});
 
 	    async function checkAvailability(row) {
 
@@ -167,56 +215,88 @@
 
 	    function aggiornaTotali() {
 
-	        let totale = 0;
+	        let totaleQta = 0;
 	        let totaleLordo = 0;
 	        let totaleNetto = 0;
 	        let totaleTara = 0;
 
 	        document.querySelectorAll(".bin-row").forEach(row => {
 
-	            const qty =
-	                parseFloat(row.querySelector(".numBins").value) || 0;
+	            const qty = Number(row.querySelector(".numBins")?.value) || 0;
+	            const lordo = Number(row.querySelector(".pesoLordo")?.value) || 0;
+	            const netto = Number(row.querySelector(".pesoNetto")?.value) || 0;
 
-	            totale += qty;
-	            
-	            const l = parseFloat(row.querySelector('.pesoLordo')?.value) || 0;
-	            const n = parseFloat(row.querySelector('.pesoNetto')?.value) || 0;
-	            
-	            totaleTara += l - n;
+	            totaleQta += qty;
+	            totaleLordo += lordo;
+	            totaleNetto += netto;
 
-	            totaleLordo += l;
-	            totaleNetto += n;
+	            totaleTara += (lordo - netto);
 	        });
+
+	        // ===== INPUT REFERENCES =====
 	        const lordoInput = document.querySelector('[name="peso_lordo"]');
-	        const nettoDiTara = document.querySelector('[name="nettoDiTara"]');
-	        const scarto = document.querySelector('[name="scarto"]');
-	        const prezzo =
-	            parseFloat(document.getElementById("prezzo").value) || 0;
-	        
-	        const nettoDiScarto = nettoDiTara.value *( 1 - scarto.value/100)
-	        
+	        const nettoTaraInput = document.querySelector('[name="nettoDiTara"]');
+	        const nettoScartoInput = document.querySelector('[name="nettoDiScarto"]');
+	        const scartoInput = document.getElementById("scarto");
+	        const prezzoInput = document.getElementById("prezzo");
 
-	        if (lordoInput) lordoInput.value = totaleLordo;
-	        if (nettoDiTara) nettoDiTara.value = totaleNetto ;
-	        
-	        
-	        document.getElementById("nettoDiScarto").value = nettoDiScarto.toFixed(2);
+	        const prezzoFrigoCaldoInput = document.getElementById("prezzoFrigoxCaldo");
+	        const prezzoFrigoFreddoInput = document.getElementById("prezzoFrigoxFreddo");
 
-	        document.getElementById("nBins").value = totale;
-	        
-	        const importo =
-	            prezzo * nettoDiScarto;
-	        document.getElementById("importo").value =
-	            importo.toFixed(2);
-	        
-	        const prezzoFrigo = document.getElementById("prezzoFrigo");
-	        
-	        const frigo = (totaleLordo - (totaleTara/2))*prezzoFrigo.value;
-	        document.getElementById("frigo").value = frigo.toFixed(2) ;
+	        // ===== SAFE PARSE =====
+	        const prezzo = Number(prezzoInput?.value) || 0;
+	        const scartoPerc = Number(scartoInput?.value) || 0;
 
-	        calcImporto();
+	        const prezzoCaldo = Number(prezzoFrigoCaldoInput?.value) || 0;
+	        const prezzoFreddo = Number(prezzoFrigoFreddoInput?.value) || 0;
+
+	        // ===== TOTALI =====
+	        if (lordoInput) {
+	            lordoInput.value = totaleLordo.toFixed(2);
+	        }
+
+	        if (nettoTaraInput) {
+	            nettoTaraInput.value = totaleNetto.toFixed(2);
+	        }
+
+	        // ===== NETTO SCONTATO =====
+	        const nettoDiScarto = totaleNetto * (1 - scartoPerc / 100);
+
+	        if (nettoScartoInput) {
+	            nettoScartoInput.value = nettoDiScarto.toFixed(2);
+	        }
+
+	        // ===== IMPORTO =====
+	        const importo = prezzo * nettoDiScarto;
+
+	        const importoInput = document.getElementById("importo");
+	        if (importoInput) {
+	            importoInput.value = importo.toFixed(2);
+	        }
+
+	        // ===== FRIGO =====
+	        const baseFrigo = totaleLordo - (totaleTara / 2);
+
+	        const frigoxCaldo = baseFrigo * prezzoCaldo;
+	        const frigoxFreddo = baseFrigo * prezzoFreddo;
+
+	        const frigoxCaldoInput = document.getElementById("frigoxCaldo");
+	        const frigoxFreddoInput = document.getElementById("frigoxFreddo");
+
+	        if (frigoxCaldoInput) {
+	            frigoxCaldoInput.value = frigoxCaldo.toFixed(2);
+	        }
+
+	        if (frigoxFreddoInput) {
+	            frigoxFreddoInput.value = frigoxFreddo.toFixed(2);
+	        }
+
+	        // ===== COUNT BINS =====
+	        const nBinsInput = document.getElementById("nBins");
+	        if (nBinsInput) {
+	            nBinsInput.value = totaleQta;
+	        }
 	    }
-
 	    function calcImporto() {
 
 	 
@@ -274,11 +354,11 @@
 	            </div>
 
 	            <div class="col-md-2">
-	                <input type="number" class="form-control pesoLordo" readonly>
+	                <input type="number" class="form-control pesoLordo" >
 	            </div>
 
 	            <div class="col-md-2">
-	                <input type="number" class="form-control pesoNetto" readonly>
+	                <input type="number" class="form-control pesoNetto" >
 	            </div>
 
 	            <div class="col-md-3">
@@ -313,6 +393,23 @@
 	        });
 
 	        index++;
+	        const pesoLordo = row.querySelector(".pesoLordo");
+	     //   const binSelect = row.querySelector(".binSelect");
+
+	        function handler() {
+	            aggiornaPesi(row);
+	            checkAvailability(row);
+	        }
+
+	        // già presenti
+	        numBins.addEventListener("input", handler);
+	        binSelect.addEventListener("change", handler);
+
+	        // 🔥 AGGIUNGI QUESTO
+	        pesoLordo.addEventListener("input", function () {
+	            aggiornaPesoDaLordo(row);
+	            aggiornaTotali();
+	        });
 	    }
 	    function removeRow(btn) {
 
@@ -320,7 +417,37 @@
 
 	        aggiornaTotali();
 	    }
+	    document.getElementById("venditaForm")
+	    .addEventListener("submit", function(e){
 
+	        if(document.querySelectorAll(".bin-row").length === 0){
+	            e.preventDefault();
+	            alert("Inserire almeno un bin");
+	            return;
+	        }
+	        const invalid =
+		        document.querySelector(".numBins.is-invalid");
+
+		    if(invalid){
+		        e.preventDefault();
+		        alert("Quantità non disponibile");
+		        return;
+		    }
+		     invalid = Array.from(document.querySelectorAll(".pesoLordo"))
+	        .some(i => Number(i.value) <= 0);
+
+	    if (invalid) {
+	        e.preventDefault();
+	        alert("Il peso lordo deve essere maggiore di 0 per ogni bin");
+	        return;
+	    }
+	    });
+	    
+	    
+	    
+	
+	    
+	    
 	    document.addEventListener("DOMContentLoaded", function () {
 
 	        document.getElementById("prezzo")
@@ -355,6 +482,23 @@
 
 	        document.getElementById("binsJson").value = JSON.stringify(bins);
 	    });
+	    function aggiornaPesoDaLordo(row) {
+
+	        const qta = Number(row.querySelector('.numBins')?.value) || 0;
+	        const binId = row.querySelector('.binSelect')?.value;
+
+	        const bin = binsList.find(b => String(b.id) === String(binId));
+
+	        if (!bin || qta <= 0) return;
+
+	        const tara = Number(bin.tara) || 0;
+
+	        const lordo = Number(row.querySelector('.pesoLordo')?.value) || 0;
+
+	        const netto = lordo - (tara * qta);
+
+	        row.querySelector('.pesoNetto').value = netto.toFixed(2);
+	    }
 </script>
 </body>
 </html>

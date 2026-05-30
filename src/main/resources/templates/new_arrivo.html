@@ -15,7 +15,7 @@
 	<div class="container mt-4">
 
 		<h1 class="text-center mb-4">Inserisci Arrivo</h1>
-
+<p th:if="${msg}" th:text="${msg}"></p>
 		<form th:action="@{/web/arrivi/save}" th:object="${arrivo}"
 			method="post">
 
@@ -63,12 +63,7 @@
 				</div>
 			</div>
 
-			<div class="row mb-3">
-				<label class="col-sm-3 col-form-label">Calo</label>
-				<div class="col-sm-9">
-					<input type="number" th:field="*{calo}" class="form-control">
-				</div>
-			</div>
+			
 			<div class="row mb-3"> <label class="col-sm-3 col-form-label">Media</label>
 			<div class="col-sm-9">
 				<input type="number" th:field="*{media}" class="form-control">
@@ -154,7 +149,34 @@ function aggiornaPesi(el) {
 
     aggiornaTotali();
 }
+function aggiornaPesoNetto(el) {
 
+    const row = el.closest('.bin-row');
+    if (!row) return;
+
+    const qta = Number(row.querySelector('.numBins')?.value) || 0;
+    const binId = row.querySelector('.binSelect')?.value;
+
+    const bin = binsList.find(b => String(b.id) === String(binId));
+
+    if (!bin || qta <= 0) {
+        aggiornaTotali();
+        return;
+    }
+
+    const tara = Number(bin.tara) || 0;
+
+    const lordo = Number(row.querySelector('.pesoLordo').value) || 0;
+
+    const netto = lordo - (tara * qta);
+
+    row.querySelector('.pesoNetto').value = netto.toFixed(2);
+
+    document.querySelector('[name="media"]').value =
+        (lordo / qta).toFixed(2);
+
+    aggiornaTotali();
+}
 function addBin() {
 
     const container = document.getElementById("binsContainer");
@@ -187,7 +209,7 @@ function addBin() {
         <div class="col-md-2">
             <input type="number" class="form-control pesoLordo" 
             	name="bins[${index}].pesoLordo"
-            onchange="aggiornaTotali()">
+            onchange="aggiornaTotali(),aggiornaPesoNetto(this)">
         </div>
 
         <div class="col-md-2">

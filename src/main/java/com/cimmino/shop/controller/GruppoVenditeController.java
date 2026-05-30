@@ -1,0 +1,90 @@
+package com.cimmino.shop.controller;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.cimmino.shop.database.BinsVendite;
+import com.cimmino.shop.database.BinsVenditeRepository;
+import com.cimmino.shop.database.GruppoVendite;
+import com.cimmino.shop.database.GruppoVenditeRepository;
+import com.cimmino.shop.database.Vendita;
+import com.cimmino.shop.database.VenditeRepository;
+
+@Controller
+@RequestMapping("/gruppovendite")
+public class GruppoVenditeController {
+	@Autowired
+	VenditeRepository venditeRepository;
+	@Autowired
+	GruppoVenditeRepository gruppoVenditeRepository;
+	@Autowired
+	BinsVenditeRepository binsVenditeRepository;
+
+	@GetMapping("/show/{id}")
+	public String showGruppo(@PathVariable Long id, Model model) {
+		Optional<Vendita> opven = venditeRepository.findById(id);
+		if (opven.isEmpty())
+			return "";
+		Vendita ven = opven.get();
+		GruppoVendite gruppo = ven.getGruppoVendite();
+
+		model.addAttribute("gruppo", gruppo);
+
+		return "handle_gruppo";
+	}
+
+	@PostMapping("/save")
+	public String save(@ModelAttribute GruppoVendite gr, Model model) {
+		GruppoVendite gruppo = gruppoVenditeRepository.findById(gr.getId()).get();
+		List<Vendita> vendite = venditeRepository.findByGruppoVendite(gruppo);
+
+		List<BinsVendite> bins = new ArrayList<>();
+		Vendita unaVendita = vendite.get(0);
+		for (Vendita ven : vendite) {
+			System.out.println(ven.getPeso_lordo());
+			bins.addAll(ven.getBins());
+		}
+
+		Vendita venditaTotale = new Vendita();
+		venditaTotale.setArrivo(unaVendita.getArrivo());
+		venditaTotale.setBins(bins);
+		venditaTotale.setPeso_lordo(gr.getPesoLordoTotale());
+		venditaTotale.setCommerciante(unaVendita.getCommerciante());
+		venditaTotale.setData(unaVendita.getData());
+		venditaTotale = venditeRepository.save(venditaTotale);
+
+		for (Vendita ven : vendite) {
+			List<BinsVendite> binss = ven.getBins();
+			for (BinsVendite binVen : binss) {
+				binVen.setVendita(venditaTotale);
+				binsVenditeRepository.save(binVen);
+			}
+			bins.addAll(ven.getBins());
+		}
+		venditeRepository.save(venditaTotale);
+		model.addAttribute("gruppo", gruppo);
+
+		return "handle_gruppo";
+	}
+//
+//	@GetMapping("/merge")
+//	public String merge(Model model) {
+//
+//		Master master = new Master();
+//
+//		model.addAttribute("master", master);
+//
+//		return "getMasterAddress";
+//	}
+
+}

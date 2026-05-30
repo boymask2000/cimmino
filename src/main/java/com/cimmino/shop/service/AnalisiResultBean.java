@@ -3,13 +3,13 @@ package com.cimmino.shop.service;
 import java.math.BigDecimal;
 import java.util.List;
 
-import com.cimmino.shop.database.Vendite;
+import com.cimmino.shop.database.Vendita;
 import com.cimmino.shop.database.dto.ArriviDTO;
 
 public class AnalisiResultBean {
 	private ArriviDTO arrivo;
 
-	private List<Vendite> vendite;
+	private List<Vendita> vendite;
 	
 	private BigDecimal totPesoLordoArrivo;
 	private BigDecimal totPesoNettoArrivo;
@@ -24,10 +24,10 @@ public class AnalisiResultBean {
 	public void setArrivo(ArriviDTO arrivo) {
 		this.arrivo = arrivo;
 	}
-	public List<Vendite> getVendite() {
+	public List<Vendita> getVendite() {
 		return vendite;
 	}
-	public void setVendite(List<Vendite> vendite) {
+	public void setVendite(List<Vendita> vendite) {
 		this.vendite = vendite;
 	}
 	public BigDecimal getTotPesoLordoArrivo() {

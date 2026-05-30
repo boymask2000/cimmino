@@ -21,9 +21,14 @@ public class Configurazione {
 	private String codFiscale;
 	private String pIva;
 	
-	private BigDecimal prezzoFrigo ;
+	private BigDecimal prezzoFrigoxCaldo ;
+	private BigDecimal prezzoFrigoxFreddo ;
 	
 	private String installationId;
+	
+	private String ruolo;
+	
+	private String ggn;
 
 	public Long getId() {
 		return id;
@@ -33,13 +38,7 @@ public class Configurazione {
 		this.id = id;
 	}
 
-	public BigDecimal getPrezzoFrigo() {
-		return prezzoFrigo;
-	}
 
-	public void setPrezzoFrigo(BigDecimal prezzoFrigo) {
-		this.prezzoFrigo = prezzoFrigo;
-	}
 
 	public String getInstallationId() {
 		return installationId;
@@ -87,5 +86,37 @@ public class Configurazione {
 
 	public void setpIva(String pIva) {
 		this.pIva = pIva;
+	}
+
+	public String getRuolo() {
+		return ruolo;
+	}
+
+	public void setRuolo(String ruolo) {
+		this.ruolo = ruolo;
+	}
+
+	public String getGgn() {
+		return ggn;
+	}
+
+	public void setGgn(String ggn) {
+		this.ggn = ggn;
+	}
+
+	public BigDecimal getPrezzoFrigoxCaldo() {
+		return prezzoFrigoxCaldo;
+	}
+
+	public void setPrezzoFrigoxCaldo(BigDecimal prezzoFrigoxCaldo) {
+		this.prezzoFrigoxCaldo = prezzoFrigoxCaldo;
+	}
+
+	public BigDecimal getPrezzoFrigoxFreddo() {
+		return prezzoFrigoxFreddo;
+	}
+
+	public void setPrezzoFrigoxFreddo(BigDecimal prezzoFrigoxFreddo) {
+		this.prezzoFrigoxFreddo = prezzoFrigoxFreddo;
 	}
 }

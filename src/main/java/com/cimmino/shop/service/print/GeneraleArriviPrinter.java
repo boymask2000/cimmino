@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.cimmino.shop.database.Arrivi;
 import com.cimmino.shop.database.BinsArrivi;
-import com.cimmino.shop.database.Vendite;
+import com.cimmino.shop.database.Vendita;
 import com.openhtmltopdf.pdfboxout.PdfRendererBuilder;
 
 public class GeneraleArriviPrinter extends BasePrinter implements HasOutputStream{
@@ -234,7 +234,7 @@ public class GeneraleArriviPrinter extends BasePrinter implements HasOutputStrea
 		out.append("<th>Importo</th>");
 		out.append("</tr>");
 
-		for (Vendite ven : arrivo.getVendite()) {
+		for (Vendita ven : arrivo.getVendite()) {
 
 			out.append("<tr>");
 

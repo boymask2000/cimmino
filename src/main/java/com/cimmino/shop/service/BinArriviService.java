@@ -11,7 +11,7 @@ import com.cimmino.shop.database.ArriviRepository;
 import com.cimmino.shop.database.BinsArrivi;
 import com.cimmino.shop.database.BinsArriviRepository;
 import com.cimmino.shop.database.BinsVendite;
-import com.cimmino.shop.database.Vendite;
+import com.cimmino.shop.database.Vendita;
 import com.cimmino.shop.database.VenditeRepository;
 
 @Service
@@ -34,6 +34,7 @@ public class BinArriviService {
 		return avail;
 	}
 
+
 	private int calcPrevistiInArrivo(Long arrivoId, Long binid) {
 		Optional<Arrivi> op = arriviRepository.findById(arrivoId);
 		if (op.isEmpty())
@@ -50,8 +51,8 @@ public class BinArriviService {
 	private int calcOccupatiDaVendite(Long arrivoId, Long binid) {
 		int ret = 0;
 
-		List<Vendite> vv = venditeRepository.findVenditeDiArrivo(arrivoId);
-		for (Vendite v : vv) {
+		List<Vendita> vv = venditeRepository.findVenditeDiArrivo(arrivoId);
+		for (Vendita v : vv) {
 			List<BinsVendite> binsArr = v.getBins();
 			for (BinsVendite bin : binsArr) {
 				if (bin.getBin().getId() == binid)

@@ -19,22 +19,16 @@
 			<h1 class="mb-0">Arrivi</h1>
 
 			<a th:href="@{/web/arrivi/new}" class="btn btn-success"> Nuovo
-				Arrivo </a> 
-			
-<form th:action="@{/pdf/filter_arrivi}" >
+				Arrivo </a>
 
-    <input type="hidden"
-           name="startDate"
-           th:value="${startDate}">
-           <input type="hidden"
-           name="endDate"
-           th:value="${endDate}">
+			<form th:action="@{/pdf/filter_arrivi}">
 
-    <button type="submit" class="btn btn-success">
-        🖨 Stampa
-    </button>
+				<input type="hidden" name="startDate" th:value="${startDate}">
+				<input type="hidden" name="endDate" th:value="${endDate}">
 
-</form>
+				<button type="submit" class="btn btn-success">🖨 Stampa</button>
+
+			</form>
 
 		</div>
 
@@ -51,18 +45,18 @@
 						<div th:if="${a.sums.get('AVAIL')!= 0}">
 							<a th:href="@{/web/vendita/new/{id}(id=${a.id})}"
 								class="btn btn-primary btn-sm"> Vendita </a>
-						</div>
-<!-- 						<a th:href="@{/web/vendita/new/{id}(id=${a.id})}" -->
-<!-- 								class="btn btn-primary btn-sm"> Vendita </a> -->
-								
+						</div> <!-- 						<a th:href="@{/web/vendita/new/{id}(id=${a.id})}" -->
+						<!-- 								class="btn btn-primary btn-sm"> Vendita </a> -->
+
 						<div th:if="${a.sums.get('AVAIL')== 0}">
-							<p>Vendite</p><p>complete</p>
+							<p>Vendite</p>
+							<p>complete</p>
 							<a th:href="@{/web/analisi/show/{id}(id=${a.id})}"
 								class="btn btn-primary btn-sm"> Analisi </a>
 						</div>
 					</td>
 
-			
+
 					<td>
 						<table border="1">
 
@@ -136,26 +130,27 @@
 									<th>Commerciante</th>
 									<th>Data</th>
 									<th>DDT</th>
-									
+
 									<th>Bin</th>
-									
+
 
 									<th>Lordo</th>
 									<th>Netto di Tara</th>
 									<th>Netto di Scarto</th>
 									<th>Media</th>
-									
+
 									<th>Scarto</th>
 									<th>Prezzo</th>
 
-<th>Frigo</th>
+									<th>Frigo</th>
 									<th>Importo</th>
-									<th></th>
+									<th></th><th></th>
 								</tr>
 							</thead>
 							<tbody>
 
-								<tr th:each="b : ${a.vendite}">
+								<tr th:class="${b.gruppoVendite != null} ? 'table-info' : ''"
+									th:each="b : ${a.vendite}">
 
 									<td><span class="badge bg-primary"> <span
 											th:text="${b.commerciante.name}"></span>
@@ -169,7 +164,7 @@
 									<td><span class="badge bg-primary"> <span
 											th:text="${b.numeroTotaleBins}"></span>
 									</span></td>
-									
+
 
 									<td><span class="badge bg-primary"> <span
 											th:text="${b.peso_lordo}"></span>
@@ -183,29 +178,35 @@
 									<td><span class="badge bg-primary"> <span
 											th:text="${b.media}"></span>
 									</span></td>
-									
+
 									<td><span class="badge bg-primary"> <span
 											th:text="${b.scarto}"></span>
 									</span></td>
 									<td><span class="badge bg-primary"> <span
 											th:text="${b.prezzo}"></span>
 									</span></td>
-<td><span th:text="${b.frigo}"></span></td>
+									<td><span th:text="${b.frigo}"></span></td>
 									<td><span th:text="${b.importo}"></span></td>
-<td>
-<div class="col-md-2">
+									<td>
+										<div class="col-md-2">
 
-    <a class="btn btn-outline-primary btn-sm"
-    
-        th:href="@{'/web/vendita/show/' + ${b.id}}"
-       target="_blank"
-       title="Visualizza dettaglio">
+											<a class="btn btn-outline-primary btn-sm"
+												th:href="@{'/web/vendita/show/' + ${b.id}}" target="_blank"
+												title="Visualizza dettaglio"> <i class="bi bi-eye"></i>
+											</a>
 
-        <i class="bi bi-eye"></i>
-    </a>
+										</div>
+										</td>
+										<td>
+										<div class="col-md-2" th:if="${b.gruppoVendite != null && b.gruppoVendite.status=='0'}">
 
-</div>
-</td>
+											<a class="btn btn-outline-success btn-lg"
+												th:href="@{'/gruppovendite/show/' + ${b.id}}" target="_blank"
+												title="Chiudi gruppo"> <i class="bi bi-eye"></i>
+											</a>
+
+										</div>
+									</td>
 								</tr>
 							<tfoot>
 								<tr>

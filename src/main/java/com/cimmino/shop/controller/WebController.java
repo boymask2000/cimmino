@@ -20,9 +20,12 @@ import com.cimmino.shop.database.BinRepository;
 import com.cimmino.shop.database.BinsArrivi;
 import com.cimmino.shop.database.BinsArriviRepository;
 import com.cimmino.shop.database.CommercianteRepository;
+import com.cimmino.shop.database.Configurazione;
 import com.cimmino.shop.database.MerceRepository;
 import com.cimmino.shop.mappers.BinMapper;
 import com.cimmino.shop.service.ArriviService;
+import com.cimmino.shop.service.BinArriviService;
+import com.cimmino.shop.service.ConfigurazioneService;
 import com.cimmino.shop.service.MovimentiBinService;
 
 import jakarta.servlet.http.HttpSession;
@@ -30,6 +33,9 @@ import jakarta.servlet.http.HttpSession;
 @Controller
 @RequestMapping("/web")
 public class WebController {
+	@Autowired
+	ConfigurazioneService configurazioneService;
+
 	@Autowired
 	ArriviRepository arriviRepository;
 	@Autowired
@@ -46,6 +52,8 @@ public class WebController {
 	CommercianteRepository commercianteRepository;
 	@Autowired
 	BinMapper binMapper;
+	@Autowired
+	BinArriviService binArriviService;
 
 	@GetMapping("/home")
 	public String home(Model model) {
@@ -57,10 +65,9 @@ public class WebController {
 		model.addAttribute("startDate", firstDay);
 		model.addAttribute("endDate", lastDay);
 
-		// model.addAttribute("status", statusService.getStatus());
+		Configurazione conf = configurazioneService.getConfigurazione();
 
-//		List<User> users = usersRepo.findAll();
-//		model.addAttribute("nusers", users.size());
+		model.addAttribute("configurazione", conf);
 
 		return "home";
 	}
@@ -95,7 +102,7 @@ public class WebController {
 			@RequestParam LocalDate endDate, //
 			HttpSession session, //
 			Model model) {
-		
+
 		if (startDate != null) {
 			session.setAttribute("startDate", startDate);
 		}
@@ -122,7 +129,7 @@ public class WebController {
 		// ❌ CONTROLLO ERRORE
 		if (arrivo.getBins() == null || arrivo.getBins().isEmpty()) {
 
-			redirectAttributes.addFlashAttribute("error", "Devi selezionare almeno un Bin prima di salvare");
+			redirectAttributes.addFlashAttribute("msg", "Devi selezionare almeno un Bin prima di salvare");
 
 			return "redirect:/web/arrivi/new";
 		}
@@ -132,6 +139,9 @@ public class WebController {
 			b.setArrivo(arrivo);
 		}
 		// arriviService.eseguiCalcoli(arrivo);
+
+		Configurazione conf = configurazioneService.getConfigurazione();
+		arrivo.setKey(conf.getInstallationId());
 
 		arriviRepository.save(arrivo);
 

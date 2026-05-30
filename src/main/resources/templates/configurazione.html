@@ -144,11 +144,11 @@
 
                     </div>
 
-                    <!-- COSTO FRIGO -->
-                    <div class="row align-items-center mb-4">
+
+ <div class="row align-items-center mb-4">
 
                         <label class="col-sm-4 col-form-label fw-semibold text-end pe-4">
-                            ❄️ Costo Frigo
+                            ❄️ Costo Frigo per Caldo
                         </label>
 
                         <div class="col-sm-8">
@@ -156,12 +156,27 @@
                                    step="0.01"
                                    min="0"
                                    class="form-control"
-                                   th:field="*{prezzoFrigo}"
+                                   th:field="*{prezzoFrigoxCaldo}"
                                    required>
                         </div>
 
                     </div>
+ <div class="row align-items-center mb-4">
 
+                        <label class="col-sm-4 col-form-label fw-semibold text-end pe-4">
+                            ❄️ Costo Frigo per Freddo
+                        </label>
+
+                        <div class="col-sm-8">
+                            <input type="number"
+                                   step="0.01"
+                                   min="0"
+                                   class="form-control"
+                                   th:field="*{prezzoFrigoxFreddo}"
+                                   required>
+                        </div>
+
+                    </div>
                     <!-- BOTTONI -->
                     <div class="d-grid">
 

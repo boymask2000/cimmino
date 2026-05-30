@@ -31,7 +31,8 @@ public class ConfigurazioneService {
 	
 	private Configurazione initConfig() {
 		Configurazione conf = new Configurazione();
-		conf.setPrezzoFrigo(new BigDecimal("0.01"));
+		conf.setPrezzoFrigoxCaldo(new BigDecimal("0.01"));
+		conf.setPrezzoFrigoxFreddo(new BigDecimal("0.01"));
 		conf.setInstallationId(""+(new Date().getTime()));
 		configurazioneRepository.save(conf);
 		return conf;

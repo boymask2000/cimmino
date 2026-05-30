@@ -21,7 +21,7 @@ import jakarta.persistence.Transient;
 
 @Entity
 @Table(name = "Vendite")
-public class Vendite {
+public class Vendita {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "vendite_id")
@@ -38,6 +38,11 @@ public class Vendite {
 	@OneToMany(mappedBy = "vendita", cascade = CascadeType.ALL, orphanRemoval = true)
 	@JsonManagedReference
 	private List<BinsVendite> bins = new ArrayList<>();
+	
+	@ManyToOne
+	@JoinColumn(name = "gruppo_id") 
+	private GruppoVendite gruppoVendite;
+
 
 	@Transient
 	private Integer numeroTotaleBins;
@@ -60,6 +65,8 @@ public class Vendite {
 	private BigDecimal importo;
 	
 	private BigDecimal frigo;
+	
+	private String key;
 
 	public Commerciante getCommerciante() {
 		return commerciante;
@@ -152,13 +159,7 @@ public class Vendite {
 
 
 
-	public int getNumeroTotaleBins() {
-		return numeroTotaleBins;
-	}
 
-	public void setNumeroTotaleBins(int numeroTotaleBins) {
-		this.numeroTotaleBins = numeroTotaleBins;
-	}
 
 	public BigDecimal getNettoDiTara() {
 		return nettoDiTara;
@@ -194,6 +195,26 @@ public class Vendite {
 
 	public void setDdt(String ddt) {
 		this.ddt = ddt;
+	}
+
+	public String getKey() {
+		return key;
+	}
+
+	public void setKey(String key) {
+		this.key = key;
+	}
+
+	public Integer getNumeroTotaleBins() {
+		return numeroTotaleBins;
+	}
+
+	public GruppoVendite getGruppoVendite() {
+		return gruppoVendite;
+	}
+
+	public void setGruppoVendite(GruppoVendite gruppoVendite) {
+		this.gruppoVendite = gruppoVendite;
 	}
 
 }

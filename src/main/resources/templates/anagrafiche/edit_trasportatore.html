@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Nuovo trasportatore</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 30px;
+        }
+
+        form {
+            width: 450px;
+        }
+
+        .form-row {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .form-row label {
+            width: 150px;
+            font-weight: bold;
+        }
+
+        .form-row input {
+            flex: 1;
+            padding: 8px;
+        }
+
+        button {
+            padding: 10px 20px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+
+<h1>Nuovo Commerciante</h1>
+
+<form th:action="@{/web/anagrafiche/trasportatore/update}"
+      th:object="${trasportatore}"
+      method="post">
+
+    <input type="hidden" th:field="*{id}" />
+
+    <div class="form-row">
+        <label>Nome:</label>
+
+        <input type="text"
+               th:field="*{name}"
+               required />
+    </div>
+        
+    <div class="form-row">
+        <label>Indirizzo:</label>
+
+        <input type="text"
+               th:field="*{indirizzo}"
+               required />
+    </div>
+    <div class="form-row">
+        <label>Pec:</label>
+
+        <input type="text"
+               th:field="*{pec}"
+                />
+    </div>
+    <div class="form-row">
+        <label>Cod. Fiscale:</label>
+
+        <input type="text"
+               th:field="*{codFiscale}"
+                />
+    </div>
+    <div class="form-row">
+        <label>P. Iva:</label>
+
+        <input type="text"
+               th:field="*{pIva}"
+                />
+    </div>
+    
+    
+
+
+    <button type="submit">
+        Salva
+    </button>
+
+</form>
+
+</body>
+</html>

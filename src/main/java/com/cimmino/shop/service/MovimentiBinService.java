@@ -17,7 +17,7 @@ import com.cimmino.shop.database.BinsArriviRepository;
 import com.cimmino.shop.database.BinsVendite;
 import com.cimmino.shop.database.MovimentiBinRepository;
 import com.cimmino.shop.database.MovimentoBin;
-import com.cimmino.shop.database.Vendite;
+import com.cimmino.shop.database.Vendita;
 import static com.cimmino.shop.database.MovimentiBinSpecification.*;
 @Service
 public class MovimentiBinService {
@@ -59,7 +59,7 @@ public class MovimentiBinService {
 		}
 	}
 
-	public void register(Vendite vendita) {
+	public void register(Vendita vendita) {
 		for (BinsVendite binArrivo : vendita.getBins()) {
 			MovimentoBin mov = new MovimentoBin();
 			mov.setData(LocalDate.now());

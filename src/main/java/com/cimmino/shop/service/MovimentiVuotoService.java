@@ -21,7 +21,7 @@ import com.cimmino.shop.database.BinsArriviRepository;
 import com.cimmino.shop.database.BinsVendite;
 import com.cimmino.shop.database.MovimentiVuotiRepository;
 import com.cimmino.shop.database.MovimentoVuoto;
-import com.cimmino.shop.database.Vendite;
+import com.cimmino.shop.database.Vendita;
 @Service
 public class MovimentiVuotoService {
 	@Autowired
@@ -62,7 +62,7 @@ public class MovimentiVuotoService {
 		}
 	}
 
-	public void register(Vendite vendita) {
+	public void register(Vendita vendita) {
 		for (BinsVendite binArrivo : vendita.getBins()) {
 			MovimentoVuoto mov = new MovimentoVuoto();
 			mov.setData(LocalDate.now());

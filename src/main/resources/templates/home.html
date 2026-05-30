@@ -31,9 +31,9 @@
 				<div class="col-md-3">
 					<label class="form-label">Data Inizio</label> <input type="date"
 						name="startDate" class="form-control"
-						th:value="${#temporals.format(startDate, 'yyyy-MM-dd')}" >
+						th:value="${#temporals.format(startDate, 'yyyy-MM-dd')}">
 				</div>
-				
+
 				<div class="col-md-3">
 					<label class="form-label">Data Fine</label> <input type="date"
 						name="endDate" class="form-control"
@@ -46,7 +46,7 @@
 				</div>
 
 			</form>
-			
+
 			<form th:action="@{/web/commercianti/filter}" method="get"
 				class="row g-3 mb-4 justify-content-center">
 
@@ -68,14 +68,20 @@
 				</div>
 
 			</form>
-<!-- 			<div class="d-flex justify-content-center"> -->
-<!-- 				<a th:href="@{/web/commercianti/lista/0}" -->
-<!-- 					class="btn btn-primary btn-sm">Commercianti </a> -->
-<!-- 			</div> -->
+			<!-- 			<div class="d-flex justify-content-center"> -->
+			<!-- 				<a th:href="@{/web/commercianti/lista/0}" -->
+			<!-- 					class="btn btn-primary btn-sm">Commercianti </a> -->
+			<!-- 			</div> -->
 		</div>
 
 		<!-- NON LOGGATO -->
-
+		<div th:if="${configurazione.ruolo=='M'}">
+			<form th:action="@{/net/getMasterAddress}" method="get"
+				class="row g-3 mb-4 justify-content-center">
+				<button type="submit" class="btn btn-primary w-100">Invio
+					dati</button>
+			</form>
+		</div>
 
 	</div>
 

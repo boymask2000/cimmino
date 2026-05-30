@@ -3,7 +3,7 @@ package com.cimmino.shop.mappers;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
-import com.cimmino.shop.database.Vendite;
+import com.cimmino.shop.database.Vendita;
 import com.cimmino.shop.database.dto.VenditaDTO;
 
 
@@ -12,5 +12,8 @@ import com.cimmino.shop.database.dto.VenditaDTO;
 public interface VenditaMapper {
 
     @Mapping(source = "commercianteId", target = "commerciante.commerciante_id")
-    Vendite toEntity(VenditaDTO dto);
+    Vendita toEntity(VenditaDTO dto);
+    
+    @Mapping(source = "commerciante.commerciante_id", target = "commercianteId")
+    VenditaDTO toDto(Vendita entity);
 }

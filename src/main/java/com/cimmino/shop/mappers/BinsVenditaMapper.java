@@ -43,5 +43,7 @@ public interface BinsVenditaMapper {
     @Mapping(source = "bin.name", target = "binName")
     BinsVenditaDTO toDto(BinsVendite entity);
 
+    @Mapping(source = "bin.id", target = "binId")
+    @Mapping(source = "bin.name", target = "binName")
     List<BinsVenditaDTO> toDtoList(List<BinsVendite> entityList);
 }

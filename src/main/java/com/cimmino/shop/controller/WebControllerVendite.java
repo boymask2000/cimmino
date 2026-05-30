@@ -23,7 +23,8 @@ import com.cimmino.shop.database.Bin;
 import com.cimmino.shop.database.BinRepository;
 import com.cimmino.shop.database.BinsVendite;
 import com.cimmino.shop.database.CommercianteRepository;
-import com.cimmino.shop.database.Vendite;
+import com.cimmino.shop.database.GruppoVendite;
+import com.cimmino.shop.database.Vendita;
 import com.cimmino.shop.database.VenditeRepository;
 import com.cimmino.shop.database.dto.BinsVenditaDTO;
 import com.cimmino.shop.database.dto.VenditaDTO;
@@ -32,6 +33,8 @@ import com.cimmino.shop.service.ConfigurazioneService;
 import com.cimmino.shop.service.VenditeService;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+
+import jakarta.servlet.http.HttpSession;
 
 @Controller
 @RequestMapping("/web")
@@ -52,15 +55,11 @@ public class WebControllerVendite {
 	@Autowired
 	private BinsVenditaMapper binsVenditaMapper;
 
-	@PostMapping("/vendita/save1")
-	public String save(@ModelAttribute VenditaDTO dto) {
-		venditeService.create(dto);
-		return "redirect:/web/vendite";
-	}
+
 
 	@GetMapping("/vendita/new/{id}")
-	public String newVendita(@PathVariable Long id, Model model) {
-		Vendite vendita = new Vendite();
+	public String newVendita(HttpSession session, @PathVariable Long id, Model model) {
+		Vendita vendita = new Vendita();
 		vendita.setData(LocalDate.now()); // 👈 data corrente
 
 		Optional<Arrivi> arr = arriviRepository.findById(id);
@@ -80,6 +79,12 @@ public class WebControllerVendite {
 			m.put("tara", b.getBin().getTara());
 			return m;
 		}).toList();
+		
+		//Controllo gruppo
+		GruppoVendite gruppo =
+		        (GruppoVendite) session.getAttribute("gruppoVendite");
+
+		    model.addAttribute("gruppoVenditePresente", gruppo != null);
 
 		model.addAttribute("binsJs", binsJs);
 		model.addAttribute("configurazione", configurazioneService.getConfigurazione());
@@ -89,9 +94,13 @@ public class WebControllerVendite {
 
 	@PostMapping("/vendita/save")
 	public String saveVendita( //
-			@ModelAttribute("vendita") Vendite vendita, //
+			HttpSession session,
+			@ModelAttribute("vendita") Vendita vendita, //
 			@RequestParam("commercianteId") Long commercianteId, @RequestParam String binsJson,
-			@RequestParam("arrivoId") Long arrivoId, @RequestParam("currData") LocalDate currData, Model model) {
+			@RequestParam("arrivoId") Long arrivoId, @RequestParam("currData") LocalDate currData, 
+			@RequestParam(required = false) Boolean creaGruppo,
+			@RequestParam(required = false) Boolean joinGruppo,
+			Model model) {
 
 		if(vendita.getDdt()!=null && vendita.getDdt().equals(""))
 			vendita.setDdt(null);
@@ -126,11 +135,16 @@ public class WebControllerVendite {
 		vendita.setArrivo(arr);
 
 		vendita.setData(currData);
-		venditeService.save(vendita, commercianteId);
+		vendita= venditeService.save(vendita, commercianteId,creaGruppo, joinGruppo,
+				(GruppoVendite)session.getAttribute("gruppoVendite"));
+		
 
+		session.setAttribute("gruppoVendite", vendita.getGruppoVendite());
 		LocalDate today = LocalDate.now();
 		LocalDate firstDay = today.withDayOfMonth(1);
 		LocalDate lastDay = today.withDayOfMonth(today.lengthOfMonth());
+		
+		model.addAttribute("configurazione",configurazioneService.getConfigurazione());
 
 		model.addAttribute("startDate", firstDay);
 		model.addAttribute("endDate", lastDay);
@@ -139,10 +153,10 @@ public class WebControllerVendite {
 
 	@GetMapping("/vendita/show/{id}")
 	public String showVendita(@PathVariable Long id, Model model) {
-		Optional<Vendite> vend = venditeRepository.findById(id);
+		Optional<Vendita> vend = venditeRepository.findById(id);
 		if (vend.isEmpty())
 			return "show_vendita";
-		Vendite v = vend.get();
+		Vendita v = vend.get();
 		model.addAttribute("vendita", v);
 		for (BinsVendite b : v.getBins()) {
 

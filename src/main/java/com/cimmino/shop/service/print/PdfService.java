@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.cimmino.shop.database.Arrivi;
 import com.cimmino.shop.database.Configurazione;
-import com.cimmino.shop.database.Vendite;
+import com.cimmino.shop.database.Vendita;
 import com.cimmino.shop.database.VenditeRepository;
 import com.cimmino.shop.database.dto.DDTDTO;
 import com.cimmino.shop.service.ConfigurazioneService;
@@ -36,10 +36,10 @@ public class PdfService {
 
 	public byte[] generatePdfDettaglioVendita(Long idVednita) throws Exception {
 
-		Optional<Vendite> v = venditeRepository.findById(idVednita);
+		Optional<Vendita> v = venditeRepository.findById(idVednita);
 		if (v.isEmpty())
 			return null;
-		Vendite ven = v.get();
+		Vendita ven = v.get();
 
 		HasOutputStream builder = new DettaglioVenditaPrinter(ven);
 
@@ -48,11 +48,11 @@ public class PdfService {
 	}
 
 	public byte[] generateDDT(Long idVendita) throws Exception {
-		Optional<Vendite> v = venditeRepository.findById(idVendita);
+		Optional<Vendita> v = venditeRepository.findById(idVendita);
 
 		if (v.isEmpty())
 			return null;
-		Vendite ven = v.get();
+		Vendita ven = v.get();
 		Configurazione conf = configurazioneService.getConfigurazione();
 
 		HasOutputStream builder = new DDTPrinter(ven, conf);
@@ -63,9 +63,9 @@ public class PdfService {
 	}
 
 	public byte[] generateDDT4Vendite(List<Long> ids) throws Exception {
-		List<Vendite> vendite = new ArrayList<Vendite>();
+		List<Vendita> vendite = new ArrayList<Vendita>();
 		for (Long id : ids) {
-			Optional<Vendite> v = venditeRepository.findById(id);
+			Optional<Vendita> v = venditeRepository.findById(id);
 			vendite.add(v.get());
 		}
 		Configurazione conf = configurazioneService.getConfigurazione();

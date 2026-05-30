@@ -3,13 +3,13 @@ package com.cimmino.shop.service.print;
 import java.io.ByteArrayOutputStream;
 
 import com.cimmino.shop.database.BinsVendite;
-import com.cimmino.shop.database.Vendite;
+import com.cimmino.shop.database.Vendita;
 import com.openhtmltopdf.pdfboxout.PdfRendererBuilder;
 
 public class DettaglioVenditaPrinter extends BasePrinter implements HasOutputStream {
 	
 
-	public DettaglioVenditaPrinter(Vendite ven) throws Exception {
+	public DettaglioVenditaPrinter(Vendita ven) throws Exception {
 		
 		
 		String html = buildHtml(ven);
@@ -23,7 +23,7 @@ public class DettaglioVenditaPrinter extends BasePrinter implements HasOutputStr
 		builder.run();
 	}
 
-	private String buildHtml(Vendite vendita) {
+	private String buildHtml(Vendita vendita) {
 
 		StringBuilder html = new StringBuilder();
 
@@ -101,7 +101,7 @@ public class DettaglioVenditaPrinter extends BasePrinter implements HasOutputStr
 		return html.toString();
 	}
 
-	private String makeBinsBox(Vendite vendita) {
+	private String makeBinsBox(Vendita vendita) {
 		StringBuilder out = new StringBuilder();
 	
 		out.append("<table>");
@@ -131,7 +131,7 @@ public class DettaglioVenditaPrinter extends BasePrinter implements HasOutputStr
 		return out.toString();
 	}
 
-	private String makeVenditaBox(Vendite ven) {
+	private String makeVenditaBox(Vendita ven) {
 
 		StringBuilder out = new StringBuilder();
 

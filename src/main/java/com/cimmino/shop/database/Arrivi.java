@@ -60,7 +60,7 @@ public class Arrivi {
 	private List<BinsArrivi> bins = new ArrayList<>();
 
 	@OneToMany(mappedBy = "arrivo")
-	private List<Vendite> vendite;
+	private List<Vendita> vendite;
 	
 	@Transient
 	private Map<String, BigDecimal> sums=new HashMap<String, BigDecimal>();
@@ -127,12 +127,12 @@ public class Arrivi {
 		this.merce = merce;
 	}
 
-	public List<Vendite> getVendite() {
-		 vendite.sort(Comparator.comparing(Vendite::getData));
+	public List<Vendita> getVendite() {
+		 vendite.sort(Comparator.comparing(Vendita::getData));
 		return vendite;
 	}
 
-	public void setVendite(List<Vendite> vendite) {
+	public void setVendite(List<Vendita> vendite) {
 		this.vendite = vendite;
 	}
 

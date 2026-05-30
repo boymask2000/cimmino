@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.cimmino.shop.database.BinsArrivi;
 import com.cimmino.shop.database.BinsArriviRepository;
-import com.cimmino.shop.database.Vendite;
+import com.cimmino.shop.database.Vendita;
 import com.cimmino.shop.database.VenditeRepository;
 import com.cimmino.shop.database.dto.ArriviDTO;
 import com.cimmino.shop.database.dto.BinsArriviDTO;
@@ -28,7 +28,7 @@ public class AnalisiService {
 	public AnalisiResultBean analize(Long idArrivo) {
 		ArriviDTO arrivo = arriviService.getById(idArrivo);
 
-		List<Vendite> vendite = venditeRepository.findVenditeDiArrivo(idArrivo);
+		List<Vendita> vendite = venditeRepository.findVenditeDiArrivo(idArrivo);
 
 		AnalisiResultBean result = new AnalisiResultBean();
 
@@ -51,7 +51,7 @@ public class AnalisiService {
 		BigDecimal totPesoNettoVendite = BigDecimal.ZERO;
 		BigDecimal totNettoDiTaraVendite = BigDecimal.ZERO;
 
-		for (Vendite ven : vendite) {
+		for (Vendita ven : vendite) {
 
 			BigDecimal lordo = ven.getBins().stream()
 					.filter(b -> b.getBin() != null && b.getBin().getPesoLordo() != null && b.getNumBins() != null)

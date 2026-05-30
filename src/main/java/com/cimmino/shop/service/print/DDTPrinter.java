@@ -6,15 +6,15 @@ import java.math.BigDecimal;
 import com.cimmino.shop.database.BinsVendite;
 import com.cimmino.shop.database.Commerciante;
 import com.cimmino.shop.database.Configurazione;
-import com.cimmino.shop.database.Vendite;
+import com.cimmino.shop.database.Vendita;
 import com.openhtmltopdf.pdfboxout.PdfRendererBuilder;
 
 public class DDTPrinter extends BasePrinter implements HasOutputStream {
 
 	private Configurazione conf;
-	private Vendite vendita;
+	private Vendita vendita;
 
-	public DDTPrinter(Vendite ven, Configurazione conf) throws Exception {
+	public DDTPrinter(Vendita ven, Configurazione conf) throws Exception {
 		this.conf = conf;
 		this.vendita = ven;
 
@@ -35,7 +35,7 @@ public class DDTPrinter extends BasePrinter implements HasOutputStream {
 		return outputStream;
 	}
 
-	private String buildHtml(Vendite vendita) {
+	private String buildHtml(Vendita vendita) {
 
 		StringBuilder html = new StringBuilder();
 
@@ -160,7 +160,7 @@ public class DDTPrinter extends BasePrinter implements HasOutputStream {
 		return out.toString();
 	}
 
-	private Object makeBinsBox(Vendite vendita2) {
+	private Object makeBinsBox(Vendita vendita2) {
 		StringBuilder out = new StringBuilder();
 		out.append("<table>");
 		out.append("<thead> ");

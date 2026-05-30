@@ -1,5 +1,6 @@
 package com.cimmino.shop.controller;
 
+import java.math.BigDecimal;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -107,15 +108,15 @@ public class AnagraficheController {
 		return "anagrafiche/anagraficaBins";
 	}
 	@PostMapping("/bins/save")
-	public String anagraficaBinSave(@ModelAttribute Bin product, Model model) {
+	public String anagraficaBinSave(@ModelAttribute Bin bin, Model model) {
 
-		Bin m = binRepository.findbyName(product.getName());
+		Bin m = binRepository.findbyName(bin.getName());
 		if (m != null) {
 			model.addAttribute("products", merceRepository.findAll());
 			return "anagrafiche/anagraficaMerce";
 		}
-
-		binRepository.save(product);
+bin.setPesoLordo(BigDecimal.ZERO);
+		binRepository.save(bin);
 		model.addAttribute("products", binRepository.findAll());
 		return "anagrafiche/anagraficaBins";
 	}
