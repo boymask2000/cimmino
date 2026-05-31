@@ -26,6 +26,8 @@ public class Configurazione {
 	
 	private String installationId;
 	
+	private String primoCessionario;
+	
 	private String ruolo;
 	
 	private String ggn;
@@ -118,5 +120,13 @@ public class Configurazione {
 
 	public void setPrezzoFrigoxFreddo(BigDecimal prezzoFrigoxFreddo) {
 		this.prezzoFrigoxFreddo = prezzoFrigoxFreddo;
+	}
+
+	public String getPrimoCessionario() {
+		return primoCessionario;
+	}
+
+	public void setPrimoCessionario(String primoCessionario) {
+		this.primoCessionario = primoCessionario;
 	}
 }

@@ -61,10 +61,10 @@
 
                     <input type="hidden" th:field="*{id}" />
                     <input type="hidden" th:field="*{installationId}" />
-                    <input type="hidden"
-                           name="configurazione"
-                           id="configurazione"
-                           th:value="${configurazione}">
+<!--                     <input type="hidden" -->
+<!--                            name="configurazione" -->
+<!--                            id="configurazione" -->
+<!--                            th:value="${configurazione}"> -->
 
                     <!-- NOME -->
                     <div class="row align-items-center mb-4">
@@ -140,6 +140,20 @@
                                    class="form-control"
                                    th:field="*{pIva}"
                                    required>
+                        </div>
+
+                    </div>
+                    <div class="row align-items-center mb-4">
+
+                        <label class="col-sm-4 col-form-label fw-semibold text-end pe-4">
+                            Primo Cessionario
+                        </label>
+
+                        <div class="col-sm-8">
+                            <input type="text"
+                                   class="form-control"
+                                   th:field="*{primoCessionario}"
+                                   >
                         </div>
 
                     </div>

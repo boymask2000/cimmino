@@ -606,6 +606,13 @@ public class DDTListVenditePrinter extends BasePrinter implements HasOutputStrea
 		out.append("<tr>");
 
 		out.append("<td>");
+		out.append("Secondo cessionario:");
+		
+		out.append("</td>");
+		out.append("<tr>");
+		out.append("<tr>");
+
+		out.append("<td>");
 		out.append(commerciante.getName());
 		out.append("<br/>" + clean(commerciante.getIndirizzo()));
 		out.append("</td>");
@@ -621,11 +628,16 @@ public class DDTListVenditePrinter extends BasePrinter implements HasOutputStrea
 	private String makeTestata2() {
 		StringBuilder out = new StringBuilder();
 		out.append("<table>");
-
 		out.append("<tr>");
 
 		out.append("<td>");
-		out.append("<br/>");
+		out.append("Primo cessionario");
+		
+		out.append("</td>");
+		out.append("<tr>");
+
+		out.append("<td>");
+		out.append(conf.getPrimoCessionario()+"<br/>");
 		out.append("<br/>");
 		out.append("<br/>");
 		out.append("<br/>");
