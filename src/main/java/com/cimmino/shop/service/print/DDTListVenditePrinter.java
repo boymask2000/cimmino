@@ -11,6 +11,8 @@ import org.springframework.stereotype.Component;
 import com.cimmino.shop.database.BinsVendite;
 import com.cimmino.shop.database.Commerciante;
 import com.cimmino.shop.database.Configurazione;
+import com.cimmino.shop.database.GruppoVendite;
+import com.cimmino.shop.database.GruppoVenditeRepository;
 import com.cimmino.shop.database.Vendita;
 import com.cimmino.shop.database.dto.DDTDTO;
 import com.cimmino.shop.service.DDTService;
@@ -23,6 +25,8 @@ public class DDTListVenditePrinter extends BasePrinter implements HasOutputStrea
 	DDTService ddtService;
 	@Autowired
 	VenditeService venditeService;
+	@Autowired
+	GruppoVenditeRepository gruppoVenditeRepository;
 
 	private Configurazione conf;
 	private List<Vendita> vendite;
@@ -47,7 +51,7 @@ public class DDTListVenditePrinter extends BasePrinter implements HasOutputStrea
 		builder.run();
 
 		DDTDTO dto = ddtService.create(html);
-		Long ddtId = dto.getId();
+		Long ddtId = dto1.getId();
 		for (Vendita vendita : vendite) {
 
 			vendita.setDdt("" + ddtId);
@@ -126,7 +130,7 @@ public class DDTListVenditePrinter extends BasePrinter implements HasOutputStrea
 		html.append(makeTestata2());
 		html.append(makeTestata3());
 		html.append(makeTestata4());
-		html.append(makeBinsBox());
+		html.append(makeBinsBox(dto1));
 
 		html.append(makeFooter1());
 		html.append(makeFooter2());
@@ -186,7 +190,11 @@ public class DDTListVenditePrinter extends BasePrinter implements HasOutputStrea
 		return out.toString();
 	}
 
-	private Object makeBinsBox() {
+	int totColli = 0;
+	int numRows = 0;
+	BigDecimal totPeso = BigDecimal.ZERO;
+
+	private Object makeBinsBox(DDTDTO dto1) {
 		StringBuilder out = new StringBuilder();
 		out.append("<table>");
 		out.append("<thead> ");
@@ -200,30 +208,14 @@ public class DDTListVenditePrinter extends BasePrinter implements HasOutputStrea
 		out.append("</tr>");
 		out.append("</thead> ");
 		out.append("<tbody>");
-		int totColli = 0;
-		int numRows = 0;
+
 		BigDecimal totPeso = BigDecimal.ZERO;
 		for (Vendita vendita : vendite)
-			for (BinsVendite b : vendita.getBins()) {
-				out.append("<tr>");
-				out.append("<td>");
-				out.append(vendita.getArrivo().getMerce().getName());
-				out.append("</td>");
-				out.append("<td>");
-				out.append(b.getBin().getName());
-				out.append("</td>");
-				out.append("<td>");
-				out.append(b.getNumBins());
-				totColli += b.getNumBins();
-				out.append("</td>");
-				out.append("<td>");
-				out.append(b.getPesoLordo());
-				totPeso = totPeso.add(b.getPesoLordo());
-				out.append("</td>");
+			if (vendita.getGruppoVendite() == null)
+				processVenditaNormale(vendita, out);
+			else
+				processVenditaGruppo(vendita, out,dto1);
 
-				out.append("</tr>");
-				numRows++;
-			}
 		for (int i = 0; i < 10 - numRows; i++) {
 			out.append("<tr>");
 			out.append("<td>");
@@ -246,6 +238,68 @@ public class DDTListVenditePrinter extends BasePrinter implements HasOutputStrea
 		out.append("</table>");
 		makeFooter2(out, totColli, totPeso);
 		return out.toString();
+	}
+
+	private void processVenditaGruppo(Vendita vendita, StringBuilder out, DDTDTO dto1) {
+		int numBins=0;
+		String nomeMerce="";
+		String bin="";
+		for (BinsVendite b : vendita.getBins()) {
+			totColli += b.getNumBins();
+			nomeMerce=vendita.getArrivo().getMerce().getName();
+			bin=b.getBin().getName();
+			
+		}
+	//	gruppoVenditeRepository.findById(vendita.ge);
+		out.append("<tr>");
+		out.append("<td>");
+		out.append(nomeMerce);
+		out.append("</td>");
+		out.append("<td>");
+		out.append(bin);
+		out.append("</td>");
+		out.append("<td>");
+	
+		out.append(totColli);
+		
+		out.append("</td>");
+		out.append("<td>");
+		out.append(vendita.getGruppoVendite().getPesoLordoTotale());
+	//	totPeso = totPeso.add(b.getPesoLordo());
+		out.append("</td>");
+
+		out.append("</tr>");
+		
+		
+		GruppoVendite gruppo = vendita.getGruppoVendite();
+		List<Vendita> lista = gruppo.getVendite();
+		for( Vendita v:lista) {
+			v.setDdt(""+dto1.getId());
+		}
+		numRows++;
+	}
+
+	private void processVenditaNormale(Vendita vendita, StringBuilder out) {
+		for (BinsVendite b : vendita.getBins()) {
+			out.append("<tr>");
+			out.append("<td>");
+			out.append(vendita.getArrivo().getMerce().getName());
+			out.append("</td>");
+			out.append("<td>");
+			out.append(b.getBin().getName());
+			out.append("</td>");
+			out.append("<td>");
+			out.append(b.getNumBins());
+			totColli += b.getNumBins();
+			out.append("</td>");
+			out.append("<td>");
+			out.append(b.getPesoLordo());
+			totPeso = totPeso.add(b.getPesoLordo());
+			out.append("</td>");
+
+			out.append("</tr>");
+			numRows++;
+		}
 	}
 
 	private void makeFooter2(StringBuilder out, int totColli, BigDecimal totPeso) {

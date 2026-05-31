@@ -20,10 +20,12 @@ public interface VenditeRepository extends JpaRepository<Vendita, Long> {
 //	@Query("select u from User u where u.userid = ?1")
 //	User findByUserId(String userid);
 	
-	@Query("select v from Vendita v where v.commerciante.commerciante_id=:commId")
+	@Query("select v from Vendita v where v.commerciante.commerciante_id=:commId"
+			+ " and ( v.gruppoVendite is null or v.isMasterGruppo =true)")
 	List<Vendita> findVenditeDiCommerciante( @Param("commId") Long commId) ;
 	
-	@Query("select v from Vendita v where v.commerciante.commerciante_id=:commId and v.ddt is null")
+	@Query("select v from Vendita v where v.commerciante.commerciante_id=:commId and v.ddt is null"
+			+ " and ( v.gruppoVendite is null or v.isMasterGruppo =true)")
 	List<Vendita> findVenditeDiCommercianteSenzaDDT( @Param("commId") Long commId) ;
 	
 	List<Vendita> findByGruppoVendite(GruppoVendite gruppoVendite);

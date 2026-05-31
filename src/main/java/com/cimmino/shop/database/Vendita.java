@@ -42,6 +42,8 @@ public class Vendita {
 	@ManyToOne
 	@JoinColumn(name = "gruppo_id") 
 	private GruppoVendite gruppoVendite;
+	
+	private Boolean isMasterGruppo;
 
 
 	@Transient
@@ -215,6 +217,14 @@ public class Vendita {
 
 	public void setGruppoVendite(GruppoVendite gruppoVendite) {
 		this.gruppoVendite = gruppoVendite;
+	}
+
+	public Boolean getIsMasterGruppo() {
+		return isMasterGruppo;
+	}
+
+	public void setIsMasterGruppo(Boolean isMasterGruppo) {
+		this.isMasterGruppo = isMasterGruppo;
 	}
 
 }

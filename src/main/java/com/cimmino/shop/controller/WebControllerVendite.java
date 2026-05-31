@@ -24,6 +24,7 @@ import com.cimmino.shop.database.BinRepository;
 import com.cimmino.shop.database.BinsVendite;
 import com.cimmino.shop.database.CommercianteRepository;
 import com.cimmino.shop.database.GruppoVendite;
+import com.cimmino.shop.database.GruppoVenditeRepository;
 import com.cimmino.shop.database.Vendita;
 import com.cimmino.shop.database.VenditeRepository;
 import com.cimmino.shop.database.dto.BinsVenditaDTO;
@@ -51,10 +52,10 @@ public class WebControllerVendite {
 	ConfigurazioneService configurazioneService;
 	@Autowired
 	private VenditeRepository venditeRepository;
-
 	@Autowired
 	private BinsVenditaMapper binsVenditaMapper;
-
+	@Autowired
+	GruppoVenditeRepository gruppoVenditeRepository;
 
 
 	@GetMapping("/vendita/new/{id}")
@@ -80,11 +81,13 @@ public class WebControllerVendite {
 			return m;
 		}).toList();
 		
+		Optional<GruppoVendite> optGrp = gruppoVenditeRepository.findGroupOpen();
+		
 		//Controllo gruppo
-		GruppoVendite gruppo =
-		        (GruppoVendite) session.getAttribute("gruppoVendite");
+//		GruppoVendite gruppo =
+//		        (GruppoVendite) session.getAttribute("gruppoVendite");
 
-		    model.addAttribute("gruppoVenditePresente", gruppo != null);
+		    model.addAttribute("gruppoVenditePresente", optGrp.isPresent());
 
 		model.addAttribute("binsJs", binsJs);
 		model.addAttribute("configurazione", configurazioneService.getConfigurazione());
@@ -129,6 +132,8 @@ public class WebControllerVendite {
 		}
 
 		vendita.setBins(entities);
+		
+		Optional<GruppoVendite> optGrp = gruppoVenditeRepository.findGroupOpen();
 
 		Optional<Arrivi> oparr = arriviRepository.findById(arrivoId);
 		Arrivi arr = oparr.get();
@@ -136,10 +141,10 @@ public class WebControllerVendite {
 
 		vendita.setData(currData);
 		vendita= venditeService.save(vendita, commercianteId,creaGruppo, joinGruppo,
-				(GruppoVendite)session.getAttribute("gruppoVendite"));
+				optGrp);
 		
 
-		session.setAttribute("gruppoVendite", vendita.getGruppoVendite());
+	//	session.setAttribute("gruppoVendite", vendita.getGruppoVendite());
 		LocalDate today = LocalDate.now();
 		LocalDate firstDay = today.withDayOfMonth(1);
 		LocalDate lastDay = today.withDayOfMonth(today.lengthOfMonth());

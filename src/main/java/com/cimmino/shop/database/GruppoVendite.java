@@ -8,6 +8,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
@@ -21,6 +23,11 @@ public class GruppoVendite {
 	
 	@OneToMany(mappedBy = "gruppoVendite")
 	private List<Vendita> vendite;
+	
+//	
+//	private Long commercianteId;
+//	
+//	private long merceId;
 	
 	private BigDecimal pesoLordoTotale; 
 	
@@ -57,4 +64,6 @@ public class GruppoVendite {
 	public void setPesoLordoTotale(BigDecimal pesoLordoTotale) {
 		this.pesoLordoTotale = pesoLordoTotale;
 	}
+
+	
 }

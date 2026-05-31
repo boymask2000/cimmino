@@ -144,7 +144,7 @@
 
 									<th>Frigo</th>
 									<th>Importo</th>
-									<th></th><th></th>
+									<th></th><th></th><th></th>
 								</tr>
 							</thead>
 							<tbody>
@@ -204,9 +204,14 @@
 												th:href="@{'/gruppovendite/show/' + ${b.id}}" target="_blank"
 												title="Chiudi gruppo"> <i class="bi bi-eye"></i>
 											</a>
+											</div>
+											<td>
+<div class="col-md-2" th:if="${b.isMasterGruppo == true}">
+<a><span th:text="M"></span></a>
+</div>
 
-										</div>
-									</td>
+										</td>
+									
 								</tr>
 							<tfoot>
 								<tr>

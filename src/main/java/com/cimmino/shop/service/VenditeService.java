@@ -2,6 +2,7 @@ package com.cimmino.shop.service;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -47,7 +48,7 @@ public class VenditeService {
 
 	@Transactional
 	public Vendita save(Vendita vendita, Long commercianteId, 
-			Boolean creaGruppo, Boolean joinGruppo, GruppoVendite gruppoinSession) {
+			Boolean creaGruppo, Boolean joinGruppo, Optional<GruppoVendite> optGrp) {
 
 		Commerciante commerciante = commercianteRepository.findById(commercianteId)
 				.orElseThrow(() -> new RuntimeException("Commerciante non trovato"));
@@ -75,17 +76,18 @@ public class VenditeService {
 		        gruppo.setStatus("0"); //Aperto
 
 		        vendita.setGruppoVendite(gruppo);
+		        vendita.setIsMasterGruppo(false);
 
 		        gruppoVenditeRepository.save(gruppo);
 		        venditeRepository.save(vendita);
 		    }
 		 if(Boolean.TRUE.equals(joinGruppo)) {
 
-		       
+			 GruppoVendite grp = optGrp.get();
 
-		        vendita.setGruppoVendite(gruppoinSession);
-
-		        gruppoVenditeRepository.save(gruppoinSession);
+		        vendita.setGruppoVendite(grp);
+		        vendita.setIsMasterGruppo(false);
+		        gruppoVenditeRepository.save(grp);
 		        venditeRepository.save(vendita);
 		    }
 
@@ -118,7 +120,7 @@ public class VenditeService {
 
 		BigDecimal media = BigDecimal.ZERO;
 
-		if (totaleBins > 0) {
+		if (totaleBins > 0 && pesoLordo!=null) {
 			media = pesoLordo.divide(BigDecimal.valueOf(totaleBins), 2, RoundingMode.HALF_UP);
 
 		}

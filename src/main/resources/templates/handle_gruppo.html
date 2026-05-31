@@ -62,6 +62,8 @@
 
 		<form th:action="@{/gruppovendite/save}" th:object="${gruppo}"
 			method="post" id="venditaForm">
+			<div class="col-md-2" th:if="${gruppo.status=='0'}">
+			
 <input type="hidden" th:field="*{id}">
 			<div class="row mb-3">
 				<label class="col-sm-3 col-form-label">Peso Lordo Totale</label>
@@ -73,6 +75,7 @@
 			
 				<button type="submit" class="btn btn-success">Salva 
 			</button>
+			</div>
 		</form>
 	</div>
 

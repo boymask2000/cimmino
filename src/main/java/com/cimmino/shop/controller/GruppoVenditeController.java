@@ -51,17 +51,21 @@ public class GruppoVenditeController {
 		List<BinsVendite> bins = new ArrayList<>();
 		Vendita unaVendita = vendite.get(0);
 		for (Vendita ven : vendite) {
-			System.out.println(ven.getPeso_lordo());
+
 			bins.addAll(ven.getBins());
 		}
 
 		Vendita venditaTotale = new Vendita();
+		venditaTotale.setGruppoVendite(gruppo);
+		venditaTotale.setIsMasterGruppo(true);
 		venditaTotale.setArrivo(unaVendita.getArrivo());
 		venditaTotale.setBins(bins);
 		venditaTotale.setPeso_lordo(gr.getPesoLordoTotale());
 		venditaTotale.setCommerciante(unaVendita.getCommerciante());
 		venditaTotale.setData(unaVendita.getData());
 		venditaTotale = venditeRepository.save(venditaTotale);
+		
+	
 
 		for (Vendita ven : vendite) {
 			List<BinsVendite> binss = ven.getBins();
@@ -71,9 +75,13 @@ public class GruppoVenditeController {
 			}
 			bins.addAll(ven.getBins());
 		}
-		venditeRepository.save(venditaTotale);
+		venditaTotale=venditeRepository.save(venditaTotale);
+		gruppo.getVendite().add(venditaTotale);
 		model.addAttribute("gruppo", gruppo);
-
+		
+		
+		gruppo.setStatus("1");
+		gruppoVenditeRepository.save(gruppo);
 		return "handle_gruppo";
 	}
 //
