@@ -1,6 +1,7 @@
 package com.cimmino.shop.service.print;
 
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -76,6 +77,23 @@ public class PdfService {
 		return outputStream.toByteArray();
 	}
 
+	
+	public byte[] generateDDT4Vendite(List<Long> ids, DDTInputData ddtInputData) throws Exception {
+		List<Vendita> vendite = new ArrayList<Vendita>();
+		for (Long id : ids) {
+			Optional<Vendita> v = venditeRepository.findById(id);
+			vendite.add(v.get());
+		}
+		Configurazione conf = configurazioneService.getConfigurazione();
+
+		 ddtListVenditePrinter.exec(vendite, conf,ddtInputData);
+		
+		ByteArrayOutputStream outputStream = ddtListVenditePrinter.getOutputStream();
+		return outputStream.toByteArray();
+	}
+	
+	
+	
 	public byte[] onlyShow(Long id) throws Exception {
 	DDTDTO ddt = ddtService.getDDT(id);
 		HasOutputStream builder = new DDTPrinterRAW(ddt);
@@ -84,5 +102,7 @@ public class PdfService {
 		return outputStream.toByteArray();
 
 	}
+
+	
 
 }

@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,8 +17,10 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.cimmino.shop.database.Commerciante;
 import com.cimmino.shop.database.CommercianteRepository;
+import com.cimmino.shop.database.TrasportatoreRepository;
 import com.cimmino.shop.database.Vendita;
 import com.cimmino.shop.database.VenditeRepository;
+import com.cimmino.shop.service.print.DDTInputData;
 
 @Controller
 @RequestMapping("/ddt")
@@ -26,6 +29,8 @@ public class DDTController {
 	CommercianteRepository commercianteRepository;
 	@Autowired
 	VenditeRepository venditeRepository;
+	@Autowired
+	TrasportatoreRepository trasportatoreRepository;
 	
 	
 	@GetMapping("/home")
@@ -84,5 +89,37 @@ public class DDTController {
 
 		redirectAttributes.addAttribute("id", id);
 		return "redirect:/pdf/ddt/showddt";
+	}
+	
+	@GetMapping("/parameters")
+	public String parameters(@RequestParam("ids") List<Long> ids,
+			@RequestParam("commercianteId")Long commercianteId, Model model) {
+		DDTInputData  ddtInputData=new DDTInputData();
+		ddtInputData.setIds(ids);
+		ddtInputData.setCommercianteId(commercianteId);
+		model.addAttribute("ddtInputData", ddtInputData);
+		model.addAttribute("trasportatori", trasportatoreRepository.findAll());
+	
+		return "ddt_input_data";
+	}
+	@PostMapping("/vendite/selezionate1")
+	public String selezionate1(
+			@ModelAttribute DDTInputData ddtInputData,
+			 RedirectAttributes redirectAttributes) {
+		Long commercianteId=ddtInputData.getCommercianteId();
+		List<Long> ids = ddtInputData.getIds();
+//		Optional<Commerciante> opt_comm = commercianteRepository.findById(commercianteId);
+//		Commerciante comm = opt_comm.get();
+		
+	    System.out.println(ids);
+	    redirectAttributes.addAttribute("commercianteId", commercianteId);
+
+	    // passa tutti gli id selezionati
+	    redirectAttributes.addAttribute("ids", String.join(",",
+	            ids.stream().map(String::valueOf).toList()));
+
+	    redirectAttributes.addFlashAttribute("ddtInputData", ddtInputData);
+
+	    return "redirect:/pdf/ddt/vendite1";
 	}
 }

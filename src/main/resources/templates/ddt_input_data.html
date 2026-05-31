@@ -14,84 +14,63 @@
 
 	<div class="container mt-4">
 
-		<h1 class="text-center mb-4">Inserisci Arrivo</h1>
+		<h1 class="text-center mb-4">DDT</h1>
 
-		<form th:action="@{/web/arrivi/save}" th:object="${ddtInputData}"
+		<form th:action="@{/ddt/vendite/selezionate1}" th:object="${ddtInputData}"
 			method="post">
+
+ <input type="hidden" th:field="*{commercianteId}">
+
+    <div th:each="id, stat : *{ids}">
+        <input type="hidden"
+               th:field="*{ids[__${stat.index}__]}">
+    </div>
 
 			<!-- DATA -->
 			<div class="row mb-3">
-				<label class="col-sm-3 col-form-label">Data</label>
+				<label class="col-sm-3 col-form-label">Trasporto a mezzo</label>
 				<div class="col-sm-9">
-					<input type="date" th:field="*{data}" class="form-control" required>
+					<input type="text" th:field="*{trasportoAmezzo}"
+						class="form-control" required>
 				</div>
 			</div>
-
-			<!-- MERCE -->
-			<div class="row mb-3">
-				<label class="col-sm-3 col-form-label">Merce</label>
-				<div class="col-sm-9">
-					<select class="form-select" th:field="*{merce}" required>
-						<option value="">-- Seleziona Merce --</option>
-						<option th:each="c : ${listamerce}" th:value="${c.merce_id}"
-							th:text="${c.name}"></option>
-					</select>
-				</div>
-			</div>
-
-			<h5>Bins</h5>
-
-			<div id="binsContainer"></div>
-
-			<button type="button" class="btn btn-primary mb-3" onclick="addBin()">
-				+ Aggiungi Bin</button>
-
-			<!-- TOTALI -->
-			<div class="row mb-3">
-				<label class="col-sm-3 col-form-label">Peso Lordo</label>
-				<div class="col-sm-9">
-					<input type="number" th:field="*{peso_lordo}" class="form-control"
-						readonly>
-				</div>
-			</div>
-
-			<div class="row mb-3">
-				<label class="col-sm-3 col-form-label">Peso Netto</label>
-				<div class="col-sm-9">
-					<input type="number" th:field="*{peso_netto}" class="form-control"
-						readonly>
-				</div>
-			</div>
-
 			
-			<div class="row mb-3"> <label class="col-sm-3 col-form-label">Media</label>
-			<div class="col-sm-9">
-				<input type="number" th:field="*{media}" class="form-control">
+			<div class="row mb-3">
+				<label class="col-sm-3 col-form-label">Luogo di destinazione</label>
+				<div class="col-sm-9">
+					<input type="text" th:field="*{luogoDiDestinazione}"
+						class="form-control" required>
+				</div>
 			</div>
-	</div>
+			<div class="row mb-3">
+				<label class="col-sm-3 col-form-label">Categoria</label>
+				<div class="col-sm-9">
+					<input type="text" th:field="*{categoria}"
+						class="form-control" required>
+				</div>
+			</div>
+			<div class="row mb-3">
+				<label class="col-sm-3 col-form-label">Aspetto esteriore</label>
+				<div class="col-sm-9">
+					<input type="text" th:field="*{aspettoEsteriore}"
+						class="form-control" required>
+				</div>
+			</div>
 
-	<div class="row mb-3 align-items-center">
-		<label class="col-sm-3 col-form-label">C/F</label>
+			<div class="mb-3">
+				<label class="form-label">Trasportatore</label> <select
+					name="trasportatoreId" class="form-select" required>
+					<option value="">-- Seleziona Trasportatore --</option>
+					<option th:each="c : ${trasportatori}"
+						th:value="${c.id}" th:text="${c.name}"></option>
+				</select>
+			</div>
 
-		<div class="col-sm-9">
-			<select th:field="*{freddo}" class="form-select">
-				<option th:value="0">Caldo</option>
-				<option th:value="1">Freddo</option>
-			</select>
-		</div>
-	</div>
 
-	<div class="row mb-3">
-		<label class="col-sm-3 col-form-label">Intestazione</label>
-		<div class="col-sm-9">
-			<input type="text" th:field="*{intestazione_merce}"
-				class="form-control">
-		</div>
-	</div>
 
-	<button type="submit" class="btn btn-success">Salva Arrivo</button>
+			<button type="submit" class="btn btn-success">Salva Arrivo</button>
 
-	</form>
+		</form>
 
 	</div>
 

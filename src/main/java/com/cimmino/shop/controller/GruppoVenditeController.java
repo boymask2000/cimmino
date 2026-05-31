@@ -81,6 +81,7 @@ public class GruppoVenditeController {
 		
 		
 		gruppo.setStatus("1");
+		gruppo.setPesoLordoTotale(gr.getPesoLordoTotale());
 		gruppoVenditeRepository.save(gruppo);
 		return "handle_gruppo";
 	}

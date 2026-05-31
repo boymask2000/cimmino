@@ -33,4 +33,11 @@ public class DDTService {
 		DDT ddt =  op.get();
 		return ddtMapper.toDto(ddt);
 	}
+
+	public DDTDTO create(String body, DDTDTO dto1) {
+		dto1.setBody(body);
+		DDT entity = ddtMapper.toEntity(dto1);
+		DDT d = ddtRepository.save(entity);
+		return ddtMapper.toDto(d);
+	}
 }

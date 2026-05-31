@@ -125,25 +125,21 @@ body {
 		<div class="mb-4">
 
 			<h1 class="page-title">
-				<i class="bi bi-cart-check"></i>
-				Vendite Commerciante
+				<i class="bi bi-cart-check"></i> Vendite Commerciante
 			</h1>
 
-			<div class="subtitle">
-				Gestione vendite associate al commerciante
-			</div>
+			<div class="subtitle">Gestione vendite associate al
+				commerciante</div>
 
-			<h3 class="fw-bold text-primary"
-				th:text="${commerciante.name}"></h3>
+			<h3 class="fw-bold text-primary" th:text="${commerciante.name}"></h3>
 
 		</div>
 
 		<div class="card-custom">
 
-			<form th:action="@{/ddt/vendite/selezionate}" method="post">
+			<form th:action="@{/ddt/parameters}" >
 
-				<input type="hidden"
-					name="commercianteId"
+				<input type="hidden" name="commercianteId"
 					th:value="${commerciante.commerciante_id}" />
 
 				<div class="table-responsive">
@@ -164,51 +160,31 @@ body {
 						<tbody>
 
 							<tr th:if="${#lists.isEmpty(vendite)}">
-								<td colspan="4" class="empty-message">
-
-									<i class="bi bi-inbox fs-2"></i>
-									<br>
-									Nessuna vendita disponibile
-
-								</td>
+								<td colspan="4" class="empty-message"><i
+									class="bi bi-inbox fs-2"></i> <br> Nessuna vendita
+									disponibile</td>
 							</tr>
 
-							<tr th:each="ven : ${vendite}"
-								class="clickable-row">
+							<tr th:each="ven : ${vendite}" class="clickable-row">
 
-								<td>
-
-									<input type="checkbox"
-										name="ids"
-										th:value="${ven.id}"
-										class="form-check-input checkbox-custom row-checkbox">
+								<td><input type="checkbox" name="ids" th:value="${ven.id}"
+									class="form-check-input checkbox-custom row-checkbox">
 
 								</td>
 
 								<td th:text="${ven.data}"></td>
 
-								<td class="importo"
-									th:text="${'€ ' + ven.importo}"></td>
+								<td class="importo" th:text="${'€ ' + ven.importo}"></td>
 
-								<td>
+								<td><span th:if="${ven.ddt != null}"
+									class="badge bg-success badge-ddt"> <i
+										class="bi bi-check-circle"></i> Associato
 
-									<span th:if="${ven.ddt != null}"
-										class="badge bg-success badge-ddt">
+								</span> <span th:if="${ven.ddt == null}"
+									class="badge bg-secondary badge-ddt"> <i
+										class="bi bi-dash-circle"></i> Non presente
 
-										<i class="bi bi-check-circle"></i>
-										Associato
-
-									</span>
-
-									<span th:if="${ven.ddt == null}"
-										class="badge bg-secondary badge-ddt">
-
-										<i class="bi bi-dash-circle"></i>
-										Non presente
-
-									</span>
-
-								</td>
+								</span></td>
 
 							</tr>
 
@@ -221,20 +197,16 @@ body {
 				<div class="footer-actions">
 
 					<div class="selected-counter">
-						<i class="bi bi-check2-square"></i>
-						Selezionati:
-						<span id="selectedCount">0</span>
+						<i class="bi bi-check2-square"></i> Selezionati: <span
+							id="selectedCount">0</span>
 					</div>
 
-					<button type="submit"
-        id="submitBtn"
-        class="btn btn-primary btn-submit"
-        disabled>
+					<button type="submit" id="submitBtn"
+						class="btn btn-primary btn-submit" disabled>
 
-    <i class="bi bi-send-check"></i>
-    Invia selezionati
+						<i class="bi bi-send-check"></i> Invia selezionati
 
-</button>
+					</button>
 
 				</div>
 

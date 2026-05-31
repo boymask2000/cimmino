@@ -1,5 +1,7 @@
 package com.cimmino.shop.service.print;
 
+import java.util.List;
+
 import com.cimmino.shop.database.Trasportatore;
 
 public class DDTInputData {
@@ -7,7 +9,10 @@ public class DDTInputData {
 	private String luogoDiDestinazione = "IDEM"; // default IDEM
 	private String categoria;
 	private String aspettoEsteriore = "BINS IN PLASTICA";
-	private Trasportatore trasportatore;
+	private Long trasportatoreId;
+	
+	private List<Long> ids;
+	private long commercianteId;
 	
 	public String getTrasportoAmezzo() {
 		return trasportoAmezzo;
@@ -33,11 +38,24 @@ public class DDTInputData {
 	public void setAspettoEsteriore(String aspettoEsteriore) {
 		this.aspettoEsteriore = aspettoEsteriore;
 	}
-	public Trasportatore getTrasportatore() {
-		return trasportatore;
+
+	public List<Long> getIds() {
+		return ids;
 	}
-	public void setTrasportatore(Trasportatore trasportatore) {
-		this.trasportatore = trasportatore;
+	public void setIds(List<Long> ids) {
+		this.ids = ids;
+	}
+	public long getCommercianteId() {
+		return commercianteId;
+	}
+	public void setCommercianteId(long commercianteId) {
+		this.commercianteId = commercianteId;
+	}
+	public Long getTrasportatoreId() {
+		return trasportatoreId;
+	}
+	public void setTrasportatoreId(Long trasportatoreId) {
+		this.trasportatoreId = trasportatoreId;
 	}
 
 }
