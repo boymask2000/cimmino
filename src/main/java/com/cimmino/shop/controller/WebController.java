@@ -164,6 +164,7 @@ System.out.println("ERRORE BINS ASSENTI");
 
 		// 🔥 FIX IMPORTANTE: DTO NON ENTITY
 		model.addAttribute("binsList", binMapper.toDtoList(binRepository.findAll()));
+		model.addAttribute("configurazione",configurazioneService.getConfigurazione());
 
 		return "new_arrivo";
 	}

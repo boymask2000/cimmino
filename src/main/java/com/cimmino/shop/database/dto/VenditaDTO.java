@@ -29,7 +29,6 @@ public class VenditaDTO {
     private BigDecimal prezzo;
     private BigDecimal importo;
 
-    private BigDecimal frigo;
 
     private String key;
 
@@ -151,13 +150,6 @@ public class VenditaDTO {
 		this.importo = importo;
 	}
 
-	public BigDecimal getFrigo() {
-		return frigo;
-	}
-
-	public void setFrigo(BigDecimal frigo) {
-		this.frigo = frigo;
-	}
 
 	public String getKey() {
 		return key;

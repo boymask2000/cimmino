@@ -148,7 +148,10 @@ public class ArriviService {
 
 		arriviRepository.delete(arrivo);
 	}
-
+	public List<ArriviDTO> getAll() {
+		List<Arrivi> lista = arriviRepository.findAll();
+		return arriviMapper.toDtoList(lista);
+	}
 	public List<ArriviDTO> cercaPerInstallation(String installId) {
 		List<Arrivi> lista = arriviRepository.cercaPerInstallation(installId);
 		return arriviMapper.toDtoList(lista);

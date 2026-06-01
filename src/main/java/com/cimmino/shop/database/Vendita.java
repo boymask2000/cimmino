@@ -66,7 +66,6 @@ public class Vendita {
 
 	private BigDecimal importo;
 	
-	private BigDecimal frigo;
 	
 	private String key;
 
@@ -183,13 +182,7 @@ public class Vendita {
 		this.numeroTotaleBins = numeroTotaleBins;
 	}
 
-	public BigDecimal getFrigo() {
-		return frigo;
-	}
 
-	public void setFrigo(BigDecimal frigo) {
-		this.frigo = frigo;
-	}
 
 	public String getDdt() {
 		return ddt;

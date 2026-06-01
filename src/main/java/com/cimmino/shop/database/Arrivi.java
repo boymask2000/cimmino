@@ -49,6 +49,11 @@ public class Arrivi {
 	private BigDecimal calo;
 	private int freddo; // 1=freddo 0=caldo
 	
+	private BigDecimal frigoxCaldo;
+	private BigDecimal frigoxFreddo;
+	
+	private Boolean pagoFrigo=true;
+	
 	private String intestazione_merce;
 	
 	private String key;
@@ -194,6 +199,36 @@ public class Arrivi {
 
 	public void setKey(String key) {
 		this.key = key;
+	}
+
+
+	public BigDecimal getFrigoxCaldo() {
+		return frigoxCaldo;
+	}
+
+
+	public void setFrigoxCaldo(BigDecimal frigoxCaldo) {
+		this.frigoxCaldo = frigoxCaldo;
+	}
+
+
+	public BigDecimal getFrigoxFreddo() {
+		return frigoxFreddo;
+	}
+
+
+	public void setFrigoxFreddo(BigDecimal frigoxFreddo) {
+		this.frigoxFreddo = frigoxFreddo;
+	}
+
+
+	public Boolean getPagoFrigo() {
+		return pagoFrigo;
+	}
+
+
+	public void setPagoFrigo(Boolean pagoFrigo) {
+		this.pagoFrigo = pagoFrigo;
 	}
 
 
