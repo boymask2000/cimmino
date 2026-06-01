@@ -37,7 +37,7 @@
 			<!-- COMMERCIANTE -->
 			<div class="mb-3">
 				<label class="form-label">Commerciante</label> <select
-					name="commercianteId" class="form-select" required>
+				id="commercianteId"	name="commercianteId" class="form-select" required>
 					<option value="">-- Seleziona Commerciante --</option>
 					<option th:each="c : ${commercianti}"
 						th:value="${c.commerciante_id}" th:text="${c.name}"></option>
@@ -66,16 +66,8 @@
 				</div>
 			</div>
 		
-			<div class="form-check mb-3" th:if="${!gruppoVenditePresente}">
-				<input class="form-check-input" type="checkbox" name="creaGruppo"
-					id="creaGruppo"> <label class="form-check-label"
-					for="creaGruppo"> Crea gruppo vendite </label>
-			</div>
-			<div class="form-check mb-3" th:if="${gruppoVenditePresente}">
-				<input class="form-check-input" type="checkbox" name="joinGruppo"
-					id="joinGruppo"> <label class="form-check-label"
-					for="joinGruppo"> Unisci a Gruppo Vendite </label>
-			</div>
+			
+			<div id="gruppoVenditeContainer"></div>
 
 			<div class="row mb-3">
 				<label class="col-sm-3 col-form-label">Netto di Tara</label>
@@ -139,35 +131,63 @@
 
 </script>
 	<script>
+	document.getElementById("commercianteId")
+	.addEventListener("change", async function () {
 
-	document.getElementById("creaGruppo")?.addEventListener("change", function () {
+	    const commercianteId = this.value;
+	    if (!commercianteId) return;
 
-	    const pesoLordoInput = document.querySelector('[name="peso_lordo"]');
-	    if (!pesoLordoInput) return;
+	    try {
 
-	    if (this.checked) {
+	        const response =
+	            await fetch(`/gruppovendite/presente/${commercianteId}`);
 
-	        pesoLordoInput.value = 0;
-	        pesoLordoInput.disabled = true;
+	        const presente = await response.json();
 
-	        // stile grigio
-	        pesoLordoInput.classList.add("bg-light");
-	        pesoLordoInput.classList.add("text-muted");
+	        const container =
+	            document.getElementById("gruppoVenditeContainer");
 
-	    } else {
+	        const pesoLordoInput =
+	            document.querySelector('[name="peso_lordo"]');
 
-	        pesoLordoInput.disabled = false;
+	        if (presente) {
 
-	        // rimuove stile grigio
-	        pesoLordoInput.classList.remove("bg-light");
-	        pesoLordoInput.classList.remove("text-muted");
+	            container.innerHTML = `
+	                <div class="form-check mb-3">
+	                    <input class="form-check-input"
+	                           type="checkbox"
+	                           name="joinGruppo"
+	                           id="joinGruppo">
+	                    <label class="form-check-label" for="joinGruppo">
+	                        Unisci a Gruppo Vendite
+	                    </label>
+	                </div>
+	            `;
 
-	        // opzionale: ricalcolo automatico
-	        if (typeof aggiornaTotali === "function") {
-	            aggiornaTotali();
+
+
+	        } else {
+
+	            container.innerHTML = `
+	                <div class="form-check mb-3">
+	                    <input class="form-check-input"
+	                           type="checkbox"
+	                           name="creaGruppo"
+	                           id="creaGruppo">
+	                    <label class="form-check-label" for="creaGruppo">
+	                        Crea gruppo vendite
+	                    </label>
+	                </div>
+	            `;
+
+
 	        }
+
+	    } catch (e) {
+	        console.error("Errore verifica gruppo vendite", e);
 	    }
 	});
+
 
 	    async function checkAvailability(row) {
 
@@ -374,14 +394,15 @@
 	        container.insertAdjacentHTML("beforeend", html);
 
 	        const row = container.lastElementChild;
-
+	
 	        const numBins = row.querySelector(".numBins");
 	        const binSelect = row.querySelector(".binSelect");
 	        const btnRemove = row.querySelector(".removeBtn");
-
+	        const pesoLordo = row.querySelector(".pesoLordo");
+	        
 	        function handler() {
 	            aggiornaPesi(row);
-	            checkAvailability(row);
+	            checkAvailability(row); 
 	        }
 
 	        numBins.addEventListener("input", handler);
@@ -393,23 +414,12 @@
 	        });
 
 	        index++;
-	        const pesoLordo = row.querySelector(".pesoLordo");
-	     //   const binSelect = row.querySelector(".binSelect");
-
-	        function handler() {
-	            aggiornaPesi(row);
-	            checkAvailability(row);
-	        }
-
-	        // già presenti
-	        numBins.addEventListener("input", handler);
-	        binSelect.addEventListener("change", handler);
-
-	        // 🔥 AGGIUNGI QUESTO
+	     
 	        pesoLordo.addEventListener("input", function () {
 	            aggiornaPesoDaLordo(row);
 	            aggiornaTotali();
 	        });
+	    
 	    }
 	    function removeRow(btn) {
 
@@ -494,8 +504,11 @@
 	        const tara = Number(bin.tara) || 0;
 
 	        const lordo = Number(row.querySelector('.pesoLordo')?.value) || 0;
-
-	        const netto = lordo - (tara * qta);
+	        
+	        var netto = 0;
+	        
+	        if( lordo > 0)
+	         netto = lordo - (tara * qta);
 
 	        row.querySelector('.pesoNetto').value = netto.toFixed(2);
 	    }

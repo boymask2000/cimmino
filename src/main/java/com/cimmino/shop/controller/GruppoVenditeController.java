@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.cimmino.shop.database.BinsVendite;
 import com.cimmino.shop.database.BinsVenditeRepository;
@@ -99,5 +100,15 @@ public class GruppoVenditeController {
 //
 //		return "getMasterAddress";
 //	}
+	
+	@GetMapping("/presente/{commercianteId}")
+	@ResponseBody
+	public boolean gruppoVenditePresente(
+	        @PathVariable Long commercianteId) {
+
+	    return gruppoVenditeRepository
+	            .existsByCommercianteIdAndStatus(
+	                    commercianteId, 0);
+	}
 
 }

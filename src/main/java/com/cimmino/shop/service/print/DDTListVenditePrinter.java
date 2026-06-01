@@ -158,7 +158,7 @@ public class DDTListVenditePrinter extends BasePrinter implements HasOutputStrea
 
 		html.append(makeTestata1(dto1,ddtInputData));
 		html.append(makeTestata2());
-		html.append(makeTestata3());
+		html.append(makeTestata3(ddtInputData));
 		html.append(makeTestata4());
 		html.append(makeBinsBox(dto1, ddtInputData));
 
@@ -173,6 +173,7 @@ public class DDTListVenditePrinter extends BasePrinter implements HasOutputStrea
 		return html.toString();
 	
 	}
+
 
 
 
@@ -326,8 +327,9 @@ public class DDTListVenditePrinter extends BasePrinter implements HasOutputStrea
 		return out.toString();
 	}	
 	private Object makeFooter1(DDTInputData ddtInputData) {
-		Trasportatore tra = trasportatoreRepository.getById(ddtInputData.getTrasportatoreId());
-	
+		Trasportatore tra1 = trasportatoreRepository.getById(ddtInputData.getTrasportatore1Id());
+		
+		
 		StringBuilder out = new StringBuilder();
 		out.append("<table>");
 		out.append("<tr>");
@@ -335,8 +337,8 @@ public class DDTListVenditePrinter extends BasePrinter implements HasOutputStrea
 		out.append("<h4>");
 		out.append("1 Incaricato del trasporto (DITTA, INDIRIZZO, N.ALBO)");
 		out.append("</h4>");
-		out.append(tra.getName()+"<br/>");
-		out.append(tra.getIndirizzo()+"<br/>");
+		out.append(tra1.getName()+"<br/>");
+		out.append(tra1.getIndirizzo()+"<br/>");
 		out.append("<br/>");
 		out.append("<br/>");
 		out.append("</td>");
@@ -344,12 +346,21 @@ public class DDTListVenditePrinter extends BasePrinter implements HasOutputStrea
 		out.append("<h4>");
 		out.append("2 Incaricato del trasporto (DITTA, INDIRIZZO, N.ALBO)");
 		out.append("</h4>");
+		insertTrasportatore2(out,ddtInputData );
+		
 		out.append("</td>");
 		out.append("</tr>");
 		out.append("</table>");
 		return out.toString();
 	}
 
+	private void insertTrasportatore2(StringBuilder out, DDTInputData ddtInputData) {
+		if(ddtInputData.getTrasportatore2Id()==null)return;
+		
+		Trasportatore tra2 = trasportatoreRepository.getById(ddtInputData.getTrasportatore2Id());
+		out.append(tra2.getName()+"<br/>");
+		out.append(tra2.getIndirizzo()+"<br/>");
+	}
 	private Object makeFooter1() {
 		StringBuilder out = new StringBuilder();
 		out.append("<table>");
@@ -596,6 +607,32 @@ public class DDTListVenditePrinter extends BasePrinter implements HasOutputStrea
 
 		out.append("</tr>");
 		out.append("</table>");
+		return out.toString();
+	}
+	private Object makeTestata3(DDTInputData ddtInputData) {
+		StringBuilder out = new StringBuilder();
+
+		out.append("<table>");
+		out.append("<tr>");
+
+		out.append("<td>");
+		out.append("Secondo cessionario:");
+		
+		out.append("</td>");
+		out.append("</tr>");
+		out.append("<tr>");
+
+		out.append("<td>");
+		out.append(commerciante.getName());
+		out.append("<br/>" + clean(commerciante.getIndirizzo()));
+		out.append("</td>");
+		out.append("<td>");
+		out.append("Luogo di destinazione<p/>");
+		out.append(ddtInputData.getLuogoDiDestinazione());
+		out.append("</td>");
+		out.append("</tr>");
+		out.append("</table>");
+
 		return out.toString();
 	}
 

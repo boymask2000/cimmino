@@ -47,8 +47,8 @@ public class VenditeService {
 	GruppoVenditeRepository gruppoVenditeRepository;
 
 	@Transactional
-	public Vendita save(Vendita vendita, Long commercianteId, 
-			Boolean creaGruppo, Boolean joinGruppo, Optional<GruppoVendite> optGrp) {
+	public Vendita save(Vendita vendita, Long commercianteId, Boolean creaGruppo, Boolean joinGruppo,
+			Optional<GruppoVendite> optGrp) {
 
 		Commerciante commerciante = commercianteRepository.findById(commercianteId)
 				.orElseThrow(() -> new RuntimeException("Commerciante non trovato"));
@@ -61,7 +61,7 @@ public class VenditeService {
 		vendita.setCommerciante(commerciante);
 
 		eseguiCalcoli(vendita);
-		
+
 		Configurazione conf = configurazioneService.getConfigurazione();
 		vendita.setKey(conf.getInstallationId());
 
@@ -69,32 +69,35 @@ public class VenditeService {
 		movimentiBinService.register(vendita);
 
 		saveOperazioneCommerciante(vendita);
-		
-		 if(Boolean.TRUE.equals(creaGruppo)) {
 
-		        GruppoVendite gruppo = new GruppoVendite();
-		        gruppo.setStatus("0"); //Aperto
+		if (Boolean.TRUE.equals(creaGruppo)) {
 
-		        vendita.setGruppoVendite(gruppo);
-		        vendita.setIsMasterGruppo(false);
+			GruppoVendite gruppo = new GruppoVendite();
+			gruppo.setStatus("0"); // Aperto
 
-		        gruppoVenditeRepository.save(gruppo);
-		        venditeRepository.save(vendita);
-		    }
-		 if(Boolean.TRUE.equals(joinGruppo)) {
+			vendita.setGruppoVendite(gruppo);
+			vendita.setIsMasterGruppo(false);
+			gruppo.setCommercianteId(commercianteId);
 
-			 GruppoVendite grp = optGrp.get();
+			gruppoVenditeRepository.save(gruppo);
+			venditeRepository.save(vendita);
+		}
+		if (Boolean.TRUE.equals(joinGruppo)) {
 
-		        vendita.setGruppoVendite(grp);
-		        vendita.setIsMasterGruppo(false);
-		        gruppoVenditeRepository.save(grp);
-		        venditeRepository.save(vendita);
-		    }
+			GruppoVendite grp = optGrp.get();
+
+			vendita.setGruppoVendite(grp);
+			vendita.setIsMasterGruppo(false);
+			gruppoVenditeRepository.save(grp);
+			venditeRepository.save(vendita);
+		}
 
 		return v;
 	}
 
 	public void saveOperazioneCommerciante(Vendita vendita) {
+		if (vendita.getGruppoVendite() != null && vendita.getIsMasterGruppo() == false)
+			return;
 		OpCommerciante op = new OpCommerciante();
 
 		// op.setBin(vendita.getBin());
@@ -120,7 +123,7 @@ public class VenditeService {
 
 		BigDecimal media = BigDecimal.ZERO;
 
-		if (totaleBins > 0 && pesoLordo!=null) {
+		if (totaleBins > 0 && pesoLordo != null) {
 			media = pesoLordo.divide(BigDecimal.valueOf(totaleBins), 2, RoundingMode.HALF_UP);
 
 		}
@@ -141,9 +144,8 @@ public class VenditeService {
 
 		venditeRepository.save(v);
 	}
-	
-	public void save(Vendita v) {
 
+	public void save(Vendita v) {
 
 		venditeRepository.save(v);
 	}

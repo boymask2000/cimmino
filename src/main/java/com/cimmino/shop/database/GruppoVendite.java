@@ -25,7 +25,7 @@ public class GruppoVendite {
 	private List<Vendita> vendite;
 	
 //	
-//	private Long commercianteId;
+	private Long commercianteId;
 //	
 //	private long merceId;
 	
@@ -63,6 +63,14 @@ public class GruppoVendite {
 
 	public void setPesoLordoTotale(BigDecimal pesoLordoTotale) {
 		this.pesoLordoTotale = pesoLordoTotale;
+	}
+
+	public Long getCommercianteId() {
+		return commercianteId;
+	}
+
+	public void setCommercianteId(Long commercianteId) {
+		this.commercianteId = commercianteId;
 	}
 
 	

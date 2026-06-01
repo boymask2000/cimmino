@@ -10,4 +10,6 @@ public interface GruppoVenditeRepository extends JpaRepository<GruppoVendite, Lo
 	@Query("select g from GruppoVendite g where g.status = '0'")
 	Optional<GruppoVendite> findGroupOpen();
 
+	boolean existsByCommercianteIdAndStatus(Long commercianteId, int i);
+
 }

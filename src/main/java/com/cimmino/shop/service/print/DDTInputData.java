@@ -9,7 +9,8 @@ public class DDTInputData {
 	private String luogoDiDestinazione = "IDEM"; // default IDEM
 	private String categoria;
 	private String aspettoEsteriore = "BINS IN PLASTICA";
-	private Long trasportatoreId;
+	private Long trasportatore1Id;
+	private Long trasportatore2Id;
 	
 	private List<Long> ids;
 	private long commercianteId;
@@ -51,11 +52,18 @@ public class DDTInputData {
 	public void setCommercianteId(long commercianteId) {
 		this.commercianteId = commercianteId;
 	}
-	public Long getTrasportatoreId() {
-		return trasportatoreId;
+	public Long getTrasportatore1Id() {
+		return trasportatore1Id;
 	}
-	public void setTrasportatoreId(Long trasportatoreId) {
-		this.trasportatoreId = trasportatoreId;
+	public void setTrasportatore1Id(Long trasportatore1Id) {
+		this.trasportatore1Id = trasportatore1Id;
 	}
+	public Long getTrasportatore2Id() {
+		return trasportatore2Id;
+	}
+	public void setTrasportatore2Id(Long trasportatore2Id) {
+		this.trasportatore2Id = trasportatore2Id;
+	}
+
 
 }
