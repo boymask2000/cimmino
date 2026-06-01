@@ -94,7 +94,7 @@ public class VenditeService {
 		return v;
 	}
 
-	private void saveOperazioneCommerciante(Vendita vendita) {
+	public void saveOperazioneCommerciante(Vendita vendita) {
 		OpCommerciante op = new OpCommerciante();
 
 		// op.setBin(vendita.getBin());

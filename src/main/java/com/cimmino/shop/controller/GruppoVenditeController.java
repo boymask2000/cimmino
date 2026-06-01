@@ -19,6 +19,7 @@ import com.cimmino.shop.database.GruppoVendite;
 import com.cimmino.shop.database.GruppoVenditeRepository;
 import com.cimmino.shop.database.Vendita;
 import com.cimmino.shop.database.VenditeRepository;
+import com.cimmino.shop.service.VenditeService;
 
 @Controller
 @RequestMapping("/gruppovendite")
@@ -29,6 +30,8 @@ public class GruppoVenditeController {
 	GruppoVenditeRepository gruppoVenditeRepository;
 	@Autowired
 	BinsVenditeRepository binsVenditeRepository;
+	@Autowired
+	VenditeService venditeService;
 
 	@GetMapping("/show/{id}")
 	public String showGruppo(@PathVariable Long id, Model model) {
@@ -76,6 +79,7 @@ public class GruppoVenditeController {
 			bins.addAll(ven.getBins());
 		}
 		venditaTotale=venditeRepository.save(venditaTotale);
+		venditeService.saveOperazioneCommerciante(venditaTotale);
 		gruppo.getVendite().add(venditaTotale);
 		model.addAttribute("gruppo", gruppo);
 		

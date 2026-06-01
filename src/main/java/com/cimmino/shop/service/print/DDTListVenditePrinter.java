@@ -609,7 +609,7 @@ public class DDTListVenditePrinter extends BasePrinter implements HasOutputStrea
 		out.append("Secondo cessionario:");
 		
 		out.append("</td>");
-		out.append("<tr>");
+		out.append("</tr>");
 		out.append("<tr>");
 
 		out.append("<td>");
@@ -634,8 +634,9 @@ public class DDTListVenditePrinter extends BasePrinter implements HasOutputStrea
 		out.append("Primo cessionario");
 		
 		out.append("</td>");
+		out.append("</tr>");
+		
 		out.append("<tr>");
-
 		out.append("<td>");
 		out.append(conf.getPrimoCessionario()+"<br/>");
 		out.append("<br/>");
