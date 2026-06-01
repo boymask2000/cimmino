@@ -128,7 +128,7 @@ public class WebController {
 
 		// ❌ CONTROLLO ERRORE
 		if (arrivo.getBins() == null || arrivo.getBins().isEmpty()) {
-
+System.out.println("ERRORE BINS ASSENTI");
 			redirectAttributes.addFlashAttribute("msg", "Devi selezionare almeno un Bin prima di salvare");
 
 			return "redirect:/web/arrivi/new";

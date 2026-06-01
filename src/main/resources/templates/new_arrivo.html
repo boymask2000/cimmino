@@ -15,7 +15,7 @@
 	<div class="container mt-4">
 
 		<h1 class="text-center mb-4">Inserisci Arrivo</h1>
-<p th:if="${msg}" th:text="${msg}"></p>
+		<p th:if="${msg}" th:text="${msg}"></p>
 		<form th:action="@{/web/arrivi/save}" th:object="${arrivo}"
 			method="post">
 
@@ -63,35 +63,36 @@
 				</div>
 			</div>
 
-			
-			<div class="row mb-3"> <label class="col-sm-3 col-form-label">Media</label>
-			<div class="col-sm-9">
-				<input type="number" th:field="*{media}" class="form-control">
+
+			<div class="row mb-3">
+				<label class="col-sm-3 col-form-label">Media</label>
+				<div class="col-sm-9">
+					<input type="number" th:field="*{media}" class="form-control">
+				</div>
 			</div>
-	</div>
 
-	<div class="row mb-3 align-items-center">
-		<label class="col-sm-3 col-form-label">C/F</label>
+			<div class="row mb-3 align-items-center">
+				<label class="col-sm-3 col-form-label">C/F</label>
 
-		<div class="col-sm-9">
-			<select th:field="*{freddo}" class="form-select">
-				<option th:value="0">Caldo</option>
-				<option th:value="1">Freddo</option>
-			</select>
-		</div>
-	</div>
+				<div class="col-sm-9">
+					<select th:field="*{freddo}" class="form-select">
+						<option th:value="0">Caldo</option>
+						<option th:value="1">Freddo</option>
+					</select>
+				</div>
+			</div>
 
-	<div class="row mb-3">
-		<label class="col-sm-3 col-form-label">Intestazione</label>
-		<div class="col-sm-9">
-			<input type="text" th:field="*{intestazione_merce}"
-				class="form-control">
-		</div>
-	</div>
+			<div class="row mb-3">
+				<label class="col-sm-3 col-form-label">Intestazione</label>
+				<div class="col-sm-9">
+					<input type="text" th:field="*{intestazione_merce}"
+						class="form-control">
+				</div>
+			</div>
 
-	<button type="submit" class="btn btn-success">Salva Arrivo</button>
+			<button type="submit" class="btn btn-success">Salva Arrivo</button>
 
-	</form>
+		</form>
 
 	</div>
 
@@ -209,7 +210,7 @@ function addBin() {
         <div class="col-md-2">
             <input type="number" class="form-control pesoLordo" 
             	name="bins[${index}].pesoLordo"
-            onchange="aggiornaTotali(),aggiornaPesoNetto(this)">
+            		oninput="aggiornaDaLordo(this)">
         </div>
 
         <div class="col-md-2">
@@ -229,7 +230,36 @@ function addBin() {
     container.insertAdjacentHTML("beforeend", html);
     index++;
 }
+function aggiornaDaLordo(el) {
 
+    const row = el.closest('.bin-row');
+    if (!row) return;
+
+    const qta = Number(row.querySelector('.numBins')?.value) || 0;
+    const binId = row.querySelector('.binSelect')?.value;
+
+    const bin = binsList.find(b => String(b.id) === String(binId));
+
+    if (!bin || qta <= 0) {
+        row.querySelector('.pesoNetto').value = "";
+        aggiornaTotali();
+        return;
+    }
+
+    const tara = Number(bin.tara) || 0;
+    const lordo = Number(el.value) || 0;
+
+    // 🔥 NETTO CORRETTO
+    const netto = lordo - (tara * qta);
+
+    row.querySelector('.pesoNetto').value = netto.toFixed(2);
+
+    // opzionale: media
+    document.querySelector('[name="media"]').value =
+        (lordo / qta).toFixed(2);
+
+    aggiornaTotali();
+}
 function removeRow(btn) {
     btn.closest('.bin-row').remove();
     aggiornaTotali();

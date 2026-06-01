@@ -35,6 +35,8 @@ public class BinsArrivi {
 	@JoinColumn(name = "arrivo_id")
 	private Arrivi arrivo;
 	
+	 public BinsArrivi() {} 
+	 
 	public Long getId() {
 		return id;
 	}
