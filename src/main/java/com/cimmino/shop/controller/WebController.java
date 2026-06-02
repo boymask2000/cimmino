@@ -16,6 +16,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.cimmino.shop.database.Arrivi;
 import com.cimmino.shop.database.ArriviRepository;
+import com.cimmino.shop.database.Bin;
 import com.cimmino.shop.database.BinRepository;
 import com.cimmino.shop.database.BinsArrivi;
 import com.cimmino.shop.database.BinsArriviRepository;
@@ -138,10 +139,21 @@ System.out.println("ERRORE BINS ASSENTI");
 		for (BinsArrivi b : arrivo.getBins()) {
 			b.setArrivo(arrivo);
 		}
+		for (BinsArrivi ba : arrivo.getBins()) {
+
+		    Long binId = ba.getBin().getId();
+
+		    Bin managedBin = binRepository.findById(binId)
+		            .orElseThrow(() -> new RuntimeException("Bin non trovato: " + binId));
+
+		    ba.setBin(managedBin);
+		    ba.setArrivo(arrivo);
+		}
 		// arriviService.eseguiCalcoli(arrivo);
 
 		Configurazione conf = configurazioneService.getConfigurazione();
 		arrivo.setKey(conf.getInstallationId());
+
 
 		arriviRepository.save(arrivo);
 
