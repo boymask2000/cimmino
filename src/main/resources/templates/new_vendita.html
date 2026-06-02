@@ -21,14 +21,18 @@
 		<form th:action="@{/web/vendita/save}" th:object="${vendita}"
 			method="post" id="venditaForm">
 
-			<input type="hidden" name="binsJson" id="binsJson"> <input
+			<input type="hidden" name="binsJson" id="binsJson">
+			 <input
 				type="hidden" name="prezzoFrigoxFreddo" id="prezzoFrigoxFreddo"
-				th:value="${configurazione.prezzoFrigoxFreddo}"> <input
+				th:value="${configurazione.prezzoFrigoxFreddo}"> 
+			<input
 				type="hidden" name="prezzoFrigoxCaldo" id="prezzoFrigoxCaldo"
 				th:value="${configurazione.prezzoFrigoxCaldo}">
-			<!-- ARRIVO ID (OBBLIGATORIO) -->
+		
+
 			<input type="hidden" name="arrivoId" id="arrivoId"
 				th:value="${arrivo.id}">
+				
 			<div class="mb-3">
 				<label class="form-label">Data</label> <input type="date"
 					name="currData" th:value="${currData}" class="form-control"
@@ -87,7 +91,7 @@
 			<!-- PREZZO -->
 			<div class="mb-3">
 				<label class="form-label">Prezzo</label> <input type="number"
-					name="prezzo" id="prezzo" class="form-control" step="0.01" required>
+					name="prezzo" id="prezzo" class="form-control" step="0.01" >
 			</div>
 
 			<!-- SCARTO -->

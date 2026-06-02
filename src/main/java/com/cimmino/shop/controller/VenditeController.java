@@ -28,8 +28,8 @@ import com.cimmino.shop.database.GruppoVenditeRepository;
 import com.cimmino.shop.database.Vendita;
 import com.cimmino.shop.database.VenditeRepository;
 import com.cimmino.shop.database.dto.BinsVenditaDTO;
-import com.cimmino.shop.database.dto.VenditaDTO;
 import com.cimmino.shop.mappers.BinsVenditaMapper;
+import com.cimmino.shop.service.ArriviService;
 import com.cimmino.shop.service.ConfigurazioneService;
 import com.cimmino.shop.service.VenditeService;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -39,7 +39,9 @@ import jakarta.servlet.http.HttpSession;
 
 @Controller
 @RequestMapping("/web")
-public class WebControllerVendite {
+public class VenditeController {
+	@Autowired
+	ArriviService arriviService;
 	@Autowired
 	ArriviRepository arriviRepository;
 	@Autowired
@@ -155,9 +157,8 @@ public class WebControllerVendite {
 		model.addAttribute("endDate", lastDay);
 		return "home";
 	}
-
-	@GetMapping("/vendita/show/{id}")
-	public String showVendita(@PathVariable Long id, Model model) {
+	@GetMapping("/vendita/edit/{id}")
+	public String editVendita(HttpSession session, @PathVariable Long id, Model model) {
 		Optional<Vendita> vend = venditeRepository.findById(id);
 		if (vend.isEmpty())
 			return "show_vendita";
@@ -170,7 +171,50 @@ public class WebControllerVendite {
 				b.setBin(opbin.get());
 			}
 		}
-		return "show_vendita";
+		model.addAttribute("commercianti", commercianteRepository.findAll());
+		return "edit_vendita";
 	}
 
+	@GetMapping("/vendita/show/{id}")
+	public String showVendita(@PathVariable Long id, Model model) {
+		Optional<Vendita> vend = venditeRepository.findById(id);
+		if (vend.isEmpty())
+			return "show_vendita";
+		Vendita v = vend.get();
+		model.addAttribute("vendita", v);
+//		for (BinsVendite b : v.getBins()) {
+//
+//			Optional<Bin> opbin = binRepository.findById(b.getBin().getId());
+//			if (opbin.isPresent()) {
+//				b.setBin(opbin.get());
+//			}
+//		}
+		return "show_vendita";
+	}
+	@PostMapping("/vendita/delete/{id}")
+	public String deleteVendita(HttpSession session,@PathVariable Long id, Model model) {
+		Optional<Vendita> vend = venditeRepository.findById(id);
+		if (vend.isEmpty())
+			return "show_vendita";
+		Vendita v = vend.get();
+
+		venditeRepository.delete(v);
+
+		setGoArrivi(session, model);
+		return "arrivi2";
+	}
+
+	public void setGoArrivi(HttpSession session, Model model) {
+		LocalDate startDate = (LocalDate) session.getAttribute("startDate");
+		LocalDate endDate = (LocalDate) session.getAttribute("endDate");
+		
+		List<Arrivi> risultati = arriviRepository.cerca(startDate, endDate);
+
+		arriviService.calcSums(risultati);
+
+		model.addAttribute("results", risultati);
+		model.addAttribute("startDate", startDate);
+		model.addAttribute("endDate", endDate);
+		
+	}
 }

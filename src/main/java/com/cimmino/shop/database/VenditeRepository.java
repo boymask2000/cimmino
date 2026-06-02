@@ -1,5 +1,6 @@
 package com.cimmino.shop.database;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -29,4 +30,10 @@ public interface VenditeRepository extends JpaRepository<Vendita, Long> {
 	List<Vendita> findVenditeDiCommercianteSenzaDDT( @Param("commId") Long commId) ;
 	
 	List<Vendita> findByGruppoVendite(GruppoVendite gruppoVendite);
+	
+	@Query("select u from Vendita u where u.data>= ?1 and data <=?2 order by data")
+	List<Vendita> cerca(LocalDate startDate, LocalDate endDate);
+	
+	@Query("select u from Vendita  u where u.commerciante.commerciante_id = ?1")
+	List<Vendita> findByCommerciante(long id);
 }
