@@ -109,7 +109,10 @@
     <artifactId>jackson-datatype-jsr310</artifactId>
 </dependency>
 <!-- Source: https://mvnrepository.com/artifact/net.sf.bluecove/bluecove -->
-
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-security</artifactId>
+</dependency>
 	</dependencies>
 
 	<build>

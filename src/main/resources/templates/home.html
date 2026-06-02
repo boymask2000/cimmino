@@ -74,16 +74,13 @@
 			<!-- 			</div> -->
 		</div>
 
-		<!-- NON LOGGATO -->
-		<div th:if="${configurazione.ruolo=='M'}">
-			<form th:action="@{/net/getMasterAddress}" method="get"
-				class="row g-3 mb-4 justify-content-center">
-				<button type="submit" class="btn btn-primary w-100">Invio
-					dati</button>
-			</form>
-		</div>
+	
 
 	</div>
-
+<form th:action="@{/logout}" method="post">
+    <button class="btn btn-danger">
+        Esci
+    </button>
+</form>
 </body>
 </html>

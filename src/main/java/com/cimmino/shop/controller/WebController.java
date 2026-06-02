@@ -180,4 +180,10 @@ System.out.println("ERRORE BINS ASSENTI");
 
 		return "new_arrivo";
 	}
+	@GetMapping("/info")
+	public String info(Model model) {
+		
+
+		return "info";
+	}
 }
