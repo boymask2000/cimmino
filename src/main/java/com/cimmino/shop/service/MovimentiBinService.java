@@ -135,7 +135,7 @@ public class MovimentiBinService {
 
 			mov.setData(LocalDate.now());
 
-			mov.setInout(0);
+			mov.setInout(1);
 			mov.setDescrizione(descr);
 			mov.setNumBins(binArrivo.getNumBins());
 			movimentiBinRepository.save(mov);

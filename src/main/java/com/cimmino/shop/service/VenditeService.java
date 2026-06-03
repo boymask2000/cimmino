@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.cimmino.shop.database.ArriviRepository;
-import com.cimmino.shop.database.BinRepository;
 import com.cimmino.shop.database.Commerciante;
 import com.cimmino.shop.database.CommercianteRepository;
 import com.cimmino.shop.database.Configurazione;
@@ -29,10 +28,6 @@ public class VenditeService {
 
 	@Autowired
 	private CommercianteRepository commercianteRepository;
-
-
-	@Autowired
-	private BinRepository binRepository;;
 	@Autowired
 	ArriviService arriviService;
 	@Autowired
