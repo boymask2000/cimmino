@@ -31,6 +31,7 @@ import com.cimmino.shop.database.dto.BinsVenditaDTO;
 import com.cimmino.shop.mappers.BinsVenditaMapper;
 import com.cimmino.shop.service.ArriviService;
 import com.cimmino.shop.service.ConfigurazioneService;
+import com.cimmino.shop.service.MovimentiBinService;
 import com.cimmino.shop.service.VenditeService;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -58,6 +59,8 @@ public class VenditeController {
 	private BinsVenditaMapper binsVenditaMapper;
 	@Autowired
 	GruppoVenditeRepository gruppoVenditeRepository;
+	@Autowired
+	MovimentiBinService  movimentiBinService;
 
 
 	@GetMapping("/vendita/new/{id}")
@@ -197,6 +200,8 @@ public class VenditeController {
 		if (vend.isEmpty())
 			return "show_vendita";
 		Vendita v = vend.get();
+		
+		movimentiBinService.unregister(v, "Cancellazione Vendita");
 
 		venditeRepository.delete(v);
 

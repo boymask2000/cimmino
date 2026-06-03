@@ -47,8 +47,6 @@ public class MagazzinoService {
 				row = map.get(key);
 				row.setNum(row.getNum() + barr.getNumBins());
 				map.put(key, row);
-
-				System.out.println(arr.getData() + " " + barr.getBin().getName() + " " + barr.getNumBins());
 			}
 		}
 

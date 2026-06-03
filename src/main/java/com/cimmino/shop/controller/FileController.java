@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.cimmino.shop.database.dto.ArriviDTO;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
 import tools.jackson.core.type.TypeReference;
 import tools.jackson.databind.ObjectMapper;

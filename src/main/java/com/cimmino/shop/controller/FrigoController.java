@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.cimmino.shop.database.Arrivi;
 import com.cimmino.shop.database.ArriviRepository;
-import com.cimmino.shop.database.BinMovimentoView;
 import com.cimmino.shop.database.dto.ArriviDTO;
 import com.cimmino.shop.service.ArriviService;
 

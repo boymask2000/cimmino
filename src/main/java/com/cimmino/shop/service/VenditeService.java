@@ -14,8 +14,6 @@ import com.cimmino.shop.database.CommercianteRepository;
 import com.cimmino.shop.database.Configurazione;
 import com.cimmino.shop.database.GruppoVendite;
 import com.cimmino.shop.database.GruppoVenditeRepository;
-import com.cimmino.shop.database.OpCommerciante;
-import com.cimmino.shop.database.OperazioniCommercianteRepository;
 import com.cimmino.shop.database.Vendita;
 import com.cimmino.shop.database.VenditeRepository;
 import com.cimmino.shop.database.dto.VenditaDTO;
@@ -32,8 +30,6 @@ public class VenditeService {
 	@Autowired
 	private CommercianteRepository commercianteRepository;
 
-	@Autowired
-	private OperazioniCommercianteRepository opCommercianteRepository;
 
 	@Autowired
 	private BinRepository binRepository;;
@@ -68,7 +64,7 @@ public class VenditeService {
 		Vendita v = venditeRepository.save(vendita);
 		movimentiBinService.register(vendita);
 
-		saveOperazioneCommerciante(vendita);
+
 
 		if (Boolean.TRUE.equals(creaGruppo)) {
 
@@ -95,27 +91,7 @@ public class VenditeService {
 		return v;
 	}
 
-	public void saveOperazioneCommerciante(Vendita vendita) {
-		if (vendita.getGruppoVendite() != null && vendita.getIsMasterGruppo() == false)
-			return;
-		OpCommerciante op = new OpCommerciante();
 
-		// op.setBin(vendita.getBin());
-		op.setCommerciante(vendita.getCommerciante());
-		op.setData(vendita.getData());
-		op.setDdt(vendita.getDdt());
-		op.setImporto(vendita.getImporto());
-		op.setLordo(vendita.getPeso_lordo());
-		op.setPrezzo(vendita.getPrezzo());
-		op.setNettoDiTara(vendita.getNettoDiTara());
-		op.setNettoDiScarto(vendita.getNettoDiScarto());
-		op.setTara(vendita.getTara());
-		// op.setnBins(vendita.getnBins());
-		op.setMerce(vendita.getArrivo().getMerce());
-
-		opCommercianteRepository.save(op);
-
-	}
 
 	public void eseguiCalcoli(Vendita vendita) {
 		int totaleBins = vendita.getBins().stream().mapToInt(b -> b.getNumBins()).sum();

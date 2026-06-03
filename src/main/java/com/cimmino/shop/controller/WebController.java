@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -34,6 +35,9 @@ import jakarta.servlet.http.HttpSession;
 @Controller
 @RequestMapping("/web")
 public class WebController {
+	@Value("${spring.application.name}")
+	private String nomeApp;
+
 	@Autowired
 	ConfigurazioneService configurazioneService;
 
@@ -69,7 +73,8 @@ public class WebController {
 		Configurazione conf = configurazioneService.getConfigurazione();
 
 		model.addAttribute("configurazione", conf);
-
+		model.addAttribute("nomeApp", nomeApp);
+		
 		return "home";
 	}
 
@@ -129,7 +134,7 @@ public class WebController {
 
 		// ❌ CONTROLLO ERRORE
 		if (arrivo.getBins() == null || arrivo.getBins().isEmpty()) {
-System.out.println("ERRORE BINS ASSENTI");
+			System.out.println("ERRORE BINS ASSENTI");
 			redirectAttributes.addFlashAttribute("msg", "Devi selezionare almeno un Bin prima di salvare");
 
 			return "redirect:/web/arrivi/new";
@@ -141,19 +146,18 @@ System.out.println("ERRORE BINS ASSENTI");
 		}
 		for (BinsArrivi ba : arrivo.getBins()) {
 
-		    Long binId = ba.getBin().getId();
+			Long binId = ba.getBin().getId();
 
-		    Bin managedBin = binRepository.findById(binId)
-		            .orElseThrow(() -> new RuntimeException("Bin non trovato: " + binId));
+			Bin managedBin = binRepository.findById(binId)
+					.orElseThrow(() -> new RuntimeException("Bin non trovato: " + binId));
 
-		    ba.setBin(managedBin);
-		    ba.setArrivo(arrivo);
+			ba.setBin(managedBin);
+			ba.setArrivo(arrivo);
 		}
 		// arriviService.eseguiCalcoli(arrivo);
 
 		Configurazione conf = configurazioneService.getConfigurazione();
 		arrivo.setKey(conf.getInstallationId());
-
 
 		arriviRepository.save(arrivo);
 
@@ -176,13 +180,13 @@ System.out.println("ERRORE BINS ASSENTI");
 
 		// 🔥 FIX IMPORTANTE: DTO NON ENTITY
 		model.addAttribute("binsList", binMapper.toDtoList(binRepository.findAll()));
-		model.addAttribute("configurazione",configurazioneService.getConfigurazione());
+		model.addAttribute("configurazione", configurazioneService.getConfigurazione());
 
 		return "new_arrivo";
 	}
+
 	@GetMapping("/info")
 	public String info(Model model) {
-		
 
 		return "info";
 	}

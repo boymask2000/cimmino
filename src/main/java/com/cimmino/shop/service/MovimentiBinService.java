@@ -15,6 +15,7 @@ import com.cimmino.shop.database.BinRepository;
 import com.cimmino.shop.database.BinsArrivi;
 import com.cimmino.shop.database.BinsArriviRepository;
 import com.cimmino.shop.database.BinsVendite;
+import com.cimmino.shop.database.BinsVenditeRepository;
 import com.cimmino.shop.database.MovimentiBinRepository;
 import com.cimmino.shop.database.MovimentoBin;
 import com.cimmino.shop.database.Vendita;
@@ -25,6 +26,8 @@ public class MovimentiBinService {
 	MovimentiBinRepository movimentiBinRepository;
 	@Autowired
 	BinsArriviRepository binsArriviRepository;
+	@Autowired
+	BinsVenditeRepository binsVenditeRepository;
 	@Autowired
 	BinRepository binRepository;
 
@@ -113,6 +116,31 @@ public class MovimentiBinService {
 			mov.setNumBins(binArrivo.getNumBins());
 			movimentiBinRepository.save(mov);
 		}
+		
+	}
+
+	public void unregister(Vendita vendita, String descr) {
+//		List<BinsVendite> binsV = binsVenditeRepository.findByVendita_Id(vendita.getId());
+//		vendita.setBins(binsV);
+
+		for (BinsVendite binArrivo : vendita.getBins()) {
+
+			MovimentoBin mov = new MovimentoBin();
+
+			Optional<Bin> optBin = binRepository.findById(binArrivo.getBin().getId());
+			if (optBin.isPresent()) {
+				Bin bin = optBin.get();
+				mov.setBinName(bin.getName());
+			}
+
+			mov.setData(LocalDate.now());
+
+			mov.setInout(0);
+			mov.setDescrizione(descr);
+			mov.setNumBins(binArrivo.getNumBins());
+			movimentiBinRepository.save(mov);
+		}
+		
 		
 	}
 }

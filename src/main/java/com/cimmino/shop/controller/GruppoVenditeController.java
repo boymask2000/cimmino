@@ -80,7 +80,7 @@ public class GruppoVenditeController {
 			bins.addAll(ven.getBins());
 		}
 		venditaTotale=venditeRepository.save(venditaTotale);
-		venditeService.saveOperazioneCommerciante(venditaTotale);
+
 		gruppo.getVendite().add(venditaTotale);
 		model.addAttribute("gruppo", gruppo);
 		

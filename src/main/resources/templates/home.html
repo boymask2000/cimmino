@@ -22,7 +22,8 @@
 		<!-- LOGGATO -->
 		<div sec:authorize="isAuthenticated()">
 
-			<h1 class="text-center mb-4">Movimenti</h1>
+			<h1 class="text-center mb-4">
+			<span th:text="${nomeApp}"></span></h1>
 
 			<!-- FORM DATE -->
 			<form th:action="@{/web/filter}" method="get"

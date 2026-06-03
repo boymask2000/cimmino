@@ -75,7 +75,7 @@ public class DDTController {
 		Optional<Commerciante> opt_comm = commercianteRepository.findById(commercianteId);
 		Commerciante comm = opt_comm.get();
 		
-	    System.out.println(ids);
+
 	    redirectAttributes.addAttribute("commercianteId", commercianteId);
 
 	    // passa tutti gli id selezionati
@@ -111,7 +111,7 @@ public class DDTController {
 //		Optional<Commerciante> opt_comm = commercianteRepository.findById(commercianteId);
 //		Commerciante comm = opt_comm.get();
 		
-	    System.out.println(ids);
+
 	    redirectAttributes.addAttribute("commercianteId", commercianteId);
 
 	    // passa tutti gli id selezionati
