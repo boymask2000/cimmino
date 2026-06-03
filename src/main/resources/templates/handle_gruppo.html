@@ -12,7 +12,7 @@
 </head>
 
 <body>
-
+	<div th:replace="navbar :: navbar"></div>
 	<div class="container mt-4">
 
 		<h2 class="mb-4">Gruppo Vendita</h2>
@@ -54,7 +54,7 @@
 					<td><span class="badge bg-primary"> <span
 							th:text="${b.prezzo}"></span>
 					</span></td>
-					<td><span th:text="${b.frigo}"></span></td>
+					
 					<td><span th:text="${b.importo}"></span></td>
 				</tr>
 			</table>

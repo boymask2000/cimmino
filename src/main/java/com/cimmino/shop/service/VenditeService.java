@@ -41,9 +41,9 @@ public class VenditeService {
 	public Vendita save(Vendita vendita, Long commercianteId, Boolean creaGruppo, Boolean joinGruppo,
 			Optional<GruppoVendite> optGrp) {
 
-		Commerciante commerciante = commercianteRepository.findById(commercianteId)
-				.orElseThrow(() -> new RuntimeException("Commerciante non trovato"));
-
+		Optional<Commerciante> opComm = commercianteRepository.findById(commercianteId);
+			//	.orElseThrow(() -> new RuntimeException("Commerciante non trovato"));
+		Commerciante commerciante = opComm.get();
 //		System.out.println("binId = "+binId);
 //		Optional<BinsArrivi> opbarr = binsArriviRepository.findById(binId);
 //		BinsArrivi barr = opbarr.get();

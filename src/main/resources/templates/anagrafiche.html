@@ -11,7 +11,7 @@
 </head>
 
 <body>
-
+<div th:replace="navbar :: navbar"></div>
 	<div class="container mt-4">
 
     <div class="mb-3">
@@ -20,6 +20,10 @@
 
         <div class="d-flex flex-column gap-2 align-items-start">
 
+ 			<a th:href="@{/web/anagrafiche/titolari}"
+               class="btn btn-success w-auto">
+                + Anagrafica Titolari
+            </a>
             <a th:href="@{/web/anagrafiche/merce}"
                class="btn btn-success w-auto">
                 + Anagrafica Prodotti

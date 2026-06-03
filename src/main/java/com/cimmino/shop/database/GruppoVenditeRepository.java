@@ -7,8 +7,8 @@ import org.springframework.data.jpa.repository.Query;
 
 public interface GruppoVenditeRepository extends JpaRepository<GruppoVendite, Long> {
 
-	@Query("select g from GruppoVendite g where g.status = '0'")
-	Optional<GruppoVendite> findGroupOpen();
+	@Query("select g from GruppoVendite g where g.status = '0' and commercianteId=?1")
+	Optional<GruppoVendite> findGroupOpen(Long commercianteId);
 
 	boolean existsByCommercianteIdAndStatus(Long commercianteId, int i);
 

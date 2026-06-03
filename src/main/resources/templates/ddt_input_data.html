@@ -11,7 +11,7 @@
 </head>
 
 <body>
-
+<div th:replace="navbar :: navbar"></div>
 	<div class="container mt-4">
 
 		<h1 class="text-center mb-4">DDT</h1>
@@ -23,6 +23,26 @@
 
 			<div th:each="id, stat : *{ids}">
 				<input type="hidden" th:field="*{ids[__${stat.index}__]}">
+			</div>
+			
+			<div class="row mb-3 align-items-center">
+				<label class="col-sm-3 col-form-label">Titolare</label>
+
+				<div class="col-sm-9">
+					<select name="titolareId" class="form-select" required>
+						<option value="">-- Seleziona Titolare --</option>
+						<option th:each="c : ${titolari}" th:value="${c.id}"
+							th:text="${c.name}"></option>
+					</select>
+				</div>
+			</div>
+			
+			<div class="row mb-3">
+				<label class="col-sm-3 col-form-label">Num. DDT</label>
+				<div class="col-sm-9">
+					<input type="text" th:field="*{numeroDDT}" class="form-control"
+						required>
+				</div>
 			</div>
 
 

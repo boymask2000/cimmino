@@ -5,6 +5,8 @@ import java.util.List;
 import com.cimmino.shop.database.Trasportatore;
 
 public class DDTInputData {
+	private Long titolareId;
+	private String numeroDDT;
 	private String trasportoAmezzo; // vettore, cedente, concessionario
 	private String luogoDiDestinazione = "IDEM"; // default IDEM
 	private String categoria;
@@ -63,6 +65,18 @@ public class DDTInputData {
 	}
 	public void setTrasportatore2Id(Long trasportatore2Id) {
 		this.trasportatore2Id = trasportatore2Id;
+	}
+	public Long getTitolareId() {
+		return titolareId;
+	}
+	public void setTitolareId(Long titolareId) {
+		this.titolareId = titolareId;
+	}
+	public String getNumeroDDT() {
+		return numeroDDT;
+	}
+	public void setNumeroDDT(String numeroDDT) {
+		this.numeroDDT = numeroDDT;
 	}
 
 

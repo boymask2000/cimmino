@@ -86,13 +86,11 @@ public class VenditeController {
 			return m;
 		}).toList();
 		
-		Optional<GruppoVendite> optGrp = gruppoVenditeRepository.findGroupOpen();
-		
-		//Controllo gruppo
-//		GruppoVendite gruppo =
-//		        (GruppoVendite) session.getAttribute("gruppoVendite");
-
-		    model.addAttribute("gruppoVenditePresente", optGrp.isPresent());
+//		Optional<GruppoVendite> optGrp = gruppoVenditeRepository.findGroupOpen();
+//		
+//
+//
+//		    model.addAttribute("gruppoVenditePresente", optGrp.isPresent());
 
 		model.addAttribute("binsJs", binsJs);
 		model.addAttribute("configurazione", configurazioneService.getConfigurazione());
@@ -138,7 +136,7 @@ public class VenditeController {
 
 		vendita.setBins(entities);
 		
-		Optional<GruppoVendite> optGrp = gruppoVenditeRepository.findGroupOpen();
+		Optional<GruppoVendite> optGrp = gruppoVenditeRepository.findGroupOpen(commercianteId);
 
 		Optional<Arrivi> oparr = arriviRepository.findById(arrivoId);
 		Arrivi arr = oparr.get();

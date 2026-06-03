@@ -40,11 +40,11 @@
 <div th:replace="navbar :: navbar"></div>
 <div class="page-container">
 
-	<h1 class="page-title">Trasportatori</h1>
+	<h1 class="page-title">Titolari</h1>
 
 	<a class="btn btn-primary btn-new"
-	   th:href="@{/web/anagrafiche/trasportatori/new}">
-		➕ Nuovo Trasportatore
+	   th:href="@{/web/anagrafiche/titolari/new}">
+		➕ Nuovo Titolare
 	</a>
 
 	<div class="table-responsive">
@@ -64,7 +64,7 @@
 
 			<tbody>
 
-				<tr th:each="p : ${trasportatori}">
+				<tr th:each="p : ${titolari}">
 
 					<td th:text="${p.name}"></td>
 					<td th:text="${p.indirizzo}"></td>
@@ -75,7 +75,7 @@
 					<td class="text-center">
 
 						<a class="btn btn-sm btn-outline-primary"
-						   th:href="@{/web/anagrafiche/trasportatore/edit/{id}(id=${p.id})}">
+						   th:href="@{/web/anagrafiche/titolari/edit/{id}(id=${p.id})}">
 							Modifica
 						</a>
 

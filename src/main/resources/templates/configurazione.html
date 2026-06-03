@@ -39,7 +39,7 @@
 </head>
 
 <body>
-
+<div th:replace="navbar :: navbar"></div>
 <div class="container py-5">
 
     <!-- HEADER -->
@@ -181,7 +181,7 @@
 
                         <div class="col-sm-8">
                             <input type="number"
-                                   step="0.01"
+                                   step="0.001"
                                    min="0"
                                    class="form-control"
                                    th:field="*{prezzoFrigoxCaldo}"
@@ -197,7 +197,7 @@
 
                         <div class="col-sm-8">
                             <input type="number"
-                                   step="0.01"
+                                   step="0.001"
                                    min="0"
                                    class="form-control"
                                    th:field="*{prezzoFrigoxFreddo}"

@@ -19,6 +19,8 @@ import com.cimmino.shop.database.Commerciante;
 import com.cimmino.shop.database.CommercianteRepository;
 import com.cimmino.shop.database.Merce;
 import com.cimmino.shop.database.MerceRepository;
+import com.cimmino.shop.database.Titolare;
+import com.cimmino.shop.database.TitolareRepository;
 
 @Controller
 @RequestMapping("/web/anagrafiche")
@@ -26,7 +28,8 @@ public class AnagraficheController {
 
 	@Autowired
 	BinRepository binRepository;
-
+	@Autowired
+	TitolareRepository titolariRepository;
 	@Autowired
 	MerceRepository merceRepository;
 	
@@ -40,6 +43,8 @@ public class AnagraficheController {
 
 		return "anagrafiche/anagraficaMerce";
 	}
+	
+	
 
 	@GetMapping("/merce/new")
 	public String anagraficaMerceNew(Model model) {
@@ -83,9 +88,9 @@ public class AnagraficheController {
 
 	@GetMapping("/bins/edit/{id}")
 	public String anagraficaBinsEdit(@PathVariable Long id, Model model) {
-		Bin product = binRepository.findById(id).orElseThrow(() -> new RuntimeException("Prodotto non trovato"));
+		Optional<Bin> product = binRepository.findById(id);//.orElseThrow(() -> new RuntimeException("Prodotto non trovato"));
 
-		model.addAttribute("bin", product);
+		model.addAttribute("bin", product.get());
 
 		return "anagrafiche/edit_bin";
 	}
@@ -150,6 +155,7 @@ bin.setPesoLordo(BigDecimal.ZERO);
 		model.addAttribute("commercianti", commercianteRepository.findAll());
 		return "anagrafiche/anagraficaCommercianti";
 	}
+	
 	@PostMapping("/commercianti/update")
 	public String anagraficaCommerciantiUpdate(@ModelAttribute Commerciante comm, Model model) {
 

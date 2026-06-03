@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Modifica Bin</title>
+    <title>Nuovo Titolare</title>
 
     <style>
         body {
@@ -38,10 +38,10 @@
 
 <body>
 <div th:replace="navbar :: navbar"></div>
-<h1>Modifica Bin</h1>
+<h1>Nuovo Titolare</h1>
 
-<form th:action="@{/web/anagrafiche/bins/update}"
-      th:object="${bin}"
+<form th:action="@{/web/anagrafiche/titolari/save}"
+      th:object="${titolare}"
       method="post">
 
     <input type="hidden" th:field="*{id}" />
@@ -54,15 +54,36 @@
                required />
     </div>
     
-
-
-<div class="form-row">
-        <label>Tara:</label>
+    <div class="form-row">
+        <label>Indirizzo:</label>
 
         <input type="text"
-               th:field="*{tara}"
+               th:field="*{indirizzo}"
                required />
     </div>
+    <div class="form-row">
+        <label>Pec:</label>
+
+        <input type="text"
+               th:field="*{pec}"
+                />
+    </div>
+    <div class="form-row">
+        <label>Cod. Fiscale:</label>
+
+        <input type="text"
+               th:field="*{codFiscale}"
+                />
+    </div>
+    <div class="form-row">
+        <label>P. Iva:</label>
+
+        <input type="text"
+               th:field="*{pIva}"
+                />
+    </div>
+    
+
 
     <button type="submit">
         Salva

@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -14,6 +15,8 @@ import com.cimmino.shop.database.Commerciante;
 import com.cimmino.shop.database.Configurazione;
 import com.cimmino.shop.database.GruppoVendite;
 import com.cimmino.shop.database.GruppoVenditeRepository;
+import com.cimmino.shop.database.Titolare;
+import com.cimmino.shop.database.TitolareRepository;
 import com.cimmino.shop.database.Trasportatore;
 import com.cimmino.shop.database.TrasportatoreRepository;
 import com.cimmino.shop.database.Vendita;
@@ -32,6 +35,8 @@ public class DDTListVenditePrinter extends BasePrinter implements HasOutputStrea
 	GruppoVenditeRepository gruppoVenditeRepository;
 	@Autowired
 	TrasportatoreRepository trasportatoreRepository;
+	@Autowired
+	TitolareRepository titolariRepository;
 
 	private Configurazione conf;
 	private List<Vendita> vendite;
@@ -186,7 +191,7 @@ public class DDTListVenditePrinter extends BasePrinter implements HasOutputStrea
 
 		out.append("<td>");
 		out.append("<h4>Cedente: Ditta </h4>");
-		insertAzienda(out);
+		insertAzienda(out,ddtInputData);
 		out.append("</td>");
 
 		out.append("<td>");
@@ -264,7 +269,7 @@ public class DDTListVenditePrinter extends BasePrinter implements HasOutputStrea
 				                    <body>
 				                """);
 
-		html.append(makeTestata1(dto1));
+	//	html.append(makeTestata1(dto1));
 		html.append(makeTestata2());
 		html.append(makeTestata3());
 		html.append(makeTestata4());
@@ -688,26 +693,26 @@ public class DDTListVenditePrinter extends BasePrinter implements HasOutputStrea
 		return out.toString();
 	}
 
-	private String makeTestata1(DDTDTO dto1) {
-		StringBuilder out = new StringBuilder();
-
-		out.append("<table>");
-
-		out.append("<tr>");
-
-		out.append("<td>");
-		out.append("<h4>Cedente: Ditta </h4>");
-		insertAzienda(out);
-		out.append("</td>");
-
-		out.append("<td>");
-		insertTestataDestra(out, dto1);
-		out.append("</td>");
-
-		out.append("</tr>");
-		out.append("</table>");
-		return out.toString();
-	}
+//	private String makeTestata1(DDTDTO dto1) {
+//		StringBuilder out = new StringBuilder();
+//
+//		out.append("<table>");
+//
+//		out.append("<tr>");
+//
+//		out.append("<td>");
+//		out.append("<h4>Cedente: Ditta </h4>");
+//		insertAzienda(out);
+//		out.append("</td>");
+//
+//		out.append("<td>");
+//		insertTestataDestra(out, dto1);
+//		out.append("</td>");
+//
+//		out.append("</tr>");
+//		out.append("</table>");
+//		return out.toString();
+//	}
 	private void insertTestataDestra(StringBuilder out, DDTDTO dto, DDTInputData ddtInputData) {
 		out.append("<h2>");
 		out.append("D.T.T.  SCHEDA DI TRASPORTO");
@@ -719,7 +724,7 @@ public class DDTListVenditePrinter extends BasePrinter implements HasOutputStrea
 
 		out.append("<td>");
 		out.append("<h2>");
-		out.append("N." + dto.getId());
+		out.append("N." + ddtInputData.getNumeroDDT());
 		out.append("</h2>");
 		out.append("</td>");
 		out.append("<td>");
@@ -754,21 +759,25 @@ public class DDTListVenditePrinter extends BasePrinter implements HasOutputStrea
 		out.append("</table>");
 	}
 
-	private void insertAzienda(StringBuilder out) {
+	private void insertAzienda(StringBuilder out, DDTInputData ddtInputData) {
+		Long titId = ddtInputData.getTitolareId();
+		Optional<Titolare> optTit = titolariRepository.findById(titId);
+		if(optTit.isEmpty())return;
+		Titolare titolare = optTit.get();
 		out.append("<p>");
-		out.append(conf.getName());
+		out.append(titolare.getName());
 		out.append("</p>");
 		out.append("<p>");
-		out.append(conf.getIndirizzo());
+		out.append(titolare.getIndirizzo());
 		out.append("</p>");
 		out.append("<p>");
-		out.append(conf.getPec());
+		out.append(titolare.getPec());
 		out.append("</p>");
 		out.append("<p>");
-		out.append(conf.getCodFiscale());
+		out.append(titolare.getCodFiscale());
 		out.append("</p>");
 		out.append("<p>");
-		out.append(conf.getpIva());
+		out.append(titolare.getpIva());
 		out.append("</p>");
 	}
 
