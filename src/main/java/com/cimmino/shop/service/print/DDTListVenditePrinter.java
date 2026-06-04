@@ -76,7 +76,7 @@ public class DDTListVenditePrinter extends BasePrinter implements HasOutputStrea
 		if (vendite.size() > 0)
 			this.commerciante = vendite.get(0).getCommerciante();
 
-		DDTDTO dto1 = ddtService.create("",ddtInputData);
+		DDTDTO dto1 = ddtService.create("", ddtInputData);
 		String html = buildHtml(dto1, ddtInputData);
 
 		outputStream = new ByteArrayOutputStream();
@@ -87,15 +87,16 @@ public class DDTListVenditePrinter extends BasePrinter implements HasOutputStrea
 		builder.toStream(outputStream);
 		builder.run();
 
-		DDTDTO dto = ddtService.create(html,dto1);
+		DDTDTO dto = ddtService.create(html, dto1);
 		Long ddtId = dto1.getId();
 		for (Vendita vendita : vendite) {
 
 			vendita.setDdt(ddtInputData.getNumeroDDT());
 			venditeService.save(vendita);
 		}
-		
+
 	}
+
 	private String buildHtml(DDTDTO dto1, DDTInputData ddtInputData) {
 		StringBuilder html = new StringBuilder();
 
@@ -161,7 +162,7 @@ public class DDTListVenditePrinter extends BasePrinter implements HasOutputStrea
 				                    <body>
 				                """);
 
-		html.append(makeTestata1(dto1,ddtInputData));
+		html.append(makeTestata1(dto1, ddtInputData));
 		html.append(makeTestata2());
 		html.append(makeTestata3(ddtInputData));
 		html.append(makeTestata4());
@@ -176,11 +177,8 @@ public class DDTListVenditePrinter extends BasePrinter implements HasOutputStrea
 				""");
 
 		return html.toString();
-	
+
 	}
-
-
-
 
 	private Object makeTestata1(DDTDTO dto1, DDTInputData ddtInputData) {
 		StringBuilder out = new StringBuilder();
@@ -191,11 +189,11 @@ public class DDTListVenditePrinter extends BasePrinter implements HasOutputStrea
 
 		out.append("<td>");
 		out.append("<h4>Cedente: Ditta </h4>");
-		insertAzienda(out,ddtInputData);
+		insertAzienda(out, ddtInputData);
 		out.append("</td>");
 
 		out.append("<td>");
-		insertTestataDestra(out, dto1,ddtInputData );
+		insertTestataDestra(out, dto1, ddtInputData);
 		out.append("</td>");
 
 		out.append("</tr>");
@@ -287,6 +285,12 @@ public class DDTListVenditePrinter extends BasePrinter implements HasOutputStrea
 //	}
 	private Object makeFooter2(DDTInputData ddtInputData) {
 		StringBuilder out = new StringBuilder();
+
+		Optional<Titolare> optTit = titolariRepository.findById(ddtInputData.getTitolareId());
+		if (optTit.isEmpty())
+			return out.toString();
+		Titolare tit = optTit.get();
+
 		out.append("<table>");
 		out.append("<tr>");
 		out.append("<td>");
@@ -294,7 +298,7 @@ public class DDTListVenditePrinter extends BasePrinter implements HasOutputStrea
 		out.append("PRODOTTO CERTIFICATO GLOBAL GAP");
 		out.append("</h2>");
 		out.append("<h2>");
-		out.append("GGN "+conf.getGgn());
+		out.append("GGN " + tit.getGgn());
 		out.append("</h2>");
 		out.append("</td>");
 		out.append("<td>");
@@ -308,42 +312,22 @@ public class DDTListVenditePrinter extends BasePrinter implements HasOutputStrea
 		out.append("</table>");
 		return out.toString();
 	}
-	private Object makeFooter2() {
-		StringBuilder out = new StringBuilder();
-		out.append("<table>");
-		out.append("<tr>");
-		out.append("<td>");
-		out.append("<h2>");
-		out.append("PRODOTTO CERTIFICATO GLOBAL GAP");
-		out.append("</h2>");
-		out.append("<h2>");
-		out.append("GGN 4063061826466");
-		out.append("</h2>");
-		out.append("</td>");
-		out.append("<td>");
-		out.append("<p>Firma del conducente</p>");
-		out.append("<br/>");
-		out.append("<br/>");
-		out.append("<p>Firma del destinatario</p>");
-		out.append("<br/>");
-		out.append("</td>");
-		out.append("</tr>");
-		out.append("</table>");
-		return out.toString();
-	}	
+
 	private Object makeFooter1(DDTInputData ddtInputData) {
-		Trasportatore tra1 = trasportatoreRepository.getById(ddtInputData.getTrasportatore1Id());
-		
-		
 		StringBuilder out = new StringBuilder();
+		Optional<Trasportatore> optra1 = trasportatoreRepository.findById(ddtInputData.getTrasportatore1Id());
+		if (optra1.isEmpty())
+			return out.toString();
+		Trasportatore tra1 = optra1.get();
+
 		out.append("<table>");
 		out.append("<tr>");
 		out.append("<td>");
 		out.append("<h4>");
 		out.append("1 Incaricato del trasporto (DITTA, INDIRIZZO, N.ALBO)");
 		out.append("</h4>");
-		out.append(tra1.getName()+"<br/>");
-		out.append(tra1.getIndirizzo()+"<br/>");
+		out.append(tra1.getName() + "<br/>");
+		out.append(tra1.getIndirizzo() + "<br/>");
 		out.append("<br/>");
 		out.append("<br/>");
 		out.append("</td>");
@@ -351,8 +335,8 @@ public class DDTListVenditePrinter extends BasePrinter implements HasOutputStrea
 		out.append("<h4>");
 		out.append("2 Incaricato del trasporto (DITTA, INDIRIZZO, N.ALBO)");
 		out.append("</h4>");
-		insertTrasportatore2(out,ddtInputData );
-		
+		insertTrasportatore2(out, ddtInputData);
+
 		out.append("</td>");
 		out.append("</tr>");
 		out.append("</table>");
@@ -360,18 +344,22 @@ public class DDTListVenditePrinter extends BasePrinter implements HasOutputStrea
 	}
 
 	private void insertTrasportatore2(StringBuilder out, DDTInputData ddtInputData) {
-		if(ddtInputData.getTrasportatore2Id()==null)return;
-		
-		Trasportatore tra2 = trasportatoreRepository.getById(ddtInputData.getTrasportatore2Id());
-		out.append(tra2.getName()+"<br/>");
-		out.append(tra2.getIndirizzo()+"<br/>");
+		if (ddtInputData.getTrasportatore2Id() == null)
+			return;
+
+		Optional<Trasportatore> optra1 = trasportatoreRepository.findById(ddtInputData.getTrasportatore2Id());
+		if (optra1.isEmpty())
+			return;
+		Trasportatore tra2 = optra1.get();
+
+		out.append(tra2.getName() + "<br/>");
+		out.append(tra2.getIndirizzo() + "<br/>");
 	}
-	
 
 	int totColli = 0;
 	int numRows = 0;
 	BigDecimal totPeso = BigDecimal.ZERO;
-	
+
 	private Object makeBinsBox(DDTDTO dto1, DDTInputData ddtInputData) {
 		StringBuilder out = new StringBuilder();
 		out.append("<table>");
@@ -390,19 +378,17 @@ public class DDTListVenditePrinter extends BasePrinter implements HasOutputStrea
 		BigDecimal totPeso = BigDecimal.ZERO;
 		for (Vendita vendita : vendite)
 			if (vendita.getGruppoVendite() == null)
-				totPeso =	processVenditaNormale(vendita, out);
+				totPeso = processVenditaNormale(vendita, out);
 			else
-				totPeso =	processVenditaGruppo(vendita, out,dto1,ddtInputData);
+				totPeso = processVenditaGruppo(vendita, out, dto1, ddtInputData);
 
 		addMorelines(out);
 		out.append("</tbody>");
 		out.append("</table>");
-		makeFooter2(out, totColli, totPeso,ddtInputData);
+		makeFooter2(out, totColli, totPeso, ddtInputData);
 		return out.toString();
 	}
 
-
-	
 	private void addMorelines(StringBuilder out) {
 		for (int i = 0; i < 10 - numRows; i++) {
 			out.append("<tr>");
@@ -423,18 +409,18 @@ public class DDTListVenditePrinter extends BasePrinter implements HasOutputStrea
 		}
 	}
 
-	private BigDecimal processVenditaGruppo(Vendita vendita, StringBuilder out, 
-			DDTDTO dto1, DDTInputData ddtInputData) {
-		int numBins=0;
-		String nomeMerce="";
-		String bin="";
+	private BigDecimal processVenditaGruppo(Vendita vendita, StringBuilder out, DDTDTO dto1,
+			DDTInputData ddtInputData) {
+		int numBins = 0;
+		String nomeMerce = "";
+		String bin = "";
 		for (BinsVendite b : vendita.getBins()) {
 			totColli += b.getNumBins();
-			nomeMerce=vendita.getArrivo().getMerce().getName();
-			bin=b.getBin().getName();
-			
+			nomeMerce = vendita.getArrivo().getMerce().getName();
+			bin = b.getBin().getName();
+
 		}
-	//	gruppoVenditeRepository.findById(vendita.ge);
+		// gruppoVenditeRepository.findById(vendita.ge);
 		out.append("<tr>");
 		out.append("<td>");
 		out.append(nomeMerce);
@@ -443,21 +429,21 @@ public class DDTListVenditePrinter extends BasePrinter implements HasOutputStrea
 		out.append(bin);
 		out.append("</td>");
 		out.append("<td>");
-	
+
 		out.append(totColli);
-		
+
 		out.append("</td>");
 		out.append("<td>");
 		out.append(vendita.getGruppoVendite().getPesoLordoTotale());
-	//	totPeso = totPeso.add(b.getPesoLordo());
+		// totPeso = totPeso.add(b.getPesoLordo());
 		out.append("</td>");
 
 		out.append("</tr>");
 		totPeso = totPeso.add(vendita.getGruppoVendite().getPesoLordoTotale());
-		
+
 		GruppoVendite gruppo = vendita.getGruppoVendite();
 		List<Vendita> lista = gruppo.getVendite();
-		for( Vendita v:lista) {
+		for (Vendita v : lista) {
 			v.setDdt(ddtInputData.getNumeroDDT());
 		}
 		numRows++;
@@ -487,6 +473,7 @@ public class DDTListVenditePrinter extends BasePrinter implements HasOutputStrea
 		}
 		return totPeso;
 	}
+
 	private void makeFooter2(StringBuilder out, int totColli2, BigDecimal totPeso2, DDTInputData ddtInputData) {
 		out.append("<table>");
 		out.append("<tr>");
@@ -495,21 +482,19 @@ public class DDTListVenditePrinter extends BasePrinter implements HasOutputStrea
 		out.append("PAESE DI ORIGINE<br/>dei prodotti<br/>ITALIA");
 		out.append("</td>");
 		out.append("<td  >");
-		out.append("CATEGORIA<br/>"+ddtInputData.getCategoria());
+		out.append("CATEGORIA<br/>" + ddtInputData.getCategoria());
 		out.append("</td>");
 		out.append("<td  >");
-		out.append("Aspetto esteriore dei beni<br/>"+ddtInputData.getAspettoEsteriore());
+		out.append("Aspetto esteriore dei beni<br/>" + ddtInputData.getAspettoEsteriore());
 		out.append("</td>");
 		out.append("<td  class=\"text-end fw-bold\">n.Colli<br/>" + totColli + "</td>");
 		out.append("<td  class=\"text-end fw-bold\" >Peso kg.<br/>" + totPeso + "</td>");
 		out.append("</tr>");
 		out.append("</table>");
 		System.out.println(out.toString());
-		
-	}
-	
 
-	
+	}
+
 	private String makeTestata4() {
 		StringBuilder out = new StringBuilder();
 		out.append("<table>");
@@ -536,6 +521,7 @@ public class DDTListVenditePrinter extends BasePrinter implements HasOutputStrea
 		out.append("</table>");
 		return out.toString();
 	}
+
 	private Object makeTestata3(DDTInputData ddtInputData) {
 		StringBuilder out = new StringBuilder();
 
@@ -544,7 +530,7 @@ public class DDTListVenditePrinter extends BasePrinter implements HasOutputStrea
 
 		out.append("<td>");
 		out.append("Secondo cessionario:");
-		
+
 		out.append("</td>");
 		out.append("</tr>");
 		out.append("<tr>");
@@ -563,8 +549,6 @@ public class DDTListVenditePrinter extends BasePrinter implements HasOutputStrea
 		return out.toString();
 	}
 
-
-
 	private String makeTestata2() {
 		StringBuilder out = new StringBuilder();
 		out.append("<table>");
@@ -572,13 +556,13 @@ public class DDTListVenditePrinter extends BasePrinter implements HasOutputStrea
 
 		out.append("<td>");
 		out.append("Primo cessionario");
-		
+
 		out.append("</td>");
 		out.append("</tr>");
-		
+
 		out.append("<tr>");
 		out.append("<td>");
-		out.append(conf.getPrimoCessionario()+"<br/>");
+		out.append(conf.getPrimoCessionario() + "<br/>");
 		out.append("<br/>");
 		out.append("<br/>");
 		out.append("<br/>");
@@ -591,12 +575,11 @@ public class DDTListVenditePrinter extends BasePrinter implements HasOutputStrea
 		return out.toString();
 	}
 
-
 	private void insertTestataDestra(StringBuilder out, DDTDTO dto, DDTInputData ddtInputData) {
 		out.append("<h2>");
 		out.append("D.T.T.  SCHEDA DI TRASPORTO");
 		out.append("</h2>");
-		out.append("Trasporto a mezzo "+ddtInputData.getTrasportoAmezzo());
+		out.append("Trasporto a mezzo " + ddtInputData.getTrasportoAmezzo());
 		out.append("<table>");
 
 		out.append("<tr>");
@@ -613,13 +596,14 @@ public class DDTListVenditePrinter extends BasePrinter implements HasOutputStrea
 		out.append("</td>");
 		out.append("</tr>");
 		out.append("</table>");
-		
+
 	}
-	
+
 	private void insertAzienda(StringBuilder out, DDTInputData ddtInputData) {
 		Long titId = ddtInputData.getTitolareId();
 		Optional<Titolare> optTit = titolariRepository.findById(titId);
-		if(optTit.isEmpty())return;
+		if (optTit.isEmpty())
+			return;
 		Titolare titolare = optTit.get();
 		out.append("<p>");
 		out.append(titolare.getName());
@@ -638,5 +622,4 @@ public class DDTListVenditePrinter extends BasePrinter implements HasOutputStrea
 		out.append("</p>");
 	}
 
-	
 }

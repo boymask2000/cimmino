@@ -20,6 +20,7 @@ public class Titolare {
 	private String pec;
 	private String codFiscale;
 	private String pIva;
+	private String ggn;
 
 
 	public Titolare() {
@@ -78,5 +79,17 @@ public class Titolare {
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+
+
+
+	public String getGgn() {
+		return ggn;
+	}
+
+
+
+	public void setGgn(String ggn) {
+		this.ggn = ggn;
 	}
 }
