@@ -210,6 +210,9 @@ function aggiornaPesi(el) {
 
     row.querySelector('.pesoLordo').value = lordo.toFixed(2);
     row.querySelector('.pesoNetto').value = netto.toFixed(2);
+    
+    if ( lordo == 0 ) // Voglio vedre il campo a blank, non 0.00
+    	row.querySelector('.pesoLordo').value = "";
 
     aggiornaTotali();
 }

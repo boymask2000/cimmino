@@ -1,6 +1,7 @@
 package com.cimmino.shop.controller;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.cimmino.shop.CommerciantiDDTInfo;
 import com.cimmino.shop.database.Commerciante;
 import com.cimmino.shop.database.CommercianteRepository;
 import com.cimmino.shop.database.TitolareRepository;
@@ -45,11 +47,19 @@ public class DDTController {
 		model.addAttribute("startDate", firstDay);
 		model.addAttribute("endDate", lastDay);
 
-		// model.addAttribute("status", statusService.getStatus());
+		List<CommerciantiDDTInfo> infos = new ArrayList<>();
 
-//		List<User> users = usersRepo.findAll();
-//		model.addAttribute("nusers", users.size());
-		model.addAttribute("commercianti", commercianteRepository.findAll());
+		for (Commerciante comm : commercianteRepository.findAll()) {
+			CommerciantiDDTInfo info = new CommerciantiDDTInfo();
+
+			List<Vendita> ll = venditeRepository.findVenditeDiCommercianteSenzaDDT(comm.getCommerciante_id());
+			info.setCommerciante(comm);
+			info.setNumVenditeNoDDT(ll.size());
+			infos.add(info);
+		}
+
+	//	model.addAttribute("commercianti", commercianteRepository.findAll());
+		model.addAttribute("infos",infos);
 		return "ddt_commercianti";
 	}
 

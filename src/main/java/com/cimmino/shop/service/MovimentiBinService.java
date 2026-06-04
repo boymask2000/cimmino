@@ -54,7 +54,7 @@ public class MovimentiBinService {
 				mov.setBinName(bin.getName());
 			}
 
-			mov.setData(LocalDate.now());
+			mov.setData(arrivo.getData());
 
 			mov.setInout(1);
 			mov.setNumBins(binArrivo.getNumBins());
@@ -65,7 +65,7 @@ public class MovimentiBinService {
 	public void register(Vendita vendita) {
 		for (BinsVendite binArrivo : vendita.getBins()) {
 			MovimentoBin mov = new MovimentoBin();
-			mov.setData(LocalDate.now());
+			mov.setData(vendita.getData());
 			mov.setBinName(binArrivo.getBin().getName());
 			mov.setInout(0);
 			mov.setNumBins(binArrivo.getNumBins());

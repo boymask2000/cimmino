@@ -9,6 +9,9 @@ public class DDTPrinterRAW extends BasePrinter implements HasOutputStream {
 
 	public DDTPrinterRAW(DDTDTO ddt) throws Exception {
 		String html = ddt.getBody();
+		if( html==null) {
+			html = "<html><body>Non trovato</body></html>";
+		}
 		outputStream = new ByteArrayOutputStream();
 
 		PdfRendererBuilder builder = new PdfRendererBuilder();

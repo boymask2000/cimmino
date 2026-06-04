@@ -31,6 +31,10 @@ public class DDTService {
 
 	public DDTDTO getDDT(String dttnum) {
 		Optional<DDT> op = ddtRepository.findByNumDDT(dttnum);
+		if( op.isEmpty()) {
+			DDT ddt = new DDT();
+			return ddtMapper.toDto(ddt);
+		}
 		DDT ddt = op.get();
 		return ddtMapper.toDto(ddt);
 	}
