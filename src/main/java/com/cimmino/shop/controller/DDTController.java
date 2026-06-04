@@ -87,10 +87,10 @@ public class DDTController {
 		return "redirect:/pdf/ddt/vendite";
 	}
 
-	@GetMapping("/viewddt/{id}")
-	public String viewDDT(@PathVariable Long id, RedirectAttributes redirectAttributes) {
+	@GetMapping("/viewddt/{ddtnum}")
+	public String viewDDT(@PathVariable String ddtnum, RedirectAttributes redirectAttributes) {
 
-		redirectAttributes.addAttribute("id", id);
+		redirectAttributes.addAttribute("ddtnum", ddtnum);
 		return "redirect:/pdf/ddt/showddt";
 	}
 

@@ -8,7 +8,7 @@ import jakarta.persistence.Column;
 public class DDTDTO {
 
 	private Long id;
-	
+	private String numeroDDT;
 	private LocalDate date;
 	
 	@Column(length = 5000)
@@ -36,5 +36,13 @@ public class DDTDTO {
 
 	public void setBody(String body) {
 		this.body = body;
+	}
+
+	public String getNumeroDDT() {
+		return numeroDDT;
+	}
+
+	public void setNumeroDDT(String numeroDDT) {
+		this.numeroDDT = numeroDDT;
 	}
 }

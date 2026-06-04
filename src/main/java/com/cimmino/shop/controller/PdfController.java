@@ -88,9 +88,9 @@ public class PdfController {
 				.contentType(MediaType.APPLICATION_PDF).body(pdf);
 	}
 	@GetMapping("/ddt/showddt")
-	public ResponseEntity<byte[]> showddt(@RequestParam Long id, Model model) throws Exception {
+	public ResponseEntity<byte[]> showddt(@RequestParam String ddtnum, Model model) throws Exception {
 
-		byte[] pdf = pdfService.onlyShow(id);
+		byte[] pdf = pdfService.onlyShow(ddtnum);
 
 		return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=ddt.pdf")
 				.contentType(MediaType.APPLICATION_PDF).body(pdf);

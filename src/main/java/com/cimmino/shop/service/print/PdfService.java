@@ -71,7 +71,7 @@ public class PdfService {
 		}
 		Configurazione conf = configurazioneService.getConfigurazione();
 
-		 ddtListVenditePrinter.exec(vendite, conf);
+//		 ddtListVenditePrinter.exec(vendite, conf);
 		
 		ByteArrayOutputStream outputStream = ddtListVenditePrinter.getOutputStream();
 		return outputStream.toByteArray();
@@ -94,8 +94,8 @@ public class PdfService {
 	
 	
 	
-	public byte[] onlyShow(Long id) throws Exception {
-	DDTDTO ddt = ddtService.getDDT(id);
+	public byte[] onlyShow(String dttnum) throws Exception {
+	DDTDTO ddt = ddtService.getDDT(dttnum);
 		HasOutputStream builder = new DDTPrinterRAW(ddt);
 
 		ByteArrayOutputStream outputStream = builder.getOutputStream();

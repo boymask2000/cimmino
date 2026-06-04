@@ -9,6 +9,7 @@ import com.cimmino.shop.database.DDT;
 import com.cimmino.shop.database.DDTRepository;
 import com.cimmino.shop.database.dto.DDTDTO;
 import com.cimmino.shop.mappers.DDTMapper;
+import com.cimmino.shop.service.print.DDTInputData;
 
 @Service
 public class DDTService {
@@ -17,9 +18,9 @@ public class DDTService {
 	@Autowired
 	DDTMapper ddtMapper;
 
-	public DDTDTO create(String body) {
+	public DDTDTO create(String body, DDTInputData ddtInputData) {
 		DDT ddt = new DDT();
-
+		ddt.setNumeroDDT(ddtInputData.getNumeroDDT());
 		ddt.setBody(body);
 
 		DDT d = ddtRepository.save(ddt);
@@ -28,9 +29,9 @@ public class DDTService {
 
 	}
 
-	public DDTDTO getDDT(Long id) {
-		Optional<DDT> op = ddtRepository.findById(id);
-		DDT ddt =  op.get();
+	public DDTDTO getDDT(String dttnum) {
+		Optional<DDT> op = ddtRepository.findByNumDDT(dttnum);
+		DDT ddt = op.get();
 		return ddtMapper.toDto(ddt);
 	}
 
