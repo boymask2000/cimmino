@@ -21,6 +21,9 @@
 		<form th:action="@{/web/vendita/save}" th:object="${vendita}"
 			method="post" id="venditaForm">
 <input type="hidden" th:field="*{id}">
+<input type="hidden" th:field="*{ddt}">
+<input type="hidden" th:field="*{isMasterGruppo}">
+<input type="hidden" th:field="*{gruppoVendite.id}">
 			<input type="hidden" name="binsJson" id="binsJson">
 			<!-- ARRIVO ID (OBBLIGATORIO) -->
 			<input type="hidden" name="arrivoId" id="arrivoId"
@@ -65,7 +68,7 @@
 					</thead>
 
 					<tbody>
-						<tr th:each="b : ${vendita.bins}">
+						<tr class="bin-row" th:each="b : ${vendita.bins}">
 							<td th:text="${b.numBins}"></td>
 							<td th:text="${b.bin.name}"></td>
 							<td th:text="${b.pesoLordo}"></td>
@@ -136,7 +139,7 @@
 			<div class="mb-3">
 				<label class="form-label">Importo</label> <input type="number"
 					th:field="*{importo}" name="importo" id="importo"
-					class="form-control" readonly>
+					class="form-control" >
 			</div>
 
 
@@ -357,32 +360,37 @@ const nettoTara = Number(nettoTaraInput?.value) || 0;
 	        document.getElementById("scarto")
 	            .addEventListener("input", aggiornaTotali);
 	    
-	    document.getElementById("venditaForm").addEventListener("submit", function () {
+	        document.getElementById("venditaForm").addEventListener("submit", function (event) {
 
-	        const rows = document.querySelectorAll(".bin-row");
+	            event.preventDefault(); // 🔥 blocca invio immediato
 
-	        const bins = [];
+	            const rows = document.querySelectorAll(".bin-row");
 
-	        rows.forEach(row => {
+	            const bins = [];
+	            console.log("ROWS FOUND:", document.querySelectorAll(".bin-row").length);
+	            rows.forEach(row => {
 
-	            const binId = row.querySelector(".binSelect").value;
-	            const numBins = parseInt(row.querySelector(".numBins").value) || 0;
+	                const binId = row.querySelector(".binSelect")?.value;
+	                const numBins = parseInt(row.querySelector(".numBins")?.value) || 0;
 
-	            const pesoLordo = parseFloat(row.querySelector(".pesoLordo").value) || 0;
-	            const pesoNetto = parseFloat(row.querySelector(".pesoNetto").value) || 0;
+	                const pesoLordo = parseFloat(row.querySelector(".pesoLordo")?.value) || 0;
+	                const pesoNetto = parseFloat(row.querySelector(".pesoNetto")?.value) || 0;
 
-	            if (binId && numBins > 0) {
-	                bins.push({
-	                    binId,
-	                    numBins,
-	                    pesoLordo,
-	                    pesoNetto
-	                });
-	            }
+	                if (binId && numBins > 0) {
+	                    bins.push({
+	                        binId,
+	                        numBins,
+	                        pesoLordo,
+	                        pesoNetto
+	                    });
+	                }
+	            });
+
+	            document.getElementById("binsJson").value = JSON.stringify(bins);
+
+	            // 🔥 ORA INVIA DOPO AVER SETTATO IL VALORE
+	            this.submit();
 	        });
-
-	        document.getElementById("binsJson").value = JSON.stringify(bins);
-	    });
 	    });
 </script>
 </body>

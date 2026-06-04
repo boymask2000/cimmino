@@ -22,6 +22,7 @@ import com.cimmino.shop.database.ArriviRepository;
 import com.cimmino.shop.database.Bin;
 import com.cimmino.shop.database.BinRepository;
 import com.cimmino.shop.database.BinsVendite;
+import com.cimmino.shop.database.BinsVenditeRepository;
 import com.cimmino.shop.database.CommercianteRepository;
 import com.cimmino.shop.database.GruppoVendite;
 import com.cimmino.shop.database.GruppoVenditeRepository;
@@ -50,6 +51,8 @@ public class VenditeController {
 	@Autowired
 	BinRepository binRepository;
 	@Autowired
+	BinsVenditeRepository binsVenditeRepository;
+	@Autowired
 	VenditeService venditeService;
 	@Autowired
 	ConfigurazioneService configurazioneService;
@@ -60,8 +63,7 @@ public class VenditeController {
 	@Autowired
 	GruppoVenditeRepository gruppoVenditeRepository;
 	@Autowired
-	MovimentiBinService  movimentiBinService;
-
+	MovimentiBinService movimentiBinService;
 
 	@GetMapping("/vendita/new/{id}")
 	public String newVendita(HttpSession session, @PathVariable Long id, Model model) {
@@ -85,7 +87,7 @@ public class VenditeController {
 			m.put("tara", b.getBin().getTara());
 			return m;
 		}).toList();
-		
+
 //		Optional<GruppoVendite> optGrp = gruppoVenditeRepository.findGroupOpen();
 //		
 //
@@ -100,42 +102,46 @@ public class VenditeController {
 
 	@PostMapping("/vendita/save")
 	public String saveVendita( //
-			HttpSession session,
-			@ModelAttribute("vendita") Vendita vendita, //
-			@RequestParam("commercianteId") Long commercianteId, @RequestParam String binsJson,
-			@RequestParam("arrivoId") Long arrivoId, @RequestParam("currData") LocalDate currData, 
-			@RequestParam(required = false) Boolean creaGruppo,
-			@RequestParam(required = false) Boolean joinGruppo,
+			HttpSession session, @ModelAttribute("vendita") Vendita vendita, //
+			@RequestParam("commercianteId") Long commercianteId, //
+			@RequestParam String binsJson, //
+			@RequestParam("arrivoId") Long arrivoId, @RequestParam("currData") LocalDate currData,
+			@RequestParam(required = false) Boolean creaGruppo, @RequestParam(required = false) Boolean joinGruppo,
 			Model model) {
-
-		if(vendita.getDdt()!=null && vendita.getDdt().equals(""))
+		List<BinsVendite> entities = new ArrayList<BinsVendite>();
+		if (vendita.getDdt() != null && vendita.getDdt().equals(""))
 			vendita.setDdt(null);
-		
-		ObjectMapper mapper = new ObjectMapper();
-		List<BinsVenditaDTO> bins = new ArrayList<BinsVenditaDTO>();
-		try {
-			bins = mapper.readValue(binsJson, new TypeReference<List<BinsVenditaDTO>>() {
-			});
 
-		} catch (Exception e) {
+		if (binsJson == null || binsJson.trim().length() == 2) {
+			entities = binsVenditeRepository.findByVendita_Id(vendita.getId());
 
-			e.printStackTrace();
-		}
+		} else {
 
-		// binRepository.findById(bins.)
+			ObjectMapper mapper = new ObjectMapper();
+			List<BinsVenditaDTO> bins = new ArrayList<BinsVenditaDTO>();
+			try {
+				bins = mapper.readValue(binsJson, new TypeReference<List<BinsVenditaDTO>>() {
+				});
 
-		List<BinsVendite> entities = binsVenditaMapper.toEntityList(bins);
-		for (BinsVendite b : entities) {
-			b.setVendita(vendita);
+			} catch (Exception e) {
 
-			Optional<Bin> opbin = binRepository.findById(b.getBin().getId());
-			if (opbin.isPresent()) {
-				b.setBin(opbin.get());
+				e.printStackTrace();
+			}
+
+			// binRepository.findById(bins.)
+
+			entities = binsVenditaMapper.toEntityList(bins);
+			for (BinsVendite b : entities) {
+				b.setVendita(vendita);
+
+				Optional<Bin> opbin = binRepository.findById(b.getBin().getId());
+				if (opbin.isPresent()) {
+					b.setBin(opbin.get());
+				}
 			}
 		}
-
 		vendita.setBins(entities);
-		
+
 		Optional<GruppoVendite> optGrp = gruppoVenditeRepository.findGroupOpen(commercianteId);
 
 		Optional<Arrivi> oparr = arriviRepository.findById(arrivoId);
@@ -143,21 +149,20 @@ public class VenditeController {
 		vendita.setArrivo(arr);
 
 		vendita.setData(currData);
-		vendita= venditeService.save(vendita, commercianteId,creaGruppo, joinGruppo,
-				optGrp);
-		
+		vendita = venditeService.save(vendita, commercianteId, creaGruppo, joinGruppo, optGrp);
 
-	//	session.setAttribute("gruppoVendite", vendita.getGruppoVendite());
+		// session.setAttribute("gruppoVendite", vendita.getGruppoVendite());
 		LocalDate today = LocalDate.now();
 		LocalDate firstDay = today.withDayOfMonth(1);
 		LocalDate lastDay = today.withDayOfMonth(today.lengthOfMonth());
-		
-		model.addAttribute("configurazione",configurazioneService.getConfigurazione());
+
+		model.addAttribute("configurazione", configurazioneService.getConfigurazione());
 
 		model.addAttribute("startDate", firstDay);
 		model.addAttribute("endDate", lastDay);
 		return "home";
 	}
+
 	@GetMapping("/vendita/edit/{id}")
 	public String editVendita(HttpSession session, @PathVariable Long id, Model model) {
 		Optional<Vendita> vend = venditeRepository.findById(id);
@@ -192,13 +197,14 @@ public class VenditeController {
 //		}
 		return "show_vendita";
 	}
+
 	@PostMapping("/vendita/delete/{id}")
-	public String deleteVendita(HttpSession session,@PathVariable Long id, Model model) {
+	public String deleteVendita(HttpSession session, @PathVariable Long id, Model model) {
 		Optional<Vendita> vend = venditeRepository.findById(id);
 		if (vend.isEmpty())
 			return "show_vendita";
 		Vendita v = vend.get();
-		
+
 		movimentiBinService.unregister(v, "Cancellazione Vendita");
 
 		venditeRepository.delete(v);
@@ -210,7 +216,7 @@ public class VenditeController {
 	public void setGoArrivi(HttpSession session, Model model) {
 		LocalDate startDate = (LocalDate) session.getAttribute("startDate");
 		LocalDate endDate = (LocalDate) session.getAttribute("endDate");
-		
+
 		List<Arrivi> risultati = arriviRepository.cerca(startDate, endDate);
 
 		arriviService.calcSums(risultati);
@@ -218,6 +224,6 @@ public class VenditeController {
 		model.addAttribute("results", risultati);
 		model.addAttribute("startDate", startDate);
 		model.addAttribute("endDate", endDate);
-		
+
 	}
 }

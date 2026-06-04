@@ -41,6 +41,9 @@ public class DDTListVenditePrinter extends BasePrinter implements HasOutputStrea
 	private Configurazione conf;
 	private List<Vendita> vendite;
 	private Commerciante commerciante;
+	private	int totColli = 0;
+	private	int numRows = 0;
+	private	BigDecimal totPeso = BigDecimal.ZERO;
 
 //	public void exec(List<Vendita> vendite, Configurazione conf) throws Exception {
 //
@@ -356,9 +359,7 @@ public class DDTListVenditePrinter extends BasePrinter implements HasOutputStrea
 		out.append(tra2.getIndirizzo() + "<br/>");
 	}
 
-	int totColli = 0;
-	int numRows = 0;
-	BigDecimal totPeso = BigDecimal.ZERO;
+
 
 	private Object makeBinsBox(DDTDTO dto1, DDTInputData ddtInputData) {
 		StringBuilder out = new StringBuilder();
@@ -439,7 +440,7 @@ public class DDTListVenditePrinter extends BasePrinter implements HasOutputStrea
 		out.append("</td>");
 
 		out.append("</tr>");
-		totPeso = totPeso.add(vendita.getGruppoVendite().getPesoLordoTotale());
+	//	totPeso = totPeso.add(vendita.getGruppoVendite().getPesoLordoTotale());
 
 		GruppoVendite gruppo = vendita.getGruppoVendite();
 		List<Vendita> lista = gruppo.getVendite();
@@ -487,12 +488,10 @@ public class DDTListVenditePrinter extends BasePrinter implements HasOutputStrea
 		out.append("<td  >");
 		out.append("Aspetto esteriore dei beni<br/>" + ddtInputData.getAspettoEsteriore());
 		out.append("</td>");
-		out.append("<td  class=\"text-end fw-bold\">n.Colli<br/>" + totColli + "</td>");
-		out.append("<td  class=\"text-end fw-bold\" >Peso kg.<br/>" + totPeso + "</td>");
+		out.append("<td  class=\"text-end fw-bold\">n.Colli<br/>" + totColli2 + "</td>");
+		out.append("<td  class=\"text-end fw-bold\" >Peso kg.<br/>" + totPeso2 + "</td>");
 		out.append("</tr>");
 		out.append("</table>");
-		System.out.println(out.toString());
-
 	}
 
 	private String makeTestata4() {
@@ -605,8 +604,8 @@ public class DDTListVenditePrinter extends BasePrinter implements HasOutputStrea
 		if (optTit.isEmpty())
 			return;
 		Titolare titolare = optTit.get();
-		out.append("<p>");
-		out.append(titolare.getName());
+		out.append("<p><b>");
+		out.append(titolare.getName()+"</b>");
 		out.append("</p>");
 		out.append("<p>");
 		out.append(titolare.getIndirizzo());
