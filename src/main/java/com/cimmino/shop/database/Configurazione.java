@@ -2,6 +2,7 @@ package com.cimmino.shop.database;
 
 import java.math.BigDecimal;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -20,8 +21,9 @@ public class Configurazione {
 	private String pec;
 	private String codFiscale;
 	private String pIva;
-	
+	@Column(precision = 10, scale = 4)
 	private BigDecimal prezzoFrigoxCaldo ;
+	@Column(precision = 10, scale = 4)
 	private BigDecimal prezzoFrigoxFreddo ;
 	
 	private String installationId;

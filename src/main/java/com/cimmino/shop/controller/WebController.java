@@ -32,7 +32,7 @@ import jakarta.servlet.http.HttpSession;
 public class WebController {
 	@Value("${spring.application.name}")
 	private String nomeApp;
-
+	private List<Arrivi> risultati = new ArrayList<Arrivi>();
 	@Autowired
 	ConfigurazioneService configurazioneService;
 
@@ -96,7 +96,7 @@ public class WebController {
 		return "stampeGlobali";
 	}
 
-	List<Arrivi> risultati = new ArrayList<Arrivi>();
+	
 
 	@GetMapping("/filter")
 	public String filter(@RequestParam LocalDate startDate, //

@@ -1,13 +1,13 @@
 package com.cimmino.shop.service.print;
 
 import java.io.ByteArrayOutputStream;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import com.cimmino.shop.database.Arrivi;
 import com.cimmino.shop.database.Configurazione;
 import com.cimmino.shop.database.Vendita;
@@ -69,7 +69,7 @@ public class PdfService {
 			Optional<Vendita> v = venditeRepository.findById(id);
 			vendite.add(v.get());
 		}
-		Configurazione conf = configurazioneService.getConfigurazione();
+	//	Configurazione conf = configurazioneService.getConfigurazione();
 
 //		 ddtListVenditePrinter.exec(vendite, conf);
 		

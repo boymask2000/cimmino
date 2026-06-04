@@ -86,8 +86,8 @@ public class DDTController {
 	@PostMapping("/vendite/selezionate")
 	public String gestisciSelezionati(@RequestParam("ids") List<Long> ids,
 			@RequestParam("commercianteId") Long commercianteId, RedirectAttributes redirectAttributes) {
-		Optional<Commerciante> opt_comm = commercianteRepository.findById(commercianteId);
-		Commerciante comm = opt_comm.get();
+//		Optional<Commerciante> opt_comm = commercianteRepository.findById(commercianteId);
+//		Commerciante comm = opt_comm.get();
 
 		redirectAttributes.addAttribute("commercianteId", commercianteId);
 

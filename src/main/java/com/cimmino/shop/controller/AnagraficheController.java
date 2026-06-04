@@ -19,7 +19,6 @@ import com.cimmino.shop.database.Commerciante;
 import com.cimmino.shop.database.CommercianteRepository;
 import com.cimmino.shop.database.Merce;
 import com.cimmino.shop.database.MerceRepository;
-import com.cimmino.shop.database.Titolare;
 import com.cimmino.shop.database.TitolareRepository;
 
 @Controller

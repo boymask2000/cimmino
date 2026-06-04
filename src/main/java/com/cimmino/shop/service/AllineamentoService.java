@@ -1,14 +1,9 @@
 package com.cimmino.shop.service;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.cimmino.shop.Master;
-import com.cimmino.shop.database.Arrivi;
-import com.cimmino.shop.database.ArriviRepository;
-import com.cimmino.shop.database.dto.ArriviDTO;
 
 @Service
 public class AllineamentoService {

@@ -2,14 +2,12 @@ package com.cimmino.shop.service.print;
 
 import java.util.List;
 
-import com.cimmino.shop.database.Trasportatore;
-
 public class DDTInputData {
 	private Long titolareId;
 	private String numeroDDT;
 	private String trasportoAmezzo; // vettore, cedente, concessionario
 	private String luogoDiDestinazione = "IDEM"; // default IDEM
-	private String categoria;
+	private String categoria = "ove richiesta";
 	private String aspettoEsteriore = "BINS IN PLASTICA";
 	private Long trasportatore1Id;
 	private Long trasportatore2Id;
