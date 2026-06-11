@@ -38,7 +38,8 @@ public class MagazzinoService {
 					row.setDate(arr.getData());
 					row.setBin(barr.getBin().getName());
 					row.setNum(barr.getNumBins());
-
+					row.setNomeMerce(barr.getArrivo().getMerce().getName());
+					
 					map.put(key, row);
 					continue;
 				}
@@ -53,7 +54,7 @@ public class MagazzinoService {
 		for (Vendita ven : vendite) {
 			List<BinsVendite> binsVen = ven.getBins();
 			for (BinsVendite bven : binsVen) {
-				String key = ven.getData().toString() + " " + bven.getBin().getName();
+				String key = ven.getArrivo().getData().toString() + " " + bven.getBin().getName();
 				
 				MagazzinoRow row = null;
 				if (map.get(key) == null) {
@@ -61,6 +62,7 @@ public class MagazzinoService {
 					row.setDate(ven.getData());
 					row.setBin(bven.getBin().getName());
 					row.setNum(-bven.getNumBins());
+					row.setNomeMerce(ven.getArrivo().getMerce().getName());
 
 					map.put(key, row);
 					continue;

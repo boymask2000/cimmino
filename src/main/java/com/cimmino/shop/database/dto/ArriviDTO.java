@@ -6,25 +6,28 @@ import java.util.List;
 
 public class ArriviDTO {
 
-	 private Long id;
-	    private LocalDate data;
+	private Long id;
+	private LocalDate data;
 
-	    private Long merceId;
-	    private String merceNome;
+	private Long merceId;
+	private String merceNome;
 
-	    private BigDecimal peso_lordo;
-	    private BigDecimal peso_netto;
-	    private BigDecimal calo;
-	    private BigDecimal media;
-	    private String key;
+	private BigDecimal peso_lordo;
+	private BigDecimal peso_netto;
+	private BigDecimal calo;
+	private BigDecimal media;
+	private String key;
 
-	    private int freddo;
-	    private String intestazione_merce;
+	private int freddo;
+	private String intestazione_merce;
 
-	    private List<BinsArriviDTO> bins;
-	    private List<VenditaDTO> vendite;
-	
-	
+	private List<BinsArriviDTO> bins;
+	private List<VenditaDTO> vendite;
+	private BigDecimal frigoxCaldo;
+	private BigDecimal frigoxFreddo;
+
+	private Boolean pagoFrigo = true;
+
 	public Long getId() {
 		return id;
 	}
@@ -41,8 +44,6 @@ public class ArriviDTO {
 		this.data = data;
 	}
 
-	
-
 	public List<BinsArriviDTO> getBins() {
 		return bins;
 	}
@@ -51,9 +52,6 @@ public class ArriviDTO {
 		this.bins = bins;
 	}
 
-	
-
-
 	public int getFreddo() {
 		return freddo;
 	}
@@ -61,10 +59,6 @@ public class ArriviDTO {
 	public void setFreddo(int freddo) {
 		this.freddo = freddo;
 	}
-
-	
-
-	
 
 	public void setPeso_lordo(BigDecimal peso_lordo) {
 		this.peso_lordo = peso_lordo;
@@ -97,8 +91,6 @@ public class ArriviDTO {
 	public void setIntestazione_merce(String intestazione_merce) {
 		this.intestazione_merce = intestazione_merce;
 	}
-
-
 
 	public BigDecimal getMedia() {
 		return media;
@@ -138,5 +130,29 @@ public class ArriviDTO {
 
 	public void setMerceNome(String merceNome) {
 		this.merceNome = merceNome;
+	}
+
+	public BigDecimal getFrigoxCaldo() {
+		return frigoxCaldo;
+	}
+
+	public void setFrigoxCaldo(BigDecimal frigoxCaldo) {
+		this.frigoxCaldo = frigoxCaldo;
+	}
+
+	public BigDecimal getFrigoxFreddo() {
+		return frigoxFreddo;
+	}
+
+	public void setFrigoxFreddo(BigDecimal frigoxFreddo) {
+		this.frigoxFreddo = frigoxFreddo;
+	}
+
+	public Boolean getPagoFrigo() {
+		return pagoFrigo;
+	}
+
+	public void setPagoFrigo(Boolean pagoFrigo) {
+		this.pagoFrigo = pagoFrigo;
 	}
 }

@@ -82,7 +82,7 @@
 				<label class="col-sm-3 col-form-label">C/F</label>
 
 				<div class="col-sm-9">
-					<select th:field="*{freddo}" class="form-select">
+					<select th:field="*{freddo}" class="form-select" name="CF" id="CF">
 						<option th:value="0">Caldo</option>
 						<option th:value="1">Freddo</option>
 					</select>
@@ -134,6 +134,28 @@
 	</div>
 
 	<script th:inline="javascript">
+	
+	document.getElementById("CF")
+	.addEventListener("change", async function () {
+
+	
+		 aggiornaFrigo();
+		 setFrigo();
+		 
+	});
+	
+	function setFrigo(){
+		const cf = document.getElementById("CF").value;
+		
+		if( cf == 0){ // Caldo
+	
+			document.getElementById("frigoxFreddo").value=0;
+		}
+		else{
+			document.getElementById("frigoxCaldo").value=0;
+		}
+	}
+
 
 let index = 0;
 const binsList = /*[[${binsList}]]*/ [];
@@ -215,6 +237,8 @@ function aggiornaPesi(el) {
     	row.querySelector('.pesoLordo').value = "";
 
     aggiornaTotali();
+    
+    setFrigo();
 }
 function aggiornaPesoNetto(el) {
 
@@ -325,6 +349,7 @@ function aggiornaDaLordo(el) {
         (lordo / qta).toFixed(2);
 
     aggiornaTotali();
+    setFrigo();
 }
 function removeRow(btn) {
     btn.closest('.bin-row').remove();

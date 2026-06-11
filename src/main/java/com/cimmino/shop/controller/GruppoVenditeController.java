@@ -1,5 +1,6 @@
 package com.cimmino.shop.controller;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -58,6 +59,18 @@ public class GruppoVenditeController {
 
 			bins.addAll(ven.getBins());
 		}
+		
+		BigDecimal sommaNettoScarto = vendite.stream()
+		        .map(Vendita::getNettoDiScarto)
+		        .reduce(BigDecimal.ZERO, BigDecimal::add);
+		BigDecimal sommaNettoTara = vendite.stream()
+		        .map(Vendita::getNettoDiTara)
+		        .reduce(BigDecimal.ZERO, BigDecimal::add);
+		
+		BigDecimal sommaMedie = vendite.stream()
+		        .map(Vendita::getMedia)
+		        .reduce(BigDecimal.ZERO, BigDecimal::add);
+		BigDecimal media = sommaMedie.divide(new BigDecimal(vendite.size()));
 
 		Vendita venditaTotale = new Vendita();
 		venditaTotale.setGruppoVendite(gruppo);
@@ -65,6 +78,9 @@ public class GruppoVenditeController {
 		venditaTotale.setArrivo(unaVendita.getArrivo());
 		venditaTotale.setBins(bins);
 		venditaTotale.setPeso_lordo(gr.getPesoLordoTotale());
+		venditaTotale.setNettoDiScarto(sommaNettoScarto);
+		venditaTotale.setNettoDiTara(sommaNettoTara);
+		venditaTotale.setMedia(media);
 		venditaTotale.setCommerciante(unaVendita.getCommerciante());
 		venditaTotale.setData(unaVendita.getData());
 		venditaTotale = venditeRepository.save(venditaTotale);

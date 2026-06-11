@@ -6,6 +6,8 @@ public class MagazzinoRow {
 	private LocalDate date;
 	private String bin;
 	private int num;
+	private String nomeMerce;
+	
 	public LocalDate getDate() {
 		return date;
 	}
@@ -23,5 +25,11 @@ public class MagazzinoRow {
 	}
 	public void setNum(int num) {
 		this.num = num;
+	}
+	public String getNomeMerce() {
+		return nomeMerce;
+	}
+	public void setNomeMerce(String nomeMerce) {
+		this.nomeMerce = nomeMerce;
 	}
 }

@@ -28,7 +28,7 @@ public class VenditaDTO {
 
     private BigDecimal prezzo;
     private BigDecimal importo;
-
+    private Boolean isMasterGruppo;
 
     private String key;
 
@@ -173,6 +173,14 @@ public class VenditaDTO {
 
 	public void setNumeroTotaleBins(Integer numeroTotaleBins) {
 		this.numeroTotaleBins = numeroTotaleBins;
+	}
+
+	public Boolean getIsMasterGruppo() {
+		return isMasterGruppo;
+	}
+
+	public void setIsMasterGruppo(Boolean isMasterGruppo) {
+		this.isMasterGruppo = isMasterGruppo;
 	}
 
     // getters & setters

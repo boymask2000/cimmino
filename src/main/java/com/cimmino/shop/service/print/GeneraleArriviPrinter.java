@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.cimmino.shop.database.Arrivi;
 import com.cimmino.shop.database.BinsArrivi;
+import com.cimmino.shop.database.BinsVendite;
 import com.cimmino.shop.database.Vendita;
 import com.openhtmltopdf.pdfboxout.PdfRendererBuilder;
 
@@ -213,7 +214,7 @@ public class GeneraleArriviPrinter extends BasePrinter implements HasOutputStrea
 
 		StringBuilder out = new StringBuilder();
 
-		out.append("<table>");
+		out.append("<table class=\"table table-auto\">");
 
 		out.append("<tr>");
 		out.append("<th colspan='12' class='section-title'>VENDITE</th>");
@@ -223,10 +224,12 @@ public class GeneraleArriviPrinter extends BasePrinter implements HasOutputStrea
 		out.append("<th>Commerciante</th>");
 		out.append("<th>Data</th>");
 		out.append("<th>DDT</th>");
+		out.append("<th>Bins</th>");
 		out.append("<th>Lordo</th>");
+		out.append("<th>Tara</th>");
 		out.append("<th>Netto di Tara</th>");
 		out.append("<th>Netto di Scarto</th>");
-		out.append("<th>Tara</th>");
+		
 		out.append("<th>Media</th>");
 		out.append("<th>Scarto</th>");
 		
@@ -241,13 +244,15 @@ public class GeneraleArriviPrinter extends BasePrinter implements HasOutputStrea
 			out.append("<td>").append(clean(ven.getCommerciante().getName())).append("</td>");
 			out.append("<td>").append(clean(ven.getData())).append("</td>");
 			out.append("<td>").append(clean(ven.getDdt())).append("</td>");
+			out.append("<td>").append(bins(ven)).append("</td>");
 			out.append("<td>").append(clean(ven.getPeso_lordo())).append("</td>");
+			out.append("<td>").append(clean(ven.getTara())).append("</td>");
 			out.append("<td>").append(clean(ven.getNettoDiTara())).append("</td>");
 			out.append("<td>").append(clean(ven.getNettoDiScarto())).append("</td>");
-			out.append("<td>").append(clean(ven.getTara())).append("</td>");
+			
 			out.append("<td>").append(clean(ven.getMedia())).append("</td>");
 			out.append("<td>").append(clean(ven.getScarto())).append("</td>");
-			// out.append("<td>").append(clean(ven.getBin().getName())).append("</td>");
+			
 			// out.append("<td>").append(clean(ven.getnBins())).append("</td>");
 			out.append("<td>").append(clean(ven.getPrezzo())).append("</td>");
 			out.append("<td>").append(clean(ven.getImporto())).append("</td>");
@@ -258,6 +263,27 @@ public class GeneraleArriviPrinter extends BasePrinter implements HasOutputStrea
 		out.append("</table>");
 
 		return out.toString();
+	}
+
+	private Object bins(Vendita ven) {
+		
+		StringBuilder out = new StringBuilder();
+
+		out.append("<table class=\"table table-auto\">");
+		
+		for( BinsVendite bin :ven.getBins()) {
+			out.append("<tr>");
+			out.append("<td>");
+			out.append(bin.getBin().getName());
+			out.append("</td>");
+			out.append("<td>");
+			out.append(bin.getNumBins());
+			out.append("</td>");
+			out.append("</tr>");
+		}
+		
+		out.append("</table>");
+		return out;
 	}
 
 	private void addRow(StringBuilder out, String label, String value) {

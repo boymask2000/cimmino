@@ -136,6 +136,9 @@ public class WebController {
 		model.addAttribute("results", risultati);
 		model.addAttribute("startDate", startDate);
 		model.addAttribute("endDate", endDate);
+		
+		arriviService.calcSums(risultati);
+		arriviService.calcNumTotaleBins(risultati);
 
 		return "arrivi2";
 	}

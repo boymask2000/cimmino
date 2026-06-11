@@ -66,7 +66,7 @@
 			<div class="row mb-3">
 				<label class="col-sm-3 col-form-label">Peso Lordo</label>
 				<div class="col-sm-9">
-					<input type="number" th:field="*{peso_lordo}" class="form-control">
+					<input type="number" th:field="*{peso_lordo}" class="form-control" id="pesoLordo">
 				</div>
 			</div>
 		
@@ -107,7 +107,13 @@
 				<label class="form-label">Importo</label> <input type="number"
 					name="importo" id="importo" class="form-control" readonly>
 			</div>
-
+<div class="row mb-3">
+				<label class="col-sm-3 col-form-label">DDT</label>
+				<div class="col-sm-9">
+					<input type="text" th:field="*{ddt}"
+						class="form-control">
+				</div>
+			</div>
 			
 
 			<button type="submit" class="btn btn-success">Salva Vendita
@@ -310,6 +316,11 @@
 	        const nBinsInput = document.getElementById("nBins");
 	        if (nBinsInput) {
 	            nBinsInput.value = totaleQta;
+	        }
+	        
+	        const pesoLordo = document.getElementById("pesoLordo");
+	        if( pesoLordo.value == 0){
+	        	pesoLordo.value='';
 	        }
 	    }
 	    function calcImporto() {

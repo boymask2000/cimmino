@@ -160,7 +160,9 @@ public class VenditeController {
 
 		model.addAttribute("startDate", firstDay);
 		model.addAttribute("endDate", lastDay);
-		return "home";
+		
+		setGoArrivi(session, model);
+		return "arrivi2";
 	}
 
 	@GetMapping("/vendita/edit/{id}")
@@ -224,6 +226,6 @@ public class VenditeController {
 		model.addAttribute("results", risultati);
 		model.addAttribute("startDate", startDate);
 		model.addAttribute("endDate", endDate);
-
+		arriviService.calcNumTotaleBins(risultati);
 	}
 }
