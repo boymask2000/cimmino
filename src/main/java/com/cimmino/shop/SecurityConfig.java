@@ -21,13 +21,13 @@ public class SecurityConfig {
 
         http
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/login", "/css/**", "/js/**").permitAll()
-                .anyRequest().authenticated()
+            		.requestMatchers("/login", "/css/**", "/js/**", "/web/home").permitAll()
+            		.anyRequest().authenticated()
             )
             .formLogin(form -> form
                 .loginPage("/login")
                 .loginProcessingUrl("/login")
-                .defaultSuccessUrl("/home", true)
+                .defaultSuccessUrl("/web/home", true)
                 .failureUrl("/login?error")
                 .permitAll()
             )
