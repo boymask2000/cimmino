@@ -23,4 +23,6 @@ public interface BinRepository extends JpaRepository<Bin, Long> {
 			where b.id = :id
 			""")
 			Integer getPesoNetto(Long id);
+
+	Bin findByName(String sbin);
 }

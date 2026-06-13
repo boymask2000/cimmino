@@ -8,6 +8,10 @@ public class MagazzinoRow {
 	private int num;
 	private String nomeMerce;
 	
+	private Long merceId;
+	private Long binId;
+	private Long arrivoId;
+	
 	public LocalDate getDate() {
 		return date;
 	}
@@ -31,5 +35,23 @@ public class MagazzinoRow {
 	}
 	public void setNomeMerce(String nomeMerce) {
 		this.nomeMerce = nomeMerce;
+	}
+	public Long getMerceId() {
+		return merceId;
+	}
+	public void setMerceId(Long merceId) {
+		this.merceId = merceId;
+	}
+	public Long getBinId() {
+		return binId;
+	}
+	public void setBinId(Long binId) {
+		this.binId = binId;
+	}
+	public Long getArrivoId() {
+		return arrivoId;
+	}
+	public void setArrivoId(Long arrivoId) {
+		this.arrivoId = arrivoId;
 	}
 }

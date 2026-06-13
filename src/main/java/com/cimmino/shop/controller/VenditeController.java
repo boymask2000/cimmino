@@ -31,6 +31,7 @@ import com.cimmino.shop.database.VenditeRepository;
 import com.cimmino.shop.database.dto.BinsVenditaDTO;
 import com.cimmino.shop.mappers.BinsVenditaMapper;
 import com.cimmino.shop.service.ArriviService;
+import com.cimmino.shop.service.CommonService;
 import com.cimmino.shop.service.ConfigurazioneService;
 import com.cimmino.shop.service.MovimentiBinService;
 import com.cimmino.shop.service.VenditeService;
@@ -42,6 +43,8 @@ import jakarta.servlet.http.HttpSession;
 @Controller
 @RequestMapping("/web")
 public class VenditeController {
+	@Autowired
+	CommonService commonService;
 	@Autowired
 	ArriviService arriviService;
 	@Autowired
@@ -142,14 +145,14 @@ public class VenditeController {
 		}
 		vendita.setBins(entities);
 
-		Optional<GruppoVendite> optGrp = gruppoVenditeRepository.findGroupOpen(commercianteId);
+	//	Optional<GruppoVendite> optGrp = gruppoVenditeRepository.findGroupOpen(commercianteId);
 
 		Optional<Arrivi> oparr = arriviRepository.findById(arrivoId);
 		Arrivi arr = oparr.get();
 		vendita.setArrivo(arr);
 
 		vendita.setData(currData);
-		vendita = venditeService.save(vendita, commercianteId, creaGruppo, joinGruppo, optGrp);
+		vendita = venditeService.save(vendita, commercianteId);
 
 		// session.setAttribute("gruppoVendite", vendita.getGruppoVendite());
 		LocalDate today = LocalDate.now();
@@ -161,7 +164,7 @@ public class VenditeController {
 		model.addAttribute("startDate", firstDay);
 		model.addAttribute("endDate", lastDay);
 		
-		setGoArrivi(session, model);
+		commonService.setGoArrivi(session, model);
 		return "arrivi2";
 	}
 
@@ -211,21 +214,9 @@ public class VenditeController {
 
 		venditeRepository.delete(v);
 
-		setGoArrivi(session, model);
+		commonService.setGoArrivi(session, model);
 		return "arrivi2";
 	}
 
-	public void setGoArrivi(HttpSession session, Model model) {
-		LocalDate startDate = (LocalDate) session.getAttribute("startDate");
-		LocalDate endDate = (LocalDate) session.getAttribute("endDate");
-
-		List<Arrivi> risultati = arriviRepository.cerca(startDate, endDate);
-
-		arriviService.calcSums(risultati);
-
-		model.addAttribute("results", risultati);
-		model.addAttribute("startDate", startDate);
-		model.addAttribute("endDate", endDate);
-		arriviService.calcNumTotaleBins(risultati);
-	}
+	
 }

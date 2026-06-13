@@ -22,6 +22,7 @@ import com.cimmino.shop.database.MerceRepository;
 import com.cimmino.shop.mappers.BinMapper;
 import com.cimmino.shop.service.ArriviService;
 import com.cimmino.shop.service.BinArriviService;
+import com.cimmino.shop.service.CommonService;
 import com.cimmino.shop.service.ConfigurazioneService;
 import com.cimmino.shop.service.MovimentiBinService;
 
@@ -35,7 +36,8 @@ public class WebController {
 	private List<Arrivi> risultati = new ArrayList<Arrivi>();
 	@Autowired
 	ConfigurazioneService configurazioneService;
-
+	@Autowired
+	CommonService commonService;
 	@Autowired
 	ArriviRepository arriviRepository;
 	@Autowired
@@ -69,7 +71,7 @@ public class WebController {
 
 		model.addAttribute("configurazione", conf);
 		model.addAttribute("nomeApp", nomeApp);
-		
+
 		return "home";
 	}
 
@@ -96,8 +98,6 @@ public class WebController {
 		return "stampeGlobali";
 	}
 
-	
-
 	@GetMapping("/filter")
 	public String filter(@RequestParam LocalDate startDate, //
 			@RequestParam LocalDate endDate, //
@@ -120,30 +120,31 @@ public class WebController {
 		model.addAttribute("endDate", endDate);
 
 		arriviService.calcNumTotaleBins(risultati);
+		
+		commonService.setGoArrivi(session, model);
 
 		return "arrivi2";
 	}
+
 	@GetMapping("/arrivi")
-	public String arrivi(
-			HttpSession session, //
+	public String arrivi(HttpSession session, //
 			Model model) {
-		
+
 		LocalDate startDate = (LocalDate) session.getAttribute("startDate");
 		LocalDate endDate = (LocalDate) session.getAttribute("endDate");
-		
+
 		risultati = arriviRepository.cerca(startDate, endDate);
 
 		model.addAttribute("results", risultati);
 		model.addAttribute("startDate", startDate);
 		model.addAttribute("endDate", endDate);
-		
+
 		arriviService.calcSums(risultati);
 		arriviService.calcNumTotaleBins(risultati);
 
 		return "arrivi2";
 	}
 
-	
 	@GetMapping("/info")
 	public String info(Model model) {
 

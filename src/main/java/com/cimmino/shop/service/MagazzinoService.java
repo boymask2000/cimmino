@@ -1,8 +1,10 @@
 package com.cimmino.shop.service;
 
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,7 +23,7 @@ public class MagazzinoService {
 	@Autowired
 	VenditeRepository venditeRepository;
 
-	public Map<String, MagazzinoRow> dump() {
+	public List<MagazzinoRow>  dump() {
 		Map<String, MagazzinoRow> map = new HashMap<String, MagazzinoRow>();
 
 		List<Arrivi> arrivi = arriviRepository.findAll();
@@ -29,8 +31,9 @@ public class MagazzinoService {
 		for (Arrivi arr : arrivi) {
 			List<BinsArrivi> binsArr = arr.getBins();
 			for (BinsArrivi barr : binsArr) {
-				String key = arr.getData().toString() + " " + barr.getBin().getName();
-
+				String key = arr.getData().toString() + " " + barr.getBin().getName()+" "+
+				barr.getArrivo().getMerce().getName();
+				
 				MagazzinoRow row = null;
 
 				if (map.get(key) == null) {
@@ -39,6 +42,10 @@ public class MagazzinoService {
 					row.setBin(barr.getBin().getName());
 					row.setNum(barr.getNumBins());
 					row.setNomeMerce(barr.getArrivo().getMerce().getName());
+					
+					row.setMerceId(barr.getArrivo().getMerce().getMerce_id());
+					row.setBinId(barr.getBin().getId());
+					row.setArrivoId(arr.getId());
 					
 					map.put(key, row);
 					continue;
@@ -54,8 +61,8 @@ public class MagazzinoService {
 		for (Vendita ven : vendite) {
 			List<BinsVendite> binsVen = ven.getBins();
 			for (BinsVendite bven : binsVen) {
-				String key = ven.getArrivo().getData().toString() + " " + bven.getBin().getName();
-				
+				String key = ven.getArrivo().getData().toString() + " " + bven.getBin().getName()+" "+
+				ven.getArrivo().getMerce().getName();
 				MagazzinoRow row = null;
 				if (map.get(key) == null) {
 					row = new MagazzinoRow();
@@ -63,7 +70,9 @@ public class MagazzinoService {
 					row.setBin(bven.getBin().getName());
 					row.setNum(-bven.getNumBins());
 					row.setNomeMerce(ven.getArrivo().getMerce().getName());
-
+					row.setMerceId(ven.getArrivo().getMerce().getMerce_id());
+					row.setBinId(bven.getBin().getId());
+					row.setArrivoId(ven.getArrivo().getId());
 					map.put(key, row);
 					continue;
 				}
@@ -74,7 +83,16 @@ public class MagazzinoService {
 			}
 		}
 
-		return map;
+		
+		
+		List<MagazzinoRow> rows =
+			   map
+			        .values()
+			        .stream()
+			        .sorted(Comparator.comparing(r -> r.getDate()))
+			        .collect(Collectors.toList());
+		
+		return rows;
 
 	}
 }

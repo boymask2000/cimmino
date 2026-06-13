@@ -38,8 +38,7 @@ public class VenditeService {
 	GruppoVenditeRepository gruppoVenditeRepository;
 
 	@Transactional
-	public Vendita save(Vendita vendita, Long commercianteId, Boolean creaGruppo, Boolean joinGruppo,
-			Optional<GruppoVendite> optGrp) {
+	public Vendita save(Vendita vendita, Long commercianteId) {
 
 		Optional<Commerciante> opComm = commercianteRepository.findById(commercianteId);
 		// .orElseThrow(() -> new RuntimeException("Commerciante non trovato"));
@@ -72,27 +71,27 @@ public class VenditeService {
 		Vendita v = venditeRepository.save(vendita);
 		movimentiBinService.register(vendita);
 
-		if (Boolean.TRUE.equals(creaGruppo)) {
-
-			GruppoVendite gruppo = new GruppoVendite();
-			gruppo.setStatus("0"); // Aperto
-
-			vendita.setGruppoVendite(gruppo);
-			vendita.setIsMasterGruppo(false);
-			gruppo.setCommercianteId(commercianteId);
-
-			gruppoVenditeRepository.save(gruppo);
-			venditeRepository.save(vendita);
-		}
-		if (Boolean.TRUE.equals(joinGruppo)) {
-
-			GruppoVendite grp = optGrp.get();
-
-			vendita.setGruppoVendite(grp);
-			vendita.setIsMasterGruppo(false);
-			gruppoVenditeRepository.save(grp);
-			venditeRepository.save(vendita);
-		}
+//		if (Boolean.TRUE.equals(creaGruppo)) {
+//
+//			GruppoVendite gruppo = new GruppoVendite();
+//			gruppo.setStatus("0"); // Aperto
+//
+//			vendita.setGruppoVendite(gruppo);
+//			vendita.setIsMasterGruppo(false);
+//			gruppo.setCommerciante(commerciante);
+//
+//			gruppoVenditeRepository.save(gruppo);
+//			venditeRepository.save(vendita);
+//		}
+//		if (Boolean.TRUE.equals(joinGruppo)) {
+//
+//			GruppoVendite grp = optGrp.get();
+//
+//			vendita.setGruppoVendite(grp);
+//			vendita.setIsMasterGruppo(false);
+//			gruppoVenditeRepository.save(grp);
+//			venditeRepository.save(vendita);
+//		}
 		
 
 		return v;
