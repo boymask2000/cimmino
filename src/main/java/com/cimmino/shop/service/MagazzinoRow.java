@@ -4,6 +4,7 @@ import java.time.LocalDate;
 
 public class MagazzinoRow {
 	private LocalDate date;
+	private String sDate;
 	private String bin;
 	private int num;
 	private String nomeMerce;
@@ -53,5 +54,14 @@ public class MagazzinoRow {
 	}
 	public void setArrivoId(Long arrivoId) {
 		this.arrivoId = arrivoId;
+	}
+	public String getsDate() {
+		int day = date.getDayOfMonth();
+		int mese = date.getMonthValue();
+		int anno = date.getYear();
+		return day+"/"+mese+"/"+anno;
+	}
+	public void setsDate(String sDate) {
+		this.sDate = sDate;
 	}
 }

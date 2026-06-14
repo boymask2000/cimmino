@@ -164,12 +164,7 @@ function confirmDelete(id) {
 				<tr th:each="a : ${results}">
 
 					<td class="align-middle text-nowrap" style="width: 1%;">
-						<div th:if="${a.sums.get('AVAIL')!= 0}">
-							<a th:href="@{/web/vendita/new/{id}(id=${a.id})}"
-								class="btn btn-primary btn-sm"> Vendita </a>
-						</div> <!-- 						<a th:href="@{/web/vendita/new/{id}(id=${a.id})}" -->
-						<!-- 								class="btn btn-primary btn-sm"> Vendita </a> -->
-
+						
 						<div th:if="${a.sums.get('AVAIL')== 0}">
 							<p>Vendite</p>
 							<p>complete</p>

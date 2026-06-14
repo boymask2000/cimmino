@@ -41,12 +41,8 @@ public class VenditeService {
 	public Vendita save(Vendita vendita, Long commercianteId) {
 
 		Optional<Commerciante> opComm = commercianteRepository.findById(commercianteId);
-		// .orElseThrow(() -> new RuntimeException("Commerciante non trovato"));
+
 		Commerciante commerciante = opComm.get();
-//		System.out.println("binId = "+binId);
-//		Optional<BinsArrivi> opbarr = binsArriviRepository.findById(binId);
-//		BinsArrivi barr = opbarr.get();
-//		Bin bin = barr.getBin();//.findById(barr.getBin().ge).orElseThrow(() -> new RuntimeException("Bin non trovato"));
 
 		vendita.setCommerciante(commerciante);
 
@@ -54,46 +50,16 @@ public class VenditeService {
 
 		Configurazione conf = configurazioneService.getConfigurazione();
 		vendita.setKey(conf.getInstallationId());
-		
-		
-		
-		
-		
+						
 		GruppoVendite grpp = vendita.getGruppoVendite();
 		if (grpp!=null) {
 	
 			gruppoVenditeRepository.save(grpp);
-		}
-		
-		
-		
+		}	
 		
 		Vendita v = venditeRepository.save(vendita);
 		movimentiBinService.register(vendita);
-
-//		if (Boolean.TRUE.equals(creaGruppo)) {
-//
-//			GruppoVendite gruppo = new GruppoVendite();
-//			gruppo.setStatus("0"); // Aperto
-//
-//			vendita.setGruppoVendite(gruppo);
-//			vendita.setIsMasterGruppo(false);
-//			gruppo.setCommerciante(commerciante);
-//
-//			gruppoVenditeRepository.save(gruppo);
-//			venditeRepository.save(vendita);
-//		}
-//		if (Boolean.TRUE.equals(joinGruppo)) {
-//
-//			GruppoVendite grp = optGrp.get();
-//
-//			vendita.setGruppoVendite(grp);
-//			vendita.setIsMasterGruppo(false);
-//			gruppoVenditeRepository.save(grp);
-//			venditeRepository.save(vendita);
-//		}
 		
-
 		return v;
 	}
 
