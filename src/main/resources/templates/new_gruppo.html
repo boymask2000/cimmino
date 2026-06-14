@@ -80,7 +80,7 @@
 						</div>
 
 
-						<div id="gruppoVenditeContainer"></div>
+<!-- 						<div id="gruppoVenditeContainer"></div> -->
 
 						<div class="row mb-3">
 							<label class="col-sm-3 col-form-label">Netto di Tara</label>
@@ -226,103 +226,108 @@
 	
 	
 	
-	document.getElementById("commercianteId")
-	.addEventListener("change", async function () {
+// 	document.getElementById("commercianteId")
+// 	.addEventListener("change", async function () {
 
-	    const commercianteId = this.value;
-	    if (!commercianteId) return;
+// 	    const commercianteId = this.value;
+// 	    if (!commercianteId) return;
 
-	    try {
+// 	    try {
 
-	        const response =
-	            await fetch(`/gruppovendite/presente/${commercianteId}`);
+// 	        const response =
+// 	            await fetch(`/gruppovendite/presente/${commercianteId}`);
 
-	        const presente = await response.json();
+// 	        const presente = await response.json();
 
-	        const container =
-	            document.getElementById("gruppoVenditeContainer");
+// 	        const container =
+// 	            document.getElementById("gruppoVenditeContainer");
 
-	        const pesoLordoInput =
-	            document.querySelector('[name="peso_lordo"]');
+// 	        const pesoLordoInput =
+// 	            document.querySelector('[name="peso_lordo"]');
 
-	        if (presente) {
+// 	        if (presente) {
 
-	            container.innerHTML = `
-	                <div class="form-check mb-3">
-	                    <input class="form-check-input"
-	                           type="checkbox"
-	                           name="joinGruppo"
-	                           id="joinGruppo">
-	                    <label class="form-check-label" for="joinGruppo">
-	                        Unisci a Gruppo Vendite
-	                    </label>
-	                </div>
-	            `;
-
-
-
-	        } else {
-
-	            container.innerHTML = `
-	                <div class="form-check mb-3">
-	                    <input class="form-check-input"
-	                           type="checkbox"
-	                           name="creaGruppo"
-	                           id="creaGruppo">
-	                    <label class="form-check-label" for="creaGruppo">
-	                        Crea gruppo vendite
-	                    </label>
-	                </div>
-	            `;
+// 	            container.innerHTML = `
+// 	                <div class="form-check mb-3">
+// 	                    <input class="form-check-input"
+// 	                           type="checkbox"
+// 	                           name="joinGruppo"
+// 	                           id="joinGruppo">
+// 	                    <label class="form-check-label" for="joinGruppo">
+// 	                        Unisci a Gruppo Vendite
+// 	                    </label>
+// 	                </div>
+// 	            `;
 
 
-	        }
 
-	    } catch (e) {
-	        console.error("Errore verifica gruppo vendite", e);
-	    }
-	});
+// 	        } else {
+
+// 	            container.innerHTML = `
+// 	                <div class="form-check mb-3">
+// 	                    <input class="form-check-input"
+// 	                           type="checkbox"
+// 	                           name="creaGruppo"
+// 	                           id="creaGruppo">
+// 	                    <label class="form-check-label" for="creaGruppo">
+// 	                        Crea gruppo vendite
+// 	                    </label>
+// 	                </div>
+// 	            `;
+
+
+// 	        }
+
+// 	    } catch (e) {
+// 	        console.error("Errore verifica gruppo vendite", e);
+// 	    }
+// 	});
 
 
 	    async function checkAvailability(row) {
 
 	        const binSelect = row.querySelector(".binSelect");
-	        const numBins = row.querySelector(".numBins");
+	        const numBinsH = row.querySelector(".numBins");
+	        const numBins = numBinsH.value||0;
 	        const availabilityMsg = row.querySelector(".availabilityMsg");
+	        const arriviSelect = row.querySelector(".arriviSelect").value||'0';
 
-	        const binId = binSelect.value;
-	        const requested = parseInt(numBins.value) || 0;
-	        const arrivoId = document.getElementById("arrivoId").value;
-
-	        if (!binId || requested <= 0) {
-	            availabilityMsg.innerText = "";
-	            return;
-	        }
+	      
 
 	        try {
 
-	            const res = await fetch(`/api/bin/${binId}/${arrivoId}/availability`);
+	            const res = await fetch(`/gruppovendite/checkAvailabilityOnBin/${numBins}/${arriviSelect}`);
 	            const data = await res.json();
-
+	            console.log(data);
 	            const available = data.available || 0;
+	            const check = data.check || 0;
 
-	            if (requested > available) {
-
-	                availabilityMsg.innerText =
-	                    "Disponibili solo " + available;
-
-	                numBins.classList.add("is-invalid");
-
-	            } else {
-
-	                availabilityMsg.innerText =
-	                    "Disponibili: " + available;
-
-	                numBins.classList.remove("is-invalid");
+	            availabilityMsg.innerText ="";
+	            numBinsH.classList.remove("is-invalid");
+	            
+	            if( check && !available){
+	            availabilityMsg.innerText =
+                    "dati non validi ";
+	            numBinsH.classList.add("is-invalid");
 	            }
+	            
+// 	            if (requested > available) {
+
+// 	                availabilityMsg.innerText =
+// 	                    "Disponibili solo " + available;
+
+// 	                numBins.classList.add("is-invalid");
+
+// 	            } else {
+
+// 	                availabilityMsg.innerText =
+// 	                    "Disponibili: " + available;
+
+// 	                numBins.classList.remove("is-invalid");
+// 	            }
 
 	        } catch (e) {
-
+	        	 console.log(e);
 	            availabilityMsg.innerText =
 	                "Errore verifica disponibilità";
 	        }
@@ -548,7 +553,8 @@
 	        const merceSelect = row.querySelector(".merceSelect");
 	        merceSelect.addEventListener("change", handler);
 
-	    	
+	        const arriviSelect = row.querySelector(".arriviSelect");
+	        arriviSelect.addEventListener("change", () => checkAvailability(row));
 	    
 	    }
 	    function removeRow(btn) {

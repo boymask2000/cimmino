@@ -1,6 +1,5 @@
 package com.cimmino.shop.controller;
 
-import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -19,33 +18,31 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.cimmino.shop.database.Arrivi;
 import com.cimmino.shop.database.ArriviRepository;
 import com.cimmino.shop.database.BinRepository;
-import com.cimmino.shop.database.BinsArrivi;
-import com.cimmino.shop.database.BinsGruppoVendita;
 import com.cimmino.shop.database.BinsGruppoVenditeRepository;
-import com.cimmino.shop.database.BinsVendite;
 import com.cimmino.shop.database.BinsVenditeRepository;
-import com.cimmino.shop.database.Commerciante;
 import com.cimmino.shop.database.CommercianteRepository;
 import com.cimmino.shop.database.GruppoVendite;
 import com.cimmino.shop.database.GruppoVenditeRepository;
 import com.cimmino.shop.database.MerceRepository;
-import com.cimmino.shop.database.Vendita;
 import com.cimmino.shop.database.VenditeRepository;
-import com.cimmino.shop.database.dto.BinsGruppoVenditaDTO;
-import com.cimmino.shop.database.dto.BinsVenditaDTO;
+import com.cimmino.shop.service.CommonService;
 import com.cimmino.shop.service.ConfigurazioneService;
+import com.cimmino.shop.service.GruppoVenditeService;
 import com.cimmino.shop.service.MagazzinoRow;
 import com.cimmino.shop.service.MagazzinoService;
 import com.cimmino.shop.service.VenditeService;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
+
+import jakarta.servlet.http.HttpSession;
 
 @Controller
 @RequestMapping("/gruppovendite")
 public class GruppoVenditeController {
+	@Autowired
+	CommonService commonService;
+	@Autowired
+	GruppoVenditeService gruppoVenditeService;
 	@Autowired
 	MagazzinoService magazzinoService;
 	@Autowired
@@ -159,162 +156,16 @@ public class GruppoVenditeController {
 	public String save( //
 			@ModelAttribute GruppoVendite gr, //
 			@RequestParam String binsJson, //
-			@RequestParam LocalDate currData, Model model) {
-		gr.setData(currData);
-		ObjectMapper mapper = new ObjectMapper();
-		List<BinsGruppoVenditaDTO> binsd = new ArrayList<BinsGruppoVenditaDTO>();
-		try {
-			binsd = mapper.readValue(binsJson, new TypeReference<List<BinsGruppoVenditaDTO>>() {
-			});
-
-		} catch (Exception e) {
-
-			e.printStackTrace();
-		}
-
-		Long commId = binsd.get(0).getCommerciante();
-		Optional<Commerciante> c = commercianteRepository.findById(commId);
-		Commerciante comm = c.get();
-		gr.setCommerciante(comm);
-
-		BigDecimal sommaNettoTara = BigDecimal.ZERO;
-		BigDecimal sommaPesoLordo = BigDecimal.ZERO;
-		BigDecimal sommaNettoScarto = BigDecimal.ZERO;
-	
-
-		for (BinsGruppoVenditaDTO dto : binsd) {
-			String vals[] = dto.getArriviSelect().split(",");
-			String sArrivoId = vals[0];
-			String sDate = vals[1];
-			String sNomeMerce = vals[2];
-			String sbin = vals[3];
-			String snuBin = vals[4];
+			@RequestParam LocalDate currData, //
+			HttpSession session,  //
+			Model model) {
 		
+		gruppoVenditeService.saveGruppoVendite(gr,currData, binsJson);
+		
+		commonService.setGoArrivi(session, model);
 
-			Vendita vendita = new Vendita();
-			vendita.setCommerciante(comm);
-			vendita.setArrivo(arriviRepository.findById(Long.parseLong(sArrivoId)).get());
-			vendita.setData(LocalDate.parse(sDate));
-			vendita.setNumeroTotaleBins(Integer.parseInt(snuBin));
-			vendita.setPeso_lordo(dto.getPesoLordo());
-			vendita.setNettoDiTara(dto.getPesoNetto());
-			// vendita.set
-			venditeService.eseguiCalcoli(vendita);
-			venditeService.save(vendita, commId);
-
-			sommaPesoLordo = sommaPesoLordo.add(dto.getPesoLordo());
-			sommaNettoTara = sommaNettoTara.add(dto.getPesoNetto());
-
-			if (gr.getScarto() != null) {
-				BigDecimal scarto = new BigDecimal(1);
-				BigDecimal perc = gr.getScarto().divide(new BigDecimal(100));
-				scarto = scarto.subtract(perc);
-
-				sommaNettoScarto = sommaNettoScarto.add(dto.getPesoLordo().multiply(scarto));
-			}
-		}
-
-		gr.setNettoDiScarto(sommaNettoScarto);
-		gr.setNettoDiTara(sommaNettoTara);
-
-		gr.setPeso_lordo(sommaPesoLordo);
-//		venditaTotale.setNettoDiScarto(sommaNettoScarto);
-//		venditaTotale.setNettoDiTara(sommaNettoTara);
-//		venditaTotale.setMedia(media);
-
-		List<BinsGruppoVendita> bins = createBinsVendite(gr, binsd);
-		for (BinsGruppoVendita grp : bins) {
-			grp.setGruppoVendita(gr);
-		}
-		gr.setBins(bins);
-		int totaleBins = bins.stream().mapToInt(b -> b.getNumBins()).sum();
-		gr.setNumeroTotaleBins(totaleBins);
-		gr = gruppoVenditeRepository.save(gr);
-
-//		GruppoVendite gruppo = gruppoVenditeRepository.findById(gr.getId()).get();
-//		List<Vendita> vendite = venditeRepository.findByGruppoVendite(gruppo);
-//
-//		List<BinsVendite> bins = new ArrayList<>();
-//		Vendita unaVendita = vendite.get(0);
-//		for (Vendita ven : vendite) {
-//
-//			bins.addAll(ven.getBins());
-//		}
-//
-//		BigDecimal sommaNettoScarto = vendite.stream().map(Vendita::getNettoDiScarto).reduce(BigDecimal.ZERO,
-//				BigDecimal::add);
-//		BigDecimal sommaNettoTara = vendite.stream().map(Vendita::getNettoDiTara).reduce(BigDecimal.ZERO,
-//				BigDecimal::add);
-//
-//		BigDecimal sommaMedie = vendite.stream().map(Vendita::getMedia).reduce(BigDecimal.ZERO, BigDecimal::add);
-//		BigDecimal media = sommaMedie.divide(new BigDecimal(vendite.size()));
-//
-//		Vendita venditaTotale = new Vendita();
-////		venditaTotale.setGruppoVendite(gruppo);
-//		venditaTotale.setIsMasterGruppo(true);
-//		venditaTotale.setArrivo(unaVendita.getArrivo());
-//		venditaTotale.setBins(bins);
-//		venditaTotale.setPeso_lordo(gr.getPesoLordoTotale());
-//		venditaTotale.setNettoDiScarto(sommaNettoScarto);
-//		venditaTotale.setNettoDiTara(sommaNettoTara);
-//		venditaTotale.setMedia(media);
-//		venditaTotale.setCommerciante(unaVendita.getCommerciante());
-//		venditaTotale.setData(unaVendita.getData());
-//		venditaTotale = venditeRepository.save(venditaTotale);
-//
-//		for (Vendita ven : vendite) {
-//			List<BinsVendite> binss = ven.getBins();
-//			for (BinsVendite binVen : binss) {
-//				binVen.setVendita(venditaTotale);
-//				binsVenditeRepository.save(binVen);
-//			}
-//			bins.addAll(ven.getBins());
-//		}
-//		venditaTotale = venditeRepository.save(venditaTotale);
-
-//		gruppo.getVendite().add(venditaTotale);
-//		model.addAttribute("gruppo", gruppo);
-//
-//		gruppo.setStatus("1");
-//		gruppo.setPesoLordoTotale(gr.getPesoLordoTotale());
-//		gruppoVenditeRepository.save(gruppo);
 		return "home";
 	}
-
-	private List<BinsGruppoVendita> createBinsVendite(GruppoVendite gr, List<BinsGruppoVenditaDTO> binsd) {
-		List<BinsGruppoVendita> out = new ArrayList<>();
-
-		for (BinsGruppoVenditaDTO dto : binsd) {
-			String vals[] = dto.getArriviSelect().split(",");
-			String sArrivoId = vals[0];
-			String sDate = vals[1];
-			String sNomeMerce = vals[2];
-			String sbin = vals[3];
-			String snuBin = vals[4];
-
-			BinsGruppoVendita bin = new BinsGruppoVendita();
-
-			bin.setBin(binRepository.findByName(sbin));
-			bin.setNumBins(Integer.parseInt(snuBin));
-			bin.setMerce(merceRepository.findbyName(sNomeMerce));
-
-			// binsGruppoVenditeRepository.save(bin);
-
-			out.add(bin);
-		}
-
-		return out;
-	}
-
-//
-//	@GetMapping("/merge")
-//	public String merge(Model model) {
-//
-//		Master master = new Master();
-//
-//		model.addAttribute("master", master);
-//
-//		return "getMasterAddress";
-//	}
+	
 
 }

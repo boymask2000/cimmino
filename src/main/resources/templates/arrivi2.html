@@ -71,6 +71,33 @@ function confirmDelete(id) {
 		<div class="table-responsive">
 
 			<table class="table table-bordered table-striped text-center">
+				<thead class="table-dark">
+								<tr>
+									<th></th>
+									<th></th>
+									<th>Commerciante</th>
+									<th>Data</th>
+									<th>DDT</th>
+
+									<th>Bin</th>
+
+
+									<th>Lordo</th>
+									<th>Netto di Tara</th>
+									<th>Netto di Scarto</th>
+									<th>Media</th>
+
+									<th>Scarto</th>
+									<th>Prezzo</th>
+
+
+									<th>Importo</th>
+									<th></th>
+									<th></th>
+									<th></th>
+								</tr>
+							</thead>
+							<tbody>
 				<tr th:each="a : ${gruppoVendite}">
 					<td><a th:href="@{/gruppovendite/show/{id}(id=${a.id})}"
 						class="btn btn-warning btn-sm"> <i class="fa fa-edit"></i>
@@ -126,6 +153,7 @@ function confirmDelete(id) {
 
 					<td><span th:text="${a.importo}"></span></td>
 				</tr>
+				</tbody>
 			</table>
 
 			<table class="table table-bordered table-striped text-center">
