@@ -20,42 +20,43 @@
 
 			<table class="table table-bordered table-striped text-center">
 
-				<tr th:each="b : ${gruppo.vendite}">
+				<tr th:each="b : ${gruppo.bins}">
 					<td><span class="badge bg-primary"> <span
-							th:text="${b.commerciante.name}"></span>
+							th:text="${b.gruppoVendita.commerciante.name}"></span>
 					</span></td>
 					<td><span class="badge bg-primary"> <span
-							th:text="${b.data}"></span>
+							th:text="${b.merce.name}"></span>
 					</span></td>
 					<td><span class="badge bg-primary"> <span
-							th:text="${b.ddt}"></span>
+							th:text="${b.gruppoVendita.data}"></span>
 					</span></td>
 					<td><span class="badge bg-primary"> <span
-							th:text="${b.numeroTotaleBins}"></span>
-					</span></td>
-
-
-					<td><span class="badge bg-primary"> <span
-							th:text="${b.peso_lordo}"></span>
+							th:text="${b.gruppoVendita.ddt}"></span>
 					</span></td>
 					<td><span class="badge bg-primary"> <span
-							th:text="${b.nettoDiTara}"></span>
-					</span></td>
-					<td><span class="badge bg-primary"> <span
-							th:text="${b.nettoDiScarto}"></span>
-					</span></td>
-					<td><span class="badge bg-primary"> <span
-							th:text="${b.media}"></span>
+							th:text="${b.gruppoVendita.numeroTotaleBins}"></span>
 					</span></td>
 
+
 					<td><span class="badge bg-primary"> <span
-							th:text="${b.scarto}"></span>
+							th:text="${b.gruppoVendita.peso_lordo}"></span>
 					</span></td>
 					<td><span class="badge bg-primary"> <span
-							th:text="${b.prezzo}"></span>
+							th:text="${b.gruppoVendita.nettoDiTara}"></span>
 					</span></td>
+					<td><span class="badge bg-primary"> <span
+							th:text="${b.gruppoVendita.nettoDiScarto}"></span>
+					</span></td>
+					<td><span class="badge bg-primary"> <span
+							th:text="${b.gruppoVendita.media}"></span>
+					</span></td>
+
+					<td><span class="badge bg-primary"> <span
+							th:text="${b.gruppoVendita.scarto}"></span>
+					</span></td>
+				
 					
-					<td><span th:text="${b.importo}"></span></td>
+					<td><span th:text="${b.gruppoVendita.importo}"></span></td>
 				</tr>
 			</table>
 		</div>

@@ -72,42 +72,59 @@ function confirmDelete(id) {
 
 			<table class="table table-bordered table-striped text-center">
 				<tr th:each="a : ${gruppoVendite}">
+					<td><a th:href="@{/gruppovendite/show/{id}(id=${a.id})}"
+						class="btn btn-warning btn-sm"> <i class="fa fa-edit"></i>
+					</a></td>
+					<td>
+						<!-- <a th:href="@{/web/vendita/edit/{id}(id=${b.id})}" class="btn btn-warning btn-sm"> -->
+						<!--     <i class="fa fa-edit"></i> --> <!-- </a> -->
+						<div>
+							<button type="button" class="btn btn-danger btn-sm"
+								th:onclick="'confirmDelete(' + ${a.id} + ')'">
+								<i class="bi bi-trash"></i>
+							</button>
+
+
+						</div>
+
+
+					</td>
 					<td><span class="badge bg-primary"> <span
 							th:text="${a.commerciante.name}"></span>
 					</span></td>
 					<td><span class="badge bg-primary"> <span
 							th:text="${a.data}"></span>
 					</span></td>
-			
-									<td><span class="badge bg-primary"> <span
-											th:text="${a.ddt}"></span>
-									</span></td>
-									<td><span class="badge bg-primary"> <span
-											th:text="${a.numeroTotaleBins}"></span>
-									</span></td>
+
+					<td><span class="badge bg-primary"> <span
+							th:text="${a.ddt}"></span>
+					</span></td>
+					<td><span class="badge bg-primary"> <span
+							th:text="${a.numeroTotaleBins}"></span>
+					</span></td>
 
 
-									<td><span class="badge bg-primary"> <span
-											th:text="${a.peso_lordo}"></span>
-									</span></td>
-									<td><span class="badge bg-primary"> <span
-											th:text="${a.nettoDiTara}"></span>
-									</span></td>
-									<td><span class="badge bg-primary"> <span
-											th:text="${a.nettoDiScarto}"></span>
-									</span></td>
-									<td><span class="badge bg-primary"> <span
-											th:text="${a.media}"></span>
-									</span></td>
+					<td><span class="badge bg-primary"> <span
+							th:text="${a.peso_lordo}"></span>
+					</span></td>
+					<td><span class="badge bg-primary"> <span
+							th:text="${a.nettoDiTara}"></span>
+					</span></td>
+					<td><span class="badge bg-primary"> <span
+							th:text="${a.nettoDiScarto}"></span>
+					</span></td>
+					<td><span class="badge bg-primary"> <span
+							th:text="${a.media}"></span>
+					</span></td>
 
-									<td><span class="badge bg-primary"> <span
-											th:text="${a.scarto}"></span>
-									</span></td>
-									<td><span class="badge bg-primary"> <span
-											th:text="${a.prezzo}"></span>
-									</span></td>
+					<td><span class="badge bg-primary"> <span
+							th:text="${a.scarto}"></span>
+					</span></td>
+					<td><span class="badge bg-primary"> <span
+							th:text="${a.prezzo}"></span>
+					</span></td>
 
-									<td><span th:text="${a.importo}"></span></td>
+					<td><span th:text="${a.importo}"></span></td>
 				</tr>
 			</table>
 

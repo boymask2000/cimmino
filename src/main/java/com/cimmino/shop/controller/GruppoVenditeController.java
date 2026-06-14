@@ -104,6 +104,7 @@ public class GruppoVenditeController {
 
 		model.addAttribute("magazzinorows", magazzinorows);
 
+		gruppo.setData(LocalDate.now());
 		model.addAttribute("currData", LocalDate.now());
 		model.addAttribute("commercianti", commercianteRepository.findAll());
 		model.addAttribute("configurazione", configurazioneService.getConfigurazione());
@@ -112,32 +113,6 @@ public class GruppoVenditeController {
 		model.addAttribute("arriviJs", arriviJs);
 		model.addAttribute("merceJs", merceJs);
 		return "new_gruppo";
-	}
-
-	public List<String> getArrivi(@RequestParam Long merceId, @RequestParam Long binId) {
-
-		List<String> out = new ArrayList<String>();
-
-		List<Arrivi> arrivi = arriviRepository.findAll();
-
-		if (merceId != 0) {
-			arrivi = arrivi.stream().filter(p -> p.getMerce().getMerce_id() == merceId).toList();
-		}
-
-		for (Arrivi arrivo : arrivi) {
-			List<BinsArrivi> bins = arrivo.getBins();
-			if (binId != 0) {
-				bins = bins.stream().filter(p -> p.getBin().getId() == binId).toList();
-			}
-
-			for (BinsArrivi bin : bins) {
-				String v = arrivo.getId() + "," + arrivo.getData() + "," + arrivo.getMerce().getName() + ","
-						+ bin.getBin().getName() + "," + bin.getNumBins();
-				out.add(v);
-			}
-		}
-
-		return out;
 	}
 
 	@GetMapping("/getArrivi")
@@ -170,11 +145,10 @@ public class GruppoVenditeController {
 
 	@GetMapping("/show/{id}")
 	public String showGruppo(@PathVariable Long id, Model model) {
-		Optional<Vendita> opven = venditeRepository.findById(id);
+		Optional<GruppoVendite> opven = gruppoVenditeRepository.findById(id);
 		if (opven.isEmpty())
 			return "";
-		Vendita ven = opven.get();
-		GruppoVendite gruppo = ven.getGruppoVendite();
+		GruppoVendite gruppo = opven.get();
 
 		model.addAttribute("gruppo", gruppo);
 
@@ -185,9 +159,8 @@ public class GruppoVenditeController {
 	public String save( //
 			@ModelAttribute GruppoVendite gr, //
 			@RequestParam String binsJson, //
-
-			Model model) {
-
+			@RequestParam LocalDate currData, Model model) {
+		gr.setData(currData);
 		ObjectMapper mapper = new ObjectMapper();
 		List<BinsGruppoVenditaDTO> binsd = new ArrayList<BinsGruppoVenditaDTO>();
 		try {
@@ -198,12 +171,16 @@ public class GruppoVenditeController {
 
 			e.printStackTrace();
 		}
-		
-		
-		Long commId=binsd.get(0).getCommerciante();
+
+		Long commId = binsd.get(0).getCommerciante();
 		Optional<Commerciante> c = commercianteRepository.findById(commId);
 		Commerciante comm = c.get();
 		gr.setCommerciante(comm);
+
+		BigDecimal sommaNettoTara = BigDecimal.ZERO;
+		BigDecimal sommaPesoLordo = BigDecimal.ZERO;
+		BigDecimal sommaNettoScarto = BigDecimal.ZERO;
+	
 
 		for (BinsGruppoVenditaDTO dto : binsd) {
 			String vals[] = dto.getArriviSelect().split(",");
@@ -212,31 +189,48 @@ public class GruppoVenditeController {
 			String sNomeMerce = vals[2];
 			String sbin = vals[3];
 			String snuBin = vals[4];
-			
+		
+
 			Vendita vendita = new Vendita();
 			vendita.setCommerciante(comm);
 			vendita.setArrivo(arriviRepository.findById(Long.parseLong(sArrivoId)).get());
 			vendita.setData(LocalDate.parse(sDate));
-		//	vendita.set
+			vendita.setNumeroTotaleBins(Integer.parseInt(snuBin));
+			vendita.setPeso_lordo(dto.getPesoLordo());
+			vendita.setNettoDiTara(dto.getPesoNetto());
+			// vendita.set
 			venditeService.eseguiCalcoli(vendita);
 			venditeService.save(vendita, commId);
-			
 
+			sommaPesoLordo = sommaPesoLordo.add(dto.getPesoLordo());
+			sommaNettoTara = sommaNettoTara.add(dto.getPesoNetto());
+
+			if (gr.getScarto() != null) {
+				BigDecimal scarto = new BigDecimal(1);
+				BigDecimal perc = gr.getScarto().divide(new BigDecimal(100));
+				scarto = scarto.subtract(perc);
+
+				sommaNettoScarto = sommaNettoScarto.add(dto.getPesoLordo().multiply(scarto));
+			}
 		}
 
-		gr.setPeso_lordo(gr.getPesoLordoTotale());
+		gr.setNettoDiScarto(sommaNettoScarto);
+		gr.setNettoDiTara(sommaNettoTara);
+
+		gr.setPeso_lordo(sommaPesoLordo);
 //		venditaTotale.setNettoDiScarto(sommaNettoScarto);
 //		venditaTotale.setNettoDiTara(sommaNettoTara);
 //		venditaTotale.setMedia(media);
 
-		gr.setData(gr.getData());
-	//	gr = gruppoVenditeRepository.save(gr);
 		List<BinsGruppoVendita> bins = createBinsVendite(gr, binsd);
+		for (BinsGruppoVendita grp : bins) {
+			grp.setGruppoVendita(gr);
+		}
 		gr.setBins(bins);
 		int totaleBins = bins.stream().mapToInt(b -> b.getNumBins()).sum();
-gr.setNumeroTotaleBins(totaleBins);
+		gr.setNumeroTotaleBins(totaleBins);
 		gr = gruppoVenditeRepository.save(gr);
-		
+
 //		GruppoVendite gruppo = gruppoVenditeRepository.findById(gr.getId()).get();
 //		List<Vendita> vendite = venditeRepository.findByGruppoVendite(gruppo);
 //
@@ -304,9 +298,8 @@ gr.setNumeroTotaleBins(totaleBins);
 			bin.setNumBins(Integer.parseInt(snuBin));
 			bin.setMerce(merceRepository.findbyName(sNomeMerce));
 
-			
-		//	binsGruppoVenditeRepository.save(bin);
-			
+			// binsGruppoVenditeRepository.save(bin);
+
 			out.add(bin);
 		}
 
