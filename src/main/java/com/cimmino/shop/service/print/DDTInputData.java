@@ -11,6 +11,7 @@ public class DDTInputData {
 	private String aspettoEsteriore = "BINS IN PLASTICA";
 	private Long trasportatore1Id;
 	private Long trasportatore2Id;
+	private String cessioneBeniConPrezzo;
 	
 	private List<Long> ids;
 	private long commercianteId;
@@ -75,6 +76,12 @@ public class DDTInputData {
 	}
 	public void setNumeroDDT(String numeroDDT) {
 		this.numeroDDT = numeroDDT;
+	}
+	public String getCessioneBeniConPrezzo() {
+		return cessioneBeniConPrezzo;
+	}
+	public void setCessioneBeniConPrezzo(String cessioneBeniConPrezzo) {
+		this.cessioneBeniConPrezzo = cessioneBeniConPrezzo;
 	}
 
 

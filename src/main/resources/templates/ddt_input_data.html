@@ -107,7 +107,19 @@
 				</div>
 			</div>
 
+<div class="row mb-3 align-items-center">
+    <label class="col-sm-3 col-form-label">Cessione Beni</label>
 
+    <div class="col-sm-9">
+        <select th:field="*{cessioneBeniConPrezzo}" class="form-select" >
+            <option value="">-- Seleziona Cessione Beni --</option>
+
+            <option value="1">Cessione beni con prezzo</option>
+
+     
+        </select>
+    </div>
+</div>
 
 
 			<button type="submit" class="btn btn-success">Crea DDT</button>

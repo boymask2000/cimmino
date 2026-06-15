@@ -28,7 +28,7 @@
 
 <body>
 	<div th:replace="navbar :: navbar"></div>
-	<div class="container mt-4">
+	<div class="container-fluid mt-4">
 
 		<div class="d-flex justify-content-between align-items-center mb-3">
 			<h2>Operazioni Commerciante</h2>
@@ -105,56 +105,26 @@
 							<!-- 						<td th:text="${op.bin != null ? op.bin.name : ''}"></td> -->
 							<!-- 						<td th:text="${op.nBins}" class="text-end"></td> -->
 
-							
-							
-<td>
-							<input class="form-control auto-save text-end"
-       type="number"
-       step="0.01"
-       th:value="${op.peso_lordo}"
-       data-field="peso_lordo">
-								
-								
-								</td>
-							
-							<td>
-							<input class="form-control auto-save text-end"
-       type="number"
-       step="0.01"
-       th:value="${op.nettoDiTara}"
-       data-field="nettoDiTara">
-								
-								
-								</td>
-							<td>
-							<input class="form-control auto-save text-end"
-       type="number"
-       step="0.01"
-       th:value="${op.nettoDiScarto}"
-       data-field="nettoDiScarto">
-								
-								
-								</td>
-							
-							<td>
-							<input class="form-control auto-save text-end"
-       type="number"
-       step="0.01"
-       th:value="${op.scarto}"
-       data-field="scarto">
-								
-								
-								</td>
-							
-							<td>
-							<input class="form-control auto-save text-end"
-       type="number"
-       step="0.01"
-       th:value="${op.tara}"
-       data-field="tara">
-								
-								
-								</td>
+
+
+							<td><input class="form-control auto-save text-end"
+								type="number" step="0.01" th:value="${op.peso_lordo}"
+								data-field="peso_lordo"></td>
+
+							<td><input class="form-control auto-save text-end"
+								type="number" step="0.01" th:value="${op.nettoDiTara}"
+								data-field="nettoDiTara"></td>
+							<td><input class="form-control auto-save text-end"
+								type="number" step="0.01" th:value="${op.nettoDiScarto}"
+								data-field="nettoDiScarto"></td>
+
+							<td><input class="form-control auto-save text-end"
+								type="number" step="0.01" th:value="${op.scarto}"
+								data-field="scarto"></td>
+
+							<td><input class="form-control auto-save text-end"
+								type="number" step="0.01" th:value="${op.tara}"
+								data-field="tara"></td>
 							<td>
 								<table>
 									<tr th:each="bin : ${op.bins}">
@@ -165,17 +135,11 @@
 								</table>
 							</td>
 
-							<td>
-							<input class="form-control auto-save text-end"
-       type="number"
-       step="0.01"
-       th:value="${op.prezzo}"
-       data-field="prezzo">
-								
-								
-								</td>
-							
-							<td th:text="${op.importo}" class="text-end"></td>
+							<td><input class="form-control auto-save text-end"
+								type="number" step="0.01" th:value="${op.prezzo}"
+								data-field="prezzo"></td>
+
+							<td th:text="${op.importo}" class="importo text-end"></td>
 
 						</tr>
 
@@ -188,7 +152,7 @@
 					</tfoot>
 
 				</table>
-				
+
 			</form>
 
 
@@ -227,11 +191,17 @@ document.querySelectorAll(".auto-save").forEach(input => {
                     value: value
                 })
             })
+           
             .then(res => {
                 if (!res.ok) throw new Error("Errore salvataggio");
             
                 return res.json();
             })
+             .then(data => {
+    			row.querySelector(".importo").textContent =
+      		 		 data.importo;
+
+			})
             .then(data => {
                 console.log("Salvato", data);
             })

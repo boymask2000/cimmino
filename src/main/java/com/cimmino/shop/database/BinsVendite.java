@@ -30,6 +30,8 @@ public class BinsVendite {
 	private BigDecimal pesoNetto;
 
 	private Integer numBins;
+	
+	private Boolean nostraProprieta;
 
 	@ManyToOne
 	@JoinColumn(name = "vendite_id")
@@ -83,6 +85,14 @@ public class BinsVendite {
 
 	public void setPesoNetto(BigDecimal pesoNetto) {
 		this.pesoNetto = pesoNetto;
+	}
+
+	public Boolean getNostraProprieta() {
+		return nostraProprieta;
+	}
+
+	public void setNostraProprieta(Boolean nostraProprieta) {
+		this.nostraProprieta = nostraProprieta;
 	}
 
 }

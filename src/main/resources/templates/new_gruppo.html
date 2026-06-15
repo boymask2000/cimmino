@@ -502,10 +502,22 @@
                 <select class="form-select arriviSelect" required>
                     ${arrivi}
                 </select>
-            </div>
+          	  </div>
             <div class="col-md-3">
-            <select class="form-select merceSelect">
-                ${merce}
+           		 <select class="form-select merceSelect">
+              	  ${merce}
+           		 </select>
+       		 </div>
+       		 
+       		<div class="col-sm-3">
+       		
+            <select class="form-select nostraProprieta" >
+                <option value="">-- Seleziona proprietà --</option>
+
+                <option value="1">NOSTRA</option>
+                <option value="0">VOSTRA</option>
+              
+         
             </select>
         </div>
 
@@ -620,6 +632,8 @@
 
 	            const pesoLordo = parseFloat(row.querySelector(".pesoLordo").value) || 0;
 	            const pesoNetto = parseFloat(row.querySelector(".pesoNetto").value) || 0;
+	            
+	            const nostraProprieta = parseInt(row.querySelector(".nostraProprieta").value) || 0;
 
 	            if (binId && numBins > 0) {
 	                bins.push({
@@ -628,6 +642,7 @@
 	                    pesoLordo,
 	                    pesoNetto,
 	                    commerciante,
+	                    nostraProprieta,
 	                    arriviSelect
 	                });
 	            }

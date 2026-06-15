@@ -19,6 +19,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.cimmino.shop.CommerciantiDDTInfo;
 import com.cimmino.shop.database.Commerciante;
 import com.cimmino.shop.database.CommercianteRepository;
+import com.cimmino.shop.database.GruppoVendite;
+import com.cimmino.shop.database.GruppoVenditeRepository;
 import com.cimmino.shop.database.TitolareRepository;
 import com.cimmino.shop.database.TrasportatoreRepository;
 import com.cimmino.shop.database.Vendita;
@@ -28,6 +30,8 @@ import com.cimmino.shop.service.print.DDTInputData;
 @Controller
 @RequestMapping("/ddt")
 public class DDTController {
+	@Autowired
+	GruppoVenditeRepository gruppoVenditeRepository;
 	@Autowired
 	CommercianteRepository commercianteRepository;
 	@Autowired
@@ -68,7 +72,7 @@ public class DDTController {
 		Optional<Commerciante> opt_comm = commercianteRepository.findById(id);
 		Commerciante comm = opt_comm.get();
 	//	List<Vendita> vendite = venditeRepository.findVenditeDiCommercianteSenzaDDT(comm.getCommerciante_id());
-		List<Vendita> vendite = venditeRepository.findVenditeDiCommerciante(comm.getCommerciante_id());
+		List<GruppoVendite> vendite = gruppoVenditeRepository.findVenditeDiCommerciante(comm.getCommerciante_id());
 		model.addAttribute("vendite", vendite);
 		model.addAttribute("commerciante", comm);
 		return "ddt_vendite_commerciante_noddt";
@@ -78,7 +82,7 @@ public class DDTController {
 	public String vendite_commerciante(@PathVariable Long id, Model model) {
 		Optional<Commerciante> opt_comm = commercianteRepository.findById(id);
 		Commerciante comm = opt_comm.get();
-		List<Vendita> vendite = venditeRepository.findVenditeDiCommerciante(comm.getCommerciante_id());
+		List<GruppoVendite> vendite = gruppoVenditeRepository.findVenditeDiCommerciante(comm.getCommerciante_id());
 		model.addAttribute("vendite", vendite);
 		model.addAttribute("commerciante", comm);
 		return "ddt_vendite_commerciante";

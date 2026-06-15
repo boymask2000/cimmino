@@ -2,6 +2,7 @@ package com.cimmino.shop.controller;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -22,11 +23,13 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.cimmino.shop.database.CommercianteRepository;
 import com.cimmino.shop.database.Vendita;
 import com.cimmino.shop.database.VenditeRepository;
+import com.cimmino.shop.service.CommerciantiService;
 
 @Controller
 @RequestMapping("/web")
 public class WebControllerCommercianti {
-
+	@Autowired
+	CommerciantiService CommerciantiService;
 	@Autowired
 	CommercianteRepository commercianteRepository;
 	@Autowired
@@ -82,46 +85,23 @@ public class WebControllerCommercianti {
 		model.addAttribute("totale", totale);
 		return "operazioni_commercianti";
 	}
-
 	@PostMapping("/commercianti/update-field")
 	@ResponseBody
-	public ResponseEntity<?> updateField(@RequestBody UpdateFieldRequest req) {
+	public Map<String, Object> updateField(@RequestBody UpdateFieldRequest req) {
 
-		Vendita op = venditeRepository.findById(req.getId()).orElseThrow();
+	    Vendita op = CommerciantiService.updateField(
+	            req.getId(),
+	            req.getField(),
+	            req.getValue());
 
-		switch (req.getField()) {
+	    Map<String, Object> res = new HashMap<>();
 
-		case "ddt":
-			op.setDdt(req.getValue());
-			break;
-		case "tara":
-			op.setTara(new BigDecimal(req.getValue()));
-			break;
-		case "scarto":
-			op.setScarto(new BigDecimal(req.getValue()));
-			break;
+	    res.put("importo", op.getImporto());
+	    res.put("nettoDiTara", op.getNettoDiTara());
+	    res.put("nettoDiScarto", op.getNettoDiScarto());
+	    res.put("scarto", op.getScarto());
+	    res.put("tara", op.getTara());
 
-		case "prezzo":
-			op.setPrezzo(new BigDecimal(req.getValue()));
-			break;
-
-		case "peso_lordo":
-			op.setPeso_lordo(new BigDecimal(req.getValue()));
-			break;
-		case "nettoDiScarto":
-			op.setNettoDiScarto(new BigDecimal(req.getValue()));
-			break;
-		case "nettoDiTara":
-			op.setNettoDiTara(new BigDecimal(req.getValue()));
-			break;
-		}
-		
-		BigDecimal importo = op.getNettoDiScarto().multiply(op.getPrezzo());
-		op.setImporto(importo);
-		
-
-		venditeRepository.save(op);
-
-		return ResponseEntity.ok().body(Map.of("status", "ok"));
+	    return res;
 	}
 }

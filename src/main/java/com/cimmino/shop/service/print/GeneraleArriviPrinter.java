@@ -225,11 +225,11 @@ public class GeneraleArriviPrinter extends BasePrinter implements HasOutputStrea
 		out.append("<th>Data</th>");
 		out.append("<th>DDT</th>");
 		out.append("<th>Bins</th>");
-		out.append("<th>Lordo</th>");
+		out.append("<th>Netto di Scarto</th>");
 		out.append("<th>Tara</th>");
 		out.append("<th>Netto di Tara</th>");
-		out.append("<th>Netto di Scarto</th>");
 		
+		out.append("<th>Lordo</th>");
 		out.append("<th>Media</th>");
 		out.append("<th>Scarto</th>");
 		
@@ -246,10 +246,10 @@ public class GeneraleArriviPrinter extends BasePrinter implements HasOutputStrea
 			out.append("<td>").append(clean(ven.getDdt())).append("</td>");
 			out.append("<td>").append(bins(ven)).append("</td>");
 			out.append("<td>").append(clean(ven.getPeso_lordo())).append("</td>");
-			out.append("<td>").append(clean(ven.getTara())).append("</td>");
-			out.append("<td>").append(clean(ven.getNettoDiTara())).append("</td>");
 			out.append("<td>").append(clean(ven.getNettoDiScarto())).append("</td>");
-			
+			out.append("<td>").append(clean(ven.getNettoDiTara())).append("</td>");
+		
+			out.append("<td>").append(clean(ven.getTara())).append("</td>");
 			out.append("<td>").append(clean(ven.getMedia())).append("</td>");
 			out.append("<td>").append(clean(ven.getScarto())).append("</td>");
 			

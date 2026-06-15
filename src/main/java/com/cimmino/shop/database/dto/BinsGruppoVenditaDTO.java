@@ -9,6 +9,9 @@ public class BinsGruppoVenditaDTO {
 	private BigDecimal pesoNetto;
 	private String arriviSelect;
 	private Long commerciante;
+	private Boolean nostraProprieta ;
+	
+	
 	public Long getBinId() {
 		return binId;
 	}
@@ -45,4 +48,11 @@ public class BinsGruppoVenditaDTO {
 	public void setCommerciante(Long commerciante) {
 		this.commerciante = commerciante;
 	}
+	public Boolean getNostraProprieta() {
+		return nostraProprieta;
+	}
+	public void setNostraProprieta(Boolean nostraProprieta) {
+		this.nostraProprieta = nostraProprieta;
+	}
+	
 }

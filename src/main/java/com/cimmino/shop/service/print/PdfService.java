@@ -10,6 +10,8 @@ import org.springframework.stereotype.Service;
 
 import com.cimmino.shop.database.Arrivi;
 import com.cimmino.shop.database.Configurazione;
+import com.cimmino.shop.database.GruppoVendite;
+import com.cimmino.shop.database.GruppoVenditeRepository;
 import com.cimmino.shop.database.Vendita;
 import com.cimmino.shop.database.VenditeRepository;
 import com.cimmino.shop.database.dto.DDTDTO;
@@ -18,6 +20,8 @@ import com.cimmino.shop.service.DDTService;
 
 @Service
 public class PdfService {
+	@Autowired
+	GruppoVenditeRepository gruppoVenditeRepository;
 	@Autowired
 	DDTService ddtService;
 	@Autowired
@@ -79,9 +83,9 @@ public class PdfService {
 
 	
 	public byte[] generateDDT4Vendite(List<Long> ids, DDTInputData ddtInputData) throws Exception {
-		List<Vendita> vendite = new ArrayList<Vendita>();
+		List<GruppoVendite> vendite = new ArrayList<>();
 		for (Long id : ids) {
-			Optional<Vendita> v = venditeRepository.findById(id);
+			Optional<GruppoVendite> v = gruppoVenditeRepository.findById(id);
 			vendite.add(v.get());
 		}
 		Configurazione conf = configurazioneService.getConfigurazione();

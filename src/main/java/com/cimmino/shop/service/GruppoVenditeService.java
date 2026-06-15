@@ -117,6 +117,7 @@ public class GruppoVenditeService {
 			bArr.setNumBins(dto.getNumBins());
 			bArr.setPesoLordo(dto.getPesoLordo());
 			bArr.setPesoNetto(dto.getPesoNetto());
+			bArr.setNostraProprieta(dto.getNostraProprieta());
 			
 			binsVenditeRepository.save(bArr);
 		}
@@ -158,8 +159,11 @@ public class GruppoVenditeService {
 			BinsGruppoVendita bin = new BinsGruppoVendita();
 
 			bin.setBin(binRepository.findByName(sbin));
-			bin.setNumBins(Integer.parseInt(snuBin));
+			bin.setNumBins(dto.getNumBins());
 			bin.setMerce(merceRepository.findbyName(sNomeMerce));
+			bin.setNostraProprieta(dto.getNostraProprieta());
+			bin.setPesoLordo(dto.getPesoLordo());
+			bin.setPesoNetto(dto.getPesoNetto());
 
 			// binsGruppoVenditeRepository.save(bin);
 

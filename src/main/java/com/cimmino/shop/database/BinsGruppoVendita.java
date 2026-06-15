@@ -28,7 +28,7 @@ public class BinsGruppoVendita {
 	@ManyToOne
 	@JoinColumn(name = "gruppoVendita_id")
 	private GruppoVendite gruppoVendita;
-	
+	private Boolean nostraProprieta;
 
 	private int numBins;
 	private BigDecimal pesoLordo;
@@ -82,5 +82,11 @@ public class BinsGruppoVendita {
 	}
 	public void setBin(Bin bin) {
 		this.bin = bin;
+	}
+	public Boolean getNostraProprieta() {
+		return nostraProprieta;
+	}
+	public void setNostraProprieta(Boolean nostraProprieta) {
+		this.nostraProprieta = nostraProprieta;
 	}
 }

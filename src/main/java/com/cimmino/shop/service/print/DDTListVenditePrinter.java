@@ -4,12 +4,16 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.cimmino.shop.database.BinsGruppoVendita;
 import com.cimmino.shop.database.BinsVendite;
 import com.cimmino.shop.database.Commerciante;
 import com.cimmino.shop.database.Configurazione;
@@ -39,11 +43,11 @@ public class DDTListVenditePrinter extends BasePrinter implements HasOutputStrea
 	TitolareRepository titolariRepository;
 
 	private Configurazione conf;
-	private List<Vendita> vendite;
+	private List<GruppoVendite> vendite;
 	private Commerciante commerciante;
-	private	int totColli = 0;
-	private	int numRows = 0;
-	private	BigDecimal totPeso = BigDecimal.ZERO;
+	private int totColli = 0;
+	private int numRows = 0;
+	private BigDecimal totPeso = BigDecimal.ZERO;
 
 //	public void exec(List<Vendita> vendite, Configurazione conf) throws Exception {
 //
@@ -72,7 +76,7 @@ public class DDTListVenditePrinter extends BasePrinter implements HasOutputStrea
 //		}
 //
 //	}
-	public void exec(List<Vendita> vendite, Configurazione conf, DDTInputData ddtInputData) throws IOException {
+	public void exec(List<GruppoVendite> vendite, Configurazione conf, DDTInputData ddtInputData) throws IOException {
 
 		this.conf = conf;
 		this.vendite = vendite;
@@ -92,10 +96,10 @@ public class DDTListVenditePrinter extends BasePrinter implements HasOutputStrea
 
 		DDTDTO dto = ddtService.create(html, dto1);
 		Long ddtId = dto1.getId();
-		for (Vendita vendita : vendite) {
+		for (GruppoVendite vendita : vendite) {
 
 			vendita.setDdt(ddtInputData.getNumeroDDT());
-			venditeService.save(vendita);
+			gruppoVenditeRepository.save(vendita);
 		}
 
 	}
@@ -359,13 +363,12 @@ public class DDTListVenditePrinter extends BasePrinter implements HasOutputStrea
 		out.append(tra2.getIndirizzo() + "<br/>");
 	}
 
-
-
 	private Object makeBinsBox(DDTDTO dto1, DDTInputData ddtInputData) {
 		StringBuilder out = new StringBuilder();
 		out.append("<table>");
 		out.append("<thead> ");
 		out.append("<tr>");
+		// <th style="width: 80%;"></th>
 
 		out.append("<th>DESCRIZIONE PRODOTTO</th>");
 		out.append("<th>Tipo</th>");
@@ -377,17 +380,71 @@ public class DDTListVenditePrinter extends BasePrinter implements HasOutputStrea
 		out.append("<tbody>");
 
 		BigDecimal totPeso = BigDecimal.ZERO;
-		for (Vendita vendita : vendite)
-			if (vendita.getGruppoVendite() == null)
+		for (GruppoVendite vendita : vendite)
+			
 				totPeso = processVenditaNormale(vendita, out);
-			else
-				totPeso = processVenditaGruppo(vendita, out, dto1, ddtInputData);
+//			else
+//				totPeso = processVenditaGruppo(vendita, out, dto1, ddtInputData);
 
 		addMorelines(out);
+		addRiassuntoBins(out, vendite);
+		addCessioneBeni(out, ddtInputData);
 		out.append("</tbody>");
 		out.append("</table>");
 		makeFooter2(out, totColli, totPeso, ddtInputData);
 		return out.toString();
+	}
+
+	private void addRiassuntoBins(StringBuilder out, List<GruppoVendite> vendite) {
+		Map<String, Integer> map = new HashMap<>();
+
+		for (GruppoVendite vendita : vendite) {
+			List<BinsGruppoVendita> bins = vendita.getBins();
+			for (BinsGruppoVendita bin : bins) {
+				String key = bin.getBin().getName() + ","
+						+ (bin.getNostraProprieta() ? "NOSTRA Prop." : "VOSTRA PROP.");
+				Integer v = map.get(key);
+				if (v == null)
+					v = 0;
+				v += bin.getNumBins();
+				map.put(key, v);
+			}
+		}
+		out.append("<table>");
+		for (Entry<String, Integer> ent : map.entrySet()) {
+			out.append("<tr>");
+
+			String key = ent.getKey();
+			Integer num = ent.getValue();
+			String vals[] = key.split(",");
+
+			out.append("<td>");
+			out.append(vals[0]);
+			out.append("</td>");
+			out.append("<td>");
+			out.append(vals[1]);
+			out.append("</td>");
+			out.append("<td>");
+			out.append("" + num);
+			out.append("</td>");
+
+			out.append("</tr>");
+		}
+		out.append("</table>");
+	}
+
+	private void addCessioneBeni(StringBuilder out, DDTInputData ddtInputData) {
+		String cess = ddtInputData.getCessioneBeniConPrezzo();
+		if (cess == null || !cess.equals("1"))
+			return;
+		out.append("<tr>");
+		out.append("<td>");
+		out.append("CESSIONE DI BENI CON PREZZO");
+		out.append("<p/>");
+		out.append("DA DETERMINARE DM 15/11/75");
+		out.append("</td>");
+		out.append("</tr>");
+
 	}
 
 	private void addMorelines(StringBuilder out) {
@@ -440,7 +497,7 @@ public class DDTListVenditePrinter extends BasePrinter implements HasOutputStrea
 		out.append("</td>");
 
 		out.append("</tr>");
-	//	totPeso = totPeso.add(vendita.getGruppoVendite().getPesoLordoTotale());
+		// totPeso = totPeso.add(vendita.getGruppoVendite().getPesoLordoTotale());
 
 		GruppoVendite gruppo = vendita.getGruppoVendite();
 		List<Vendita> lista = gruppo.getVendite();
@@ -451,11 +508,11 @@ public class DDTListVenditePrinter extends BasePrinter implements HasOutputStrea
 		return vendita.getGruppoVendite().getPesoLordoTotale();
 	}
 
-	private BigDecimal processVenditaNormale(Vendita vendita, StringBuilder out) {
-		for (BinsVendite b : vendita.getBins()) {
+	private BigDecimal processVenditaNormale(GruppoVendite vendita, StringBuilder out) {
+		for (BinsGruppoVendita b : vendita.getBins()) {
 			out.append("<tr>");
 			out.append("<td>");
-			out.append(vendita.getArrivo().getMerce().getName());
+			out.append(b.getMerce().getName());
 			out.append("</td>");
 			out.append("<td>");
 			out.append(b.getBin().getName());
@@ -465,8 +522,9 @@ public class DDTListVenditePrinter extends BasePrinter implements HasOutputStrea
 			totColli += b.getNumBins();
 			out.append("</td>");
 			out.append("<td>");
+			if( b.getPesoLordo()!=null) {
 			out.append(b.getPesoLordo());
-			totPeso = totPeso.add(b.getPesoLordo());
+			totPeso = totPeso.add(b.getPesoLordo());}
 			out.append("</td>");
 
 			out.append("</tr>");
@@ -528,13 +586,12 @@ public class DDTListVenditePrinter extends BasePrinter implements HasOutputStrea
 		out.append("<tr>");
 
 		out.append("<td>");
-		out.append("Secondo cessionario:");
+		out.append("<b>Secondo cessionario:</b>");
+		out.append("<p/>");
+		out.append("<p/>");
+		
 
-		out.append("</td>");
-		out.append("</tr>");
-		out.append("<tr>");
-
-		out.append("<td>");
+	
 		out.append(commerciante.getName());
 		out.append("<br/>" + clean(commerciante.getIndirizzo()));
 		out.append("</td>");
@@ -554,13 +611,10 @@ public class DDTListVenditePrinter extends BasePrinter implements HasOutputStrea
 		out.append("<tr>");
 
 		out.append("<td>");
-		out.append("Primo cessionario");
+		out.append("<b>Primo cessionario:</b>");
 
-		out.append("</td>");
-		out.append("</tr>");
-
-		out.append("<tr>");
-		out.append("<td>");
+		out.append("<p/>");
+		out.append("<p/>");
 		out.append(conf.getPrimoCessionario() + "<br/>");
 		out.append("<br/>");
 		out.append("<br/>");
@@ -605,7 +659,7 @@ public class DDTListVenditePrinter extends BasePrinter implements HasOutputStrea
 			return;
 		Titolare titolare = optTit.get();
 		out.append("<p><b>");
-		out.append(titolare.getName()+"</b>");
+		out.append(titolare.getName() + "</b>");
 		out.append("</p>");
 		out.append("<p>");
 		out.append(titolare.getIndirizzo());

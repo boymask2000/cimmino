@@ -120,16 +120,7 @@ public class ArriviService {
 	}
 
 	public void calcNumTotaleBins(List<Arrivi> arr) {
-		for (Arrivi arrivo : arr) {
-			List<Vendita> vendite = arrivo.getVendite();
-			for (Vendita ven : vendite) {
-				int sum = 0;
-				for (BinsVendite bve : ven.getBins()) {
-					sum += bve.getNumBins();
-				}
-				ven.setNumeroTotaleBins(sum);
-			}
-		}
+	
 
 	}
 
@@ -174,5 +165,31 @@ public class ArriviService {
 
         System.out.println(json);
 		return json;
+	}
+
+	@Transactional
+	public void addBin(Long arrivoId,
+	                   Integer numBins,
+	                   Long binId,
+	                   BigDecimal pesoLordo,
+	                   BigDecimal pesoNetto) {
+
+	     Arrivi arrivo = arriviRepository.findById(arrivoId)
+	            .orElseThrow();
+
+	    Bin bin = binRepository.findById(binId)
+	            .orElseThrow();
+
+	    BinsArrivi ab = new BinsArrivi();
+
+	    ab.setArrivo(arrivo);
+	    ab.setBin(bin);
+	    ab.setNumBins(numBins);
+	    ab.setPesoLordo(pesoLordo);
+	    ab.setPesoNetto(pesoNetto);
+
+	    arrivo.getBins().add(ab);
+
+	    arriviRepository.save(arrivo);
 	}
 }

@@ -52,6 +52,8 @@ public class WebControllerArrivi {
 		if (oparrivo.isEmpty())
 			return "";
 		Arrivi arrivo = oparrivo.get();
+		
+		model.addAttribute("binsDisponibili",binRepository.findAll());
 
 		model.addAttribute("arrivo", arrivo);
 
