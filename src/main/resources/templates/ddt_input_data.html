@@ -38,12 +38,18 @@
 			</div>
 			
 			<div class="row mb-3">
-				<label class="col-sm-3 col-form-label">Num. DDT</label>
-				<div class="col-sm-9">
-					<input type="text" th:field="*{numeroDDT}" class="form-control"
-						required>
-				</div>
-			</div>
+    <label class="col-sm-3 col-form-label">Num. DDT</label>
+
+    <div class="col-sm-9">
+        <input type="text"
+               th:field="*{numeroDDT}"
+               id="numeroDDT"
+               class="form-control"
+               required>
+
+        <small id="ddtMessage" class="form-text"></small>
+    </div>
+</div>
 
 
 <div class="row mb-3 align-items-center">
@@ -131,4 +137,66 @@
 
 
 </body>
+<script>
+const input = document.getElementById("numeroDDT");
+const message = document.getElementById("ddtMessage");
+
+let timer;
+
+input.addEventListener("input", () => {
+
+    clearTimeout(timer);
+
+    timer = setTimeout(async () => {
+
+        const numero = input.value.trim();
+
+        if (numero === "") {
+            message.textContent = "";
+            input.classList.remove("is-valid", "is-invalid");
+            return;
+        }
+
+        try {
+
+            const response = await fetch(
+                `/ddt/check?numeroDDT=${encodeURIComponent(numero)}`
+            );
+
+            const data = await response.json();
+
+            if (data.exists) {
+
+                input.classList.remove("is-valid");
+                input.classList.add("is-invalid");
+
+                message.className = "text-danger";
+                message.textContent =
+                    "⚠ Numero DDT già presente nel database";
+
+            } else {
+
+                input.classList.remove("is-invalid");
+                input.classList.add("is-valid");
+
+                message.className = "text-success";
+                message.textContent =
+                    "✓ Numero DDT disponibile";
+            }
+
+        } catch (e) {
+            console.error(e);
+        }
+
+    }, 500); // debounce
+});
+document.querySelector("form").addEventListener("submit", e => {
+
+    if (input.classList.contains("is-invalid")) {
+        e.preventDefault();
+        alert("Numero DDT già esistente.");
+    }
+
+});
+</script>
 </html>
