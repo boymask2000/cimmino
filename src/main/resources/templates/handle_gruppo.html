@@ -19,7 +19,32 @@
 		<div class="table-responsive">
 
 			<table class="table table-bordered table-striped text-center">
+<thead class="table-dark">
+								<tr>
+								
+									<th>Commerciante</th>
+									
+										<th>Merce</th>
+										<th>Data</th>
+									<th>DDT</th>
 
+									<th>Bin</th>
+
+
+									<th>Lordo</th>
+									<th>Netto di Tara</th>
+									<th>Netto di Scarto</th>
+									<th>Media</th>
+
+									<th>Scarto</th>
+								
+
+
+									<th>Importo</th>
+									
+								</tr>
+							</thead>
+							<tbody>
 				<tr th:each="b : ${gruppo.bins}">
 					<td><span class="badge bg-primary"> <span
 							th:text="${b.gruppoVendita.commerciante.name}"></span>
@@ -28,7 +53,7 @@
 							th:text="${b.merce.name}"></span>
 					</span></td>
 					<td><span class="badge bg-primary"> <span
-							th:text="${b.gruppoVendita.data}"></span>
+							th:text="${@fmt.date(b.gruppoVendita.data)}"></span>
 					</span></td>
 					<td><span class="badge bg-primary"> <span
 							th:text="${b.gruppoVendita.ddt}"></span>
@@ -58,6 +83,7 @@
 					
 					<td><span th:text="${b.gruppoVendita.importo}"></span></td>
 				</tr>
+				</tbody>
 			</table>
 		</div>
 

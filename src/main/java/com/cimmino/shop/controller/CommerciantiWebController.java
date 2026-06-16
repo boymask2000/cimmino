@@ -62,7 +62,7 @@ public class CommerciantiWebController {
 	}
 
 	@GetMapping("/commercianti/filter/groups/commerciante/{id}")
-	public String listaCommercianti2( //
+	public String filter_groups_commercianti( //
 			@RequestParam(required = false, defaultValue = "0") Long commercianteId, //
 			RedirectAttributes redirectAttributes) {
 
@@ -78,7 +78,7 @@ public class CommerciantiWebController {
 	}
 
 	@GetMapping("/commercianti/groups/view2")
-	public String view2(@RequestParam(required = false, defaultValue = "0") Long commercianteId, Model model) {
+	public String groups_view2(@RequestParam(required = false, defaultValue = "0") Long commercianteId, Model model) {
 
 		List<GruppoVendite> ll;
 
@@ -152,5 +152,42 @@ public class CommerciantiWebController {
 		res.put("tara", op.getTara());
 
 		return res;
+	}
+	@GetMapping("/commercianti/filter/vendite/commerciante/{id}")
+	public String filter_vendite_commercianti( //
+			@RequestParam(required = false, defaultValue = "0") Long commercianteId, //
+			RedirectAttributes redirectAttributes) {
+
+		redirectAttributes.addAttribute("commercianteId", commercianteId);
+
+		if (commercianteId == 0) {
+			redirectAttributes.addFlashAttribute("msg", "Nessun filtro applicato");
+		} else {
+			redirectAttributes.addFlashAttribute("msg", "Filtri applicati");
+		}
+
+		return "redirect:/web/commercianti/vendite/view2";
+	}
+	@GetMapping("/commercianti/vendite/view2")
+	public String gvendite_view2(@RequestParam(required = false, defaultValue = "0") Long commercianteId, Model model) {
+
+		List<Vendita> ll;
+
+		if (commercianteId == 0) {
+			ll = venditeRepository.findAll();
+		} else {
+			ll = venditeRepository.findVenditeDiCommerciante(commercianteId);
+		}
+
+		BigDecimal totale = ll.stream().map(Vendita::getImporto).filter(Objects::nonNull).reduce(BigDecimal.ZERO,
+				BigDecimal::add)
+		// .setScale(2, RoundingMode.HALF_UP)
+		;
+
+		model.addAttribute("operazioni", ll);
+		model.addAttribute("commercianti", commercianteRepository.findAll());
+		model.addAttribute("commercianteId", commercianteId);
+		model.addAttribute("totale", totale);
+		return "operazioni_commercianti_vendite";
 	}
 }
