@@ -35,8 +35,8 @@
 		</div>
 
 		<!-- FILTRO COMMERCIANTE -->
-		<form th:action="@{/web/commercianti/filter/vendite/commerciante/0}" method="get"
-			class="row g-3 mb-4">
+		<form th:action="@{/web/commercianti/filter/vendite/commerciante/0}"
+			method="get" class="row g-3 mb-4">
 
 			<div class="col-md-4">
 
@@ -70,17 +70,20 @@
 						<tr>
 
 							<th>Data</th>
-							<th>DDT</th>
 							<th>Commerciante</th>
+							<th class="text-end">Bins</th>
+							<th>Merce</th>
+							<th>DDT</th>
+
 							<!-- 						<th>Merce</th> -->
 							<!-- 						<th>Bin</th> -->
 							<!-- 						<th class="text-end">N° Bins</th> -->
 							<th class="text-end">Lordo</th>
 							<th class="text-end">Netto di Tara</th>
-							<th class="text-end">Netto di Scarto</th>
 							<th class="text-end">Scarto</th>
-							<th class="text-end">Tara</th>
-							<th class="text-end">Bins</th>
+							<th class="text-end">Netto di Scarto</th>
+							
+						
 							<th class="text-end">Prezzo</th>
 							<th class="text-end">Importo</th>
 						</tr>
@@ -93,24 +96,9 @@
 
 
 							<td th:text="${op.data}"></td>
-
-							<td th:text="${op.ddt}"></td>
-
 							<td
 								th:text="${op.commerciante != null ? op.commerciante.name : ''}">
 							</td>
-
-							<!-- 						<td th:text="${op.merce != null ? op.merce.name : ''}"></td> -->
-
-							<!-- 						<td th:text="${op.bin != null ? op.bin.name : ''}"></td> -->
-							<!-- 						<td th:text="${op.nBins}" class="text-end"></td> -->
-
-							<td th:text="${op.peso_lordo}" class="text-end"></td>
-
-							<td th:text="${op.nettoDiTara}" class="text-end"></td>
-							<td th:text="${op.nettoDiScarto}" class="text-end"></td>
-							<td th:text="${op.scarto}" class="text-end"></td>
-							<td th:text="${op.tara}" class="text-end"></td>
 							<td>
 								<table>
 									<tr th:each="bin : ${op.bins}">
@@ -120,20 +108,30 @@
 									</tr>
 								</table>
 							</td>
-
-							<td>
-							<input class="form-control auto-save text-end"
-       type="number"
-       step="0.01"
-       th:value="${op.prezzo}"
-       data-field="prezzo">
-								
-								
-								</td>
 							
-							<td class="importo text-end"
-    th:text="${op.importo}">
-</td>
+							<td th:text="${op.arrivo.merce.name}"></td>
+							<td th:text="${op.ddt}"></td>
+
+
+
+							<!-- 						<td th:text="${op.merce != null ? op.merce.name : ''}"></td> -->
+
+							<!-- 						<td th:text="${op.bin != null ? op.bin.name : ''}"></td> -->
+							<!-- 						<td th:text="${op.nBins}" class="text-end"></td> -->
+
+							<td th:text="${op.peso_lordo}" class="text-end"></td>
+
+							<td th:text="${op.nettoDiTara}" class="text-end"></td>
+						<td th:text="${op.scarto}" class="text-end"></td>
+							<td th:text="${op.nettoDiScarto}" class="text-end"></td>
+							
+							
+							
+							<td><input class="form-control auto-save text-end"
+								type="number" step="0.01" th:value="${op.prezzo}"
+								data-field="prezzo"></td>
+
+							<td class="importo text-end" th:text="${op.importo}"></td>
 
 						</tr>
 
@@ -146,7 +144,7 @@
 					</tfoot>
 
 				</table>
-				
+
 			</form>
 
 

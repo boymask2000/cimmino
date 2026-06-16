@@ -26,7 +26,7 @@ public interface VenditeRepository extends JpaRepository<Vendita, Long> {
 	List<Vendita> findVenditeDiCommerciante( @Param("commId") Long commId) ;
 	
 	@Query("select v from Vendita v where v.commerciante.commerciante_id=:commId and v.ddt is null"
-			+ " and ( v.gruppoVendite is null or v.isMasterGruppo =true)")
+			)
 	List<Vendita> findVenditeDiCommercianteSenzaDDT( @Param("commId") Long commId) ;
 	
 	List<Vendita> findByGruppoVendite(GruppoVendite gruppoVendite);

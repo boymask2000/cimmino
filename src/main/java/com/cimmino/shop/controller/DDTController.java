@@ -56,7 +56,7 @@ public class DDTController {
 		for (Commerciante comm : commercianteRepository.findAll()) {
 			CommerciantiDDTInfo info = new CommerciantiDDTInfo();
 
-			List<Vendita> ll = venditeRepository.findVenditeDiCommercianteSenzaDDT(comm.getCommerciante_id());
+			List<GruppoVendite> ll = gruppoVenditeRepository.findGruppoVenditeDiCommercianteSenzaDDT(comm.getCommerciante_id());
 			info.setCommerciante(comm);
 			info.setNumVenditeNoDDT(ll.size());
 			infos.add(info);
@@ -72,7 +72,7 @@ public class DDTController {
 		Optional<Commerciante> opt_comm = commercianteRepository.findById(id);
 		Commerciante comm = opt_comm.get();
 	//	List<Vendita> vendite = venditeRepository.findVenditeDiCommercianteSenzaDDT(comm.getCommerciante_id());
-		List<GruppoVendite> vendite = gruppoVenditeRepository.findVenditeDiCommerciante(comm.getCommerciante_id());
+		List<GruppoVendite> vendite = gruppoVenditeRepository.findGruppoVenditeDiCommercianteSenzaDDT(comm.getCommerciante_id());
 		model.addAttribute("vendite", vendite);
 		model.addAttribute("commerciante", comm);
 		return "ddt_vendite_commerciante_noddt";

@@ -117,11 +117,19 @@
 
 							<td th:text="${p.commerciante.pIva}"></td>
 
+<!-- 							<td class="text-center"> -->
+<!-- 							<a -->
+<!-- 								th:href="@{/ddt/vendite_commercianteNoDDT/{id}(id=${p.commerciante.commerciante_id})}" -->
+<!-- 								class="btn btn-sm btn-action" -->
+<!-- 								th:classappend="' btn-success'"> -->
+
+<!-- 									<i class="bi bi-plus-circle"></i> Crea DDT -->
+<!-- 							</a> -->
+<!-- 							</td> -->
 							<td class="text-center"><a
-								th:href="@{/ddt/vendite_commercianteNoDDT/{id}(id=${p.commerciante.commerciante_id})}"
+								th:href="${p.numVenditeNoDDT<=0} ? '#' : @{/ddt/vendite_commercianteNoDDT/{id}(id=${p.commerciante.commerciante_id})}"
 								class="btn btn-sm btn-action"
-								th:classappend="' btn-success'"
-								>
+								th:classappend="${p.numVenditeNoDDT<=0} ? ' btn-secondary disabled' : ' btn-success'">
 
 									<i class="bi bi-plus-circle"></i> Crea DDT
 							</a></td>

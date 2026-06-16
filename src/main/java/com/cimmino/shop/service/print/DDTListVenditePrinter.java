@@ -95,7 +95,7 @@ public class DDTListVenditePrinter extends BasePrinter implements HasOutputStrea
 		builder.run();
 
 		DDTDTO dto = ddtService.create(html, dto1);
-		Long ddtId = dto1.getId();
+		Long ddtId = dto.getId();
 		for (GruppoVendite vendita : vendite) {
 
 			vendita.setDdt(ddtInputData.getNumeroDDT());
