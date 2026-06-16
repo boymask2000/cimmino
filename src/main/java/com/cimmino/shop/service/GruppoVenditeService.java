@@ -45,8 +45,8 @@ public class GruppoVenditeService {
 	BinsVenditeRepository binsVenditeRepository;
 	@Autowired
 	MerceRepository merceRepository;
-	
-	public void saveGruppoVendite(GruppoVendite gr,LocalDate currData, String binsJson) {
+
+	public void saveGruppoVendite(GruppoVendite gr, LocalDate currData, String binsJson) {
 		gr.setData(currData);
 		ObjectMapper mapper = new ObjectMapper();
 		List<BinsGruppoVenditaDTO> binsd = new ArrayList<BinsGruppoVenditaDTO>();
@@ -76,16 +76,16 @@ public class GruppoVenditeService {
 			String sNomeMerce = vals[2];
 			String sbin = vals[3];
 			String snuBin = vals[4];
-			
+
 			int numBin = Integer.parseInt(snuBin);
 			Arrivi arrivo = arriviRepository.findById(Long.parseLong(sArrivoId)).get();
-			
-			  BigDecimal scarto = new BigDecimal(1);
-				BigDecimal perc = dto.getScarto().divide(new BigDecimal(100));
-				scarto = scarto.subtract(perc);
-				BigDecimal importo = dto.getPesoLordo().multiply(scarto);
-			
-				sommaImporto = sommaImporto.add(importo);
+
+			BigDecimal scarto = new BigDecimal(1);
+			BigDecimal perc = dto.getScarto().divide(new BigDecimal(100));
+			scarto = scarto.subtract(perc);
+			BigDecimal nettoScarto = dto.getPesoLordo().multiply(scarto);
+			BigDecimal importo = nettoScarto.multiply(dto.getPrezzo());
+			sommaImporto = sommaImporto.add(importo);
 
 			Vendita vendita = new Vendita();
 			vendita.setCommerciante(comm);
@@ -94,11 +94,12 @@ public class GruppoVenditeService {
 			vendita.setNumeroTotaleBins(Integer.parseInt(snuBin));
 			vendita.setPeso_lordo(dto.getPesoLordo());
 			vendita.setNettoDiTara(dto.getPesoNetto());
+			vendita.setNettoDiScarto(nettoScarto);
 			vendita.setPrezzo(dto.getPrezzo());
 			vendita.setImporto(importo);
+			vendita.setScarto(dto.getScarto());
 			// vendita.set
 			venditeService.eseguiCalcoli(vendita);
-		
 
 			sommaPesoLordo = sommaPesoLordo.add(dto.getPesoLordo());
 			sommaNettoTara = sommaNettoTara.add(dto.getPesoNetto());
@@ -110,12 +111,10 @@ public class GruppoVenditeService {
 
 				sommaNettoScarto = sommaNettoScarto.add(dto.getPesoLordo().multiply(scarto));
 				vendita.setNettoDiScarto(dto.getPesoLordo().multiply(scarto));
-				vendita.setScarto(scarto);
+
 			}
-			vendita=venditeService.save(vendita, commId);
-			
-			
-			
+			vendita = venditeService.save(vendita, commId);
+
 			Bin bb = binRepository.findbyName(sbin);
 			BinsVendite bArr = new BinsVendite();
 			bArr.setVendita(vendita);
@@ -124,11 +123,11 @@ public class GruppoVenditeService {
 			bArr.setPesoLordo(dto.getPesoLordo());
 			bArr.setPesoNetto(dto.getPesoNetto());
 			bArr.setNostraProprieta(dto.getNostraProprieta());
-			
+
 			binsVenditeRepository.save(bArr);
 		}
 
-	//	gr.setNettoDiScarto(sommaNettoScarto);
+		// gr.setNettoDiScarto(sommaNettoScarto);
 		gr.setImporto(sommaImporto);
 		gr.setNettoDiTara(sommaNettoTara);
 
@@ -144,15 +143,15 @@ public class GruppoVenditeService {
 		gr.setBins(bins);
 		int totaleBins = bins.stream().mapToInt(b -> b.getNumBins()).sum();
 		gr.setNumeroTotaleBins(totaleBins);
-		
+
 		calcolaMedia(gr);
-		
+
 		gr = gruppoVenditeRepository.save(gr);
-		
+
 		movimentiBinService.register(gr);
 
 	}
-	
+
 	private List<BinsGruppoVendita> createBinsVendite(GruppoVendite gr, List<BinsGruppoVenditaDTO> binsd) {
 		List<BinsGruppoVendita> out = new ArrayList<>();
 

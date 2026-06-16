@@ -3678,3 +3678,476 @@ org.hibernate.NonUniqueResultException: Query did not return a unique result: 2 
 2026-06-16T11:48:28.025+02:00  WARN 29043 --- [Shop] [http-nio-0.0.0.0-8443-exec-1] actStandardFragmentInsertionTagProcessor : [THYMELEAF][http-nio-0.0.0.0-8443-exec-1][ddt_commercianti] Deprecated unwrapped fragment expression "navbar :: navbar" found in template ddt_commercianti, line 70, col 7. Please use the complete syntax of fragment expressions instead ("~{navbar :: navbar}"). The old, unwrapped syntax for fragment expressions will be removed in future versions of Thymeleaf.
 2026-06-16T11:48:29.302+02:00  WARN 29043 --- [Shop] [http-nio-0.0.0.0-8443-exec-4] actStandardFragmentInsertionTagProcessor : [THYMELEAF][http-nio-0.0.0.0-8443-exec-4][ddt_vendite_commerciante_noddt] Deprecated unwrapped fragment expression "navbar :: navbar" found in template ddt_vendite_commerciante_noddt, line 123, col 7. Please use the complete syntax of fragment expressions instead ("~{navbar :: navbar}"). The old, unwrapped syntax for fragment expressions will be removed in future versions of Thymeleaf.
 2026-06-16T11:48:32.062+02:00  WARN 29043 --- [Shop] [http-nio-0.0.0.0-8443-exec-5] actStandardFragmentInsertionTagProcessor : [THYMELEAF][http-nio-0.0.0.0-8443-exec-5][ddt_input_data] Deprecated unwrapped fragment expression "navbar :: navbar" found in template ddt_input_data, line 14, col 6. Please use the complete syntax of fragment expressions instead ("~{navbar :: navbar}"). The old, unwrapped syntax for fragment expressions will be removed in future versions of Thymeleaf.
+2026-06-16T11:55:03.822+02:00  INFO 29043 --- [Shop] [SpringApplicationShutdownHook] o.s.boot.tomcat.GracefulShutdown         : Commencing graceful shutdown. Waiting for active requests to complete
+2026-06-16T11:55:03.824+02:00  INFO 29043 --- [Shop] [tomcat-shutdown] o.s.boot.tomcat.GracefulShutdown         : Graceful shutdown complete
+2026-06-16T11:55:03.829+02:00  INFO 29043 --- [Shop] [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-06-16T11:55:03.831+02:00  INFO 29043 --- [Shop] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2026-06-16T11:55:03.835+02:00  INFO 29043 --- [Shop] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2026-06-16T12:18:22.674+02:00  INFO 30520 --- [Shop] [main] com.cimmino.shop.ShopApplication         : Starting ShopApplication using Java 21.0.11 with PID 30520 (/home/giovanni/ws_cimmino/shop/target/classes started by giovanni in /home/giovanni/ws_cimmino/shop)
+2026-06-16T12:18:22.677+02:00  INFO 30520 --- [Shop] [main] com.cimmino.shop.ShopApplication         : No active profile set, falling back to 1 default profile: "default"
+2026-06-16T12:18:23.167+02:00  INFO 30520 --- [Shop] [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-06-16T12:18:23.244+02:00  INFO 30520 --- [Shop] [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 69 ms. Found 15 JPA repository interfaces.
+2026-06-16T12:18:23.968+02:00  INFO 30520 --- [Shop] [main] o.s.boot.tomcat.TomcatWebServer          : Tomcat initialized with port 8443 (http)
+2026-06-16T12:18:23.979+02:00  INFO 30520 --- [Shop] [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-06-16T12:18:23.980+02:00  INFO 30520 --- [Shop] [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/11.0.21]
+2026-06-16T12:18:24.034+02:00  INFO 30520 --- [Shop] [main] b.w.c.s.WebApplicationContextInitializer : Root WebApplicationContext: initialization completed in 1314 ms
+2026-06-16T12:18:24.222+02:00  INFO 30520 --- [Shop] [main] org.hibernate.orm.jpa                    : HHH008540: Processing PersistenceUnitInfo [name: default]
+2026-06-16T12:18:24.257+02:00  INFO 30520 --- [Shop] [main] org.hibernate.orm.core                   : HHH000001: Hibernate ORM core version 7.2.12.Final
+2026-06-16T12:18:24.538+02:00  INFO 30520 --- [Shop] [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-06-16T12:18:24.558+02:00  INFO 30520 --- [Shop] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-06-16T12:18:24.674+02:00  INFO 30520 --- [Shop] [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@6a552721
+2026-06-16T12:18:24.675+02:00  INFO 30520 --- [Shop] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-06-16T12:18:24.693+02:00  WARN 30520 --- [Shop] [main] org.hibernate.orm.deprecation            : HHH90000025: PostgreSQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-06-16T12:18:24.706+02:00  INFO 30520 --- [Shop] [main] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [jdbc:postgresql://172.19.0.2:5432/cimmino]
+	Database driver: PostgreSQL JDBC Driver
+	Database dialect: PostgreSQLDialect
+	Database version: 15.17
+	Default catalog/schema: cimmino/public
+	Autocommit mode: undefined/unknown
+	Isolation level: READ_COMMITTED [default READ_COMMITTED]
+	JDBC fetch size: none
+	Pool: DataSourceConnectionProvider
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2026-06-16T12:18:25.380+02:00  INFO 30520 --- [Shop] [main] org.hibernate.orm.core                   : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-06-16T12:18:25.429+02:00  INFO 30520 --- [Shop] [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-06-16T12:18:25.476+02:00  INFO 30520 --- [Shop] [main] o.s.d.j.r.query.QueryEnhancerFactories   : Hibernate is in classpath; If applicable, HQL parser will be used.
+2026-06-16T12:18:26.323+02:00  WARN 30520 --- [Shop] [main] ConfigServletWebServerApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'analisiController': Unsatisfied dependency expressed through field 'analisiService': Error creating bean with name 'analisiService': Unsatisfied dependency expressed through field 'arriviService': Error creating bean with name 'arriviService': Unsatisfied dependency expressed through field 'arriviMapper': No qualifying bean of type 'com.cimmino.shop.mappers.ArriviMapper' available: expected at least 1 bean which qualifies as autowire candidate. Dependency annotations: {@org.springframework.beans.factory.annotation.Autowired(required=true)}
+2026-06-16T12:18:26.324+02:00  INFO 30520 --- [Shop] [main] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-06-16T12:18:26.325+02:00  INFO 30520 --- [Shop] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2026-06-16T12:18:26.328+02:00  INFO 30520 --- [Shop] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2026-06-16T12:18:26.330+02:00  INFO 30520 --- [Shop] [main] o.apache.catalina.core.StandardService   : Stopping service [Tomcat]
+2026-06-16T12:18:26.336+02:00  INFO 30520 --- [Shop] [main] .s.b.a.l.ConditionEvaluationReportLogger : 
+
+Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+2026-06-16T12:18:26.348+02:00 ERROR 30520 --- [Shop] [main] o.s.b.d.LoggingFailureAnalysisReporter   : 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Field arriviMapper in com.cimmino.shop.service.ArriviService required a bean of type 'com.cimmino.shop.mappers.ArriviMapper' that could not be found.
+
+The injection point has the following annotations:
+	- @org.springframework.beans.factory.annotation.Autowired(required=true)
+
+
+Action:
+
+Consider defining a bean of type 'com.cimmino.shop.mappers.ArriviMapper' in your configuration.
+
+2026-06-16T12:19:14.485+02:00  INFO 30756 --- [Shop] [main] com.cimmino.shop.ShopApplication         : Starting ShopApplication using Java 21.0.11 with PID 30756 (/home/giovanni/ws_cimmino/shop/target/classes started by giovanni in /home/giovanni/ws_cimmino/shop)
+2026-06-16T12:19:14.487+02:00  INFO 30756 --- [Shop] [main] com.cimmino.shop.ShopApplication         : No active profile set, falling back to 1 default profile: "default"
+2026-06-16T12:19:14.963+02:00  INFO 30756 --- [Shop] [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-06-16T12:19:15.026+02:00  INFO 30756 --- [Shop] [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 55 ms. Found 15 JPA repository interfaces.
+2026-06-16T12:19:15.381+02:00  INFO 30756 --- [Shop] [main] o.s.boot.tomcat.TomcatWebServer          : Tomcat initialized with port 8443 (http)
+2026-06-16T12:19:15.391+02:00  INFO 30756 --- [Shop] [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-06-16T12:19:15.391+02:00  INFO 30756 --- [Shop] [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/11.0.21]
+2026-06-16T12:19:15.429+02:00  INFO 30756 --- [Shop] [main] b.w.c.s.WebApplicationContextInitializer : Root WebApplicationContext: initialization completed in 912 ms
+2026-06-16T12:19:15.574+02:00  INFO 30756 --- [Shop] [main] org.hibernate.orm.jpa                    : HHH008540: Processing PersistenceUnitInfo [name: default]
+2026-06-16T12:19:15.614+02:00  INFO 30756 --- [Shop] [main] org.hibernate.orm.core                   : HHH000001: Hibernate ORM core version 7.2.12.Final
+2026-06-16T12:19:15.871+02:00  INFO 30756 --- [Shop] [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-06-16T12:19:15.890+02:00  INFO 30756 --- [Shop] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-06-16T12:19:15.998+02:00  INFO 30756 --- [Shop] [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@30e143ff
+2026-06-16T12:19:15.999+02:00  INFO 30756 --- [Shop] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-06-16T12:19:16.018+02:00  WARN 30756 --- [Shop] [main] org.hibernate.orm.deprecation            : HHH90000025: PostgreSQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-06-16T12:19:16.032+02:00  INFO 30756 --- [Shop] [main] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [jdbc:postgresql://172.19.0.2:5432/cimmino]
+	Database driver: PostgreSQL JDBC Driver
+	Database dialect: PostgreSQLDialect
+	Database version: 15.17
+	Default catalog/schema: cimmino/public
+	Autocommit mode: undefined/unknown
+	Isolation level: READ_COMMITTED [default READ_COMMITTED]
+	JDBC fetch size: none
+	Pool: DataSourceConnectionProvider
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2026-06-16T12:19:16.699+02:00  INFO 30756 --- [Shop] [main] org.hibernate.orm.core                   : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-06-16T12:19:16.748+02:00  INFO 30756 --- [Shop] [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-06-16T12:19:16.796+02:00  INFO 30756 --- [Shop] [main] o.s.d.j.r.query.QueryEnhancerFactories   : Hibernate is in classpath; If applicable, HQL parser will be used.
+2026-06-16T12:19:17.835+02:00  WARN 30756 --- [Shop] [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-06-16T12:19:17.944+02:00  INFO 30756 --- [Shop] [main] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with UserDetailsService bean with name users
+2026-06-16T12:19:18.231+02:00  INFO 30756 --- [Shop] [main] o.s.boot.tomcat.TomcatWebServer          : Tomcat started on port 8443 (http) with context path '/'
+2026-06-16T12:19:18.235+02:00  INFO 30756 --- [Shop] [main] com.cimmino.shop.ShopApplication         : Started ShopApplication in 4.062 seconds (process running for 4.316)
+2026-06-16T12:20:20.645+02:00  INFO 30756 --- [Shop] [http-nio-0.0.0.0-8443-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-06-16T12:20:20.645+02:00  INFO 30756 --- [Shop] [http-nio-0.0.0.0-8443-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-06-16T12:20:20.646+02:00  INFO 30756 --- [Shop] [http-nio-0.0.0.0-8443-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
+2026-06-16T12:20:20.823+02:00  WARN 30756 --- [Shop] [http-nio-0.0.0.0-8443-exec-1] actStandardFragmentInsertionTagProcessor : [THYMELEAF][http-nio-0.0.0.0-8443-exec-1][home] Deprecated unwrapped fragment expression "navbar :: navbar" found in template home, line 77, col 6. Please use the complete syntax of fragment expressions instead ("~{navbar :: navbar}"). The old, unwrapped syntax for fragment expressions will be removed in future versions of Thymeleaf.
+2026-06-16T12:20:24.467+02:00  WARN 30756 --- [Shop] [http-nio-0.0.0.0-8443-exec-8] actStandardFragmentInsertionTagProcessor : [THYMELEAF][http-nio-0.0.0.0-8443-exec-8][home] Deprecated unwrapped fragment expression "navbar :: navbar" found in template home, line 77, col 6. Please use the complete syntax of fragment expressions instead ("~{navbar :: navbar}"). The old, unwrapped syntax for fragment expressions will be removed in future versions of Thymeleaf.
+2026-06-16T12:20:25.942+02:00  WARN 30756 --- [Shop] [http-nio-0.0.0.0-8443-exec-1] actStandardFragmentInsertionTagProcessor : [THYMELEAF][http-nio-0.0.0.0-8443-exec-1][arrivi2] Deprecated unwrapped fragment expression "navbar :: navbar" found in template arrivi2, line 49, col 7. Please use the complete syntax of fragment expressions instead ("~{navbar :: navbar}"). The old, unwrapped syntax for fragment expressions will be removed in future versions of Thymeleaf.
+2026-06-16T14:28:15.427+02:00  INFO 30756 --- [Shop] [SpringApplicationShutdownHook] o.s.boot.tomcat.GracefulShutdown         : Commencing graceful shutdown. Waiting for active requests to complete
+2026-06-16T14:28:15.429+02:00  INFO 30756 --- [Shop] [tomcat-shutdown] o.s.boot.tomcat.GracefulShutdown         : Graceful shutdown complete
+2026-06-16T14:28:15.433+02:00  INFO 30756 --- [Shop] [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-06-16T14:28:15.434+02:00  INFO 30756 --- [Shop] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2026-06-16T14:28:15.436+02:00  INFO 30756 --- [Shop] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2026-06-16T14:28:18.389+02:00  INFO 33746 --- [Shop] [main] com.cimmino.shop.ShopApplication         : Starting ShopApplication using Java 21.0.11 with PID 33746 (/home/giovanni/ws_cimmino/shop/target/classes started by giovanni in /home/giovanni/ws_cimmino/shop)
+2026-06-16T14:28:18.392+02:00  INFO 33746 --- [Shop] [main] com.cimmino.shop.ShopApplication         : No active profile set, falling back to 1 default profile: "default"
+2026-06-16T14:28:18.955+02:00  INFO 33746 --- [Shop] [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-06-16T14:28:19.030+02:00  INFO 33746 --- [Shop] [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 66 ms. Found 15 JPA repository interfaces.
+2026-06-16T14:28:19.492+02:00  INFO 33746 --- [Shop] [main] o.s.boot.tomcat.TomcatWebServer          : Tomcat initialized with port 8443 (http)
+2026-06-16T14:28:19.504+02:00  INFO 33746 --- [Shop] [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-06-16T14:28:19.504+02:00  INFO 33746 --- [Shop] [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/11.0.21]
+2026-06-16T14:28:19.541+02:00  INFO 33746 --- [Shop] [main] b.w.c.s.WebApplicationContextInitializer : Root WebApplicationContext: initialization completed in 1110 ms
+2026-06-16T14:28:19.690+02:00  INFO 33746 --- [Shop] [main] org.hibernate.orm.jpa                    : HHH008540: Processing PersistenceUnitInfo [name: default]
+2026-06-16T14:28:19.729+02:00  INFO 33746 --- [Shop] [main] org.hibernate.orm.core                   : HHH000001: Hibernate ORM core version 7.2.12.Final
+2026-06-16T14:28:20.088+02:00  INFO 33746 --- [Shop] [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-06-16T14:28:20.114+02:00  INFO 33746 --- [Shop] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-06-16T14:28:20.245+02:00  INFO 33746 --- [Shop] [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@7f64bd7
+2026-06-16T14:28:20.247+02:00  INFO 33746 --- [Shop] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-06-16T14:28:20.268+02:00  WARN 33746 --- [Shop] [main] org.hibernate.orm.deprecation            : HHH90000025: PostgreSQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-06-16T14:28:20.284+02:00  INFO 33746 --- [Shop] [main] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [jdbc:postgresql://172.19.0.2:5432/cimmino]
+	Database driver: PostgreSQL JDBC Driver
+	Database dialect: PostgreSQLDialect
+	Database version: 15.17
+	Default catalog/schema: cimmino/public
+	Autocommit mode: undefined/unknown
+	Isolation level: READ_COMMITTED [default READ_COMMITTED]
+	JDBC fetch size: none
+	Pool: DataSourceConnectionProvider
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2026-06-16T14:28:21.091+02:00  INFO 33746 --- [Shop] [main] org.hibernate.orm.core                   : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-06-16T14:28:21.144+02:00  INFO 33746 --- [Shop] [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-06-16T14:28:21.206+02:00  INFO 33746 --- [Shop] [main] o.s.d.j.r.query.QueryEnhancerFactories   : Hibernate is in classpath; If applicable, HQL parser will be used.
+2026-06-16T14:28:22.478+02:00  WARN 33746 --- [Shop] [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-06-16T14:28:22.596+02:00  INFO 33746 --- [Shop] [main] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with UserDetailsService bean with name users
+2026-06-16T14:28:22.934+02:00  INFO 33746 --- [Shop] [main] o.s.boot.tomcat.TomcatWebServer          : Tomcat started on port 8443 (http) with context path '/'
+2026-06-16T14:28:22.941+02:00  INFO 33746 --- [Shop] [main] com.cimmino.shop.ShopApplication         : Started ShopApplication in 4.935 seconds (process running for 5.429)
+2026-06-16T14:28:43.327+02:00  INFO 33746 --- [Shop] [http-nio-0.0.0.0-8443-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-06-16T14:28:43.327+02:00  INFO 33746 --- [Shop] [http-nio-0.0.0.0-8443-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-06-16T14:28:43.329+02:00  INFO 33746 --- [Shop] [http-nio-0.0.0.0-8443-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 2 ms
+2026-06-16T14:28:45.003+02:00  WARN 33746 --- [Shop] [http-nio-0.0.0.0-8443-exec-4] actStandardFragmentInsertionTagProcessor : [THYMELEAF][http-nio-0.0.0.0-8443-exec-4][home] Deprecated unwrapped fragment expression "navbar :: navbar" found in template home, line 77, col 6. Please use the complete syntax of fragment expressions instead ("~{navbar :: navbar}"). The old, unwrapped syntax for fragment expressions will be removed in future versions of Thymeleaf.
+2026-06-16T14:28:46.105+02:00  WARN 33746 --- [Shop] [http-nio-0.0.0.0-8443-exec-7] actStandardFragmentInsertionTagProcessor : [THYMELEAF][http-nio-0.0.0.0-8443-exec-7][arrivi2] Deprecated unwrapped fragment expression "navbar :: navbar" found in template arrivi2, line 49, col 7. Please use the complete syntax of fragment expressions instead ("~{navbar :: navbar}"). The old, unwrapped syntax for fragment expressions will be removed in future versions of Thymeleaf.
+2026-06-16T14:28:56.504+02:00  WARN 33746 --- [Shop] [http-nio-0.0.0.0-8443-exec-8] actStandardFragmentInsertionTagProcessor : [THYMELEAF][http-nio-0.0.0.0-8443-exec-8][new_gruppo] Deprecated unwrapped fragment expression "navbar :: navbar" found in template new_gruppo, line 15, col 7. Please use the complete syntax of fragment expressions instead ("~{navbar :: navbar}"). The old, unwrapped syntax for fragment expressions will be removed in future versions of Thymeleaf.
+2026-06-16T14:32:45.704+02:00  INFO 34082 --- [Shop] [main] com.cimmino.shop.ShopApplication         : Starting ShopApplication using Java 21.0.11 with PID 34082 (/home/giovanni/ws_cimmino/shop/target/classes started by giovanni in /home/giovanni/ws_cimmino/shop)
+2026-06-16T14:32:45.706+02:00  INFO 34082 --- [Shop] [main] com.cimmino.shop.ShopApplication         : No active profile set, falling back to 1 default profile: "default"
+2026-06-16T14:32:46.182+02:00  INFO 34082 --- [Shop] [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-06-16T14:32:46.243+02:00  INFO 34082 --- [Shop] [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 54 ms. Found 15 JPA repository interfaces.
+2026-06-16T14:32:46.600+02:00  INFO 34082 --- [Shop] [main] o.s.boot.tomcat.TomcatWebServer          : Tomcat initialized with port 8443 (http)
+2026-06-16T14:32:46.609+02:00  INFO 34082 --- [Shop] [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-06-16T14:32:46.609+02:00  INFO 34082 --- [Shop] [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/11.0.21]
+2026-06-16T14:32:46.647+02:00  INFO 34082 --- [Shop] [main] b.w.c.s.WebApplicationContextInitializer : Root WebApplicationContext: initialization completed in 910 ms
+2026-06-16T14:32:46.793+02:00  INFO 34082 --- [Shop] [main] org.hibernate.orm.jpa                    : HHH008540: Processing PersistenceUnitInfo [name: default]
+2026-06-16T14:32:46.823+02:00  INFO 34082 --- [Shop] [main] org.hibernate.orm.core                   : HHH000001: Hibernate ORM core version 7.2.12.Final
+2026-06-16T14:32:47.084+02:00  INFO 34082 --- [Shop] [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-06-16T14:32:47.103+02:00  INFO 34082 --- [Shop] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-06-16T14:32:47.218+02:00  INFO 34082 --- [Shop] [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@41bdaa81
+2026-06-16T14:32:47.219+02:00  INFO 34082 --- [Shop] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-06-16T14:32:47.237+02:00  WARN 34082 --- [Shop] [main] org.hibernate.orm.deprecation            : HHH90000025: PostgreSQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-06-16T14:32:47.250+02:00  INFO 34082 --- [Shop] [main] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [jdbc:postgresql://172.19.0.2:5432/cimmino]
+	Database driver: PostgreSQL JDBC Driver
+	Database dialect: PostgreSQLDialect
+	Database version: 15.17
+	Default catalog/schema: cimmino/public
+	Autocommit mode: undefined/unknown
+	Isolation level: READ_COMMITTED [default READ_COMMITTED]
+	JDBC fetch size: none
+	Pool: DataSourceConnectionProvider
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2026-06-16T14:32:47.933+02:00  INFO 34082 --- [Shop] [main] org.hibernate.orm.core                   : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-06-16T14:32:47.982+02:00  INFO 34082 --- [Shop] [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-06-16T14:32:48.028+02:00  INFO 34082 --- [Shop] [main] o.s.d.j.r.query.QueryEnhancerFactories   : Hibernate is in classpath; If applicable, HQL parser will be used.
+2026-06-16T14:32:49.118+02:00  WARN 34082 --- [Shop] [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-06-16T14:32:49.232+02:00  INFO 34082 --- [Shop] [main] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with UserDetailsService bean with name users
+2026-06-16T14:32:49.537+02:00  INFO 34082 --- [Shop] [main] o.s.boot.tomcat.TomcatWebServer          : Tomcat started on port 8443 (http) with context path '/'
+2026-06-16T14:32:49.542+02:00  INFO 34082 --- [Shop] [main] com.cimmino.shop.ShopApplication         : Started ShopApplication in 4.178 seconds (process running for 4.421)
+2026-06-16T14:32:52.602+02:00  INFO 34082 --- [Shop] [http-nio-0.0.0.0-8443-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-06-16T14:32:52.603+02:00  INFO 34082 --- [Shop] [http-nio-0.0.0.0-8443-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-06-16T14:32:52.604+02:00  INFO 34082 --- [Shop] [http-nio-0.0.0.0-8443-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
+2026-06-16T14:32:52.788+02:00  WARN 34082 --- [Shop] [http-nio-0.0.0.0-8443-exec-1] actStandardFragmentInsertionTagProcessor : [THYMELEAF][http-nio-0.0.0.0-8443-exec-1][home] Deprecated unwrapped fragment expression "navbar :: navbar" found in template home, line 77, col 6. Please use the complete syntax of fragment expressions instead ("~{navbar :: navbar}"). The old, unwrapped syntax for fragment expressions will be removed in future versions of Thymeleaf.
+2026-06-16T14:32:55.701+02:00  WARN 34082 --- [Shop] [http-nio-0.0.0.0-8443-exec-6] actStandardFragmentInsertionTagProcessor : [THYMELEAF][http-nio-0.0.0.0-8443-exec-6][home] Deprecated unwrapped fragment expression "navbar :: navbar" found in template home, line 77, col 6. Please use the complete syntax of fragment expressions instead ("~{navbar :: navbar}"). The old, unwrapped syntax for fragment expressions will be removed in future versions of Thymeleaf.
+2026-06-16T14:32:57.123+02:00  WARN 34082 --- [Shop] [http-nio-0.0.0.0-8443-exec-9] actStandardFragmentInsertionTagProcessor : [THYMELEAF][http-nio-0.0.0.0-8443-exec-9][arrivi2] Deprecated unwrapped fragment expression "navbar :: navbar" found in template arrivi2, line 49, col 7. Please use the complete syntax of fragment expressions instead ("~{navbar :: navbar}"). The old, unwrapped syntax for fragment expressions will be removed in future versions of Thymeleaf.
+2026-06-16T14:33:03.911+02:00  WARN 34082 --- [Shop] [http-nio-0.0.0.0-8443-exec-10] actStandardFragmentInsertionTagProcessor : [THYMELEAF][http-nio-0.0.0.0-8443-exec-10][new_gruppo] Deprecated unwrapped fragment expression "navbar :: navbar" found in template new_gruppo, line 15, col 7. Please use the complete syntax of fragment expressions instead ("~{navbar :: navbar}"). The old, unwrapped syntax for fragment expressions will be removed in future versions of Thymeleaf.
+2026-06-16T14:33:51.295+02:00  WARN 34082 --- [Shop] [http-nio-0.0.0.0-8443-exec-2] actStandardFragmentInsertionTagProcessor : [THYMELEAF][http-nio-0.0.0.0-8443-exec-2][home] Deprecated unwrapped fragment expression "navbar :: navbar" found in template home, line 77, col 6. Please use the complete syntax of fragment expressions instead ("~{navbar :: navbar}"). The old, unwrapped syntax for fragment expressions will be removed in future versions of Thymeleaf.
+2026-06-16T14:33:53.265+02:00  WARN 34082 --- [Shop] [http-nio-0.0.0.0-8443-exec-3] actStandardFragmentInsertionTagProcessor : [THYMELEAF][http-nio-0.0.0.0-8443-exec-3][arrivi2] Deprecated unwrapped fragment expression "navbar :: navbar" found in template arrivi2, line 49, col 7. Please use the complete syntax of fragment expressions instead ("~{navbar :: navbar}"). The old, unwrapped syntax for fragment expressions will be removed in future versions of Thymeleaf.
+2026-06-16T14:34:21.989+02:00  WARN 34082 --- [Shop] [http-nio-0.0.0.0-8443-exec-5] actStandardFragmentInsertionTagProcessor : [THYMELEAF][http-nio-0.0.0.0-8443-exec-5][new_gruppo] Deprecated unwrapped fragment expression "navbar :: navbar" found in template new_gruppo, line 15, col 7. Please use the complete syntax of fragment expressions instead ("~{navbar :: navbar}"). The old, unwrapped syntax for fragment expressions will be removed in future versions of Thymeleaf.
+2026-06-16T14:37:00.212+02:00  INFO 34082 --- [Shop] [SpringApplicationShutdownHook] o.s.boot.tomcat.GracefulShutdown         : Commencing graceful shutdown. Waiting for active requests to complete
+2026-06-16T14:37:00.214+02:00  INFO 34082 --- [Shop] [tomcat-shutdown] o.s.boot.tomcat.GracefulShutdown         : Graceful shutdown complete
+2026-06-16T14:37:00.217+02:00  INFO 34082 --- [Shop] [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-06-16T14:37:00.218+02:00  INFO 34082 --- [Shop] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2026-06-16T14:37:00.222+02:00  INFO 34082 --- [Shop] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2026-06-16T14:37:05.366+02:00  INFO 34280 --- [Shop] [main] com.cimmino.shop.ShopApplication         : Starting ShopApplication using Java 21.0.11 with PID 34280 (/home/giovanni/ws_cimmino/shop/target/classes started by giovanni in /home/giovanni/ws_cimmino/shop)
+2026-06-16T14:37:05.368+02:00  INFO 34280 --- [Shop] [main] com.cimmino.shop.ShopApplication         : No active profile set, falling back to 1 default profile: "default"
+2026-06-16T14:37:05.840+02:00  INFO 34280 --- [Shop] [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-06-16T14:37:05.904+02:00  INFO 34280 --- [Shop] [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 57 ms. Found 15 JPA repository interfaces.
+2026-06-16T14:37:06.262+02:00  INFO 34280 --- [Shop] [main] o.s.boot.tomcat.TomcatWebServer          : Tomcat initialized with port 8443 (http)
+2026-06-16T14:37:06.272+02:00  INFO 34280 --- [Shop] [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-06-16T14:37:06.272+02:00  INFO 34280 --- [Shop] [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/11.0.21]
+2026-06-16T14:37:06.310+02:00  INFO 34280 --- [Shop] [main] b.w.c.s.WebApplicationContextInitializer : Root WebApplicationContext: initialization completed in 913 ms
+2026-06-16T14:37:06.448+02:00  INFO 34280 --- [Shop] [main] org.hibernate.orm.jpa                    : HHH008540: Processing PersistenceUnitInfo [name: default]
+2026-06-16T14:37:06.477+02:00  INFO 34280 --- [Shop] [main] org.hibernate.orm.core                   : HHH000001: Hibernate ORM core version 7.2.12.Final
+2026-06-16T14:37:06.737+02:00  INFO 34280 --- [Shop] [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-06-16T14:37:06.756+02:00  INFO 34280 --- [Shop] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-06-16T14:37:06.882+02:00  INFO 34280 --- [Shop] [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@30e143ff
+2026-06-16T14:37:06.883+02:00  INFO 34280 --- [Shop] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-06-16T14:37:06.901+02:00  WARN 34280 --- [Shop] [main] org.hibernate.orm.deprecation            : HHH90000025: PostgreSQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-06-16T14:37:06.913+02:00  INFO 34280 --- [Shop] [main] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [jdbc:postgresql://172.19.0.2:5432/cimmino]
+	Database driver: PostgreSQL JDBC Driver
+	Database dialect: PostgreSQLDialect
+	Database version: 15.17
+	Default catalog/schema: cimmino/public
+	Autocommit mode: undefined/unknown
+	Isolation level: READ_COMMITTED [default READ_COMMITTED]
+	JDBC fetch size: none
+	Pool: DataSourceConnectionProvider
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2026-06-16T14:37:07.626+02:00  INFO 34280 --- [Shop] [main] org.hibernate.orm.core                   : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-06-16T14:37:07.677+02:00  INFO 34280 --- [Shop] [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-06-16T14:37:07.724+02:00  INFO 34280 --- [Shop] [main] o.s.d.j.r.query.QueryEnhancerFactories   : Hibernate is in classpath; If applicable, HQL parser will be used.
+2026-06-16T14:37:08.779+02:00  WARN 34280 --- [Shop] [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-06-16T14:37:08.888+02:00  INFO 34280 --- [Shop] [main] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with UserDetailsService bean with name users
+2026-06-16T14:37:09.188+02:00  INFO 34280 --- [Shop] [main] o.s.boot.tomcat.TomcatWebServer          : Tomcat started on port 8443 (http) with context path '/'
+2026-06-16T14:37:09.192+02:00  INFO 34280 --- [Shop] [main] com.cimmino.shop.ShopApplication         : Started ShopApplication in 4.153 seconds (process running for 4.401)
+2026-06-16T14:37:11.742+02:00  INFO 34280 --- [Shop] [http-nio-0.0.0.0-8443-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-06-16T14:37:11.742+02:00  INFO 34280 --- [Shop] [http-nio-0.0.0.0-8443-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-06-16T14:37:11.743+02:00  INFO 34280 --- [Shop] [http-nio-0.0.0.0-8443-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
+2026-06-16T14:37:13.039+02:00  WARN 34280 --- [Shop] [http-nio-0.0.0.0-8443-exec-4] actStandardFragmentInsertionTagProcessor : [THYMELEAF][http-nio-0.0.0.0-8443-exec-4][home] Deprecated unwrapped fragment expression "navbar :: navbar" found in template home, line 77, col 6. Please use the complete syntax of fragment expressions instead ("~{navbar :: navbar}"). The old, unwrapped syntax for fragment expressions will be removed in future versions of Thymeleaf.
+2026-06-16T14:37:13.968+02:00  WARN 34280 --- [Shop] [http-nio-0.0.0.0-8443-exec-7] actStandardFragmentInsertionTagProcessor : [THYMELEAF][http-nio-0.0.0.0-8443-exec-7][arrivi2] Deprecated unwrapped fragment expression "navbar :: navbar" found in template arrivi2, line 49, col 7. Please use the complete syntax of fragment expressions instead ("~{navbar :: navbar}"). The old, unwrapped syntax for fragment expressions will be removed in future versions of Thymeleaf.
+2026-06-16T14:37:15.770+02:00  WARN 34280 --- [Shop] [http-nio-0.0.0.0-8443-exec-8] actStandardFragmentInsertionTagProcessor : [THYMELEAF][http-nio-0.0.0.0-8443-exec-8][new_gruppo] Deprecated unwrapped fragment expression "navbar :: navbar" found in template new_gruppo, line 15, col 7. Please use the complete syntax of fragment expressions instead ("~{navbar :: navbar}"). The old, unwrapped syntax for fragment expressions will be removed in future versions of Thymeleaf.
+2026-06-16T14:37:46.776+02:00  WARN 34280 --- [Shop] [http-nio-0.0.0.0-8443-exec-8] actStandardFragmentInsertionTagProcessor : [THYMELEAF][http-nio-0.0.0.0-8443-exec-8][home] Deprecated unwrapped fragment expression "navbar :: navbar" found in template home, line 77, col 6. Please use the complete syntax of fragment expressions instead ("~{navbar :: navbar}"). The old, unwrapped syntax for fragment expressions will be removed in future versions of Thymeleaf.
+2026-06-16T14:37:48.494+02:00  WARN 34280 --- [Shop] [http-nio-0.0.0.0-8443-exec-10] actStandardFragmentInsertionTagProcessor : [THYMELEAF][http-nio-0.0.0.0-8443-exec-10][arrivi2] Deprecated unwrapped fragment expression "navbar :: navbar" found in template arrivi2, line 49, col 7. Please use the complete syntax of fragment expressions instead ("~{navbar :: navbar}"). The old, unwrapped syntax for fragment expressions will be removed in future versions of Thymeleaf.
+2026-06-16T14:39:19.181+02:00  INFO 34280 --- [Shop] [SpringApplicationShutdownHook] o.s.boot.tomcat.GracefulShutdown         : Commencing graceful shutdown. Waiting for active requests to complete
+2026-06-16T14:39:19.183+02:00  INFO 34280 --- [Shop] [tomcat-shutdown] o.s.boot.tomcat.GracefulShutdown         : Graceful shutdown complete
+2026-06-16T14:39:19.187+02:00  INFO 34280 --- [Shop] [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-06-16T14:39:19.188+02:00  INFO 34280 --- [Shop] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2026-06-16T14:39:19.191+02:00  INFO 34280 --- [Shop] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2026-06-16T14:39:22.906+02:00  INFO 34475 --- [Shop] [main] com.cimmino.shop.ShopApplication         : Starting ShopApplication using Java 21.0.11 with PID 34475 (/home/giovanni/ws_cimmino/shop/target/classes started by giovanni in /home/giovanni/ws_cimmino/shop)
+2026-06-16T14:39:22.908+02:00  INFO 34475 --- [Shop] [main] com.cimmino.shop.ShopApplication         : No active profile set, falling back to 1 default profile: "default"
+2026-06-16T14:39:23.384+02:00  INFO 34475 --- [Shop] [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-06-16T14:39:23.446+02:00  INFO 34475 --- [Shop] [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 56 ms. Found 15 JPA repository interfaces.
+2026-06-16T14:39:23.804+02:00  INFO 34475 --- [Shop] [main] o.s.boot.tomcat.TomcatWebServer          : Tomcat initialized with port 8443 (http)
+2026-06-16T14:39:23.813+02:00  INFO 34475 --- [Shop] [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-06-16T14:39:23.813+02:00  INFO 34475 --- [Shop] [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/11.0.21]
+2026-06-16T14:39:23.843+02:00  INFO 34475 --- [Shop] [main] b.w.c.s.WebApplicationContextInitializer : Root WebApplicationContext: initialization completed in 905 ms
+2026-06-16T14:39:23.990+02:00  INFO 34475 --- [Shop] [main] org.hibernate.orm.jpa                    : HHH008540: Processing PersistenceUnitInfo [name: default]
+2026-06-16T14:39:24.020+02:00  INFO 34475 --- [Shop] [main] org.hibernate.orm.core                   : HHH000001: Hibernate ORM core version 7.2.12.Final
+2026-06-16T14:39:24.272+02:00  INFO 34475 --- [Shop] [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-06-16T14:39:24.291+02:00  INFO 34475 --- [Shop] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-06-16T14:39:24.391+02:00  INFO 34475 --- [Shop] [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@30e143ff
+2026-06-16T14:39:24.392+02:00  INFO 34475 --- [Shop] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-06-16T14:39:24.409+02:00  WARN 34475 --- [Shop] [main] org.hibernate.orm.deprecation            : HHH90000025: PostgreSQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-06-16T14:39:24.421+02:00  INFO 34475 --- [Shop] [main] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [jdbc:postgresql://172.19.0.2:5432/cimmino]
+	Database driver: PostgreSQL JDBC Driver
+	Database dialect: PostgreSQLDialect
+	Database version: 15.17
+	Default catalog/schema: cimmino/public
+	Autocommit mode: undefined/unknown
+	Isolation level: READ_COMMITTED [default READ_COMMITTED]
+	JDBC fetch size: none
+	Pool: DataSourceConnectionProvider
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2026-06-16T14:39:25.090+02:00  INFO 34475 --- [Shop] [main] org.hibernate.orm.core                   : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-06-16T14:39:25.150+02:00  INFO 34475 --- [Shop] [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-06-16T14:39:25.198+02:00  INFO 34475 --- [Shop] [main] o.s.d.j.r.query.QueryEnhancerFactories   : Hibernate is in classpath; If applicable, HQL parser will be used.
+2026-06-16T14:39:26.243+02:00  WARN 34475 --- [Shop] [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-06-16T14:39:26.358+02:00  INFO 34475 --- [Shop] [main] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with UserDetailsService bean with name users
+2026-06-16T14:39:26.653+02:00  INFO 34475 --- [Shop] [main] o.s.boot.tomcat.TomcatWebServer          : Tomcat started on port 8443 (http) with context path '/'
+2026-06-16T14:39:26.657+02:00  INFO 34475 --- [Shop] [main] com.cimmino.shop.ShopApplication         : Started ShopApplication in 4.057 seconds (process running for 4.34)
+2026-06-16T14:39:44.871+02:00  INFO 34475 --- [Shop] [http-nio-0.0.0.0-8443-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-06-16T14:39:44.871+02:00  INFO 34475 --- [Shop] [http-nio-0.0.0.0-8443-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-06-16T14:39:44.873+02:00  INFO 34475 --- [Shop] [http-nio-0.0.0.0-8443-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
+2026-06-16T14:39:46.830+02:00  WARN 34475 --- [Shop] [http-nio-0.0.0.0-8443-exec-4] actStandardFragmentInsertionTagProcessor : [THYMELEAF][http-nio-0.0.0.0-8443-exec-4][home] Deprecated unwrapped fragment expression "navbar :: navbar" found in template home, line 77, col 6. Please use the complete syntax of fragment expressions instead ("~{navbar :: navbar}"). The old, unwrapped syntax for fragment expressions will be removed in future versions of Thymeleaf.
+2026-06-16T14:39:47.725+02:00  WARN 34475 --- [Shop] [http-nio-0.0.0.0-8443-exec-7] actStandardFragmentInsertionTagProcessor : [THYMELEAF][http-nio-0.0.0.0-8443-exec-7][arrivi2] Deprecated unwrapped fragment expression "navbar :: navbar" found in template arrivi2, line 49, col 7. Please use the complete syntax of fragment expressions instead ("~{navbar :: navbar}"). The old, unwrapped syntax for fragment expressions will be removed in future versions of Thymeleaf.
+2026-06-16T14:39:50.376+02:00  WARN 34475 --- [Shop] [http-nio-0.0.0.0-8443-exec-8] actStandardFragmentInsertionTagProcessor : [THYMELEAF][http-nio-0.0.0.0-8443-exec-8][new_gruppo] Deprecated unwrapped fragment expression "navbar :: navbar" found in template new_gruppo, line 15, col 7. Please use the complete syntax of fragment expressions instead ("~{navbar :: navbar}"). The old, unwrapped syntax for fragment expressions will be removed in future versions of Thymeleaf.
+2026-06-16T14:40:13.871+02:00  WARN 34475 --- [Shop] [http-nio-0.0.0.0-8443-exec-8] actStandardFragmentInsertionTagProcessor : [THYMELEAF][http-nio-0.0.0.0-8443-exec-8][home] Deprecated unwrapped fragment expression "navbar :: navbar" found in template home, line 77, col 6. Please use the complete syntax of fragment expressions instead ("~{navbar :: navbar}"). The old, unwrapped syntax for fragment expressions will be removed in future versions of Thymeleaf.
+2026-06-16T14:40:15.497+02:00  WARN 34475 --- [Shop] [http-nio-0.0.0.0-8443-exec-10] actStandardFragmentInsertionTagProcessor : [THYMELEAF][http-nio-0.0.0.0-8443-exec-10][arrivi2] Deprecated unwrapped fragment expression "navbar :: navbar" found in template arrivi2, line 49, col 7. Please use the complete syntax of fragment expressions instead ("~{navbar :: navbar}"). The old, unwrapped syntax for fragment expressions will be removed in future versions of Thymeleaf.
+2026-06-16T14:40:40.962+02:00  WARN 34475 --- [Shop] [http-nio-0.0.0.0-8443-exec-1] actStandardFragmentInsertionTagProcessor : [THYMELEAF][http-nio-0.0.0.0-8443-exec-1][new_gruppo] Deprecated unwrapped fragment expression "navbar :: navbar" found in template new_gruppo, line 15, col 7. Please use the complete syntax of fragment expressions instead ("~{navbar :: navbar}"). The old, unwrapped syntax for fragment expressions will be removed in future versions of Thymeleaf.
+2026-06-16T14:41:07.614+02:00  WARN 34475 --- [Shop] [http-nio-0.0.0.0-8443-exec-1] actStandardFragmentInsertionTagProcessor : [THYMELEAF][http-nio-0.0.0.0-8443-exec-1][home] Deprecated unwrapped fragment expression "navbar :: navbar" found in template home, line 77, col 6. Please use the complete syntax of fragment expressions instead ("~{navbar :: navbar}"). The old, unwrapped syntax for fragment expressions will be removed in future versions of Thymeleaf.
+2026-06-16T14:41:09.175+02:00  WARN 34475 --- [Shop] [http-nio-0.0.0.0-8443-exec-3] actStandardFragmentInsertionTagProcessor : [THYMELEAF][http-nio-0.0.0.0-8443-exec-3][arrivi2] Deprecated unwrapped fragment expression "navbar :: navbar" found in template arrivi2, line 49, col 7. Please use the complete syntax of fragment expressions instead ("~{navbar :: navbar}"). The old, unwrapped syntax for fragment expressions will be removed in future versions of Thymeleaf.
+2026-06-16T14:42:49.075+02:00  INFO 34475 --- [Shop] [SpringApplicationShutdownHook] o.s.boot.tomcat.GracefulShutdown         : Commencing graceful shutdown. Waiting for active requests to complete
+2026-06-16T14:42:49.076+02:00  INFO 34475 --- [Shop] [tomcat-shutdown] o.s.boot.tomcat.GracefulShutdown         : Graceful shutdown complete
+2026-06-16T14:42:49.080+02:00  INFO 34475 --- [Shop] [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-06-16T14:42:49.081+02:00  INFO 34475 --- [Shop] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2026-06-16T14:42:49.084+02:00  INFO 34475 --- [Shop] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2026-06-16T14:42:57.066+02:00  INFO 34658 --- [Shop] [main] com.cimmino.shop.ShopApplication         : Starting ShopApplication using Java 21.0.11 with PID 34658 (/home/giovanni/ws_cimmino/shop/target/classes started by giovanni in /home/giovanni/ws_cimmino/shop)
+2026-06-16T14:42:57.069+02:00  INFO 34658 --- [Shop] [main] com.cimmino.shop.ShopApplication         : No active profile set, falling back to 1 default profile: "default"
+2026-06-16T14:42:57.646+02:00  INFO 34658 --- [Shop] [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-06-16T14:42:57.720+02:00  INFO 34658 --- [Shop] [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 66 ms. Found 15 JPA repository interfaces.
+2026-06-16T14:42:58.162+02:00  INFO 34658 --- [Shop] [main] o.s.boot.tomcat.TomcatWebServer          : Tomcat initialized with port 8443 (http)
+2026-06-16T14:42:58.174+02:00  INFO 34658 --- [Shop] [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-06-16T14:42:58.174+02:00  INFO 34658 --- [Shop] [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/11.0.21]
+2026-06-16T14:42:58.213+02:00  INFO 34658 --- [Shop] [main] b.w.c.s.WebApplicationContextInitializer : Root WebApplicationContext: initialization completed in 1106 ms
+2026-06-16T14:42:58.361+02:00  INFO 34658 --- [Shop] [main] org.hibernate.orm.jpa                    : HHH008540: Processing PersistenceUnitInfo [name: default]
+2026-06-16T14:42:58.399+02:00  INFO 34658 --- [Shop] [main] org.hibernate.orm.core                   : HHH000001: Hibernate ORM core version 7.2.12.Final
+2026-06-16T14:42:58.727+02:00  INFO 34658 --- [Shop] [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-06-16T14:42:58.750+02:00  INFO 34658 --- [Shop] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-06-16T14:42:58.869+02:00  INFO 34658 --- [Shop] [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@7f64bd7
+2026-06-16T14:42:58.871+02:00  INFO 34658 --- [Shop] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-06-16T14:42:58.893+02:00  WARN 34658 --- [Shop] [main] org.hibernate.orm.deprecation            : HHH90000025: PostgreSQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-06-16T14:42:58.909+02:00  INFO 34658 --- [Shop] [main] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [jdbc:postgresql://172.19.0.2:5432/cimmino]
+	Database driver: PostgreSQL JDBC Driver
+	Database dialect: PostgreSQLDialect
+	Database version: 15.17
+	Default catalog/schema: cimmino/public
+	Autocommit mode: undefined/unknown
+	Isolation level: READ_COMMITTED [default READ_COMMITTED]
+	JDBC fetch size: none
+	Pool: DataSourceConnectionProvider
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2026-06-16T14:42:59.677+02:00  INFO 34658 --- [Shop] [main] org.hibernate.orm.core                   : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-06-16T14:42:59.795+02:00  INFO 34658 --- [Shop] [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-06-16T14:42:59.886+02:00  INFO 34658 --- [Shop] [main] o.s.d.j.r.query.QueryEnhancerFactories   : Hibernate is in classpath; If applicable, HQL parser will be used.
+2026-06-16T14:43:01.227+02:00  WARN 34658 --- [Shop] [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-06-16T14:43:01.360+02:00  INFO 34658 --- [Shop] [main] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with UserDetailsService bean with name users
+2026-06-16T14:43:01.728+02:00  INFO 34658 --- [Shop] [main] o.s.boot.tomcat.TomcatWebServer          : Tomcat started on port 8443 (http) with context path '/'
+2026-06-16T14:43:01.735+02:00  INFO 34658 --- [Shop] [main] com.cimmino.shop.ShopApplication         : Started ShopApplication in 5.068 seconds (process running for 5.531)
+2026-06-16T14:43:05.689+02:00  INFO 34658 --- [Shop] [http-nio-0.0.0.0-8443-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-06-16T14:43:05.690+02:00  INFO 34658 --- [Shop] [http-nio-0.0.0.0-8443-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-06-16T14:43:05.691+02:00  INFO 34658 --- [Shop] [http-nio-0.0.0.0-8443-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
+2026-06-16T14:43:07.172+02:00  WARN 34658 --- [Shop] [http-nio-0.0.0.0-8443-exec-4] actStandardFragmentInsertionTagProcessor : [THYMELEAF][http-nio-0.0.0.0-8443-exec-4][home] Deprecated unwrapped fragment expression "navbar :: navbar" found in template home, line 77, col 6. Please use the complete syntax of fragment expressions instead ("~{navbar :: navbar}"). The old, unwrapped syntax for fragment expressions will be removed in future versions of Thymeleaf.
+2026-06-16T14:43:08.404+02:00  WARN 34658 --- [Shop] [http-nio-0.0.0.0-8443-exec-7] actStandardFragmentInsertionTagProcessor : [THYMELEAF][http-nio-0.0.0.0-8443-exec-7][arrivi2] Deprecated unwrapped fragment expression "navbar :: navbar" found in template arrivi2, line 49, col 7. Please use the complete syntax of fragment expressions instead ("~{navbar :: navbar}"). The old, unwrapped syntax for fragment expressions will be removed in future versions of Thymeleaf.
+2026-06-16T14:43:10.103+02:00  WARN 34658 --- [Shop] [http-nio-0.0.0.0-8443-exec-8] actStandardFragmentInsertionTagProcessor : [THYMELEAF][http-nio-0.0.0.0-8443-exec-8][new_arrivo] Deprecated unwrapped fragment expression "navbar :: navbar" found in template new_arrivo, line 14, col 6. Please use the complete syntax of fragment expressions instead ("~{navbar :: navbar}"). The old, unwrapped syntax for fragment expressions will be removed in future versions of Thymeleaf.
+2026-06-16T14:43:21.398+02:00  WARN 34658 --- [Shop] [http-nio-0.0.0.0-8443-exec-2] actStandardFragmentInsertionTagProcessor : [THYMELEAF][http-nio-0.0.0.0-8443-exec-2][new_arrivo] Deprecated unwrapped fragment expression "navbar :: navbar" found in template new_arrivo, line 14, col 6. Please use the complete syntax of fragment expressions instead ("~{navbar :: navbar}"). The old, unwrapped syntax for fragment expressions will be removed in future versions of Thymeleaf.
+2026-06-16T14:43:33.809+02:00  WARN 34658 --- [Shop] [http-nio-0.0.0.0-8443-exec-5] actStandardFragmentInsertionTagProcessor : [THYMELEAF][http-nio-0.0.0.0-8443-exec-5][arrivi2] Deprecated unwrapped fragment expression "navbar :: navbar" found in template arrivi2, line 49, col 7. Please use the complete syntax of fragment expressions instead ("~{navbar :: navbar}"). The old, unwrapped syntax for fragment expressions will be removed in future versions of Thymeleaf.
+2026-06-16T14:43:37.540+02:00  WARN 34658 --- [Shop] [http-nio-0.0.0.0-8443-exec-7] actStandardFragmentInsertionTagProcessor : [THYMELEAF][http-nio-0.0.0.0-8443-exec-7][new_gruppo] Deprecated unwrapped fragment expression "navbar :: navbar" found in template new_gruppo, line 15, col 7. Please use the complete syntax of fragment expressions instead ("~{navbar :: navbar}"). The old, unwrapped syntax for fragment expressions will be removed in future versions of Thymeleaf.
+2026-06-16T14:45:49.133+02:00  INFO 35403 --- [Shop] [main] com.cimmino.shop.ShopApplication         : Starting ShopApplication using Java 21.0.11 with PID 35403 (/home/giovanni/ws_cimmino/shop/target/classes started by giovanni in /home/giovanni/ws_cimmino/shop)
+2026-06-16T14:45:49.135+02:00  INFO 35403 --- [Shop] [main] com.cimmino.shop.ShopApplication         : No active profile set, falling back to 1 default profile: "default"
+2026-06-16T14:45:49.607+02:00  INFO 35403 --- [Shop] [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-06-16T14:45:49.673+02:00  INFO 35403 --- [Shop] [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 59 ms. Found 15 JPA repository interfaces.
+2026-06-16T14:45:50.028+02:00  INFO 35403 --- [Shop] [main] o.s.boot.tomcat.TomcatWebServer          : Tomcat initialized with port 8443 (http)
+2026-06-16T14:45:50.038+02:00  INFO 35403 --- [Shop] [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-06-16T14:45:50.038+02:00  INFO 35403 --- [Shop] [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/11.0.21]
+2026-06-16T14:45:50.077+02:00  INFO 35403 --- [Shop] [main] b.w.c.s.WebApplicationContextInitializer : Root WebApplicationContext: initialization completed in 912 ms
+2026-06-16T14:45:50.220+02:00  INFO 35403 --- [Shop] [main] org.hibernate.orm.jpa                    : HHH008540: Processing PersistenceUnitInfo [name: default]
+2026-06-16T14:45:50.250+02:00  INFO 35403 --- [Shop] [main] org.hibernate.orm.core                   : HHH000001: Hibernate ORM core version 7.2.12.Final
+2026-06-16T14:45:50.506+02:00  INFO 35403 --- [Shop] [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-06-16T14:45:50.528+02:00  INFO 35403 --- [Shop] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-06-16T14:45:50.641+02:00  INFO 35403 --- [Shop] [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@30e143ff
+2026-06-16T14:45:50.642+02:00  INFO 35403 --- [Shop] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-06-16T14:45:50.660+02:00  WARN 35403 --- [Shop] [main] org.hibernate.orm.deprecation            : HHH90000025: PostgreSQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-06-16T14:45:50.672+02:00  INFO 35403 --- [Shop] [main] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [jdbc:postgresql://172.19.0.2:5432/cimmino]
+	Database driver: PostgreSQL JDBC Driver
+	Database dialect: PostgreSQLDialect
+	Database version: 15.17
+	Default catalog/schema: cimmino/public
+	Autocommit mode: undefined/unknown
+	Isolation level: READ_COMMITTED [default READ_COMMITTED]
+	JDBC fetch size: none
+	Pool: DataSourceConnectionProvider
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2026-06-16T14:45:51.324+02:00  INFO 35403 --- [Shop] [main] org.hibernate.orm.core                   : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-06-16T14:45:51.375+02:00  INFO 35403 --- [Shop] [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-06-16T14:45:51.423+02:00  INFO 35403 --- [Shop] [main] o.s.d.j.r.query.QueryEnhancerFactories   : Hibernate is in classpath; If applicable, HQL parser will be used.
+2026-06-16T14:45:52.569+02:00  WARN 35403 --- [Shop] [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-06-16T14:45:52.686+02:00  INFO 35403 --- [Shop] [main] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with UserDetailsService bean with name users
+2026-06-16T14:45:52.991+02:00  INFO 35403 --- [Shop] [main] o.s.boot.tomcat.TomcatWebServer          : Tomcat started on port 8443 (http) with context path '/'
+2026-06-16T14:45:52.996+02:00  INFO 35403 --- [Shop] [main] com.cimmino.shop.ShopApplication         : Started ShopApplication in 4.164 seconds (process running for 4.424)
+2026-06-16T14:45:54.589+02:00  INFO 35403 --- [Shop] [http-nio-0.0.0.0-8443-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-06-16T14:45:54.589+02:00  INFO 35403 --- [Shop] [http-nio-0.0.0.0-8443-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-06-16T14:45:54.591+02:00  INFO 35403 --- [Shop] [http-nio-0.0.0.0-8443-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 2 ms
+2026-06-16T14:45:54.762+02:00  WARN 35403 --- [Shop] [http-nio-0.0.0.0-8443-exec-1] actStandardFragmentInsertionTagProcessor : [THYMELEAF][http-nio-0.0.0.0-8443-exec-1][home] Deprecated unwrapped fragment expression "navbar :: navbar" found in template home, line 77, col 6. Please use the complete syntax of fragment expressions instead ("~{navbar :: navbar}"). The old, unwrapped syntax for fragment expressions will be removed in future versions of Thymeleaf.
+2026-06-16T14:45:57.379+02:00  WARN 35403 --- [Shop] [http-nio-0.0.0.0-8443-exec-6] actStandardFragmentInsertionTagProcessor : [THYMELEAF][http-nio-0.0.0.0-8443-exec-6][home] Deprecated unwrapped fragment expression "navbar :: navbar" found in template home, line 77, col 6. Please use the complete syntax of fragment expressions instead ("~{navbar :: navbar}"). The old, unwrapped syntax for fragment expressions will be removed in future versions of Thymeleaf.
+2026-06-16T14:45:58.561+02:00  WARN 35403 --- [Shop] [http-nio-0.0.0.0-8443-exec-9] actStandardFragmentInsertionTagProcessor : [THYMELEAF][http-nio-0.0.0.0-8443-exec-9][arrivi2] Deprecated unwrapped fragment expression "navbar :: navbar" found in template arrivi2, line 49, col 7. Please use the complete syntax of fragment expressions instead ("~{navbar :: navbar}"). The old, unwrapped syntax for fragment expressions will be removed in future versions of Thymeleaf.
+2026-06-16T14:46:00.409+02:00  WARN 35403 --- [Shop] [http-nio-0.0.0.0-8443-exec-10] actStandardFragmentInsertionTagProcessor : [THYMELEAF][http-nio-0.0.0.0-8443-exec-10][new_gruppo] Deprecated unwrapped fragment expression "navbar :: navbar" found in template new_gruppo, line 15, col 7. Please use the complete syntax of fragment expressions instead ("~{navbar :: navbar}"). The old, unwrapped syntax for fragment expressions will be removed in future versions of Thymeleaf.
+2026-06-16T14:46:19.208+02:00  WARN 35403 --- [Shop] [http-nio-0.0.0.0-8443-exec-10] actStandardFragmentInsertionTagProcessor : [THYMELEAF][http-nio-0.0.0.0-8443-exec-10][home] Deprecated unwrapped fragment expression "navbar :: navbar" found in template home, line 77, col 6. Please use the complete syntax of fragment expressions instead ("~{navbar :: navbar}"). The old, unwrapped syntax for fragment expressions will be removed in future versions of Thymeleaf.
+2026-06-16T14:46:20.695+02:00  WARN 35403 --- [Shop] [http-nio-0.0.0.0-8443-exec-2] actStandardFragmentInsertionTagProcessor : [THYMELEAF][http-nio-0.0.0.0-8443-exec-2][arrivi2] Deprecated unwrapped fragment expression "navbar :: navbar" found in template arrivi2, line 49, col 7. Please use the complete syntax of fragment expressions instead ("~{navbar :: navbar}"). The old, unwrapped syntax for fragment expressions will be removed in future versions of Thymeleaf.
+2026-06-16T14:49:06.083+02:00  INFO 35403 --- [Shop] [SpringApplicationShutdownHook] o.s.boot.tomcat.GracefulShutdown         : Commencing graceful shutdown. Waiting for active requests to complete
+2026-06-16T14:49:06.085+02:00  INFO 35403 --- [Shop] [tomcat-shutdown] o.s.boot.tomcat.GracefulShutdown         : Graceful shutdown complete
+2026-06-16T14:49:06.088+02:00  INFO 35403 --- [Shop] [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-06-16T14:49:06.090+02:00  INFO 35403 --- [Shop] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2026-06-16T14:49:06.092+02:00  INFO 35403 --- [Shop] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2026-06-16T14:49:08.848+02:00  INFO 35685 --- [Shop] [main] com.cimmino.shop.ShopApplication         : Starting ShopApplication using Java 21.0.11 with PID 35685 (/home/giovanni/ws_cimmino/shop/target/classes started by giovanni in /home/giovanni/ws_cimmino/shop)
+2026-06-16T14:49:08.850+02:00  INFO 35685 --- [Shop] [main] com.cimmino.shop.ShopApplication         : No active profile set, falling back to 1 default profile: "default"
+2026-06-16T14:49:09.329+02:00  INFO 35685 --- [Shop] [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-06-16T14:49:09.391+02:00  INFO 35685 --- [Shop] [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 56 ms. Found 15 JPA repository interfaces.
+2026-06-16T14:49:09.740+02:00  INFO 35685 --- [Shop] [main] o.s.boot.tomcat.TomcatWebServer          : Tomcat initialized with port 8443 (http)
+2026-06-16T14:49:09.750+02:00  INFO 35685 --- [Shop] [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-06-16T14:49:09.750+02:00  INFO 35685 --- [Shop] [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/11.0.21]
+2026-06-16T14:49:09.781+02:00  INFO 35685 --- [Shop] [main] b.w.c.s.WebApplicationContextInitializer : Root WebApplicationContext: initialization completed in 901 ms
+2026-06-16T14:49:09.930+02:00  INFO 35685 --- [Shop] [main] org.hibernate.orm.jpa                    : HHH008540: Processing PersistenceUnitInfo [name: default]
+2026-06-16T14:49:09.962+02:00  INFO 35685 --- [Shop] [main] org.hibernate.orm.core                   : HHH000001: Hibernate ORM core version 7.2.12.Final
+2026-06-16T14:49:10.222+02:00  INFO 35685 --- [Shop] [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-06-16T14:49:10.241+02:00  INFO 35685 --- [Shop] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-06-16T14:49:10.340+02:00  INFO 35685 --- [Shop] [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@30e143ff
+2026-06-16T14:49:10.341+02:00  INFO 35685 --- [Shop] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-06-16T14:49:10.357+02:00  WARN 35685 --- [Shop] [main] org.hibernate.orm.deprecation            : HHH90000025: PostgreSQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-06-16T14:49:10.370+02:00  INFO 35685 --- [Shop] [main] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [jdbc:postgresql://172.19.0.2:5432/cimmino]
+	Database driver: PostgreSQL JDBC Driver
+	Database dialect: PostgreSQLDialect
+	Database version: 15.17
+	Default catalog/schema: cimmino/public
+	Autocommit mode: undefined/unknown
+	Isolation level: READ_COMMITTED [default READ_COMMITTED]
+	JDBC fetch size: none
+	Pool: DataSourceConnectionProvider
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2026-06-16T14:49:11.016+02:00  INFO 35685 --- [Shop] [main] org.hibernate.orm.core                   : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-06-16T14:49:11.065+02:00  INFO 35685 --- [Shop] [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-06-16T14:49:11.114+02:00  INFO 35685 --- [Shop] [main] o.s.d.j.r.query.QueryEnhancerFactories   : Hibernate is in classpath; If applicable, HQL parser will be used.
+2026-06-16T14:49:12.240+02:00  WARN 35685 --- [Shop] [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-06-16T14:49:12.353+02:00  INFO 35685 --- [Shop] [main] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with UserDetailsService bean with name users
+2026-06-16T14:49:12.660+02:00  INFO 35685 --- [Shop] [main] o.s.boot.tomcat.TomcatWebServer          : Tomcat started on port 8443 (http) with context path '/'
+2026-06-16T14:49:12.665+02:00  INFO 35685 --- [Shop] [main] com.cimmino.shop.ShopApplication         : Started ShopApplication in 4.113 seconds (process running for 4.339)
+2026-06-16T14:49:14.662+02:00  INFO 35685 --- [Shop] [http-nio-0.0.0.0-8443-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-06-16T14:49:14.662+02:00  INFO 35685 --- [Shop] [http-nio-0.0.0.0-8443-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-06-16T14:49:14.664+02:00  INFO 35685 --- [Shop] [http-nio-0.0.0.0-8443-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 2 ms
+2026-06-16T14:49:16.258+02:00  WARN 35685 --- [Shop] [http-nio-0.0.0.0-8443-exec-4] actStandardFragmentInsertionTagProcessor : [THYMELEAF][http-nio-0.0.0.0-8443-exec-4][home] Deprecated unwrapped fragment expression "navbar :: navbar" found in template home, line 77, col 6. Please use the complete syntax of fragment expressions instead ("~{navbar :: navbar}"). The old, unwrapped syntax for fragment expressions will be removed in future versions of Thymeleaf.
+2026-06-16T14:49:17.437+02:00  WARN 35685 --- [Shop] [http-nio-0.0.0.0-8443-exec-7] actStandardFragmentInsertionTagProcessor : [THYMELEAF][http-nio-0.0.0.0-8443-exec-7][arrivi2] Deprecated unwrapped fragment expression "navbar :: navbar" found in template arrivi2, line 49, col 7. Please use the complete syntax of fragment expressions instead ("~{navbar :: navbar}"). The old, unwrapped syntax for fragment expressions will be removed in future versions of Thymeleaf.
+2026-06-16T14:49:19.673+02:00  WARN 35685 --- [Shop] [http-nio-0.0.0.0-8443-exec-8] actStandardFragmentInsertionTagProcessor : [THYMELEAF][http-nio-0.0.0.0-8443-exec-8][new_arrivo] Deprecated unwrapped fragment expression "navbar :: navbar" found in template new_arrivo, line 14, col 6. Please use the complete syntax of fragment expressions instead ("~{navbar :: navbar}"). The old, unwrapped syntax for fragment expressions will be removed in future versions of Thymeleaf.
+2026-06-16T14:49:26.248+02:00  WARN 35685 --- [Shop] [http-nio-0.0.0.0-8443-exec-1] actStandardFragmentInsertionTagProcessor : [THYMELEAF][http-nio-0.0.0.0-8443-exec-1][arrivi2] Deprecated unwrapped fragment expression "navbar :: navbar" found in template arrivi2, line 49, col 7. Please use the complete syntax of fragment expressions instead ("~{navbar :: navbar}"). The old, unwrapped syntax for fragment expressions will be removed in future versions of Thymeleaf.
+2026-06-16T14:49:27.608+02:00  WARN 35685 --- [Shop] [http-nio-0.0.0.0-8443-exec-2] actStandardFragmentInsertionTagProcessor : [THYMELEAF][http-nio-0.0.0.0-8443-exec-2][new_gruppo] Deprecated unwrapped fragment expression "navbar :: navbar" found in template new_gruppo, line 15, col 7. Please use the complete syntax of fragment expressions instead ("~{navbar :: navbar}"). The old, unwrapped syntax for fragment expressions will be removed in future versions of Thymeleaf.
+2026-06-16T14:50:04.166+02:00  WARN 35685 --- [Shop] [http-nio-0.0.0.0-8443-exec-2] actStandardFragmentInsertionTagProcessor : [THYMELEAF][http-nio-0.0.0.0-8443-exec-2][home] Deprecated unwrapped fragment expression "navbar :: navbar" found in template home, line 77, col 6. Please use the complete syntax of fragment expressions instead ("~{navbar :: navbar}"). The old, unwrapped syntax for fragment expressions will be removed in future versions of Thymeleaf.
+2026-06-16T14:50:06.291+02:00  WARN 35685 --- [Shop] [http-nio-0.0.0.0-8443-exec-4] actStandardFragmentInsertionTagProcessor : [THYMELEAF][http-nio-0.0.0.0-8443-exec-4][arrivi2] Deprecated unwrapped fragment expression "navbar :: navbar" found in template arrivi2, line 49, col 7. Please use the complete syntax of fragment expressions instead ("~{navbar :: navbar}"). The old, unwrapped syntax for fragment expressions will be removed in future versions of Thymeleaf.
+2026-06-16T14:50:16.967+02:00  WARN 35685 --- [Shop] [http-nio-0.0.0.0-8443-exec-5] actStandardFragmentInsertionTagProcessor : [THYMELEAF][http-nio-0.0.0.0-8443-exec-5][movimentibin] Deprecated unwrapped fragment expression "navbar :: navbar" found in template movimentibin, line 29, col 6. Please use the complete syntax of fragment expressions instead ("~{navbar :: navbar}"). The old, unwrapped syntax for fragment expressions will be removed in future versions of Thymeleaf.
+2026-06-16T14:50:36.772+02:00  WARN 35685 --- [Shop] [http-nio-0.0.0.0-8443-exec-10] actStandardFragmentInsertionTagProcessor : [THYMELEAF][http-nio-0.0.0.0-8443-exec-10][arrivi2] Deprecated unwrapped fragment expression "navbar :: navbar" found in template arrivi2, line 49, col 7. Please use the complete syntax of fragment expressions instead ("~{navbar :: navbar}"). The old, unwrapped syntax for fragment expressions will be removed in future versions of Thymeleaf.
+2026-06-16T14:51:12.835+02:00  INFO 35685 --- [Shop] [SpringApplicationShutdownHook] o.s.boot.tomcat.GracefulShutdown         : Commencing graceful shutdown. Waiting for active requests to complete
+2026-06-16T14:51:12.836+02:00  INFO 35685 --- [Shop] [tomcat-shutdown] o.s.boot.tomcat.GracefulShutdown         : Graceful shutdown complete
+2026-06-16T14:51:12.844+02:00  INFO 35685 --- [Shop] [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-06-16T14:51:12.847+02:00  INFO 35685 --- [Shop] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2026-06-16T14:51:12.850+02:00  INFO 35685 --- [Shop] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2026-06-16T14:51:15.627+02:00  INFO 35842 --- [Shop] [main] com.cimmino.shop.ShopApplication         : Starting ShopApplication using Java 21.0.11 with PID 35842 (/home/giovanni/ws_cimmino/shop/target/classes started by giovanni in /home/giovanni/ws_cimmino/shop)
+2026-06-16T14:51:15.629+02:00  INFO 35842 --- [Shop] [main] com.cimmino.shop.ShopApplication         : No active profile set, falling back to 1 default profile: "default"
+2026-06-16T14:51:16.115+02:00  INFO 35842 --- [Shop] [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-06-16T14:51:16.178+02:00  INFO 35842 --- [Shop] [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 57 ms. Found 15 JPA repository interfaces.
+2026-06-16T14:51:16.530+02:00  INFO 35842 --- [Shop] [main] o.s.boot.tomcat.TomcatWebServer          : Tomcat initialized with port 8443 (http)
+2026-06-16T14:51:16.540+02:00  INFO 35842 --- [Shop] [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-06-16T14:51:16.540+02:00  INFO 35842 --- [Shop] [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/11.0.21]
+2026-06-16T14:51:16.576+02:00  INFO 35842 --- [Shop] [main] b.w.c.s.WebApplicationContextInitializer : Root WebApplicationContext: initialization completed in 916 ms
+2026-06-16T14:51:16.710+02:00  INFO 35842 --- [Shop] [main] org.hibernate.orm.jpa                    : HHH008540: Processing PersistenceUnitInfo [name: default]
+2026-06-16T14:51:16.741+02:00  INFO 35842 --- [Shop] [main] org.hibernate.orm.core                   : HHH000001: Hibernate ORM core version 7.2.12.Final
+2026-06-16T14:51:16.996+02:00  INFO 35842 --- [Shop] [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-06-16T14:51:17.015+02:00  INFO 35842 --- [Shop] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-06-16T14:51:17.136+02:00  INFO 35842 --- [Shop] [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@30e143ff
+2026-06-16T14:51:17.137+02:00  INFO 35842 --- [Shop] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-06-16T14:51:17.153+02:00  WARN 35842 --- [Shop] [main] org.hibernate.orm.deprecation            : HHH90000025: PostgreSQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-06-16T14:51:17.166+02:00  INFO 35842 --- [Shop] [main] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [jdbc:postgresql://172.19.0.2:5432/cimmino]
+	Database driver: PostgreSQL JDBC Driver
+	Database dialect: PostgreSQLDialect
+	Database version: 15.17
+	Default catalog/schema: cimmino/public
+	Autocommit mode: undefined/unknown
+	Isolation level: READ_COMMITTED [default READ_COMMITTED]
+	JDBC fetch size: none
+	Pool: DataSourceConnectionProvider
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2026-06-16T14:51:17.839+02:00  INFO 35842 --- [Shop] [main] org.hibernate.orm.core                   : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-06-16T14:51:17.889+02:00  INFO 35842 --- [Shop] [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-06-16T14:51:17.938+02:00  INFO 35842 --- [Shop] [main] o.s.d.j.r.query.QueryEnhancerFactories   : Hibernate is in classpath; If applicable, HQL parser will be used.
+2026-06-16T14:51:19.012+02:00  WARN 35842 --- [Shop] [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-06-16T14:51:19.127+02:00  INFO 35842 --- [Shop] [main] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with UserDetailsService bean with name users
+2026-06-16T14:51:19.416+02:00  INFO 35842 --- [Shop] [main] o.s.boot.tomcat.TomcatWebServer          : Tomcat started on port 8443 (http) with context path '/'
+2026-06-16T14:51:19.420+02:00  INFO 35842 --- [Shop] [main] com.cimmino.shop.ShopApplication         : Started ShopApplication in 4.095 seconds (process running for 4.326)
+2026-06-16T14:51:23.147+02:00  INFO 35842 --- [Shop] [http-nio-0.0.0.0-8443-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-06-16T14:51:23.148+02:00  INFO 35842 --- [Shop] [http-nio-0.0.0.0-8443-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-06-16T14:51:23.149+02:00  INFO 35842 --- [Shop] [http-nio-0.0.0.0-8443-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
+2026-06-16T14:51:24.856+02:00  WARN 35842 --- [Shop] [http-nio-0.0.0.0-8443-exec-4] actStandardFragmentInsertionTagProcessor : [THYMELEAF][http-nio-0.0.0.0-8443-exec-4][home] Deprecated unwrapped fragment expression "navbar :: navbar" found in template home, line 77, col 6. Please use the complete syntax of fragment expressions instead ("~{navbar :: navbar}"). The old, unwrapped syntax for fragment expressions will be removed in future versions of Thymeleaf.
+2026-06-16T14:51:25.908+02:00  WARN 35842 --- [Shop] [http-nio-0.0.0.0-8443-exec-7] actStandardFragmentInsertionTagProcessor : [THYMELEAF][http-nio-0.0.0.0-8443-exec-7][arrivi2] Deprecated unwrapped fragment expression "navbar :: navbar" found in template arrivi2, line 49, col 7. Please use the complete syntax of fragment expressions instead ("~{navbar :: navbar}"). The old, unwrapped syntax for fragment expressions will be removed in future versions of Thymeleaf.
