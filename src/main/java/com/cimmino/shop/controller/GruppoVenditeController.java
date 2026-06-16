@@ -98,6 +98,7 @@ public class GruppoVenditeController {
 		}).toList();
 
 		List<MagazzinoRow> magazzinorows = magazzinoService.dump();
+		magazzinorows = magazzinorows.stream().filter(p -> p.getNum()>0).toList();
 
 		model.addAttribute("magazzinorows", magazzinorows);
 

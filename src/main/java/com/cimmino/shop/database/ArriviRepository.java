@@ -17,4 +17,11 @@ public interface ArriviRepository extends JpaRepository<Arrivi, Long> {
 	@Query("select u from Arrivi u where u.key>= ?1 ")
 	List<Arrivi> cercaPerInstallation(String installId);
 
+	
+	
+	@Query(
+			  value = "select * from arrivi arr where exists "
+			  		+ "( select * from vendite v where v.arrivo_id=arr.arrivo_id and v.data>= ?1 and v.data<= ?2)", 
+			  nativeQuery = true)
+	List<Arrivi> cercaArriviPerDataVendita(LocalDate startDate, LocalDate endDate);
 }

@@ -10,6 +10,9 @@ public class BinsGruppoVenditaDTO {
 	private String arriviSelect;
 	private Long commerciante;
 	private Boolean nostraProprieta ;
+	private BigDecimal scarto;
+	private BigDecimal prezzo;
+	private BigDecimal importo;
 	
 	
 	public Long getBinId() {
@@ -53,6 +56,24 @@ public class BinsGruppoVenditaDTO {
 	}
 	public void setNostraProprieta(Boolean nostraProprieta) {
 		this.nostraProprieta = nostraProprieta;
+	}
+	public BigDecimal getScarto() {
+		return scarto;
+	}
+	public void setScarto(BigDecimal scarto) {
+		this.scarto = scarto;
+	}
+	public BigDecimal getImporto() {
+		return importo;
+	}
+	public void setImporto(BigDecimal importo) {
+		this.importo = importo;
+	}
+	public BigDecimal getPrezzo() {
+		return prezzo;
+	}
+	public void setPrezzo(BigDecimal prezzo) {
+		this.prezzo = prezzo;
 	}
 	
 }

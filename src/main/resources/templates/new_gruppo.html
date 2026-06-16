@@ -99,16 +99,7 @@
 
 						<input type="hidden" name="nBins" id="nBins">
 						<!-- PREZZO -->
-						<div class="mb-3">
-							<label class="form-label">Prezzo</label> <input type="number"
-								name="prezzo" id="prezzo" class="form-control" step="0.01">
-						</div>
-
-						<!-- SCARTO -->
-						<div class="mb-3">
-							<label class="form-label">Scarto (%)</label> <input type="number"
-								name="scarto" id="scarto" class="form-control" step="0.01">
-						</div>
+						
 
 						<!-- SCARTO -->
 
@@ -130,7 +121,8 @@
 
 					</form>
 				</td>
-				<td>
+				<td style="vertical-align: top;">
+				<div class="container mt-0">
 					<table class="table table-bordered table-striped">
 			<thead class="table-dark">
 				<tr>
@@ -157,7 +149,7 @@
 
 				
 			</tbody>
-		</table>
+		</table></div>
 				</td>
 			</tr>
 		</table>
@@ -225,63 +217,6 @@
 	
 	
 	
-	
-// 	document.getElementById("commercianteId")
-// 	.addEventListener("change", async function () {
-
-// 	    const commercianteId = this.value;
-// 	    if (!commercianteId) return;
-
-// 	    try {
-
-// 	        const response =
-// 	            await fetch(`/gruppovendite/presente/${commercianteId}`);
-
-// 	        const presente = await response.json();
-
-// 	        const container =
-// 	            document.getElementById("gruppoVenditeContainer");
-
-// 	        const pesoLordoInput =
-// 	            document.querySelector('[name="peso_lordo"]');
-
-// 	        if (presente) {
-
-// 	            container.innerHTML = `
-// 	                <div class="form-check mb-3">
-// 	                    <input class="form-check-input"
-// 	                           type="checkbox"
-// 	                           name="joinGruppo"
-// 	                           id="joinGruppo">
-// 	                    <label class="form-check-label" for="joinGruppo">
-// 	                        Unisci a Gruppo Vendite
-// 	                    </label>
-// 	                </div>
-// 	            `;
-
-
-
-// 	        } else {
-
-// 	            container.innerHTML = `
-// 	                <div class="form-check mb-3">
-// 	                    <input class="form-check-input"
-// 	                           type="checkbox"
-// 	                           name="creaGruppo"
-// 	                           id="creaGruppo">
-// 	                    <label class="form-check-label" for="creaGruppo">
-// 	                        Crea gruppo vendite
-// 	                    </label>
-// 	                </div>
-// 	            `;
-
-
-// 	        }
-
-// 	    } catch (e) {
-// 	        console.error("Errore verifica gruppo vendite", e);
-// 	    }
-// 	});
 
 
 	    async function checkAvailability(row) {
@@ -339,12 +274,20 @@
 	        let totaleLordo = 0;
 	        let totaleNetto = 0;
 	        let totaleTara = 0;
-
+	        let totaleImporto=0;
+console.log("aggiornaTotali");
 	        document.querySelectorAll(".bin-row").forEach(row => {
 
 	            const qty = Number(row.querySelector(".numBins")?.value) || 0;
 	            const lordo = Number(row.querySelector(".pesoLordo")?.value) || 0;
 	            const netto = Number(row.querySelector(".pesoNetto")?.value) || 0;
+	            const scarto = Number(row.querySelector(".scarto")?.value) || 0;
+	            const prezzo = Number(row.querySelector(".prezzo")?.value) || 0;
+	            
+	            const importo = lordo * prezzo*(1-scarto/100);
+	            totaleImporto+=importo;
+	            
+	            row.querySelector(".importo").value= importo;
 
 	            totaleQta += qty;
 	            totaleLordo += lordo;
@@ -352,19 +295,20 @@
 
 	            totaleTara += (lordo - netto);
 	        });
-
+ 	        const importoGen = document.getElementById("importo");
+ 	        importoGen.value= totaleImporto;
 	        // ===== INPUT REFERENCES =====
 	        const lordoInput = document.querySelector('[name="peso_lordo"]');
 	        const nettoTaraInput = document.querySelector('[name="nettoDiTara"]');
 	        const nettoScartoInput = document.querySelector('[name="nettoDiScarto"]');
 	        const scartoInput = document.getElementById("scarto");
-	        const prezzoInput = document.getElementById("prezzo");
+	     
 
 	        const prezzoFrigoCaldoInput = document.getElementById("prezzoFrigoxCaldo");
 	        const prezzoFrigoFreddoInput = document.getElementById("prezzoFrigoxFreddo");
 
 	        // ===== SAFE PARSE =====
-	        const prezzo = Number(prezzoInput?.value) || 0;
+	     
 	        const scartoPerc = Number(scartoInput?.value) || 0;
 
 	        const prezzoCaldo = Number(prezzoFrigoCaldoInput?.value) || 0;
@@ -387,12 +331,9 @@
 	        }
 
 	        // ===== IMPORTO =====
-	        const importo = prezzo * nettoDiScarto;
+	     
 
-	        const importoInput = document.getElementById("importo");
-	        if (importoInput) {
-	            importoInput.value = importo.toFixed(2);
-	        }
+	    
 
 	        // ===== FRIGO =====
 	        const baseFrigo = totaleLordo - (totaleTara / 2);
@@ -498,6 +439,26 @@
 	                <input type="number" class="form-control pesoNetto" >
 	            </div>
 	            
+	            <div class="col-md-2">
+                <input type="number" step="0.001"
+                       class="form-control scarto"
+                       min="1"
+                       placeholder="scarto">
+            </div>
+	            
+	            <div class="col-md-2">
+                <input type="number" step="0.001"
+                       class="form-control prezzo"
+                       min="1"
+                       placeholder="prezzo">
+            </div>
+            <div class="col-md-2">
+            <input type="number"
+                   class="form-control importo"
+                   min="1"
+                   placeholder="importo">
+        </div>
+	            
 	            <div class="col-md-3">
                 <select class="form-select arriviSelect" required>
                     ${arrivi}
@@ -591,10 +552,10 @@
 		        alert("Quantità non disponibile");
 		        return;
 		    }
-		     invalid = Array.from(document.querySelectorAll(".pesoLordo"))
+		    const     invalid1 = Array.from(document.querySelectorAll(".pesoLordo"))
 	        .some(i => Number(i.value) <= 0);
 
-	    if (invalid) {
+	    if (invalid1) {
 	        e.preventDefault();
 	        alert("Il peso lordo deve essere maggiore di 0 per ogni bin");
 	        return;
@@ -608,11 +569,7 @@
 	    
 	    document.addEventListener("DOMContentLoaded", function () {
 
-	        document.getElementById("prezzo")
-	            .addEventListener("input", aggiornaTotali);
-
-	        document.getElementById("scarto")
-	            .addEventListener("input", aggiornaTotali);
+	      
 	    });
 	    document.getElementById("venditaForm").addEventListener("submit", function () {
 
@@ -632,6 +589,11 @@
 
 	            const pesoLordo = parseFloat(row.querySelector(".pesoLordo").value) || 0;
 	            const pesoNetto = parseFloat(row.querySelector(".pesoNetto").value) || 0;
+	            const prezzo = parseFloat(row.querySelector(".prezzo").value) || 0
+	            const scarto = parseFloat(row.querySelector(".scarto").value) || 0;
+	         //   var importo = row.querySelector(".importo");
+	            const importo = pesoLordo*prezzo*(1-scarto/100);
+	     
 	            
 	            const nostraProprieta = parseInt(row.querySelector(".nostraProprieta").value) || 0;
 
@@ -642,6 +604,8 @@
 	                    pesoLordo,
 	                    pesoNetto,
 	                    commerciante,
+	                    scarto,
+	                    importo,
 	                    nostraProprieta,
 	                    arriviSelect
 	                });

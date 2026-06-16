@@ -31,6 +31,7 @@ public class BinsGruppoVendita {
 	private Boolean nostraProprieta;
 
 	private int numBins;
+	private BigDecimal prezzo;
 	private BigDecimal pesoLordo;
 	private BigDecimal pesoNetto;
 	private String arriviSelect;
@@ -88,5 +89,11 @@ public class BinsGruppoVendita {
 	}
 	public void setNostraProprieta(Boolean nostraProprieta) {
 		this.nostraProprieta = nostraProprieta;
+	}
+	public BigDecimal getPrezzo() {
+		return prezzo;
+	}
+	public void setPrezzo(BigDecimal prezzo) {
+		this.prezzo = prezzo;
 	}
 }

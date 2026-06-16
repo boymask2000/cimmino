@@ -120,7 +120,7 @@ function confirmDelete(id) {
 							th:text="${a.commerciante.name}"></span>
 					</span></td>
 					<td><span class="badge bg-primary"> <span
-							th:text="${a.data}"></span>
+							th:text="${@fmt.date(a.data)}"></span>
 					</span></td>
 
 					<td><span class="badge bg-primary"> <span
@@ -179,7 +179,7 @@ function confirmDelete(id) {
 
 
 							<tr>
-								<td th:text="${#temporals.format(a.data, 'dd/MM/yyyy')}"></td>
+								<td th:text="${@fmt.date(a.data)}"></td>
 							</tr>
 
 							<tr>
@@ -294,7 +294,7 @@ function confirmDelete(id) {
 											th:text="${b.commerciante.name}"></span>
 									</span></td>
 									<td><span class="badge bg-primary"> <span
-											th:text="${b.data}"></span>
+											th:text="${@fmt.date(b.data)}"></span>
 									</span></td>
 									<td><span class="badge bg-primary"> <span
 											th:text="${b.ddt}"></span>

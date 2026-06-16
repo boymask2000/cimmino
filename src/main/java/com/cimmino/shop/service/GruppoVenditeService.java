@@ -29,7 +29,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Service
 public class GruppoVenditeService {
-
+	@Autowired
+	MovimentiBinService movimentiBinService;
 	@Autowired
 	GruppoVenditeRepository gruppoVenditeRepository;
 	@Autowired
@@ -66,7 +67,7 @@ public class GruppoVenditeService {
 		BigDecimal sommaNettoTara = BigDecimal.ZERO;
 		BigDecimal sommaPesoLordo = BigDecimal.ZERO;
 		BigDecimal sommaNettoScarto = BigDecimal.ZERO;
-	
+		BigDecimal sommaImporto = BigDecimal.ZERO;
 
 		for (BinsGruppoVenditaDTO dto : binsd) {
 			String vals[] = dto.getArriviSelect().split(",");
@@ -79,7 +80,12 @@ public class GruppoVenditeService {
 			int numBin = Integer.parseInt(snuBin);
 			Arrivi arrivo = arriviRepository.findById(Long.parseLong(sArrivoId)).get();
 			
-		
+			  BigDecimal scarto = new BigDecimal(1);
+				BigDecimal perc = dto.getScarto().divide(new BigDecimal(100));
+				scarto = scarto.subtract(perc);
+				BigDecimal importo = dto.getPesoLordo().multiply(scarto);
+			
+				sommaImporto = sommaImporto.add(importo);
 
 			Vendita vendita = new Vendita();
 			vendita.setCommerciante(comm);
@@ -88,8 +94,8 @@ public class GruppoVenditeService {
 			vendita.setNumeroTotaleBins(Integer.parseInt(snuBin));
 			vendita.setPeso_lordo(dto.getPesoLordo());
 			vendita.setNettoDiTara(dto.getPesoNetto());
-			vendita.setPrezzo(gr.getPrezzo());
-			vendita.setImporto(gr.getImporto());
+			vendita.setPrezzo(dto.getPrezzo());
+			vendita.setImporto(importo);
 			// vendita.set
 			venditeService.eseguiCalcoli(vendita);
 		
@@ -98,9 +104,9 @@ public class GruppoVenditeService {
 			sommaNettoTara = sommaNettoTara.add(dto.getPesoNetto());
 
 			if (gr.getScarto() != null) {
-				BigDecimal scarto = new BigDecimal(1);
-				BigDecimal perc = gr.getScarto().divide(new BigDecimal(100));
-				scarto = scarto.subtract(perc);
+				BigDecimal scarto1 = new BigDecimal(1);
+				BigDecimal perc1 = gr.getScarto().divide(new BigDecimal(100));
+				scarto = scarto1.subtract(perc1);
 
 				sommaNettoScarto = sommaNettoScarto.add(dto.getPesoLordo().multiply(scarto));
 				vendita.setNettoDiScarto(dto.getPesoLordo().multiply(scarto));
@@ -123,7 +129,7 @@ public class GruppoVenditeService {
 		}
 
 	//	gr.setNettoDiScarto(sommaNettoScarto);
-		
+		gr.setImporto(sommaImporto);
 		gr.setNettoDiTara(sommaNettoTara);
 
 		gr.setPeso_lordo(sommaPesoLordo);
@@ -142,6 +148,8 @@ public class GruppoVenditeService {
 		calcolaMedia(gr);
 		
 		gr = gruppoVenditeRepository.save(gr);
+		
+		movimentiBinService.register(gr);
 
 	}
 	

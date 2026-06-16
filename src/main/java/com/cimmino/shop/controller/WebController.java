@@ -111,11 +111,11 @@ public class WebController {
 			session.setAttribute("endDate", endDate);
 		}
 
-		risultati = arriviRepository.cerca(startDate, endDate);
+	//	risultati = arriviRepository.cercaArriviPerDataVendita(startDate, endDate);
 
-		arriviService.calcSums(risultati);
+	//	arriviService.calcSums(risultati);
 
-		model.addAttribute("results", risultati);
+	//	model.addAttribute("results", risultati);
 		model.addAttribute("startDate", startDate);
 		model.addAttribute("endDate", endDate);
 
@@ -141,7 +141,7 @@ public class WebController {
 
 		arriviService.calcSums(risultati);
 		arriviService.calcNumTotaleBins(risultati);
-
+		commonService.setGoArrivi(session, model);
 		return "arrivi2";
 	}
 

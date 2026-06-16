@@ -47,6 +47,7 @@
 				<thead>
 					<tr>
 						<th>Qta</th>
+						<th>Merce</th>
 						<th>Bin</th>
 						<th>Peso Lordo</th>
 						<th>Peso Netto</th>
@@ -58,6 +59,7 @@
 					<tr th:each="b : ${arrivo.bins}">
 
 						<td th:text="${b.numBins}"></td>
+						<td th:text="${arrivo.merce.name}"></td>
 						<td th:text="${b.bin.name}"></td>
 						<td th:text="${b.pesoLordo}"></td>
 						<td th:text="${b.pesoNetto}"></td>

@@ -35,7 +35,7 @@
 		</div>
 
 		<!-- FILTRO COMMERCIANTE -->
-		<form th:action="@{/web/commercianti/lista2/0}" method="get"
+		<form th:action="@{/web/commercianti/filter/groups/commerciante/0}" method="get"
 			class="row g-3 mb-4">
 
 			<div class="col-md-4">
@@ -72,15 +72,18 @@
 							<th>Data</th>
 							<th>DDT</th>
 							<th>Commerciante</th>
+							<th class="text-end">Bins</th>
+							<th class="text-end">Merce</th>
 							<!-- 						<th>Merce</th> -->
 							<!-- 						<th>Bin</th> -->
 							<!-- 						<th class="text-end">N° Bins</th> -->
 							<th class="text-end">Lordo</th>
 							<th class="text-end">Netto di Tara</th>
-							<th class="text-end">Netto di Scarto</th>
 							<th class="text-end">Scarto</th>
-							<th class="text-end">Tara</th>
-							<th class="text-end">Bins</th>
+							<th class="text-end">Netto di Scarto</th>
+							
+						
+							
 							<th class="text-end">Prezzo</th>
 							<th class="text-end">Importo</th>
 						</tr>
@@ -91,14 +94,25 @@
 						<tr th:each="op : ${operazioni}" th:attr="data-id=${op.id}">
 
 
-
-							<td th:text="${op.data}"></td>
+<td th:text="${#temporals.format(op.data, 'dd/MM/yyyy')}"></td>
+							
 
 							<td th:text="${op.ddt}"></td>
 
 							<td
 								th:text="${op.commerciante != null ? op.commerciante.name : ''}">
 							</td>
+							<td>
+								<table>
+									<tr th:each="bin : ${op.bins}">
+										<td th:text="${bin.bin.name}" class="text-start"></td>
+										<td th:text="${bin.numBins}" class="text-end"></td>
+										<td th:text="${bin.merce.name}" class="text-end"></td>	
+
+									</tr>
+								</table>
+							</td>
+							<td></td>
 
 							<!-- 						<td th:text="${op.merce != null ? op.merce.name : ''}"></td> -->
 
@@ -114,26 +128,16 @@
 							<td><input class="form-control auto-save text-end"
 								type="number" step="0.01" th:value="${op.nettoDiTara}"
 								data-field="nettoDiTara"></td>
+									<td><input class="form-control auto-save text-end"
+								type="number" step="0.01" th:value="${op.scarto}"
+								data-field="scarto"></td>
 							<td><input class="form-control auto-save text-end"
 								type="number" step="0.01" th:value="${op.nettoDiScarto}"
 								data-field="nettoDiScarto"></td>
 
-							<td><input class="form-control auto-save text-end"
-								type="number" step="0.01" th:value="${op.scarto}"
-								data-field="scarto"></td>
+						
 
-							<td><input class="form-control auto-save text-end"
-								type="number" step="0.01" th:value="${op.tara}"
-								data-field="tara"></td>
-							<td>
-								<table>
-									<tr th:each="bin : ${op.bins}">
-										<td th:text="${bin.bin.name}" class="text-start"></td>
-										<td th:text="${bin.numBins}" class="text-end"></td>
-
-									</tr>
-								</table>
-							</td>
+					
 
 							<td><input class="form-control auto-save text-end"
 								type="number" step="0.01" th:value="${op.prezzo}"
@@ -179,7 +183,7 @@ document.querySelectorAll(".auto-save").forEach(input => {
             const token = document.querySelector('meta[name="_csrf"]').content;
             const header = document.querySelector('meta[name="_csrf_header"]').content;
 
-            fetch("/web/commercianti/update-field", {
+            fetch("/web/commercianti/groups/update-field", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",

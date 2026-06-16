@@ -30,8 +30,7 @@ public class VenditeService {
 	private CommercianteRepository commercianteRepository;
 	@Autowired
 	ArriviService arriviService;
-	@Autowired
-	MovimentiBinService movimentiBinService;
+	
 	@Autowired
 	ArriviRepository arriviRepository;
 	@Autowired
@@ -58,7 +57,7 @@ public class VenditeService {
 		}	
 		
 		Vendita v = venditeRepository.save(vendita);
-		movimentiBinService.register(vendita);
+	
 		
 		return v;
 	}

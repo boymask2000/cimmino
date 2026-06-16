@@ -14,8 +14,10 @@ import com.cimmino.shop.database.BinMovimentoView;
 import com.cimmino.shop.database.BinRepository;
 import com.cimmino.shop.database.BinsArrivi;
 import com.cimmino.shop.database.BinsArriviRepository;
+import com.cimmino.shop.database.BinsGruppoVendita;
 import com.cimmino.shop.database.BinsVendite;
 import com.cimmino.shop.database.BinsVenditeRepository;
+import com.cimmino.shop.database.GruppoVendite;
 import com.cimmino.shop.database.MovimentiBinRepository;
 import com.cimmino.shop.database.MovimentoBin;
 import com.cimmino.shop.database.Vendita;
@@ -141,6 +143,18 @@ public class MovimentiBinService {
 			movimentiBinRepository.save(mov);
 		}
 		
+		
+	}
+
+	public void register(GruppoVendite gr) {
+		for (BinsGruppoVendita binArrivo : gr.getBins()) {
+			MovimentoBin mov = new MovimentoBin();
+			mov.setData(gr.getData());
+			mov.setBinName(binArrivo.getBin().getName());
+			mov.setInout(0);
+			mov.setNumBins(binArrivo.getNumBins());
+			movimentiBinRepository.save(mov);
+		}
 		
 	}
 }
