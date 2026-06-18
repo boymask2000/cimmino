@@ -171,6 +171,8 @@ public class GruppoVenditeService {
 			bin.setNostraProprieta(dto.getNostraProprieta());
 			bin.setPesoLordo(dto.getPesoLordo());
 			bin.setPesoNetto(dto.getPesoNetto());
+			bin.setPrezzo(dto.getPrezzo());
+		//	bin.setScarto(dto.getScarto());
 
 			// binsGruppoVenditeRepository.save(bin);
 

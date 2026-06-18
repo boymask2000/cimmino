@@ -148,9 +148,9 @@ public class GruppoVenditeController {
 			return "";
 		GruppoVendite gruppo = opven.get();
 		
-//		int num =gruppo.getBins().stream().mapToInt(b -> b.getNumBins()).sum();
-//
-//		gruppo.setNumeroTotaleBins(num);
+		int num =gruppo.getBins().stream().mapToInt(b -> b.getNumBins()).sum();
+
+		gruppo.setNumeroTotaleBins(num);
 		model.addAttribute("gruppo", gruppo);
 
 		return "handle_gruppo";

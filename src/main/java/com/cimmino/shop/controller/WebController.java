@@ -123,9 +123,45 @@ public class WebController {
 		
 		commonService.setGoArrivi(session, model);
 
-		return "arrivi2";
+		//return "arrivi2";
+		return "arrivi_master";
 	}
+	
+	@GetMapping("/giornaliero")
+	public String giornaliero(@RequestParam LocalDate startDate, //
+			@RequestParam LocalDate endDate, //
+			HttpSession session, //
+			Model model) {
+		
+		startDate=LocalDate.now();
 
+		if (startDate != null) {
+			session.setAttribute("startDate", startDate);
+	
+			session.setAttribute("endDate", startDate);
+		}
+
+		model.addAttribute("startDate", startDate);
+		model.addAttribute("endDate", startDate);
+		
+		commonService.setGoArrivi(session, model);
+
+		//return "arrivi2";
+		return "giornaliero";
+	}
+	@GetMapping("/giornaliero/fragment")
+	public String aggiornaFragment(
+	        @RequestParam LocalDate startDate,
+	        HttpSession session, //
+	        Model model) {
+		session.setAttribute("startDate", startDate);
+		  session.setAttribute("endDate", startDate);
+		  
+		  commonService.setGoArrivi(session, model);
+	  
+
+	    return "arrivi_fragment :: contenuto";
+	}
 	@GetMapping("/arrivi")
 	public String arrivi(HttpSession session, //
 			Model model) {
@@ -142,7 +178,7 @@ public class WebController {
 		arriviService.calcSums(risultati);
 		arriviService.calcNumTotaleBins(risultati);
 		commonService.setGoArrivi(session, model);
-		return "arrivi2";
+		return "arrivi_master";
 	}
 
 	@GetMapping("/info")
