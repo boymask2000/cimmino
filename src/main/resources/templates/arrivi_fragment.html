@@ -158,12 +158,23 @@
 									<div th:if="${!#lists.isEmpty(a.bins)}">
 										<table class="table table-bordered table-striped text-center"
 											style="border: 1px solid black;">
-											<tbody>
-												<tr th:each="b : ${a.bins}">
-													<td th:text="${b.bin.name}"></td>
-													<td th:text="${b.numBins}"></td>
-												</tr>
-											</tbody>
+											<th:block th:with="totale=0">
+    <tbody>
+        <tr th:each="b, stat : ${a.bins}"
+            th:with="totale=${totale + b.numBins}">
+            <td th:text="${b.bin.name}"></td>
+            <td th:text="${b.numBins}"></td>
+        </tr>
+
+        <tr>
+            <td><strong></strong></td>
+            <td>
+                <strong th:text="${#aggregates.sum(a.bins.![numBins])}"></strong>
+            </td>
+        </tr>
+    </tbody>
+</th:block>
+								
 										</table>
 									</div>
 

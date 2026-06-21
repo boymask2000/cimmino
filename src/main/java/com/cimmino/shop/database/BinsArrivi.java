@@ -28,6 +28,8 @@ public class BinsArrivi {
 
 	@Column(name = "peso_netto")
 	private BigDecimal pesoNetto;
+	
+	private BigDecimal media;
 
 	private Integer numBins;
 	
@@ -86,6 +88,14 @@ public class BinsArrivi {
 
 	public void setPesoNetto(BigDecimal pesoNetto) {
 		this.pesoNetto = pesoNetto;
+	}
+
+	public BigDecimal getMedia() {
+		return media;
+	}
+
+	public void setMedia(BigDecimal media) {
+		this.media = media;
 	}
 
 

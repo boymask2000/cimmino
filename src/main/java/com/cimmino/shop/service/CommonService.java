@@ -36,11 +36,13 @@ public class CommonService {
 		List<GruppoVendite> gruppoVendite = gruppoVenditeRepository.cerca(startDate,endDate);
 
 		arriviService.calcSums(arrivi);
+		
 
 		model.addAttribute("results", arrivi);
 		model.addAttribute("startDate", startDate);
 		model.addAttribute("endDate", endDate);
 		model.addAttribute("gruppoVendite", gruppoVendite);
+		
 		
 		for( Arrivi arr: arrivi) {
 			List<Vendita> vens = arr.getVendite();

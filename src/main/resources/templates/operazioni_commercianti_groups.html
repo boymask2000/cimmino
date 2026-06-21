@@ -143,7 +143,9 @@
 								type="number" step="0.01" th:value="${op.prezzo}"
 								data-field="prezzo"></td>
 
-							<td th:text="${op.importo}" class="importo text-end"></td>
+							<td class="importo text-end"
+    th:text="${#numbers.formatDecimal(op.importo, 1, 2)}">
+</td>
 
 						</tr>
 

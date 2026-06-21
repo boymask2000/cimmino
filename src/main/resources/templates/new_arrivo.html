@@ -160,12 +160,54 @@
 let index = 0;
 const binsList = /*[[${binsList}]]*/ [];
 console.log(binsList);
+
 function aggiornaTotali() {
 
     let totaleLordo = 0;
     let totaleNetto = 0;
+    let totaleBins = 0;
 
     document.querySelectorAll('.bin-row').forEach(row => {
+
+        const qta = Number(row.querySelector('.numBins')?.value) || 0;
+        const lordo = Number(row.querySelector('.pesoLordo')?.value) || 0;
+        const netto = Number(row.querySelector('.pesoNetto')?.value) || 0;
+
+        totaleBins += qta;
+        totaleLordo += lordo;
+        totaleNetto += netto;
+
+        // media della singola riga
+        if (qta > 0) {
+            row.querySelector('.media').value = (lordo / qta).toFixed(2);
+        }
+    });
+
+    document.getElementById("pesoLordo").value = totaleLordo.toFixed(2);
+    document.getElementById("pesoNetto").value = totaleNetto.toFixed(2);
+
+    // media complessiva
+    const mediaTotale = totaleBins > 0 ? totaleLordo / totaleBins : 0;
+
+    document.querySelector('[name="media"]').value =
+        mediaTotale.toFixed(2);
+
+    aggiornaFrigo();
+}
+function aggiornaTotali_old() {
+
+    let totaleLordo = 0;
+    let totaleNetto = 0;
+    let numBin=0;
+    let media=0;
+
+    document.querySelectorAll('.bin-row').forEach(row => {
+    	
+    	numBin=Number(row.querySelector('.media')?.value) || 0
+    	if( numBin>0){
+    		media = (Number(row.querySelector('.pesoLordo')?.value) || 0 )/ numBin;
+    		row.querySelector('.media').value=media;
+    	}
 
         totaleLordo += Number(row.querySelector('.pesoLordo')?.value) || 0;
         totaleNetto += Number(row.querySelector('.pesoNetto')?.value) || 0;
@@ -308,6 +350,11 @@ function addBin() {
             	name="bins[${index}].pesoNetto"
             onchange="aggiornaTotali()">
         </div>
+        <div class="col-md-2">
+        <input type="number" class="form-control media"
+        	name="bins[${index}].media"
+        onchange="aggiornaTotali()">
+    </div>
 
         <div class="col-md-3">
             <button type="button" class="btn btn-danger" onclick="removeRow(this)">

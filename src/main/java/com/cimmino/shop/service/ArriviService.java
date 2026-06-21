@@ -181,12 +181,18 @@ public class ArriviService {
 	            .orElseThrow();
 
 	    BinsArrivi ab = new BinsArrivi();
+	    
+	    BigDecimal media=BigDecimal.ZERO;
+	    if( numBins>0) {
+	    	media= pesoLordo.divide(new BigDecimal(numBins));
+	    }
 
 	    ab.setArrivo(arrivo);
 	    ab.setBin(bin);
 	    ab.setNumBins(numBins);
 	    ab.setPesoLordo(pesoLordo);
 	    ab.setPesoNetto(pesoNetto);
+	    ab.setMedia(media);
 
 	    arrivo.getBins().add(ab);
 
