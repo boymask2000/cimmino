@@ -7,13 +7,13 @@ import com.cimmino.shop.database.BinsArrivi;
 public class MovimentiForm {
 
 
-    private List<BinsArrivi> binsarrivi;
+    private List<BinMovimento> binsarrivi;
 
-    public List<BinsArrivi> getBinsarrivi() {
+    public List<BinMovimento> getBinsarrivi() {
         return binsarrivi;
     }
 
-    public void setBinsarrivi(List<BinsArrivi> binsarrivi) {
+    public void setBinsarrivi(List<BinMovimento> binsarrivi) {
         this.binsarrivi = binsarrivi;
     }
 }

@@ -23,7 +23,6 @@ import com.cimmino.shop.database.GruppoVendite;
 import com.cimmino.shop.database.GruppoVenditeRepository;
 import com.cimmino.shop.database.TitolareRepository;
 import com.cimmino.shop.database.TrasportatoreRepository;
-import com.cimmino.shop.database.Vendita;
 import com.cimmino.shop.database.VenditeRepository;
 import com.cimmino.shop.service.print.DDTInputData;
 

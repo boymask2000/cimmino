@@ -24,7 +24,6 @@ import com.cimmino.shop.database.BinRepository;
 import com.cimmino.shop.database.BinsVendite;
 import com.cimmino.shop.database.BinsVenditeRepository;
 import com.cimmino.shop.database.CommercianteRepository;
-import com.cimmino.shop.database.GruppoVendite;
 import com.cimmino.shop.database.GruppoVenditeRepository;
 import com.cimmino.shop.database.Vendita;
 import com.cimmino.shop.database.VenditeRepository;

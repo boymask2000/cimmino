@@ -120,7 +120,7 @@ public class MovimentiBinController {
 			return m;
 		}).toList();
 		
-		List<BinsArrivi> binsarrivi = new ArrayList<BinsArrivi>();
+		List<BinMovimento> binsarrivi = new ArrayList<>();
 
 		model.addAttribute("binsJs", binsJs);
 		model.addAttribute("binsarrivi", binsarrivi);
@@ -134,7 +134,7 @@ public class MovimentiBinController {
 			@RequestParam(name = "operazione") Long operazione,
 			Model model) {
 
-	    List<BinsArrivi> binsarrivi = form.getBinsarrivi();
+	    List<BinMovimento> binsarrivi = form.getBinsarrivi();
 
 //	    System.out.println(binsarrivi.size());
 //	    System.out.println("oper = "+operazione);

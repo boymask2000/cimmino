@@ -15,7 +15,6 @@ import com.cimmino.shop.database.Bin;
 import com.cimmino.shop.database.BinRepository;
 import com.cimmino.shop.database.BinsArrivi;
 import com.cimmino.shop.database.BinsArriviRepository;
-import com.cimmino.shop.database.BinsVendite;
 import com.cimmino.shop.database.Vendita;
 import com.cimmino.shop.database.dto.ArriviDTO;
 import com.cimmino.shop.database.dto.BinsArriviDTO;

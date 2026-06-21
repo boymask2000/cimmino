@@ -134,7 +134,7 @@ public class MovimentiVuotiController {
 			@RequestParam(name = "operazione") Long operazione,
 			Model model) {
 
-	    List<BinsArrivi> binsarrivi = form.getBinsarrivi();
+	    List<BinMovimento> binsarrivi = form.getBinsarrivi();
 
 //	    System.out.println(binsarrivi.size());
 //	    System.out.println("oper = "+operazione);

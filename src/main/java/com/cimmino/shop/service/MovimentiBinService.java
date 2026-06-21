@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
+import com.cimmino.shop.controller.BinMovimento;
 import com.cimmino.shop.database.Arrivi;
 import com.cimmino.shop.database.Bin;
 import com.cimmino.shop.database.BinMovimentoView;
@@ -75,10 +76,10 @@ public class MovimentiBinService {
 		}
 	}
 
-	public void register(List<BinsArrivi> binsarrivi, Long operazione) {
-		for (BinsArrivi binArrivo : binsarrivi) {
+	public void register(List<BinMovimento> binsarrivi, Long operazione) {
+		for (BinMovimento binArrivo : binsarrivi) {
 			MovimentoBin mov = new MovimentoBin();
-			mov.setData(LocalDate.now());
+			mov.setData(binArrivo.getData());
 			mov.setBinName(binArrivo.getBin().getName());
 			mov.setInout(operazione.intValue());
 			mov.setNumBins(binArrivo.getNumBins());

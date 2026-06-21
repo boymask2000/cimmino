@@ -236,18 +236,6 @@ public class DDTPrinter extends BasePrinter implements HasOutputStream {
 		out.append("</table>");
 		System.out.println(out.toString());
 	}
-	private void makeFooter(StringBuilder out, int totColli, BigDecimal totPeso) {
-		out.append("<tfoot>");
-		out.append("<tr>");
-	//	out.append("<td colspan=\"3\">N.Colli</td>");
-		out.append("<td colspan=\"0\" ></td>");
-		out.append("<td colspan=\"1\" ></td>");
-		out.append("<td colspan=\"1\" class=\"text-end fw-bold\">n.Colli<br/>"+totColli+"</td>");
-		out.append("<td colspan=\"1\" class=\"text-end fw-bold\" >Peso kg.<br/>"+totPeso+"</td>");
-		out.append("</tr>");
-		out.append("</tfoot>");
-		System.out.println(out.toString());
-	}
 
 	private String makeTestata4() {
 		StringBuilder out = new StringBuilder();
