@@ -15,8 +15,10 @@ public class ConfigurazioneService {
 	@Autowired
 	ConfigurazioneRepository configurazioneRepository;
 	
+	private Configurazione conf = null;
 	
 	public Configurazione getConfigurazione() {
+		if( conf!=null)return conf;
 	
 		 List<Configurazione> confs = configurazioneRepository.findAll();
 		if( confs.isEmpty())
@@ -24,8 +26,8 @@ public class ConfigurazioneService {
 		if( confs.size()>1) {
 			System.out.println("ERR getConfigurazione");
 		}
-		
-		return confs.get(0);
+		conf = confs.get(0);
+		return conf;
 	}
 	
 	
@@ -39,8 +41,9 @@ public class ConfigurazioneService {
 	}
 
 
-	public void save(Configurazione conf) {
-		configurazioneRepository.save(conf);
+	public void save(Configurazione config) {
+		configurazioneRepository.save(config);
+		conf=null;
 		
 	}
 }

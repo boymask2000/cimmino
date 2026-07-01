@@ -18,11 +18,11 @@
 		<h2 class="mb-4">Crea Nuova Vendita</h2>
 
 		<table style="width: 100%; table-layout: fixed;">
-		<tr>
-    <th style="width: 80%;"></th>
-    <th style="width: 20%;"></th>
+			<tr>
+				<th style="width: 80%;"></th>
+				<th style="width: 20%;"></th>
 
-  </tr>
+			</tr>
 			<tr>
 				<td>
 					<!-- ===================== FORM ===================== -->
@@ -34,8 +34,7 @@
 							type="hidden" name="prezzoFrigoxFreddo" id="prezzoFrigoxFreddo"
 							th:value="${configurazione.prezzoFrigoxFreddo}"> <input
 							type="hidden" name="prezzoFrigoxCaldo" id="prezzoFrigoxCaldo"
-							th:value="${configurazione.prezzoFrigoxCaldo}">
-							<input
+							th:value="${configurazione.prezzoFrigoxCaldo}"> <input
 							type="hidden" name="taraxFrigo" id="taraxFrigo"
 							th:value="${configurazione.taraxFrigo}">
 
@@ -45,8 +44,7 @@
 
 						<div class="mb-3">
 							<label class="form-label">Data</label> <input type="date"
-								name="currData" th:value="*{data}" class="form-control"
-								required>
+								name="currData" th:value="*{data}" class="form-control" required>
 						</div>
 						<!-- COMMERCIANTE -->
 						<div class="mb-3">
@@ -83,7 +81,7 @@
 						</div>
 
 
-<!-- 						<div id="gruppoVenditeContainer"></div> -->
+						<!-- 						<div id="gruppoVenditeContainer"></div> -->
 
 						<div class="row mb-3">
 							<label class="col-sm-3 col-form-label">Netto di Tara</label>
@@ -102,17 +100,17 @@
 
 						<input type="hidden" name="nBins" id="nBins">
 						<!-- PREZZO -->
-						
+
 
 						<!-- SCARTO -->
 
 						<!-- IMPORTO -->
 						<div class="row mb-3">
-							<label class="col-sm-3 form-label">Importo</label> 
+							<label class="col-sm-3 form-label">Importo</label>
 							<div class="col-sm-9">
-							<input type="number"
-								name="importo" id="importo" class="form-control" readonly>
-								</div>
+								<input type="number" name="importo" id="importo"
+									class="form-control" readonly>
+							</div>
 						</div>
 						<div class="row mb-3">
 							<label class="col-sm-3 col-form-label">DDT</label>
@@ -128,34 +126,31 @@
 					</form>
 				</td>
 				<td style="vertical-align: top;">
-				<div class="container mt-0">
-					<table class="table table-bordered table-striped">
-			<thead class="table-dark">
-				<tr>
-					<th>Data</th>
-					<th>Nome</th>
-					<th>Merce</th>
-					<th>Num</th>
-				</tr>
-			</thead>
+					<div class="container mt-0">
+						<table class="table table-bordered table-striped">
+							<thead class="table-dark">
+								<tr>
+									<th>Data</th>
+									<th>Nome</th>
+									<th>Merce</th>
+									<th>Num</th>
+								</tr>
+							</thead>
 
-			<tbody>
-				<tr th:each="entry : ${magazzinorows}">
-					<td  th:text="${entry.date}">
-					</td>
-					<td  th:text="${entry.bin}">
-					</td>
-					<td  th:text="${entry.nomeMerce}">
-					</td>
-					<td  th:text="${entry.num}">
-					</td>
-					
-				</tr>
+							<tbody>
+								<tr th:each="entry : ${magazzinorows}">
+									<td th:text="${entry.date}"></td>
+									<td th:text="${entry.bin}"></td>
+									<td th:text="${entry.nomeMerce}"></td>
+									<td th:text="${entry.num}"></td>
+
+								</tr>
 
 
-				
-			</tbody>
-		</table></div>
+
+							</tbody>
+						</table>
+					</div>
 				</td>
 			</tr>
 		</table>
@@ -450,10 +445,7 @@ console.log("aggiornaTotali");
                        min="1"
                        placeholder="prezzo">
             </div>
-            <div class="col-md-2">
-            <input type="number" step="0.01" class="form-control tarabin" 
-            	  placeholder="tarabin">
-        </div>
+          
         
 
 	            <div class="col-md-2">
@@ -465,7 +457,10 @@ console.log("aggiornaTotali");
 	                <input type="number" step="0.01" class="form-control pesoNetto" 
 	                	  placeholder="pesoNetto">
 	            </div>
-	            
+	            <div class="col-md-2">
+	            <input type="number" step="0.01" class="form-control tarabin" 
+	            	  placeholder="tarabin">
+	        </div>
 	            <div class="col-md-2">
                 <input type="number" step="0.001"
                        class="form-control scarto"
@@ -518,15 +513,28 @@ console.log("aggiornaTotali");
 	        const binSelect = row.querySelector(".binSelect");
 	        const btnRemove = row.querySelector(".removeBtn");
 	        const pesoLordo = row.querySelector(".pesoLordo");
+	        const tarabin = row.querySelector(".tarabin");
 	        
 	        function handler() {
 	            aggiornaPesi(row);
 	            checkAvailability(row); 
 	            aggiornaArrivi(row);
 	        }
+	        function updNetto() {
+	        	 const qta = Number(row.querySelector('.numBins')?.value) || 0;
+	        	 const lordo = Number(row.querySelector('.pesoLordo')?.value) || 0;
+	 	        const tara = tarabin?.value || 0;
+	 	        var netto = 0;
+	 	        
+	 	        if( lordo > 0)
+	 	         netto = lordo - (tara * qta);
+	 	       
+	 	        row.querySelector('.pesoNetto').value = netto.toFixed(2);
+	        }
 
 	        numBins.addEventListener("input", handler);
 	        binSelect.addEventListener("change", handler);
+	        tarabin.addEventListener("change", updNetto);
 
 	        btnRemove.addEventListener("click", () => {
 	            row.remove();
