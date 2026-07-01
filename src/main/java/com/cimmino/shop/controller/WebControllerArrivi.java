@@ -101,6 +101,8 @@ public class WebControllerArrivi {
 			ba.setBin(managedBin);
 			ba.setArrivo(arrivo);
 		}
+		
+		arriviService.calcolaFrigo(arrivo);
 		// arriviService.eseguiCalcoli(arrivo);
 
 		Configurazione conf = configurazioneService.getConfigurazione();

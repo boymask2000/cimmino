@@ -26,6 +26,8 @@ public class Configurazione {
 	@Column(precision = 10, scale = 4)
 	private BigDecimal prezzoFrigoxFreddo ;
 	
+	private BigDecimal taraxFrigo;
+	
 	private String installationId;
 	
 	private String primoCessionario;
@@ -130,5 +132,13 @@ public class Configurazione {
 
 	public void setPrimoCessionario(String primoCessionario) {
 		this.primoCessionario = primoCessionario;
+	}
+
+	public BigDecimal getTaraxFrigo() {
+		return taraxFrigo;
+	}
+
+	public void setTaraxFrigo(BigDecimal taraxFrigo) {
+		this.taraxFrigo = taraxFrigo;
 	}
 }

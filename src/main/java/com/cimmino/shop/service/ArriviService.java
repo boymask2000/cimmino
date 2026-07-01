@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +26,8 @@ import tools.jackson.databind.ObjectMapper;
 
 @Service
 public class ArriviService {
-
+	@Autowired
+	ConfigurazioneService configurazioneService;
 	@Autowired
 	private ArriviRepository arriviRepository;
 
@@ -40,8 +42,6 @@ public class ArriviService {
 	private BinsArriviRepository binsArriviRepository;
 	@Autowired
 	private ArriviMapper arriviMapper;
-	
-	
 
 	public ArriviDTO getById(Long id) {
 		Arrivi a = arriviRepository.findById(id).orElseThrow();
@@ -119,7 +119,6 @@ public class ArriviService {
 	}
 
 	public void calcNumTotaleBins(List<Arrivi> arr) {
-	
 
 	}
 
@@ -138,63 +137,79 @@ public class ArriviService {
 
 		arriviRepository.delete(arrivo);
 	}
+
 	public List<ArriviDTO> getAll() {
 		List<Arrivi> lista = arriviRepository.findAll();
 		return arriviMapper.toDtoList(lista);
 	}
+
 	public List<ArriviDTO> cercaPerInstallation(String installId) {
 		List<Arrivi> lista = arriviRepository.cercaPerInstallation(installId);
 		return arriviMapper.toDtoList(lista);
 	}
+
 	public String cercaPerInstallationAsJSON(String installId) {
 		List<Arrivi> lista = arriviRepository.cercaPerInstallation(installId);
-		
-		List<ArriviDTO> dtos=new ArrayList<ArriviDTO>(); 
-		for( Arrivi arr: lista) {
+
+		List<ArriviDTO> dtos = new ArrayList<ArriviDTO>();
+		for (Arrivi arr : lista) {
 			dtos.add(arriviMapper.toDto(arr));
 		}
-		
+
 		ObjectMapper mapper = new ObjectMapper();
 
-      //  mapper.registerModule(new JavaTimeModule());
+		// mapper.registerModule(new JavaTimeModule());
 
-        String json = mapper
-                .writerWithDefaultPrettyPrinter()
-                .writeValueAsString(dtos);
+		String json = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(dtos);
 
-        System.out.println(json);
+		System.out.println(json);
 		return json;
 	}
 
 	@Transactional
-	public void addBin(Long arrivoId,
-	                   Integer numBins,
-	                   Long binId,
-	                   BigDecimal pesoLordo,
-	                   BigDecimal pesoNetto) {
+	public void addBin(Long arrivoId, Integer numBins, Long binId, BigDecimal pesoLordo, BigDecimal pesoNetto) {
 
-	     Arrivi arrivo = arriviRepository.findById(arrivoId)
-	            .orElseThrow();
+		Arrivi arrivo = arriviRepository.findById(arrivoId).orElseThrow();
 
-	    Bin bin = binRepository.findById(binId)
-	            .orElseThrow();
+		Bin bin = binRepository.findById(binId).orElseThrow();
 
-	    BinsArrivi ab = new BinsArrivi();
-	    
-	    BigDecimal media=BigDecimal.ZERO;
-	    if( numBins>0) {
-	    	media= pesoLordo.divide(new BigDecimal(numBins));
-	    }
+		BinsArrivi ab = new BinsArrivi();
 
-	    ab.setArrivo(arrivo);
-	    ab.setBin(bin);
-	    ab.setNumBins(numBins);
-	    ab.setPesoLordo(pesoLordo);
-	    ab.setPesoNetto(pesoNetto);
-	    ab.setMedia(media);
+		BigDecimal media = BigDecimal.ZERO;
+		if (numBins > 0) {
+			media = pesoLordo.divide(new BigDecimal(numBins));
+		}
 
-	    arrivo.getBins().add(ab);
+		ab.setArrivo(arrivo);
+		ab.setBin(bin);
+		ab.setNumBins(numBins);
+		ab.setPesoLordo(pesoLordo);
+		ab.setPesoNetto(pesoNetto);
+		ab.setMedia(media);
 
-	    arriviRepository.save(arrivo);
+		arrivo.getBins().add(ab);
+
+		arriviRepository.save(arrivo);
+	}
+
+	public void calcolaFrigo(Arrivi arrivo) {
+		BigDecimal taraFrigo = configurazioneService.getConfigurazione().getTaraxFrigo();
+		BigDecimal prezzoCaldo = configurazioneService.getConfigurazione().getPrezzoFrigoxCaldo();
+		BigDecimal prezzoFreddo = configurazioneService.getConfigurazione().getPrezzoFrigoxFreddo();
+
+		int sumBins = 0;
+		for (BinsArrivi ba : arrivo.getBins()) {
+			sumBins += ba.getNumBins();
+		}
+		taraFrigo = taraFrigo.multiply(new BigDecimal(sumBins));
+		BigDecimal peso = arrivo.getPeso_lordo().subtract(taraFrigo);
+
+		if (arrivo.getFreddo() == 1) {// Freddo
+			peso = peso.multiply(prezzoFreddo);
+			arrivo.setFrigoxFreddo(peso);
+		} else {
+			peso = peso.multiply(prezzoCaldo);
+			arrivo.setFrigoxCaldo(peso);
+		}
 	}
 }

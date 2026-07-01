@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.cimmino.shop.database.BinRepository;
 import com.cimmino.shop.database.MerceRepository;
 import com.cimmino.shop.database.Titolare;
 import com.cimmino.shop.database.TitolareRepository;
@@ -20,8 +19,7 @@ import com.cimmino.shop.database.TitolareRepository;
 @RequestMapping("/web/anagrafiche")
 public class TitolariController {
 
-	@Autowired
-	BinRepository binRepository;
+
 	@Autowired
 	TitolareRepository titolariRepository;
 	@Autowired

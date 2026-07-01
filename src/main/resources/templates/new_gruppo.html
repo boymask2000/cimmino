@@ -35,6 +35,9 @@
 							th:value="${configurazione.prezzoFrigoxFreddo}"> <input
 							type="hidden" name="prezzoFrigoxCaldo" id="prezzoFrigoxCaldo"
 							th:value="${configurazione.prezzoFrigoxCaldo}">
+							<input
+							type="hidden" name="taraxFrigo" id="taraxFrigo"
+							th:value="${configurazione.taraxFrigo}">
 
 
 						<!-- 			<input type="hidden" name="arrivoId" id="arrivoId" -->
@@ -272,7 +275,7 @@
 	    }
 
 	    function aggiornaTotali() {
-
+	    	const taraFrigo = document.getElementById("taraxFrigo").value;
 	        let totaleQta = 0;
 	        let totaleLordo = 0;
 	        let totaleNetto = 0;
@@ -286,6 +289,7 @@ console.log("aggiornaTotali");
 	            const netto = Number(row.querySelector(".pesoNetto")?.value) || 0;
 	            const scarto = Number(row.querySelector(".scarto")?.value) || 0;
 	            const prezzo = Number(row.querySelector(".prezzo")?.value) || 0;
+	            const tara = Number(row.querySelector(".tarabin")?.value) || 0;
 	            
 	            const importo = lordo * prezzo*(1-scarto/100);
 	            totaleImporto+=importo;
@@ -296,7 +300,8 @@ console.log("aggiornaTotali");
 	            totaleLordo += lordo;
 	            totaleNetto += netto;
 
-	            totaleTara += (lordo - netto);
+	           // totaleTara += (lordo - netto);
+	            totaleTara += qty * taraFrigo;
 	        });
  	        const importoGen = document.getElementById("importo");
  	        importoGen.value= totaleImporto;
@@ -339,7 +344,8 @@ console.log("aggiornaTotali");
 	    
 
 	        // ===== FRIGO =====
-	        const baseFrigo = totaleLordo - (totaleTara / 2);
+	        //const baseFrigo = totaleLordo - (totaleTara / 2);
+	        const baseFrigo = totaleLordo - totaleTara;
 
 	        const frigoxCaldo = baseFrigo * prezzoCaldo;
 	        const frigoxFreddo = baseFrigo * prezzoFreddo;
@@ -444,14 +450,19 @@ console.log("aggiornaTotali");
                        min="1"
                        placeholder="prezzo">
             </div>
+            <div class="col-md-2">
+            <input type="number" step="0.01" class="form-control tarabin" 
+            	  placeholder="tarabin">
+        </div>
+        
 
 	            <div class="col-md-2">
-	                <input type="number" class="form-control pesoLordo" 
+	                <input type="number" step="0.01" class="form-control pesoLordo" 
 	                	  placeholder="pesoLordo">
 	            </div>
 
 	            <div class="col-md-2">
-	                <input type="number" class="form-control pesoNetto" 
+	                <input type="number" step="0.01" class="form-control pesoNetto" 
 	                	  placeholder="pesoNetto">
 	            </div>
 	            
@@ -640,7 +651,7 @@ console.log("aggiornaTotali");
 	        
 	        if( lordo > 0)
 	         netto = lordo - (tara * qta);
-
+	        row.querySelector('.tarabin').value = tara;
 	        row.querySelector('.pesoNetto').value = netto.toFixed(2);
 	    }
 </script>
