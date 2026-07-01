@@ -63,7 +63,8 @@ public class VenditeService {
 	}
 
 	public void eseguiCalcoli(Vendita vendita) {
-		int totaleBins = vendita.getNumeroTotaleBins();
+		int totaleBins = vendita.getBins().stream().mapToInt(b -> b.getNumBins()).sum();
+	//	int totaleBins = vendita.getNumeroTotaleBins();
 		BigDecimal pesoLordo = vendita.getPeso_lordo();
 
 		BigDecimal media = BigDecimal.ZERO;
