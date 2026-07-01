@@ -192,6 +192,9 @@ public class ArriviService {
 	}
 
 	public void calcolaFrigo(Arrivi arrivo) {
+		if (!arrivo.getPagoFrigo())
+			return;
+
 		BigDecimal taraFrigo = configurazioneService.getConfigurazione().getTaraxFrigo();
 		BigDecimal prezzoCaldo = configurazioneService.getConfigurazione().getPrezzoFrigoxCaldo();
 		BigDecimal prezzoFreddo = configurazioneService.getConfigurazione().getPrezzoFrigoxFreddo();
