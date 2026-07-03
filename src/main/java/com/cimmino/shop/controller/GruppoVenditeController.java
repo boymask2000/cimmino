@@ -98,7 +98,7 @@ public class GruppoVenditeController {
 		}).toList();
 
 		List<MagazzinoRow> magazzinorows = magazzinoService.dump();
-		magazzinorows = magazzinorows.stream().filter(p -> p.getNum()>0).toList();
+		magazzinorows = magazzinorows.stream().filter(p -> p.getNum() > 0).toList();
 
 		model.addAttribute("magazzinorows", magazzinorows);
 
@@ -147,8 +147,8 @@ public class GruppoVenditeController {
 		if (opven.isEmpty())
 			return "";
 		GruppoVendite gruppo = opven.get();
-		
-		int num =gruppo.getBins().stream().mapToInt(b -> b.getNumBins()).sum();
+
+		int num = gruppo.getBins().stream().mapToInt(b -> b.getNumBins()).sum();
 
 		gruppo.setNumeroTotaleBins(num);
 		model.addAttribute("gruppo", gruppo);
@@ -156,20 +156,28 @@ public class GruppoVenditeController {
 		return "handle_gruppo";
 	}
 
+	@PostMapping("/delete/{id}")
+	public String delete(@PathVariable Long id, HttpSession session, Model model) {
+		gruppoVenditeRepository.deleteById(id);
+		
+		commonService.setGoArrivi(session, model);
+
+		return "arrivi_master";
+	}
+
 	@PostMapping("/save")
 	public String save( //
 			@ModelAttribute GruppoVendite gr, //
 			@RequestParam String binsJson, //
 			@RequestParam LocalDate currData, //
-			HttpSession session,  //
+			HttpSession session, //
 			Model model) {
-		
-		gruppoVenditeService.saveGruppoVendite(gr,currData, binsJson);
-		
+
+		gruppoVenditeService.saveGruppoVendite(gr, currData, binsJson);
+
 		commonService.setGoArrivi(session, model);
 
-		return "home";
+		return "arrivi_master";
 	}
-	
 
 }

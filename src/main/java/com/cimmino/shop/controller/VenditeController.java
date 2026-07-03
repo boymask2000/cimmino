@@ -144,7 +144,8 @@ public class VenditeController {
 		}
 		vendita.setBins(entities);
 
-	//	Optional<GruppoVendite> optGrp = gruppoVenditeRepository.findGroupOpen(commercianteId);
+		// Optional<GruppoVendite> optGrp =
+		// gruppoVenditeRepository.findGroupOpen(commercianteId);
 
 		Optional<Arrivi> oparr = arriviRepository.findById(arrivoId);
 		Arrivi arr = oparr.get();
@@ -162,7 +163,7 @@ public class VenditeController {
 
 		model.addAttribute("startDate", firstDay);
 		model.addAttribute("endDate", lastDay);
-		
+
 		commonService.setGoArrivi(session, model);
 		return "arrivi2";
 	}
@@ -205,17 +206,15 @@ public class VenditeController {
 	@PostMapping("/vendita/delete/{id}")
 	public String deleteVendita(HttpSession session, @PathVariable Long id, Model model) {
 		Optional<Vendita> vend = venditeRepository.findById(id);
-		if (vend.isEmpty())
-			return "show_vendita";
-		Vendita v = vend.get();
+		if (!vend.isEmpty()) {
+			Vendita v = vend.get();
 
-		movimentiBinService.unregister(v, "Cancellazione Vendita");
+			movimentiBinService.unregister(v, "Cancellazione Vendita");
 
-		venditeRepository.delete(v);
-
+			venditeRepository.delete(v);
+		}
 		commonService.setGoArrivi(session, model);
 		return "arrivi2";
 	}
 
-	
 }

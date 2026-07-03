@@ -17,6 +17,33 @@
 <meta name="_csrf_header" th:content="${_csrf.headerName}">
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
+function confirmDeleteGrp(id) {
+    Swal.fire({
+        title: 'Sei sicuro?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Elimina'
+    }).then((result) => {
+        if (result.isConfirmed) {
+
+            const csrfToken = document.querySelector('meta[name="_csrf"]').content;
+
+            const form = document.createElement('form');
+            form.method = 'post';
+            form.action = '/gruppovendite/delete/' + id;
+
+            const input = document.createElement('input');
+            input.type = 'hidden';
+            input.name = '_csrf';
+            input.value = csrfToken;
+
+            form.appendChild(input);
+
+            document.body.appendChild(form);
+            form.submit();
+        }
+    });
+}
 function confirmDelete(id) {
     Swal.fire({
         title: 'Sei sicuro?',
