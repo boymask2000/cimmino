@@ -19,7 +19,7 @@ public class Bin {
 
     // usa naming Java standard (NON snake_case nei field Java)
     @Column(name = "peso_lordo")
-    private BigDecimal pesoLordo;
+    private BigDecimal pesoLordo=BigDecimal.ZERO;
 
     @Column(name = "tara")
     private BigDecimal tara;

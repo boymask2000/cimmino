@@ -14,36 +14,35 @@ import com.cimmino.shop.database.ConfigurazioneRepository;
 public class ConfigurazioneService {
 	@Autowired
 	ConfigurazioneRepository configurazioneRepository;
-	
+
 	private Configurazione conf = null;
-	
+
 	public Configurazione getConfigurazione() {
-		if( conf!=null)return conf;
-	
-		 List<Configurazione> confs = configurazioneRepository.findAll();
-		if( confs.isEmpty())
+		if (conf != null)
+			return conf;
+
+		List<Configurazione> confs = configurazioneRepository.findAll();
+		if (confs.isEmpty())
 			return initConfig();
-		if( confs.size()>1) {
+		if (confs.size() > 1) {
 			System.out.println("ERR getConfigurazione");
 		}
 		conf = confs.get(0);
 		return conf;
 	}
-	
-	
+
 	private Configurazione initConfig() {
 		Configurazione conf = new Configurazione();
 		conf.setPrezzoFrigoxCaldo(new BigDecimal("0.01"));
 		conf.setPrezzoFrigoxFreddo(new BigDecimal("0.01"));
-		conf.setInstallationId(""+(new Date().getTime()));
+		conf.setInstallationId("" + (new Date().getTime()));
 		configurazioneRepository.save(conf);
 		return conf;
 	}
 
-
 	public void save(Configurazione config) {
 		configurazioneRepository.save(config);
-		conf=null;
-		
+		conf = null;
+
 	}
 }

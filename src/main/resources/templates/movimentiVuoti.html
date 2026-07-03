@@ -33,7 +33,7 @@
 			<h2>CAMPAGNA VUOTI</h2>
 
 			<a th:href="@{/movimentibin/sposta/1}" class="btn btn-success"> CAMPAGNA PIENI </a> 
-			<a th:href="@{/movimentibin/sposta/0}" class="btn btn-success"> Restituisci Bin </a> 
+			<a th:href="@{/movimentibin/sposta/0}" class="btn btn-success"> CAMPAGNA VUOTI </a> 
 			
 
 
@@ -154,7 +154,7 @@
 								<td th:text="${op.data}"></td>
 								<td th:text="${op.binName}"></td>
 								<td th:text="${op.numBins}"></td>
-								<td th:text="${op.inout==0?'Uscita':'Ingresso'}"></td>
+								<td th:text="${op.inout==0?'CAMPAGNA VUOTI':'CAMPAGNA PIENI'}"></td>
 							</tr>
 						</tbody>
 
