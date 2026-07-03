@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.cimmino.shop.database.ArriviRepository;
 import com.cimmino.shop.database.BinRepository;
 import com.cimmino.shop.database.BinsGruppoVenditeRepository;
 import com.cimmino.shop.database.BinsVenditeRepository;
@@ -49,8 +48,6 @@ public class GruppoVenditeController {
 	ConfigurazioneService configurazioneService;
 	@Autowired
 	VenditeRepository venditeRepository;
-	@Autowired
-	ArriviRepository arriviRepository;
 	@Autowired
 	MerceRepository merceRepository;
 	@Autowired
