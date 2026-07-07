@@ -25,7 +25,7 @@ public class CommonService {
 	@Autowired
 	GruppoVenditeRepository gruppoVenditeRepository;
 
-	public void setGoArrivi(HttpSession session, Model model) {
+	public String setGoArrivi(HttpSession session, Model model) {
 		LocalDate startDate = (LocalDate) session.getAttribute("startDate");
 		LocalDate endDate = (LocalDate) session.getAttribute("endDate");
 
@@ -66,6 +66,6 @@ public class CommonService {
 				ven.setNumeroTotaleBins(num);
 			}
 		}
-		
+		return "arrivi_master";
 	}
 }

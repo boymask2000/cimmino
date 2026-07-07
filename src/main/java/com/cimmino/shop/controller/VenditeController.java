@@ -164,8 +164,8 @@ public class VenditeController {
 		model.addAttribute("startDate", firstDay);
 		model.addAttribute("endDate", lastDay);
 
-		commonService.setGoArrivi(session, model);
-		return "arrivi2";
+		return commonService.setGoArrivi(session, model);
+	//	return "arrivi2";
 	}
 
 	@GetMapping("/vendita/edit/{id}")
@@ -213,8 +213,8 @@ public class VenditeController {
 
 			venditeRepository.delete(v);
 		}
-		commonService.setGoArrivi(session, model);
-		return "arrivi2";
+		return commonService.setGoArrivi(session, model);
+	//	return "arrivi2";
 	}
 
 }
