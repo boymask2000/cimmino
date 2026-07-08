@@ -27,6 +27,8 @@ import com.cimmino.shop.database.dto.BinsGruppoVenditaDTO;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import jakarta.transaction.Transactional;
+
 @Service
 public class GruppoVenditeService {
 	@Autowired
@@ -83,7 +85,7 @@ public class GruppoVenditeService {
 			BigDecimal scarto = new BigDecimal(1);
 			BigDecimal perc = dto.getScarto().divide(new BigDecimal(100));
 			scarto = scarto.subtract(perc);
-			BigDecimal nettoScarto = dto.getPesoLordo().multiply(scarto);
+			BigDecimal nettoScarto = dto.getPesoNetto().multiply(scarto);
 			BigDecimal importo = nettoScarto.multiply(dto.getPrezzo());
 			sommaImporto = sommaImporto.add(importo);
 
@@ -194,6 +196,15 @@ public class GruppoVenditeService {
 
 		}
 		gr.setMedia(media);
+	}
+
+	@Transactional
+	public void cleanDDT(String ddtnum) {
+	List<GruppoVendite> ll = gruppoVenditeRepository.findGruppoVenditeByDDT(ddtnum);
+		for( GruppoVendite gv: ll) {
+			gv.setDdt(null);
+			gruppoVenditeRepository.save(gv);
+		}
 	}
 
 }

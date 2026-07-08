@@ -17,4 +17,7 @@ public interface GruppoVenditeRepository extends JpaRepository<GruppoVendite, Lo
 
 	@Query("select v from GruppoVendite v where v.commerciante.commerciante_id=:commId and (v.ddt is null or v.ddt ='')")
 	List<GruppoVendite> findGruppoVenditeDiCommercianteSenzaDDT(@Param("commId") Long commId);
+	
+	@Query("select v from GruppoVendite v where v.ddt = :ddt")
+	List<GruppoVendite> findGruppoVenditeByDDT(@Param("ddt") String ddt);
 }

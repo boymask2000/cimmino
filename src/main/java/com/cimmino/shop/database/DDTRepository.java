@@ -11,6 +11,8 @@ public interface DDTRepository extends JpaRepository<DDT, Long> {
 	@Query("select g from DDT g where g.numeroDDT = ?1")
 	Optional<DDT> findByNumDDT(String dttNum);
 
+
+	void deleteByNumeroDDT(String dttNum);
 	
 	@Query("""
 			select count(d) > 0

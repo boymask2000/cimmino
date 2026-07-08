@@ -286,7 +286,8 @@ console.log("aggiornaTotali");
 	            const prezzo = Number(row.querySelector(".prezzo")?.value) || 0;
 	            const tara = Number(row.querySelector(".tarabin")?.value) || 0;
 	            
-	            const importo = lordo * prezzo*(1-scarto/100);
+	            const importo = netto * prezzo*(1-scarto/100);
+	        //    const importo = lordo * prezzo*(1-scarto/100);
 	            totaleImporto+=importo;
 	            
 	            row.querySelector(".importo").value = importo.toFixed(2);
@@ -623,7 +624,7 @@ console.log("aggiornaTotali");
 	            const prezzo = parseFloat(row.querySelector(".prezzo").value) || 0
 	            const scarto = parseFloat(row.querySelector(".scarto").value) || 0;
 	         //   var importo = row.querySelector(".importo");
-	            const importo = pesoLordo*prezzo*(1-scarto/100);
+	            const importo = pesoNetto*prezzo*(1-scarto/100);
 	     
 	            
 	            const nostraProprieta = parseInt(row.querySelector(".nostraProprieta").value) || 0;

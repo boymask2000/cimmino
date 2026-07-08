@@ -24,11 +24,14 @@ import com.cimmino.shop.database.GruppoVenditeRepository;
 import com.cimmino.shop.database.TitolareRepository;
 import com.cimmino.shop.database.TrasportatoreRepository;
 import com.cimmino.shop.database.VenditeRepository;
+import com.cimmino.shop.service.DDTService;
 import com.cimmino.shop.service.print.DDTInputData;
 
 @Controller
 @RequestMapping("/ddt")
 public class DDTController {
+	@Autowired
+	DDTService ddtService;
 	@Autowired
 	GruppoVenditeRepository gruppoVenditeRepository;
 	@Autowired
@@ -106,6 +109,13 @@ public class DDTController {
 
 		redirectAttributes.addAttribute("ddtnum", ddtnum);
 		return "redirect:/pdf/ddt/showddt";
+	}
+
+	@GetMapping("/annulladdt/{ddtnum}")
+	public String annullaDDT(@PathVariable String ddtnum, RedirectAttributes redirectAttributes) {
+
+		ddtService.annullaDDT(ddtnum);
+		return "ddt_commercianti";
 	}
 
 	@GetMapping("/parameters")

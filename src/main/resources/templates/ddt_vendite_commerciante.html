@@ -165,6 +165,14 @@ body {
 										Vedi DDT
 
 									</a>
+										<a th:if="${ven.ddt != null && ven.ddt !=''}"
+										th:href="@{/ddt/annulladdt/{id}(id=${ven.ddt})}"
+										class="btn btn-primary btn-sm btn-action">
+
+										<i class="bi bi-eye"></i>
+										Annulla DDT
+
+									</a>
 
 								</td>
 

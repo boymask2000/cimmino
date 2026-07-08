@@ -38,7 +38,7 @@
 
 <body>
 <div th:replace="navbar :: navbar"></div>
-<h1>Nuovo Commerciante</h1>
+<h1>Nuovo trasportatore</h1>
 
 <form th:action="@{/web/anagrafiche/trasportatori/save}"
       th:object="${trasportatore}"
@@ -59,7 +59,7 @@
 
         <input type="text"
                th:field="*{indirizzo}"
-               required />
+                />
     </div>
     <div class="form-row">
         <label>Pec:</label>

@@ -522,9 +522,9 @@ public class DDTListVenditePrinter extends BasePrinter implements HasOutputStrea
 			totColli += b.getNumBins();
 			out.append("</td>");
 			out.append("<td>");
-			if( b.getPesoLordo()!=null) {
-			out.append(b.getPesoLordo());
-			totPeso = totPeso.add(b.getPesoLordo());}
+			if( b.getPesoNetto()!=null) {
+			out.append(b.getPesoNetto());
+			totPeso = totPeso.add(b.getPesoNetto());}
 			out.append("</td>");
 
 			out.append("</tr>");

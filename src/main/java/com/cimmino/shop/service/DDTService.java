@@ -11,10 +11,14 @@ import com.cimmino.shop.database.dto.DDTDTO;
 import com.cimmino.shop.mappers.DDTMapper;
 import com.cimmino.shop.service.print.DDTInputData;
 
+import jakarta.transaction.Transactional;
+
 @Service
 public class DDTService {
 	@Autowired
 	DDTRepository ddtRepository;
+	@Autowired
+	GruppoVenditeService gruppoVenditeService;
 	@Autowired
 	DDTMapper ddtMapper;
 
@@ -44,5 +48,11 @@ public class DDTService {
 		DDT entity = ddtMapper.toEntity(dto1);
 		DDT d = ddtRepository.save(entity);
 		return ddtMapper.toDto(d);
+	}
+
+	@Transactional
+	public void annullaDDT(String ddtnum) {
+		ddtRepository.deleteByNumeroDDT(ddtnum);
+		gruppoVenditeService.cleanDDT(ddtnum);
 	}
 }

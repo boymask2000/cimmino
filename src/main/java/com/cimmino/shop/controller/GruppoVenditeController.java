@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.cimmino.shop.database.BinRepository;
 import com.cimmino.shop.database.BinsGruppoVenditeRepository;
-import com.cimmino.shop.database.BinsVenditeRepository;
 import com.cimmino.shop.database.CommercianteRepository;
 import com.cimmino.shop.database.GruppoVendite;
 import com.cimmino.shop.database.GruppoVenditeRepository;
@@ -52,8 +51,7 @@ public class GruppoVenditeController {
 	MerceRepository merceRepository;
 	@Autowired
 	GruppoVenditeRepository gruppoVenditeRepository;
-	@Autowired
-	BinsVenditeRepository binsVenditeRepository;
+
 	@Autowired
 	CommercianteRepository commercianteRepository;
 	@Autowired
