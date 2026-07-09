@@ -68,6 +68,21 @@ public class DDTController {
 		model.addAttribute("infos",infos);
 		return "ddt_commercianti";
 	}
+	private String goDDTCommercianti(Model model) {
+		List<CommerciantiDDTInfo> infos = new ArrayList<>();
+
+		for (Commerciante comm : commercianteRepository.findAll()) {
+			CommerciantiDDTInfo info = new CommerciantiDDTInfo();
+
+			List<GruppoVendite> ll = gruppoVenditeRepository.findGruppoVenditeDiCommercianteSenzaDDT(comm.getCommerciante_id());
+			info.setCommerciante(comm);
+			info.setNumVenditeNoDDT(ll.size());
+			infos.add(info);
+		}
+
+		model.addAttribute("infos",infos);
+		return "ddt_commercianti";
+	}
 
 	@GetMapping("/vendite_commercianteNoDDT/{id}")
 	public String vendite_commercianteNoDDt(@PathVariable Long id, Model model) {
@@ -112,10 +127,10 @@ public class DDTController {
 	}
 
 	@GetMapping("/annulladdt/{ddtnum}")
-	public String annullaDDT(@PathVariable String ddtnum, RedirectAttributes redirectAttributes) {
+	public String annullaDDT(@PathVariable String ddtnum, RedirectAttributes redirectAttributes,Model model) {
 
 		ddtService.annullaDDT(ddtnum);
-		return "ddt_commercianti";
+		return goDDTCommercianti(model);
 	}
 
 	@GetMapping("/parameters")
