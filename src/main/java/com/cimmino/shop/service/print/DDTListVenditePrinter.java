@@ -3,6 +3,7 @@ package com.cimmino.shop.service.print;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
@@ -49,35 +50,12 @@ public class DDTListVenditePrinter extends BasePrinter implements HasOutputStrea
 	private int numRows = 0;
 	private BigDecimal totPeso = BigDecimal.ZERO;
 
-//	public void exec(List<Vendita> vendite, Configurazione conf) throws Exception {
-//
-//		this.conf = conf;
-//		this.vendite = vendite;
-//		if (vendite.size() > 0)
-//			this.commerciante = vendite.get(0).getCommerciante();
-//
-//		DDTDTO dto1 = ddtService.create("");
-//		String html = buildHtml(dto1);
-//
-//		outputStream = new ByteArrayOutputStream();
-//
-//		PdfRendererBuilder builder = new PdfRendererBuilder();
-//
-//		builder.withHtmlContent(html, null);
-//		builder.toStream(outputStream);
-//		builder.run();
-//
-//		DDTDTO dto = ddtService.create(html,dto1);
-//		Long ddtId = dto1.getId();
-//		for (Vendita vendita : vendite) {
-//
-//			vendita.setDdt("" + ddtId);
-//			venditeService.save(vendita);
-//		}
-//
-//	}
-	public void exec(List<GruppoVendite> vendite, Configurazione conf, DDTInputData ddtInputData) throws IOException {
 
+	public void exec(List<GruppoVendite> vendite, Configurazione conf, DDTInputData ddtInputData) throws IOException {
+		totPeso = BigDecimal.ZERO;
+		totColli = 0;
+		numRows = 0;
+		
 		this.conf = conf;
 		this.vendite = vendite;
 		if (vendite.size() > 0)
@@ -381,8 +359,8 @@ public class DDTListVenditePrinter extends BasePrinter implements HasOutputStrea
 
 		BigDecimal totPeso = BigDecimal.ZERO;
 		for (GruppoVendite vendita : vendite)
-			
-				totPeso = processVenditaNormale(vendita, out);
+
+			totPeso = processVenditaNormale(vendita, out, ddtInputData);
 //			else
 //				totPeso = processVenditaGruppo(vendita, out, dto1, ddtInputData);
 
@@ -508,7 +486,7 @@ public class DDTListVenditePrinter extends BasePrinter implements HasOutputStrea
 		return vendita.getGruppoVendite().getPesoLordoTotale();
 	}
 
-	private BigDecimal processVenditaNormale(GruppoVendite vendita, StringBuilder out) {
+	private BigDecimal processVenditaNormale(GruppoVendite vendita, StringBuilder out, DDTInputData ddtInputData) {
 		for (BinsGruppoVendita b : vendita.getBins()) {
 			out.append("<tr>");
 			out.append("<td>");
@@ -522,15 +500,51 @@ public class DDTListVenditePrinter extends BasePrinter implements HasOutputStrea
 			totColli += b.getNumBins();
 			out.append("</td>");
 			out.append("<td>");
-			if( b.getPesoNetto()!=null) {
-			out.append(b.getPesoNetto());
-			totPeso = totPeso.add(b.getPesoNetto());}
+			insertPeso(b, ddtInputData, out);
+//			if (b.getPesoNetto() != null) {
+//				out.append(b.getPesoNetto());
+//				totPeso = totPeso.add(b.getPesoNetto());
+//			}
 			out.append("</td>");
 
 			out.append("</tr>");
 			numRows++;
 		}
 		return totPeso;
+	}
+
+	private void insertPeso(BinsGruppoVendita b, //
+			DDTInputData ddtInputData, //
+			StringBuilder out) {
+		BigDecimal peso = BigDecimal.ZERO;
+
+		switch (ddtInputData.getTipoPeso()) {
+		case 0: // peso lordo
+			if (b.getPesoLordo() != null) {
+				peso = b.getPesoLordo();
+			}
+			break;
+		case 1: // netto di tara
+			if (b.getPesoNetto() != null) {
+				peso = b.getPesoNetto();
+			}
+			break;
+		default:
+			BigDecimal scarto1 = new BigDecimal(1);
+			BigDecimal perc1 = b.getScarto().divide(new BigDecimal(100));
+			BigDecimal scarto = scarto1.subtract(perc1);
+
+			peso = b.getPesoNetto().multiply(scarto);
+
+			break;
+		}
+		totPeso = totPeso.add(peso);
+		out.append(formatNum(peso));
+	}
+	private String formatNum( BigDecimal v ) {
+		return v
+		        .setScale(2, RoundingMode.HALF_UP)
+		        .toPlainString();
 	}
 
 	private void makeFooter2(StringBuilder out, int totColli2, BigDecimal totPeso2, DDTInputData ddtInputData) {
@@ -547,7 +561,7 @@ public class DDTListVenditePrinter extends BasePrinter implements HasOutputStrea
 		out.append("Aspetto esteriore dei beni<br/>" + ddtInputData.getAspettoEsteriore());
 		out.append("</td>");
 		out.append("<td  class=\"text-end fw-bold\">n.Colli<br/>" + totColli2 + "</td>");
-		out.append("<td  class=\"text-end fw-bold\" >Peso kg.<br/>" + totPeso2 + "</td>");
+		out.append("<td  class=\"text-end fw-bold\" >Peso kg.<br/>" + formatNum(totPeso2) + "</td>");
 		out.append("</tr>");
 		out.append("</table>");
 	}
@@ -589,9 +603,7 @@ public class DDTListVenditePrinter extends BasePrinter implements HasOutputStrea
 		out.append("<b>Secondo cessionario:</b>");
 		out.append("<p/>");
 		out.append("<p/>");
-		
 
-	
 		out.append(commerciante.getName());
 		out.append("<br/>" + clean(commerciante.getIndirizzo()));
 		out.append("</td>");

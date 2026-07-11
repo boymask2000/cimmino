@@ -34,6 +34,7 @@ public class BinsGruppoVendita {
 	private BigDecimal prezzo;
 	private BigDecimal pesoLordo;
 	private BigDecimal pesoNetto;
+	private BigDecimal scarto=BigDecimal.ZERO;
 	private String arriviSelect;
 	public Long getId() {
 		return id;
@@ -95,5 +96,11 @@ public class BinsGruppoVendita {
 	}
 	public void setPrezzo(BigDecimal prezzo) {
 		this.prezzo = prezzo;
+	}
+	public BigDecimal getScarto() {
+		return scarto;
+	}
+	public void setScarto(BigDecimal scarto) {
+		this.scarto = scarto;
 	}
 }

@@ -12,6 +12,10 @@ public class DDTInputData {
 	private Long trasportatore1Id;
 	private Long trasportatore2Id;
 	private String cessioneBeniConPrezzo;
+	private int tipoPeso =2;
+	// 0 => LORDO
+	// 1 => NETTO DI TARA
+	// 2 => NETTO DI SCARTO
 	
 	private List<Long> ids;
 	private long commercianteId;
@@ -82,6 +86,12 @@ public class DDTInputData {
 	}
 	public void setCessioneBeniConPrezzo(String cessioneBeniConPrezzo) {
 		this.cessioneBeniConPrezzo = cessioneBeniConPrezzo;
+	}
+	public int getTipoPeso() {
+		return tipoPeso;
+	}
+	public void setTipoPeso(int tipoPeso) {
+		this.tipoPeso = tipoPeso;
 	}
 
 
