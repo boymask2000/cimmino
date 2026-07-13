@@ -48,6 +48,7 @@ public class GruppoVenditeService {
 	@Autowired
 	MerceRepository merceRepository;
 
+	@Transactional
 	public void saveGruppoVendite(GruppoVendite gr, LocalDate currData, String binsJson) {
 		gr.setData(currData);
 		ObjectMapper mapper = new ObjectMapper();
@@ -200,8 +201,8 @@ public class GruppoVenditeService {
 
 	@Transactional
 	public void cleanDDT(String ddtnum) {
-	List<GruppoVendite> ll = gruppoVenditeRepository.findGruppoVenditeByDDT(ddtnum);
-		for( GruppoVendite gv: ll) {
+		List<GruppoVendite> ll = gruppoVenditeRepository.findGruppoVenditeByDDT(ddtnum);
+		for (GruppoVendite gv : ll) {
 			gv.setDdt(null);
 			gruppoVenditeRepository.save(gv);
 		}

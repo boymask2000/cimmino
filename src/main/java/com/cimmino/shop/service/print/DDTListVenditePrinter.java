@@ -186,88 +186,7 @@ public class DDTListVenditePrinter extends BasePrinter implements HasOutputStrea
 		return out.toString();
 	}
 
-//	private String buildHtml(DDTDTO dto1) {
-//
-//		StringBuilder html = new StringBuilder();
-//
-//		html.append("""
-//				                <html>
-//				                    <head>
-//				                        <meta charset="UTF-8"/>
-//
-//				                        <style>
-//
-//				                            @page {
-//
-//				                                margin: 10mm;
-//				                            }
-//
-//				                            body {
-//				                                font-family: Arial, sans-serif;
-//				                                font-size: 10px;
-//				                                margin: 0;
-//				                                padding: 0;
-//				                            }
-//
-//				                            h1 {
-//				                                color: #2c3e50;
-//				                                margin-bottom: 20px;
-//				                            }
-//
-//				                           table {
-//				    width: 100%;
-//				    border-collapse: collapse;
-//				    table-layout: fixed;
-//				}
-//
-//				                            th, td {
-//				                                border: 1px solid #000;
-//				                                padding: 4px;
-//				                                text-align: left;
-//				                                vertical-align: top;
-//				                            }
-//
-//				                            th {
-//				                                background-color: #f2f2f2;
-//				                            }
-//
-//				                            .arrivo-box {
-//				                                margin-bottom: 25px;
-//				                                page-break-inside: avoid;
-//				                            }
-//
-//				                            .section-title {
-//				                                background-color: #dfe6e9;
-//				                                font-weight: bold;
-//				                            }
-//
-//				                            tr {
-//				                                page-break-inside: avoid;
-//				                            }
-//
-//				                        </style>
-//
-//				                    </head>
-//
-//				                    <body>
-//				                """);
-//
-//	//	html.append(makeTestata1(dto1));
-//		html.append(makeTestata2());
-//		html.append(makeTestata3());
-//		html.append(makeTestata4());
-//		html.append(makeBinsBox(dto1));
-//
-//		html.append(makeFooter1());
-//		html.append(makeFooter2());
-//
-//		html.append("""
-//				    </body>
-//				</html>
-//				""");
-//
-//		return html.toString();
-//	}
+
 	private Object makeFooter2(DDTInputData ddtInputData) {
 		StringBuilder out = new StringBuilder();
 
@@ -530,8 +449,11 @@ public class DDTListVenditePrinter extends BasePrinter implements HasOutputStrea
 			}
 			break;
 		default:
+			BigDecimal scartoDB = b.getScarto();
+			if(scartoDB==null) scartoDB=BigDecimal.ZERO;
+			
 			BigDecimal scarto1 = new BigDecimal(1);
-			BigDecimal perc1 = b.getScarto().divide(new BigDecimal(100));
+			BigDecimal perc1 = scartoDB.divide(new BigDecimal(100));
 			BigDecimal scarto = scarto1.subtract(perc1);
 
 			peso = b.getPesoNetto().multiply(scarto);
