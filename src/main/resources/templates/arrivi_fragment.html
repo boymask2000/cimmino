@@ -1,6 +1,15 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-
+<head>
+<style>
+    .badge-neutra {
+        background-color: transparent !important;
+        color: #000000 !important;
+        font-weight: normal;
+        padding: 0;
+    }
+</style>
+</head>
 
 <body>
 
@@ -56,31 +65,31 @@
 
 
 					</td>
-					<td><span class="badge bg-primary"> <span
+					<td><span class="badge-neutra"> <span
 							th:text="${a.commerciante.name}"></span>
 					</span></td>
-					<td><span class="badge bg-primary"> <span
+					<td><span class="badge-neutra"> <span
 							th:text="${@fmt.date(a.data)}"></span>
 					</span></td>
 
-					<td><span class="badge bg-primary"> <span
+					<td><span class="badge-neutra"> <span
 							th:text="${a.ddt}"></span>
 					</span></td>
-					<td><span class="badge bg-primary"> <span
+					<td><span class="badge-neutra"> <span
 							th:text="${a.numeroTotaleBins}"></span>
 					</span></td>
 
 
-					<td><span class="badge bg-primary"> <span
+					<td><span class="badge-neutra"> <span
 							th:text="${a.peso_lordo}"></span>
 					</span></td>
-					<td><span class="badge bg-primary"> <span
+					<td><span class="badge-neutra"> <span
 							th:text="${a.nettoDiTara}"></span>
 					</span></td>
-					<td><span class="badge bg-primary"> <span
+					<td><span class="badge-neutra"> <span
 							th:text="${a.nettoDiScarto}"></span>
 					</span></td>
-					<td><span class="badge bg-primary"> <span
+					<td><span class="badge-neutra"> <span
 							th:text="${a.media}"></span>
 					</span></td>
 
@@ -241,37 +250,37 @@
 
 
 									</td>
-									<td><span class="badge bg-primary"> <span
+									<td><span class="badge-neutra"> <span
 											th:text="${b.commerciante.name}"></span>
 									</span></td>
-									<td><span class="badge bg-primary"> <span
+									<td><span class="badge-neutra"> <span
 											th:text="${@fmt.date(b.data)}"></span>
 									</span></td>
-									<td><span class="badge bg-primary"> <span
+									<td><span class="badge-neutra"> <span
 											th:text="${b.ddt}"></span>
 									</span></td>
-									<td><span class="badge bg-primary"> <span
+									<td><span class="badge-neutra"> <span
 											th:text="${b.numeroTotaleBins}"></span>
 									</span></td>
 
 
-									<td><span class="badge bg-primary"> <span
+									<td><span class="badge-neutra"> <span
 											th:text="${b.peso_lordo}"></span>
 									</span></td>
-									<td><span class="badge bg-primary"> <span
+									<td><span class="badge-neutra"> <span
 											th:text="${b.nettoDiTara}"></span>
 									</span></td>
-									<td><span class="badge bg-primary"> <span
+									<td><span class="badge-neutra"> <span
 											th:text="${b.nettoDiScarto}"></span>
 									</span></td>
-									<td><span class="badge bg-primary"> <span
+									<td><span class="badge-neutra"> <span
 											th:text="${b.media}"></span>
 									</span></td>
 
-									<td><span class="badge bg-primary"> <span
+									<td><span class="badge-neutra"> <span
 											th:text="${b.scarto}"></span>
 									</span></td>
-									<td><span class="badge bg-primary"> <span
+									<td><span class="badge-neutra"> <span
 											th:text="${b.prezzo}"></span>
 									</span></td>
 

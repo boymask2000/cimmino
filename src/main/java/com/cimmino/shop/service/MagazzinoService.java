@@ -23,7 +23,7 @@ public class MagazzinoService {
 	@Autowired
 	VenditeRepository venditeRepository;
 
-	public List<MagazzinoRow>  dump() {
+	public List<MagazzinoRow> dump() {
 		Map<String, MagazzinoRow> map = new HashMap<String, MagazzinoRow>();
 
 		List<Arrivi> arrivi = arriviRepository.findAll();
@@ -31,9 +31,9 @@ public class MagazzinoService {
 		for (Arrivi arr : arrivi) {
 			List<BinsArrivi> binsArr = arr.getBins();
 			for (BinsArrivi barr : binsArr) {
-				String key = arr.getData().toString() + " " + barr.getBin().getName()+" "+
-				barr.getArrivo().getMerce().getName();
-				
+				String key = arr.getData().toString() + " " + barr.getBin().getName() + " "
+						+ barr.getArrivo().getMerce().getName();
+
 				MagazzinoRow row = null;
 
 				if (map.get(key) == null) {
@@ -42,11 +42,11 @@ public class MagazzinoService {
 					row.setBin(barr.getBin().getName());
 					row.setNum(barr.getNumBins());
 					row.setNomeMerce(barr.getArrivo().getMerce().getName());
-					
+
 					row.setMerceId(barr.getArrivo().getMerce().getMerce_id());
 					row.setBinId(barr.getBin().getId());
 					row.setArrivoId(arr.getId());
-					
+
 					map.put(key, row);
 					continue;
 				}
@@ -61,8 +61,8 @@ public class MagazzinoService {
 		for (Vendita ven : vendite) {
 			List<BinsVendite> binsVen = ven.getBins();
 			for (BinsVendite bven : binsVen) {
-				String key = ven.getArrivo().getData().toString() + " " + bven.getBin().getName()+" "+
-				ven.getArrivo().getMerce().getName();
+				String key = ven.getArrivo().getData().toString() + " " + bven.getBin().getName() + " "
+						+ ven.getArrivo().getMerce().getName();
 				MagazzinoRow row = null;
 				if (map.get(key) == null) {
 					row = new MagazzinoRow();
@@ -83,16 +83,20 @@ public class MagazzinoService {
 			}
 		}
 
-		
-		
-		List<MagazzinoRow> rows =
-			   map
-			        .values()
-			        .stream()
-			        .sorted(Comparator.comparing(r -> r.getDate()))
-			        .collect(Collectors.toList());
-		
+		List<MagazzinoRow> rows = map.values().stream().sorted(Comparator.comparing(r -> r.getDate()))
+				.collect(Collectors.toList());
+
 		return rows;
 
+	}
+
+	public List<MagazzinoRow> dumpNoZero() {
+		List<MagazzinoRow> lista = dump();
+
+		List<MagazzinoRow> rows = lista.stream(). //
+				filter(p -> p.getNum() > 0). //
+				collect(Collectors.toList()); //
+		
+		return rows;
 	}
 }

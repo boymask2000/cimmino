@@ -19,7 +19,7 @@ public class MagazzinoController {
 
 	@GetMapping("/show")
 	public String show(Model model) {
-		List<MagazzinoRow> rows = magazzinoService.dump();
+		List<MagazzinoRow> rows = magazzinoService.dumpNoZero();
 
 		model.addAttribute("rows", rows);
 

@@ -88,6 +88,8 @@
         <div class="col-md-3">
             <label>Qta</label>
             <input type="number"
+           			 id="numBins"
+           			  min="1"
                    name="numBins"
                    class="form-control"
                    required>
@@ -96,6 +98,7 @@
         <div class="col-md-3">
             <label>Bin</label>
             <select name="binId"
+            		id="binId"
                     class="form-select"
                     required>
 
@@ -108,10 +111,19 @@
 
             </select>
         </div>
+        <div class="col-md-3">
+            <label for="tara" >Tara (kg)</label>
+            <input type="number"
+                   id="tara"
+                   class="form-control"
+                   step="0.01"
+                   readonly>
+        </div>
 
         <div class="col-md-3">
             <label>Peso Lordo</label>
             <input type="number"
+             		id="pesoLordo"
                    step="0.01"
                    name="pesoLordo"
                    class="form-control"
@@ -121,6 +133,7 @@
         <div class="col-md-3">
             <label>Peso Netto</label>
             <input type="number"
+            		 id="pesoNetto"
                    step="0.01"
                    name="pesoNetto"
                    class="form-control"
@@ -206,6 +219,83 @@
 		</div>
 
 	</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+
+    const binSelect = document.getElementById("binId");
+    const numBinsInput = document.getElementById("numBins");
+    const taraInput = document.getElementById("tara");
+    const pesoLordoInput = document.getElementById("pesoLordo");
+    const pesoNettoInput = document.getElementById("pesoNetto");
+
+    let taraPerBin = null;
+
+    function calcolaPesoNetto() {
+        const quantita = Number(numBinsInput.value);
+        const pesoLordo = Number(pesoLordoInput.value);
+
+        if (
+            taraPerBin === null ||
+            numBinsInput.value === "" ||
+            pesoLordoInput.value === "" ||
+            quantita <= 0 ||
+            pesoLordo < 0
+        ) {
+            pesoNettoInput.value = "";
+            return;
+        }
+
+        const pesoNetto = pesoLordo - (taraPerBin * quantita);
+
+        pesoNettoInput.value =
+            pesoNetto >= 0 ? pesoNetto.toFixed(2) : "";
+    }
+
+    binSelect.addEventListener("change", async () => {
+        taraPerBin = null;
+        taraInput.value = "";
+        pesoNettoInput.value = "";
+
+        if (!binSelect.value) {
+            return;
+        }
+
+        try {
+        	const response = await fetch(
+        		    `/api/bin/${encodeURIComponent(binSelect.value)}/tara`
+        		);
+
+            if (!response.ok) {
+                throw new Error("Impossibile recuperare la tara");
+            }
+
+            taraPerBin = Number(await response.json());
+
+            if (!Number.isFinite(taraPerBin) || taraPerBin < 0) {
+                taraPerBin = null;
+                throw new Error("Valore della tara non valido");
+            }
+
+            taraInput.value = taraPerBin.toFixed(2);
+
+            calcolaPesoNetto();
+
+        } catch (error) {
+            taraPerBin = null;
+            taraInput.value = "";
+            pesoNettoInput.value = "";
+
+            alert("Errore nel recupero della tara del bin.");
+            console.error(error);
+        }
+    });
+
+    numBinsInput.addEventListener("input", calcolaPesoNetto);
+    pesoLordoInput.addEventListener("input", calcolaPesoNetto);
+
+});
+</script>
 
 </body>
 </html>

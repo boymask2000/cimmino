@@ -5,6 +5,7 @@ import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -43,6 +44,15 @@ public class BinApiController {
 //        
 //        return vv;
 	}
+	
+	@GetMapping("/{id}/tara")
+    public ResponseEntity<BigDecimal> getTara(
+            @PathVariable Long id) {
+
+        return binRepository.findById(id)
+                .map(bin -> ResponseEntity.ok(bin.getTara()))
+                .orElse(ResponseEntity.notFound().build());
+    }
 
 	@GetMapping("/{binid}/{arrivoId}/availability")
 	public Map<String, Integer> availability(@PathVariable Long binid, @PathVariable Long arrivoId) {
