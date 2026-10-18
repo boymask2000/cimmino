@@ -23,6 +23,7 @@ import com.cimmino.shop.database.GruppoVendite;
 import com.cimmino.shop.database.GruppoVenditeRepository;
 import com.cimmino.shop.database.Vendita;
 import com.cimmino.shop.database.VenditeRepository;
+import com.cimmino.shop.database.dto.RiepilogoVendite;
 import com.cimmino.shop.service.CommerciantiService;
 
 import jakarta.servlet.http.HttpSession;
@@ -116,6 +117,7 @@ public class CommerciantiWebController {
 
 		return res;
 	}
+
 	@GetMapping("/commercianti/filter/vendite")
 	public String filter_vendite(@RequestParam LocalDate startDate, //
 			@RequestParam LocalDate endDate, //
@@ -137,6 +139,32 @@ public class CommerciantiWebController {
 
 		return "operazioni_commercianti_vendite";
 	}
+
+	@GetMapping("/commercianti/filter/vendite_grouped")
+	public String filter_vendite_grouped(@RequestParam LocalDate startDate, //
+			@RequestParam LocalDate endDate, //
+			HttpSession session, //
+			Model model) {
+
+		if (startDate != null) {
+			session.setAttribute("startDate", startDate);
+		}
+		if (endDate != null) {
+			session.setAttribute("endDate", endDate);
+		}
+		List<Vendita> risultati = venditeRepository.cerca(startDate, endDate);
+
+		List<RiepilogoVendite> riepilogo = venditeRepository.riepilogoPerCommerciante(startDate, endDate);
+
+		model.addAttribute("commercianti", commercianteRepository.findAll());
+		model.addAttribute("operazioni", risultati);
+		model.addAttribute("riepilogo", riepilogo);
+		model.addAttribute("startDate", startDate);
+		model.addAttribute("endDate", endDate);
+
+		return "operazioni_commercianti_vendite_grouped";
+	}
+
 	@PostMapping("/commercianti/vendite/update-field")
 	@ResponseBody
 	public Map<String, Object> updateFieldVendite(@RequestBody UpdateFieldRequest req) {
@@ -153,6 +181,7 @@ public class CommerciantiWebController {
 
 		return res;
 	}
+
 	@GetMapping("/commercianti/filter/vendite/commerciante/{id}")
 	public String filter_vendite_commercianti( //
 			@RequestParam(required = false, defaultValue = "0") Long commercianteId, //
@@ -168,6 +197,7 @@ public class CommerciantiWebController {
 
 		return "redirect:/web/commercianti/vendite/view2";
 	}
+
 	@GetMapping("/commercianti/vendite/view2")
 	public String gvendite_view2(@RequestParam(required = false, defaultValue = "0") Long commercianteId, Model model) {
 
@@ -178,6 +208,9 @@ public class CommerciantiWebController {
 		} else {
 			ll = venditeRepository.findVenditeDiCommerciante(commercianteId);
 		}
+		
+		List<RiepilogoVendite> riepilogo = venditeRepository.riepilogoTotalePerCommerciante(commercianteId);
+
 
 		BigDecimal totale = ll.stream().map(Vendita::getImporto).filter(Objects::nonNull).reduce(BigDecimal.ZERO,
 				BigDecimal::add)
@@ -187,7 +220,8 @@ public class CommerciantiWebController {
 		model.addAttribute("operazioni", ll);
 		model.addAttribute("commercianti", commercianteRepository.findAll());
 		model.addAttribute("commercianteId", commercianteId);
+		model.addAttribute("riepilogo", riepilogo);
 		model.addAttribute("totale", totale);
-		return "operazioni_commercianti_vendite";
+		return "operazioni_commercianti_vendite_grouped";
 	}
 }

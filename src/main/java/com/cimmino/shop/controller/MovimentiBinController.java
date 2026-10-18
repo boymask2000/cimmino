@@ -77,9 +77,10 @@ public class MovimentiBinController {
 	@GetMapping("/view")
 	public String view(Model model) {
 
-		List<MovimentoBin> ll;
-
-		ll = movimentiBinRepository.findAll();
+		List<MovimentoBin> 	ll = movimentiBinRepository.findAll();
+		
+		ll=ll.stream().filter(p->p.getDescrizione()==null || p.getDescrizione().length()==0).
+				toList();
 		
 		List<BinMovimentoView> riepilogo = movimentiBinRepository.getRiepilogoMovimenti();
 

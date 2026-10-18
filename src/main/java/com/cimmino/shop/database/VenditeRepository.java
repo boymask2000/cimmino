@@ -7,6 +7,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import com.cimmino.shop.database.dto.RiepilogoVendite;
+
 public interface VenditeRepository extends JpaRepository<Vendita, Long> {
 
 //	@Query("SELECT COALESCE(SUM(v.nBins), 0) FROM Vendite v WHERE v.bin.id = :binId")
@@ -36,4 +38,65 @@ public interface VenditeRepository extends JpaRepository<Vendita, Long> {
 	
 	@Query("select u from Vendita  u where u.commerciante.commerciante_id = ?1")
 	List<Vendita> findByCommerciante(long id);
+	
+	
+
+
+@Query("""
+    SELECT NEW com.cimmino.shop.database.dto.RiepilogoVendite(
+        v.commerciante.commerciante_id,
+        v.commerciante.name,
+        SUM(v.importo),
+        SUM(v.peso_lordo),
+        v.data,
+        a.merce.merce_id,
+        a.merce.name
+    )
+    FROM Vendita v
+    JOIN v.arrivo a
+    WHERE v.data >= :startDate
+      AND v.data <= :endDate
+    GROUP BY
+        v.commerciante.commerciante_id,
+        v.commerciante.name,
+        v.data,
+        a.merce.merce_id,
+        a.merce.name
+    ORDER BY
+        v.data,
+        v.commerciante.commerciante_id,
+        a.merce.merce_id
+    """)
+List<RiepilogoVendite> riepilogoPerCommerciante(
+    @Param("startDate") LocalDate startDate,
+    @Param("endDate") LocalDate endDate
+);
+@Query("""
+	    SELECT NEW com.cimmino.shop.database.dto.RiepilogoVendite(
+	        v.commerciante.commerciante_id,
+	        v.commerciante.name,
+	        SUM(v.importo),
+	        SUM(v.peso_lordo),
+	        v.data,
+	        a.merce.merce_id,
+	        a.merce.name
+	    )
+	    FROM Vendita v
+	    JOIN v.arrivo a
+	    WHERE :commId=0 or v.commerciante.commerciante_id = :commId
+	     
+	    GROUP BY
+	        v.commerciante.commerciante_id,
+	        v.commerciante.name,
+	        v.data,
+	        a.merce.merce_id,
+	        a.merce.name
+	    ORDER BY
+	        v.data,
+	        v.commerciante.commerciante_id,
+	        a.merce.merce_id
+	    """)
+	List<RiepilogoVendite> riepilogoTotalePerCommerciante(
+	    @Param("commId") Long commId
+	);
 }
