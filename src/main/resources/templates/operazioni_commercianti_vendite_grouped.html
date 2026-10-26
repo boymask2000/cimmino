@@ -162,6 +162,7 @@
 							<th>Commerciante</th>
 							<th>Data</th>
 							<th>Merce</th>
+							<th>Peso Lordo</th>
 							
 							<th class="text-end">Importo</th>
 						</tr>
@@ -181,18 +182,23 @@
 							
 							<td th:text="${op.merceNome}"></td>
 							
+							<td th:text="${op.totalePesoLordo}"></td>
+							
 
 							<td class="importo text-end"
-    th:text="${#numbers.formatDecimal(op.totaleImporto, 1, 2)}">
-</td>
+    							th:text="${#numbers.formatDecimal(op.totaleImporto, 1, 2)}">
+							</td>
 
 						</tr>
 
 					</tbody>
 					<tfoot class="table-dark">
 						<tr>
-							<td colspan="11" class="text-end fw-bold">Totale</td>
-							<td th:text="${totale}" class="text-end fw-bold"></td>
+							<td colspan="4" class="text-end fw-bold">Totale</td>
+							<td 
+							th:text="${#aggregates.sum(riepilogo.![totaleImporto])}"
+							 class="text-end fw-bold"></td>
+							<td></td>
 						</tr>
 					</tfoot>
 
